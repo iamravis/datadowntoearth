@@ -352,23 +352,55 @@ function init() {
     }
 
     const terms = [
-      // Data Science
-      "regression", "classification", "clustering", "data mining", "neural networks", "deep learning", "supervised learning",
-      "unsupervised learning", "reinforcement learning", "dimensionality reduction", "feature engineering", "cross-validation",
-      "overfitting", "underfitting", "bias", "variance", "precision", "recall", "F1 score", "ROC curve", "AUC", "hyperparameter tuning",
-      "gradient descent", "backpropagation", "support vector machines", "decision trees", "random forests", "k-means clustering",
-      "PCA", "t-SNE", "natural language processing", "time series analysis", "anomaly detection", "mean squared error",
-      "cross entropy", "log loss", "hinge loss", "chi-squared test", "t-test", "ANOVA", "Mann-Whitney U test", "Kolmogorov-Smirnov test",
-      "Wilcoxon signed-rank test", "Levene's test", "Shapiro-Wilk test", "confusion matrix", "correlation matrix",
-      // Data Engineering
-      "ETL", "data pipelines", "data warehousing", "Apache Hadoop", "Apache Spark", "Kafka", "Flink", "Airflow", "data lakes",
-      "data governance", "data lineage", "data quality", "big data", "NoSQL", "SQL", "database management", "data architecture",
-      "cloud computing", "AWS", "Azure", "Google Cloud", "Redshift", "Snowflake", "DataBricks", "data modelling", "schema design",
-      // Generative AI
-      "GANs", "autoencoders", "transformer models", "GPT", "BERT", "T5", "diffusion models",
-      "style transfer", "neural style transfer", "voice synthesis", "music generation", "AI art", "language models", "few-shot learning",
-      "zero-shot learning", "self-supervised learning", "pre-trained models", "fine-tuning", "prompt engineering"
-    ];
+    // Data Science
+    "regression", "classification", "clustering", "data mining", "neural networks", "deep learning", "supervised learning",
+    "unsupervised learning", "reinforcement learning", "dimensionality reduction", "feature engineering", "cross-validation",
+    "overfitting", "underfitting", "bias", "variance", "precision", "recall", "F1 score", "ROC curve", "AUC", "hyperparameter tuning",
+    "gradient descent", "backpropagation", "support vector machines", "decision trees", "random forests", "k-means clustering",
+    "PCA", "t-SNE", "natural language processing", "time series analysis", "anomaly detection", "mean squared error",
+    "cross entropy", "log loss", "hinge loss", "chi-squared test", "t-test", "ANOVA", "Mann-Whitney U test", "Kolmogorov-Smirnov test",
+    "Wilcoxon signed-rank test", "Levene's test", "Shapiro-Wilk test", "confusion matrix", "correlation matrix",
+    "data visualization", "feature selection", "ensemble methods", "model evaluation", "data augmentation", "Bayesian inference",
+    "Markov chains", "time series forecasting", "K-fold cross-validation", "ROC-AUC", "data ethics", "explainable AI",
+    "transfer learning", "active learning", "multi-label classification", "dimensionality curse", "feature scaling",
+
+    // Data Engineering
+    "ETL", "data pipelines", "data warehousing", "Apache Hadoop", "Apache Spark", "Kafka", "Flink", "Airflow", "data lakes",
+    "data governance", "data lineage", "data quality", "big data", "NoSQL", "SQL", "database management", "data architecture",
+    "cloud computing", "AWS", "Azure", "Google Cloud", "Redshift", "Snowflake", "DataBricks", "data modelling", "schema design",
+    "data integration", "data federation", "data virtualization", "stream processing", "batch processing", "data catalog",
+    "data mesh", "data fabric", "data warehouse automation", "data security", "data privacy", "data retention", "data migration",
+    "data orchestration", "data lakehouse", "columnar storage", "OLAP", "OLTP", "data profiling",
+
+    // Generative AI
+    "GANs", "autoencoders", "transformer models", "GPT", "BERT", "T5", "diffusion models",
+    "style transfer", "neural style transfer", "voice synthesis", "music generation", "AI art", "language models", "few-shot learning",
+    "zero-shot learning", "self-supervised learning", "pre-trained models", "fine-tuning", "prompt engineering",
+    "text-to-image synthesis", "image-to-image translation", "video generation", "content generation", "adversarial training",
+    "latent space", "variational autoencoders", "model distillation", "data synthesis", "creative AI", "AI-driven storytelling",
+    "interactive AI", "AI ethics", "algorithmic bias", "synthetic data", "multi-modal learning", "neural rendering",
+
+    // Business Intelligence
+    "data warehousing", "dashboarding", "KPIs", "reporting", "data storytelling", "self-service BI", "OLAP cubes",
+    "data mining", "descriptive analytics", "predictive analytics", "prescriptive analytics", "data governance", "data lineage",
+    "business metrics", "data visualization tools", "Power BI", "Tableau", "Looker", "SQL reporting", "ETL processes",
+
+    // Big Data
+    "Hadoop", "Spark", "MapReduce", "data lakes", "data streams", "real-time processing", "batch processing",
+    "distributed computing", "data sharding", "NoSQL databases", "column-family stores", "document stores", "graph databases",
+    "big data analytics", "data ingestion", "data processing frameworks", "data storage solutions",
+
+    // Data Visualization
+    "data storytelling", "visual encoding", "chart types", "infographics", "heatmaps", "scatter plots", "line charts",
+    "bar charts", "pie charts", "dashboards", "interactive visualizations", "data design principles", "D3.js", "Tableau",
+    "Power BI", "matplotlib", "seaborn", "ggplot2", "plotly", "visualization best practices",
+
+    // Statistical Analysis
+    "descriptive statistics", "inferential statistics", "hypothesis testing", "confidence intervals", "p-values",
+    "statistical significance", "sampling methods", "normal distribution", "binomial distribution", "Poisson distribution",
+    "regression analysis", "ANOVA", "chi-square tests", "correlation coefficients", "time series analysis", "Bayesian statistics"
+];
+
 
     const highlightIndex = Math.floor(Math.random() * terms.length);
 
