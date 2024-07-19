@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -224,6 +258,80 @@ ul.task-list li input[type="checkbox"] {
 <li><p><strong>Operational Metrics</strong>: Metrics that assess the efficiency of product operations, such as churn rate and conversion rate.</p></li>
 </ol>
 <p>By focusing on the right metrics, teams can avoid vanity metrics—those that look impressive but lack actionable insights—and instead prioritize actionable metrics that drive meaningful improvements[1][2][4].</p>
+<div id="84dc8205" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> InstagramCampaignMetrics:</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Initialize metrics</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.total_impressions <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.total_engagements <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.total_clicks <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.total_revenue <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.new_followers <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> simulate_campaign(<span class="va">self</span>, days):</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> day <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, days <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Simulate daily metrics</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>            daily_impressions <span class="op">=</span> random.randint(<span class="dv">1000</span>, <span class="dv">5000</span>)  <span class="co"># Daily impressions</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>            daily_engagements <span class="op">=</span> <span class="bu">int</span>(daily_impressions <span class="op">*</span> random.uniform(<span class="fl">0.05</span>, <span class="fl">0.15</span>))  <span class="co"># 5% to 15% engagement rate</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>            daily_clicks <span class="op">=</span> <span class="bu">int</span>(daily_engagements <span class="op">*</span> random.uniform(<span class="fl">0.1</span>, <span class="fl">0.3</span>))  <span class="co"># 10% to 30% click-through rate</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>            daily_revenue <span class="op">=</span> daily_clicks <span class="op">*</span> random.uniform(<span class="dv">10</span>, <span class="dv">50</span>)  <span class="co"># Revenue per click between $10 and $50</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>            daily_followers <span class="op">=</span> random.randint(<span class="dv">10</span>, <span class="dv">100</span>)  <span class="co"># New followers gained</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Update total metrics</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.total_impressions <span class="op">+=</span> daily_impressions</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.total_engagements <span class="op">+=</span> daily_engagements</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.total_clicks <span class="op">+=</span> daily_clicks</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.total_revenue <span class="op">+=</span> daily_revenue</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.new_followers <span class="op">+=</span> daily_followers</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> calculate_kpis(<span class="va">self</span>):</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calculate KPIs</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        engagement_rate <span class="op">=</span> (<span class="va">self</span>.total_engagements <span class="op">/</span> <span class="va">self</span>.total_impressions) <span class="op">*</span> <span class="dv">100</span> <span class="cf">if</span> <span class="va">self</span>.total_impressions <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">0</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        conversion_rate <span class="op">=</span> (<span class="va">self</span>.total_clicks <span class="op">/</span> <span class="va">self</span>.total_engagements) <span class="op">*</span> <span class="dv">100</span> <span class="cf">if</span> <span class="va">self</span>.total_engagements <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">0</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        average_revenue_per_click <span class="op">=</span> <span class="va">self</span>.total_revenue <span class="op">/</span> <span class="va">self</span>.total_clicks <span class="cf">if</span> <span class="va">self</span>.total_clicks <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">0</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> {</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Total Impressions"</span>: <span class="va">self</span>.total_impressions,</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Total Engagements"</span>: <span class="va">self</span>.total_engagements,</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Total Clicks"</span>: <span class="va">self</span>.total_clicks,</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Total Revenue"</span>: <span class="va">self</span>.total_revenue,</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>            <span class="st">"New Followers"</span>: <span class="va">self</span>.new_followers,</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Engagement Rate (%)"</span>: engagement_rate,</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Conversion Rate (%)"</span>: conversion_rate,</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Average Revenue per Click ($)"</span>: average_revenue_per_click</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate an Instagram campaign for 30 days</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>campaign <span class="op">=</span> InstagramCampaignMetrics()</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>campaign.simulate_campaign(<span class="dv">30</span>)</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Get and print the KPIs</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>kpi_report <span class="op">=</span> campaign.calculate_kpis()</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the results</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Instagram Campaign KPI Report"</span>)</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"==============================="</span>)</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> kpi, value <span class="kw">in</span> kpi_report.items():</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>kpi<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>value<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Instagram Campaign KPI Report
+===============================
+Total Impressions: 104241.00
+Total Engagements: 10355.00
+Total Clicks: 1995.00
+Total Revenue: 64584.44
+New Followers: 1754.00
+Engagement Rate (%): 9.93
+Conversion Rate (%): 19.27
+Average Revenue per Click ($): 32.37</code></pre>
+</div>
+</div>
+<hr>
 </section>
 </section>
 <section id="types-of-product-metrics-vanity-vs.-actionable" class="level2">
@@ -247,6 +355,100 @@ ul.task-list li input[type="checkbox"] {
 <li>Churn rates (percentage of customers lost during a specific period)</li>
 </ul>
 <p>Actionable metrics inform decision-making and guide product improvements, making them essential for effective product management. Teams should focus on metrics that reflect actual user behavior and connect to strategic goals[2][3][5].</p>
+<div id="3f1857d4" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime, timedelta</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> InstagramStoriesForBusiness:</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.vanity_metrics <span class="op">=</span> {</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">'total_story_views'</span>: <span class="dv">0</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">'total_followers'</span>: <span class="dv">10000</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">'total_likes'</span>: <span class="dv">0</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.actionable_metrics <span class="op">=</span> {</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">'story_completion_rate'</span>: <span class="dv">0</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">'conversion_rate'</span>: <span class="dv">0</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">'engagement_rate'</span>: <span class="dv">0</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">'retention_rate'</span>: <span class="dv">0</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.user_data <span class="op">=</span> {</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>            <span class="st">'active_users'</span>: <span class="dv">5000</span>,</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>            <span class="st">'retained_users'</span>: <span class="dv">4500</span>,</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>            <span class="st">'converted_users'</span>: <span class="dv">0</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> simulate_daily_activity(<span class="va">self</span>, days):</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(days):</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Simulate vanity metrics</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>            daily_views <span class="op">=</span> random.randint(<span class="dv">5000</span>, <span class="dv">15000</span>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>            daily_likes <span class="op">=</span> random.randint(<span class="dv">1000</span>, <span class="dv">5000</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>            new_followers <span class="op">=</span> random.randint(<span class="dv">50</span>, <span class="dv">200</span>)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.vanity_metrics[<span class="st">'total_story_views'</span>] <span class="op">+=</span> daily_views</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.vanity_metrics[<span class="st">'total_likes'</span>] <span class="op">+=</span> daily_likes</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.vanity_metrics[<span class="st">'total_followers'</span>] <span class="op">+=</span> new_followers</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Simulate actionable metrics</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>            story_completions <span class="op">=</span> random.randint(<span class="bu">int</span>(daily_views <span class="op">*</span> <span class="fl">0.4</span>), <span class="bu">int</span>(daily_views <span class="op">*</span> <span class="fl">0.8</span>))</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>            converted_users <span class="op">=</span> random.randint(<span class="dv">10</span>, <span class="dv">50</span>)</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>            engaged_users <span class="op">=</span> random.randint(<span class="bu">int</span>(<span class="va">self</span>.user_data[<span class="st">'active_users'</span>] <span class="op">*</span> <span class="fl">0.1</span>), <span class="bu">int</span>(<span class="va">self</span>.user_data[<span class="st">'active_users'</span>] <span class="op">*</span> <span class="fl">0.3</span>))</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>            churned_users <span class="op">=</span> random.randint(<span class="dv">50</span>, <span class="dv">200</span>)</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.user_data[<span class="st">'converted_users'</span>] <span class="op">+=</span> converted_users</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.user_data[<span class="st">'active_users'</span>] <span class="op">=</span> <span class="bu">min</span>(<span class="va">self</span>.user_data[<span class="st">'active_users'</span>] <span class="op">+</span> random.randint(<span class="op">-</span><span class="dv">100</span>, <span class="dv">100</span>), <span class="va">self</span>.vanity_metrics[<span class="st">'total_followers'</span>])</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.user_data[<span class="st">'retained_users'</span>] <span class="op">=</span> <span class="va">self</span>.user_data[<span class="st">'active_users'</span>] <span class="op">-</span> churned_users</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Calculate actionable metrics</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.actionable_metrics[<span class="st">'story_completion_rate'</span>] <span class="op">=</span> (story_completions <span class="op">/</span> daily_views) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.actionable_metrics[<span class="st">'conversion_rate'</span>] <span class="op">=</span> (<span class="va">self</span>.user_data[<span class="st">'converted_users'</span>] <span class="op">/</span> <span class="va">self</span>.vanity_metrics[<span class="st">'total_followers'</span>]) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.actionable_metrics[<span class="st">'engagement_rate'</span>] <span class="op">=</span> (engaged_users <span class="op">/</span> <span class="va">self</span>.user_data[<span class="st">'active_users'</span>]) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.actionable_metrics[<span class="st">'retention_rate'</span>] <span class="op">=</span> (<span class="va">self</span>.user_data[<span class="st">'retained_users'</span>] <span class="op">/</span> <span class="va">self</span>.user_data[<span class="st">'active_users'</span>]) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> generate_report(<span class="va">self</span>):</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Instagram Stories for Business Metrics Report"</span>)</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"============================================="</span>)</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Vanity Metrics:"</span>)</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> metric, value <span class="kw">in</span> <span class="va">self</span>.vanity_metrics.items():</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>metric<span class="sc">.</span>replace(<span class="st">'_'</span>, <span class="st">' '</span>)<span class="sc">.</span>title()<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>value<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Actionable Metrics:"</span>)</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> metric, value <span class="kw">in</span> <span class="va">self</span>.actionable_metrics.items():</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>metric<span class="sc">.</span>replace(<span class="st">'_'</span>, <span class="st">' '</span>)<span class="sc">.</span>title()<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>value<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">User Data:"</span>)</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> metric, value <span class="kw">in</span> <span class="va">self</span>.user_data.items():</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>metric<span class="sc">.</span>replace(<span class="st">'_'</span>, <span class="st">' '</span>)<span class="sc">.</span>title()<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>value<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate 30 days of activity</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>instagram_stories <span class="op">=</span> InstagramStoriesForBusiness()</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>instagram_stories.simulate_daily_activity(<span class="dv">30</span>)</span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>instagram_stories.generate_report()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Instagram Stories for Business Metrics Report
+=============================================
+
+Vanity Metrics:
+Total Story Views: 293,268
+Total Followers: 14,209
+Total Likes: 88,404
+
+Actionable Metrics:
+Story Completion Rate: 49.64%
+Conversion Rate: 5.87%
+Engagement Rate: 24.15%
+Retention Rate: 98.52%
+
+User Data:
+Active Users: 4,790
+Retained Users: 4,719
+Converted Users: 834</code></pre>
+</div>
+</div>
+<hr>
 </section>
 </section>
 <section id="defining-success-metrics" class="level2">
@@ -259,6 +461,125 @@ ul.task-list li input[type="checkbox"] {
 <li><p><strong>Monitor and Iterate</strong>: Continuously track success metrics and adjust strategies based on performance data. This iterative approach helps refine product offerings and improve user experiences.</p></li>
 <li><p><strong>Communicate Metrics</strong>: Share success metrics with stakeholders to demonstrate progress and justify product decisions. This transparency fosters alignment and support across teams[1][4].</p></li>
 </ol>
+<div id="fe02bb03" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Facebook Reels Success Metrics</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Align with Business Goals</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>business_goals <span class="op">=</span> {</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"increase_user_engagement"</span>: <span class="st">"Boost daily active users and time spent on platform"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"grow_ad_revenue"</span>: <span class="st">"Increase ad impressions and click-through rates"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"compete_with_tiktok"</span>: <span class="st">"Attract and retain younger demographics"</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Identify Key User Actions</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>key_user_actions <span class="op">=</span> [</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"create_reel"</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"watch_reel"</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"like_reel"</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"comment_on_reel"</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"share_reel"</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Set Clear Targets</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>success_metrics <span class="op">=</span> {</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"daily_active_reel_users"</span>: {</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">"target"</span>: <span class="dv">100000000</span>,  <span class="co"># 100 million</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">"timeframe"</span>: <span class="st">"within 3 months of launch"</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"average_watch_time"</span>: {</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">"target"</span>: <span class="dv">30</span>,  <span class="co"># seconds</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">"timeframe"</span>: <span class="st">"per reel"</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">"reel_creation_rate"</span>: {</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        <span class="st">"target"</span>: <span class="fl">0.05</span>,  <span class="co"># 5% of daily active users</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>        <span class="st">"timeframe"</span>: <span class="st">"daily"</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">"reel_engagement_rate"</span>: {</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>        <span class="st">"target"</span>: <span class="fl">0.15</span>,  <span class="co"># 15% (likes + comments + shares) / views</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>        <span class="st">"timeframe"</span>: <span class="st">"per reel"</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ad_impression_increase"</span>: {</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>        <span class="st">"target"</span>: <span class="fl">0.10</span>,  <span class="co"># 10% increase</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>        <span class="st">"timeframe"</span>: <span class="st">"within 6 months of launch"</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 4: Monitor and Iterate</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> simulate_metrics(days):</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    daily_metrics <span class="op">=</span> {}</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> day <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, days <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>        daily_metrics[day] <span class="op">=</span> {</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>            <span class="st">"daily_active_reel_users"</span>: random.randint(<span class="dv">80000000</span>, <span class="dv">120000000</span>),</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>            <span class="st">"average_watch_time"</span>: random.uniform(<span class="dv">25</span>, <span class="dv">35</span>),</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>            <span class="st">"reel_creation_rate"</span>: random.uniform(<span class="fl">0.03</span>, <span class="fl">0.07</span>),</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>            <span class="st">"reel_engagement_rate"</span>: random.uniform(<span class="fl">0.12</span>, <span class="fl">0.18</span>),</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>            <span class="st">"ad_impression_increase"</span>: <span class="bu">min</span>(<span class="fl">0.15</span>, day <span class="op">*</span> <span class="fl">0.005</span>)  <span class="co"># Simulating gradual increase</span></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> daily_metrics</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>simulated_data <span class="op">=</span> simulate_metrics(<span class="dv">90</span>)  <span class="co"># 3 months of data</span></span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a><span class="co"># Analyze the data</span></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> analyze_performance(data, targets):</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>    performance <span class="op">=</span> {}</span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> metric, target <span class="kw">in</span> targets.items():</span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>        avg_value <span class="op">=</span> <span class="bu">sum</span>(day[metric] <span class="cf">for</span> day <span class="kw">in</span> data.values()) <span class="op">/</span> <span class="bu">len</span>(data)</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>        performance[metric] <span class="op">=</span> {</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>            <span class="st">"average"</span>: avg_value,</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>            <span class="st">"target"</span>: target[<span class="st">"target"</span>],</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>            <span class="st">"status"</span>: <span class="st">"Met"</span> <span class="cf">if</span> avg_value <span class="op">&gt;=</span> target[<span class="st">"target"</span>] <span class="cf">else</span> <span class="st">"Not Met"</span></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> performance</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>performance_analysis <span class="op">=</span> analyze_performance(simulated_data, success_metrics)</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 5: Communicate Metrics</span></span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_report(performance):</span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Facebook Reels Performance Report"</span>)</span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"================================="</span>)</span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> metric, data <span class="kw">in</span> performance.items():</span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>metric<span class="sc">.</span>replace(<span class="st">'_'</span>, <span class="st">' '</span>)<span class="sc">.</span>title()<span class="sc">}</span><span class="ss">:"</span>)</span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  Target: </span><span class="sc">{</span>data[<span class="st">'target'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  Average: </span><span class="sc">{</span>data[<span class="st">'average'</span>]<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"  Status: </span><span class="sc">{</span>data[<span class="st">'status'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>()</span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>generate_report(performance_analysis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Facebook Reels Performance Report
+=================================
+Daily Active Reel Users:
+  Target: 100000000
+  Average: 99885222.01
+  Status: Not Met
+
+Average Watch Time:
+  Target: 30
+  Average: 30.04
+  Status: Met
+
+Reel Creation Rate:
+  Target: 0.05
+  Average: 0.05
+  Status: Not Met
+
+Reel Engagement Rate:
+  Target: 0.15
+  Average: 0.15
+  Status: Met
+
+Ad Impression Increase:
+  Target: 0.1
+  Average: 0.13
+  Status: Met
+</code></pre>
+</div>
+</div>
 </section>
 <section id="ab-testing-basics" class="level2">
 <h2 class="anchored" data-anchor-id="ab-testing-basics">A/B Testing Basics</h2>
@@ -272,28 +593,249 @@ ul.task-list li input[type="checkbox"] {
 <li><p><strong>Implement Findings</strong>: Use the insights gained from the A/B test to inform product decisions and optimize user experiences.</p></li>
 </ol>
 <p>A/B testing is a powerful tool for making data-driven decisions and validating assumptions about user preferences[2][3][5].</p>
+<div id="1f623e81" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A/B Testing Example: Instagram Ad Campaign for a Fashion Brand</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Define Hypothesis</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Hypothesis: Changing the image style in our Instagram ad will lead to higher engagement rates.</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>hypothesis <span class="op">=</span> <span class="st">"Using lifestyle images will increase engagement compared to product-only images."</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Create Variants</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Version A (Control): Product-only image</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>ad_variant_a <span class="op">=</span> {</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"image"</span>: <span class="st">"product_image.jpg"</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"copy"</span>: <span class="st">"Check out our new collection!"</span>,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cta"</span>: <span class="st">"Shop Now"</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Version B (Variant): Lifestyle image featuring the product in use</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>ad_variant_b <span class="op">=</span> {</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"image"</span>: <span class="st">"lifestyle_image.jpg"</span>,</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"copy"</span>: <span class="st">"See how our collection fits into your life!"</span>,</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cta"</span>: <span class="st">"Shop Now"</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Segment Users</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Randomly assign users to each version</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>users <span class="op">=</span> [<span class="st">"user1"</span>, <span class="st">"user2"</span>, <span class="st">"user3"</span>, <span class="st">"user4"</span>, <span class="st">"user5"</span>]</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>user_assignments <span class="op">=</span> {user: random.choice([<span class="st">"A"</span>, <span class="st">"B"</span>]) <span class="cf">for</span> user <span class="kw">in</span> users}</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 4: Collect Data</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate user interactions and collect engagement metrics</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>engagement_data <span class="op">=</span> {</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">"A"</span>: {<span class="st">"clicks"</span>: <span class="dv">0</span>, <span class="st">"impressions"</span>: <span class="dv">0</span>},</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">"B"</span>: {<span class="st">"clicks"</span>: <span class="dv">0</span>, <span class="st">"impressions"</span>: <span class="dv">0</span>}</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulated impressions for each variant</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> user, variant <span class="kw">in</span> user_assignments.items():</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>    engagement_data[variant][<span class="st">"impressions"</span>] <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> random.random() <span class="op">&gt;</span> <span class="fl">0.5</span>:  <span class="co"># 50% chance of clicking</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>        engagement_data[variant][<span class="st">"clicks"</span>] <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 5: Analyze Results</span></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> analyze_results(data):</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> {}</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> variant, metrics <span class="kw">in</span> data.items():</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>        click_through_rate <span class="op">=</span> metrics[<span class="st">"clicks"</span>] <span class="op">/</span> metrics[<span class="st">"impressions"</span>] <span class="cf">if</span> metrics[<span class="st">"impressions"</span>] <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">0</span></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>        results[variant] <span class="op">=</span> {</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>            <span class="st">"clicks"</span>: metrics[<span class="st">"clicks"</span>],</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>            <span class="st">"impressions"</span>: metrics[<span class="st">"impressions"</span>],</span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>            <span class="st">"CTR"</span>: click_through_rate</span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> results</span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> analyze_results(engagement_data)</span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 6: Implement Findings</span></span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>winning_variant <span class="op">=</span> <span class="bu">max</span>(results, key<span class="op">=</span><span class="kw">lambda</span> x: results[x][<span class="st">"CTR"</span>])</span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"The winning variant is </span><span class="sc">{</span>winning_variant<span class="sc">}</span><span class="ss"> with a CTR of </span><span class="sc">{</span>results[winning_variant][<span class="st">'CTR'</span>]<span class="sc">:.2%}</span><span class="ss">."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>The winning variant is A with a CTR of 100.00%.</code></pre>
+</div>
+</div>
+<hr>
 </section>
 <section id="tools-for-metrics-and-analytics" class="level2">
 <h2 class="anchored" data-anchor-id="tools-for-metrics-and-analytics">Tools for Metrics and Analytics</h2>
 <p>Several tools are available to help product teams track metrics and analyze user behavior. Here are three popular options:</p>
 <section id="google-analytics" class="level3">
 <h3 class="anchored" data-anchor-id="google-analytics">Google Analytics</h3>
-<p><strong>Features</strong>: - Tracks website traffic and user behavior - Provides insights into user demographics and engagement - Supports goal tracking and conversion measurement</p>
-<p><strong>Pros</strong>: - Free to use with robust features - Widely adopted and well-documented - Integrates with other Google services</p>
-<p><strong>Cons</strong>: - Can be overwhelming due to the volume of data - Limited in-depth analysis capabilities for specific user interactions</p>
+<p><strong>Features</strong>:</p>
+<ul>
+<li>Tracks website traffic and user behavior</li>
+<li>Provides insights into user demographics and engagement</li>
+<li>Supports goal tracking and conversion measurement</li>
+</ul>
+<p><strong>Pros</strong>:</p>
+<ul>
+<li>Free to use with robust features</li>
+<li>Widely adopted and well-documented</li>
+<li>Integrates with other Google services</li>
+</ul>
+<p><strong>Cons</strong>:</p>
+<ul>
+<li>Can be overwhelming due to the volume of data</li>
+<li>Limited in-depth analysis capabilities for specific user interactions</li>
+</ul>
 </section>
 <section id="mixpanel" class="level3">
 <h3 class="anchored" data-anchor-id="mixpanel">Mixpanel</h3>
-<p><strong>Features</strong>: - Focuses on product analytics and user engagement - Allows tracking of specific user actions and events - Provides cohort analysis and retention tracking</p>
-<p><strong>Pros</strong>: - Offers advanced analytics capabilities - User-friendly interface for tracking user behavior - Supports A/B testing and experimentation</p>
-<p><strong>Cons</strong>: - Pricing can be high for larger teams - Requires setup and configuration for optimal use</p>
+<p><strong>Features</strong>:</p>
+<ul>
+<li>Focuses on product analytics and user engagement</li>
+<li>Allows tracking of specific user actions and events</li>
+<li>Provides cohort analysis and retention tracking</li>
+</ul>
+<p><strong>Pros</strong>:</p>
+<ul>
+<li>Offers advanced analytics capabilities</li>
+<li>User-friendly interface for tracking user behavior</li>
+<li>Supports A/B testing and experimentation</li>
+</ul>
+<p><strong>Cons</strong>:</p>
+<ul>
+<li>Pricing can be high for larger teams</li>
+<li>Requires setup and configuration for optimal use</li>
+</ul>
 </section>
 <section id="amplitude" class="level3">
 <h3 class="anchored" data-anchor-id="amplitude">Amplitude</h3>
-<p><strong>Features</strong>: - Provides comprehensive product analytics - Enables tracking of user journeys and behaviors - Offers powerful segmentation and cohort analysis tools</p>
-<p><strong>Pros</strong>: - Strong focus on user engagement and retention metrics - Intuitive interface for visualizing data - Integrates with various data sources and tools</p>
-<p><strong>Cons</strong>: - Can be complex to set up initially - Pricing may be a barrier for smaller teams</p>
+<p><strong>Features</strong>:</p>
+<ul>
+<li>Provides comprehensive product analytics</li>
+<li>Enables tracking of user journeys and behaviors</li>
+<li>Offers powerful segmentation and cohort analysis tools</li>
+</ul>
+<p><strong>Pros</strong>:</p>
+<ul>
+<li>Strong focus on user engagement and retention metrics</li>
+<li>Intuitive interface for visualizing data</li>
+<li>Integrates with various data sources and tools</li>
+</ul>
+<p><strong>Cons</strong>:</p>
+<ul>
+<li>Can be complex to set up initially</li>
+<li>Pricing may be a barrier for smaller teams</li>
+</ul>
 <p>When selecting a tool, consider the specific needs of your team, the type of data you want to collect, and your budget. Each tool has unique strengths and is suited for different analytics purposes[4][5].</p>
+<div id="5f580e53" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import necessary libraries</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime, timedelta</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize data structures for storing metrics</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> InstagramAnalytics:</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.google_analytics_data <span class="op">=</span> {</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">'page_views'</span>: <span class="dv">0</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">'user_sessions'</span>: <span class="dv">0</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">'bounce_rate'</span>: <span class="fl">0.0</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">'avg_session_duration'</span>: <span class="fl">0.0</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.mixpanel_data <span class="op">=</span> {</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">'event_views'</span>: <span class="dv">0</span>,</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">'event_clicks'</span>: <span class="dv">0</span>,</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>            <span class="st">'conversion_rate'</span>: <span class="fl">0.0</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.amplitude_data <span class="op">=</span> {</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>            <span class="st">'active_users'</span>: <span class="dv">0</span>,</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>            <span class="st">'retention_rate'</span>: <span class="fl">0.0</span>,</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>            <span class="st">'churn_rate'</span>: <span class="fl">0.0</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> simulate_google_analytics(<span class="va">self</span>, days):</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(days):</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>            daily_page_views <span class="op">=</span> random.randint(<span class="dv">1000</span>, <span class="dv">5000</span>)</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>            daily_user_sessions <span class="op">=</span> random.randint(<span class="dv">500</span>, <span class="dv">2000</span>)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>            daily_bounce_rate <span class="op">=</span> random.uniform(<span class="fl">0.3</span>, <span class="fl">0.7</span>)</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>            daily_session_duration <span class="op">=</span> random.uniform(<span class="dv">1</span>, <span class="dv">5</span>)</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.google_analytics_data[<span class="st">'page_views'</span>] <span class="op">+=</span> daily_page_views</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.google_analytics_data[<span class="st">'user_sessions'</span>] <span class="op">+=</span> daily_user_sessions</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.google_analytics_data[<span class="st">'bounce_rate'</span>] <span class="op">+=</span> daily_bounce_rate</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.google_analytics_data[<span class="st">'avg_session_duration'</span>] <span class="op">+=</span> daily_session_duration</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calculate averages</span></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.google_analytics_data[<span class="st">'bounce_rate'</span>] <span class="op">/=</span> days</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.google_analytics_data[<span class="st">'avg_session_duration'</span>] <span class="op">/=</span> days</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> simulate_mixpanel(<span class="va">self</span>, days):</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(days):</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>            daily_event_views <span class="op">=</span> random.randint(<span class="dv">1000</span>, <span class="dv">5000</span>)</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>            daily_event_clicks <span class="op">=</span> random.randint(<span class="dv">100</span>, <span class="dv">1000</span>)</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.mixpanel_data[<span class="st">'event_views'</span>] <span class="op">+=</span> daily_event_views</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.mixpanel_data[<span class="st">'event_clicks'</span>] <span class="op">+=</span> daily_event_clicks</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calculate conversion rate</span></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.mixpanel_data[<span class="st">'conversion_rate'</span>] <span class="op">=</span> (<span class="va">self</span>.mixpanel_data[<span class="st">'event_clicks'</span>] <span class="op">/</span> <span class="va">self</span>.mixpanel_data[<span class="st">'event_views'</span>]) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> simulate_amplitude(<span class="va">self</span>, days):</span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(days):</span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>            daily_active_users <span class="op">=</span> random.randint(<span class="dv">1000</span>, <span class="dv">5000</span>)</span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>            daily_retained_users <span class="op">=</span> random.randint(<span class="dv">500</span>, <span class="dv">2000</span>)</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>            daily_churned_users <span class="op">=</span> random.randint(<span class="dv">100</span>, <span class="dv">500</span>)</span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.amplitude_data[<span class="st">'active_users'</span>] <span class="op">+=</span> daily_active_users</span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.amplitude_data[<span class="st">'retention_rate'</span>] <span class="op">+=</span> daily_retained_users</span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.amplitude_data[<span class="st">'churn_rate'</span>] <span class="op">+=</span> daily_churned_users</span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calculate retention and churn rates</span></span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.amplitude_data[<span class="st">'retention_rate'</span>] <span class="op">=</span> (<span class="va">self</span>.amplitude_data[<span class="st">'retention_rate'</span>] <span class="op">/</span> <span class="va">self</span>.amplitude_data[<span class="st">'active_users'</span>]) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.amplitude_data[<span class="st">'churn_rate'</span>] <span class="op">=</span> (<span class="va">self</span>.amplitude_data[<span class="st">'churn_rate'</span>] <span class="op">/</span> <span class="va">self</span>.amplitude_data[<span class="st">'active_users'</span>]) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> generate_report(<span class="va">self</span>):</span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Instagram Stories for Business Analytics Report"</span>)</span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"==============================================="</span>)</span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Google Analytics Data:"</span>)</span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> metric, value <span class="kw">in</span> <span class="va">self</span>.google_analytics_data.items():</span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>metric<span class="sc">.</span>replace(<span class="st">'_'</span>, <span class="st">' '</span>)<span class="sc">.</span>title()<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>value<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Mixpanel Data:"</span>)</span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> metric, value <span class="kw">in</span> <span class="va">self</span>.mixpanel_data.items():</span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>metric<span class="sc">.</span>replace(<span class="st">'_'</span>, <span class="st">' '</span>)<span class="sc">.</span>title()<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>value<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Amplitude Data:"</span>)</span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> metric, value <span class="kw">in</span> <span class="va">self</span>.amplitude_data.items():</span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>metric<span class="sc">.</span>replace(<span class="st">'_'</span>, <span class="st">' '</span>)<span class="sc">.</span>title()<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>value<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate 30 days of activity</span></span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a>instagram_analytics <span class="op">=</span> InstagramAnalytics()</span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a>instagram_analytics.simulate_google_analytics(<span class="dv">30</span>)</span>
+<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a>instagram_analytics.simulate_mixpanel(<span class="dv">30</span>)</span>
+<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a>instagram_analytics.simulate_amplitude(<span class="dv">30</span>)</span>
+<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a>instagram_analytics.generate_report()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Instagram Stories for Business Analytics Report
+===============================================
+
+Google Analytics Data:
+Page Views: 88713.00
+User Sessions: 39156.00
+Bounce Rate: 0.50
+Avg Session Duration: 3.33
+
+Mixpanel Data:
+Event Views: 99035.00
+Event Clicks: 17996.00
+Conversion Rate: 18.17
+
+Amplitude Data:
+Active Users: 86645.00
+Retention Rate: 43.12
+Churn Rate: 11.17</code></pre>
+</div>
+</div>
 </section>
 </section>
 </div>
