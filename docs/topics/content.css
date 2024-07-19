@@ -88,8 +88,9 @@ body {
 .text-content h2 { font-size: 30px; }
 .text-content h3 { font-size: 28px; }
 .text-content h4 { font-size: 20px; }
-.text-content h5, .text-content h6 {
-  font-size: 18px;
+.text-content h5 { font-size: 18px; }
+.text-content h6 {
+  font-size: 14px;
   font-style: italic;
 }
 
