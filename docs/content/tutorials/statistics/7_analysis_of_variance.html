@@ -294,7 +294,7 @@ F = \frac{\text{between-group variance}}{\text{within-group variance}}
 <section id="post-hoc-tests" class="level3">
 <h3 class="anchored" data-anchor-id="post-hoc-tests">Post-hoc Tests</h3>
 <p>Post-hoc tests are performed after finding a significant F-ratio to identify which specific groups differ. 1. <strong>Tukey’s HSD (Honestly Significant Difference)</strong>: Used to determine which specific group means are different from each other. 2. <strong>Bonferroni Correction</strong>: Adjusts the significance level to control for Type I errors when multiple comparisons are made, reducing the chances of falsely identifying a difference.</p>
-<div id="15aed7a1" class="cell" data-execution_count="1">
+<div id="862162c0" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -453,7 +453,7 @@ F = \frac{\text{variance due to factor A, factor B, and interaction}}{\text{with
 <section id="example-2" class="level4">
 <h4 class="anchored" data-anchor-id="example-2">Example</h4>
 <p>The effect of teaching method (e.g., traditional vs.&nbsp;interactive) might differ for students who study for 1 hour versus those who study for 3 hours, indicating an interaction between study time and teaching method.</p>
-<div id="671ce9ad" class="cell" data-execution_count="2">
+<div id="7a07adbc" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -615,7 +615,7 @@ Tukey's HSD test results for Study_Time:
 ------------------------------------------------------</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_8093/255884064.py:83: FutureWarning:
+<pre><code>/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_31018/255884064.py:83: FutureWarning:
 
 
 
@@ -719,7 +719,7 @@ Residual       2009.963871  87.0        NaN           NaN</code></pre>
 <li><strong>Discriminant Analysis</strong>: Used to determine which dependent variables contribute most to the group differences.</li>
 <li><strong>Bonferroni Correction</strong>: Adjusts the significance level for multiple comparisons, controlling for Type I errors.</li>
 </ol>
-<div id="372b2900" class="cell" data-execution_count="3">
+<div id="d4993718" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -887,7 +887,7 @@ Blood_Pressure:
 <li><strong>Pairwise Comparisons</strong>: Used to determine which time points or conditions are significantly different from each other.</li>
 <li><strong>Bonferroni Correction</strong>: Adjusts the significance level for multiple comparisons, reducing the risk of Type I errors.</li>
 </ol>
-<div id="cbdff698" class="cell" data-execution_count="4">
+<div id="8732df9a" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1019,7 +1019,7 @@ Post-hoc Pairwise Comparisons (Bonferroni-corrected):
 <li><strong>Random Effects</strong>: Factors that introduce random variability, often related to experimental units (e.g., patients within hospitals).</li>
 </ol>
 <p>Mixed-effects models allow for more flexible modeling of complex data structures, capturing both the fixed and random sources of variability.</p>
-<div id="1e6ab07f" class="cell" data-execution_count="5">
+<div id="e82bc8ce" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>

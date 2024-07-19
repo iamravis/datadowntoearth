@@ -320,7 +320,7 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2 + \cdots + \beta_n x^n + \epsilon
 <li><p><strong>Make predictions:</strong> Use the estimated parameters to predict new values of <span class="math inline">\(y\)</span>.</p></li>
 </ol></li>
 </ul>
-<div id="222f597d" class="cell" data-execution_count="1">
+<div id="2d5cff4c" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -511,7 +511,7 @@ J(\beta) = \frac{1}{2m} \sum_{i=1}^{m} (h_\beta(x_i) - y_i)^2
 <li><p><strong>Repeat:</strong> Iterate the process until convergence.</p></li>
 </ol></li>
 </ul>
-<div id="187edd93" class="cell" data-execution_count="2">
+<div id="dfc6d1e6" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -601,7 +601,7 @@ p = \frac{1}{1 + e^{-(\beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p
 \]</span></p></li>
 </ol></li>
 </ul>
-<div id="0049713c" class="cell" data-execution_count="3">
+<div id="cff79445" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -718,7 +718,7 @@ Coefficients: [ 6.23708757e-02 -4.22361215e-05]</code></pre>
 <li><p><strong>Make predictions:</strong> Calculate the probability of each category using the logistic function.</p></li>
 </ol></li>
 </ul>
-<div id="90e60943" class="cell" data-execution_count="4">
+<div id="d9bb1c90" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -812,7 +812,7 @@ Coefficients: [[-5.79159626e-02  3.31799508e-05  2.32288011e-04 -4.79284122e-05]
 <li><p><strong>Make predictions:</strong> Calculate the probability of each category using the logistic function.</p></li>
 </ol></li>
 </ul>
-<div id="6b074c61" class="cell" data-execution_count="5">
+<div id="01bb9fc8" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -931,7 +931,7 @@ dtype: float64</code></pre>
 <li><p><strong>Validation:</strong> Use cross-validation and bootstrapping to ensure the model generalizes well to unseen data.</p></li>
 <li><p><strong>Interpretability:</strong> Understand the coefficients and their implications, and use tools like SHAP values to explain model predictions.</p></li>
 </ul>
-<div id="3a41ad2c" class="cell" data-execution_count="6">
+<div id="83c87b09" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1122,7 +1122,7 @@ d(x, y) = \left( \sum_{i=1}^{n} |x_i - y_i|^p \right)^{\frac{1}{p}}
 <li><p><strong>Dimensionality Reduction:</strong> Use techniques like PCA to reduce the dimensionality of the data, as high-dimensional spaces can lead to sparse data and reduce the effectiveness of k-NN.</p></li>
 <li><p><strong>Efficiency:</strong> Implement efficient search algorithms like KD-trees or ball trees to speed up the nearest neighbor search, especially for large datasets.</p></li>
 </ul>
-<div id="86d6ebc0" class="cell" data-execution_count="7">
+<div id="b57b79dd" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1313,7 +1313,7 @@ Gini(T) = 1 - \sum_{i=1}^{c} p_i^2
 <li><p><strong>Square each proportion and sum them:</strong> Sum the squared proportions.</p></li>
 <li><p><strong>Subtract the sum from 1:</strong> The result is the Gini impurity.</p></li>
 </ol>
-<div id="e348e549" class="cell" data-execution_count="8">
+<div id="f80e0008" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1416,7 +1416,7 @@ Gini Impurity for PlayTennis: 0.4592</code></pre>
 <ul>
 <li><strong>Example:</strong> Using the CART algorithm to build a decision tree for predicting whether a passenger survived the Titanic disaster.</li>
 </ul>
-<div id="03da8137" class="cell" data-execution_count="9">
+<div id="b2fc9660" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -1543,7 +1543,7 @@ weighted avg       0.97      0.97      0.97        30
 <li><p><strong>Evaluate each node for pruning:</strong> For each non-leaf node, evaluate whether its removal (and replacement with a leaf node) would improve the model’s performance on a validation set.</p></li>
 <li><p><strong>Prune the tree:</strong> Remove nodes that do not contribute to improved performance or reduce complexity without harming the model’s accuracy.</p></li>
 </ol>
-<div id="8d519cd0" class="cell" data-execution_count="10">
+<div id="b0eb8b13" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -1643,7 +1643,7 @@ weighted avg       0.97      0.97      0.97        30
 <span id="cb24-95"><a href="#cb24-95" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_9620/2672598698.py:21: FutureWarning:
+<pre><code>/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_32460/2672598698.py:21: FutureWarning:
 
 A value is trying to be set on a copy of a DataFrame or Series through chained assignment using an inplace method.
 The behavior will change in pandas 3.0. This inplace method will never work because the intermediate object on which we are setting values always behaves as a copy.
@@ -1652,7 +1652,7 @@ For example, when doing 'df[col].method(value, inplace=True)', try using 'df.met
 
 
 
-/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_9620/2672598698.py:21: FutureWarning:
+/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_32460/2672598698.py:21: FutureWarning:
 
 A value is trying to be set on a copy of a DataFrame or Series through chained assignment using an inplace method.
 The behavior will change in pandas 3.0. This inplace method will never work because the intermediate object on which we are setting values always behaves as a copy.
@@ -1782,7 +1782,7 @@ weighted avg       0.76      0.76      0.76       143
 </ul></li>
 </ol>
 <p>By following these detailed steps and considerations, decision trees can be effectively utilized for various machine learning tasks, providing both predictive power and interpretability.</p>
-<div id="b4b10f75" class="cell" data-execution_count="11">
+<div id="dac4ac6c" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -1967,7 +1967,7 @@ P(x_i | y) = \frac{1}{\sqrt{2 \pi \sigma_y^2}} \exp \left( -\frac{(x_i - \mu_y)^
 <li><p><strong>Compute the posterior probability:</strong> Use Bayes’ theorem to compute the posterior probability for each class.</p></li>
 <li><p><strong>Predict the class:</strong> Choose the class with the highest posterior probability.</p></li>
 </ol>
-<div id="d3312a95" class="cell" data-execution_count="12">
+<div id="ba7efcf6" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -2078,7 +2078,7 @@ P(x_i | y) = \frac{\text{Count}(x_i, y) + 1}{\sum_{i} \text{Count}(x_i, y) + n}
 <li><p><strong>Compute the posterior probability:</strong> Use Bayes’ theorem to compute the posterior probability for each class.</p></li>
 <li><p><strong>Predict the class:</strong> Choose the class with the highest posterior probability.</p></li>
 </ol>
-<div id="9e36ce86" class="cell" data-execution_count="13">
+<div id="a321d8d6" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -2185,7 +2185,7 @@ P(x_i | y) = p_i^{x_i} (1 - p_i)^{1 - x_i}
 <li><p><strong>Compute the posterior probability:</strong> Use Bayes’ theorem to compute the posterior probability for each class.</p></li>
 <li><p><strong>Predict the class:</strong> Choose the class with the highest posterior probability.</p></li>
 </ol>
-<div id="03b6a6ca" class="cell" data-execution_count="14">
+<div id="0b28c47a" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -2303,7 +2303,7 @@ P(x_i | y) = \frac{\text{Count}(x_i, \text{not } y) + 1}{\sum_{i} \text{Count}(x
 <li><p><strong>Compute the posterior probability:</strong> Use Bayes’ theorem to compute the posterior probability for each class.</p></li>
 <li><p><strong>Predict the class:</strong> Choose the class with the highest posterior probability.</p></li>
 </ol>
-<div id="91633b85" class="cell" data-execution_count="15">
+<div id="e4a202fd" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -2449,7 +2449,7 @@ Log Probabilities for Each Class Complement:
 <li><p><strong>Efficiency:</strong> Naive Bayes is highly efficient and scales well to large datasets, making it suitable for real-time prediction tasks.</p></li>
 <li><p><strong>Interpretability:</strong> The model’s probabilistic nature makes it interpretable, allowing easy understanding of how predictions are made based on feature probabilities.</p></li>
 </ul>
-<div id="b8f9f9da" class="cell" data-execution_count="16">
+<div id="64e5098f" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -2620,7 +2620,7 @@ y_i (\mathbf{w} \cdot \mathbf{x_i} + b) \geq 1, \quad \forall i
 <li><p><strong>Solve the dual problem:</strong> Use quadratic programming (QP) solvers to find the optimal values of the Lagrange multipliers.</p></li>
 <li><p><strong>Recover the primal solution:</strong> Use the optimal Lagrange multipliers to compute the weight vector and bias term.</p></li>
 </ol>
-<div id="99065a85" class="cell" data-execution_count="17">
+<div id="b4e92eef" class="cell" data-execution_count="17">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -2721,7 +2721,7 @@ K(\mathbf{x_i}, \mathbf{x_j}) = \exp \left( -\frac{\|\mathbf{x_i} - \mathbf{x_j}
 <li><p><strong>Solve the dual problem:</strong> Use the kernel matrix in the dual formulation of the SVM optimization problem.</p></li>
 <li><p><strong>Make predictions:</strong> Use the kernel function to compute the decision function for new data points.</p></li>
 </ol>
-<div id="fc8e06b1" class="cell" data-execution_count="18">
+<div id="a2e431bb" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -2925,7 +2925,7 @@ y_i (\mathbf{w} \cdot \mathbf{x_i} + b) \geq 1 - \xi_i, \quad \xi_i \geq 0, \qua
 <li><p><strong>Recover the primal solution:</strong> Use the optimal Lagrange multipliers to compute the weight vector, bias term, and slack variables.</p></li>
 <li><p><strong>Tune the regularization parameter <span class="math inline">\(C\)</span>:</strong> Use cross-validation to find the optimal value of <span class="math inline">\(C\)</span> that balances margin maximization and error minimization.</p></li>
 </ol>
-<div id="eac038f6" class="cell" data-execution_count="19">
+<div id="6d967315" class="cell" data-execution_count="19">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
