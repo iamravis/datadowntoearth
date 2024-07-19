@@ -297,7 +297,9 @@ window.Quarto = {
 <section id="example-1" class="level4">
 <h4 class="anchored" data-anchor-id="example-1">Example</h4>
 <p>Choosing 10 students randomly from a class of 30 students. Each student has an equal probability of being selected, ensuring that the sample is representative of the class.</p>
-<div id="ffb7a182" class="cell" data-execution_count="1">
+<div id="63fb550b" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># List of social media usernames (population)</span></span>
@@ -314,9 +316,10 @@ window.Quarto = {
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the sample</span></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Randomly selected sample of"</span>, sample_size, <span class="st">"social media usernames:"</span>)</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Randomly selected sample of 5 social media usernames:
-['user14', 'user4', 'user12', 'user8', 'user3']</code></pre>
+['user12', 'user3', 'user10', 'user9', 'user1']</code></pre>
 </div>
 </div>
 <hr>
@@ -335,7 +338,9 @@ window.Quarto = {
 <section id="example-2" class="level4">
 <h4 class="anchored" data-anchor-id="example-2">Example</h4>
 <p>Sampling from different age groups in a population to ensure representation from each age group. For instance, if the population consists of 60% adults and 40% children, the sample should reflect this ratio.</p>
-<div id="85d83023" class="cell" data-execution_count="2">
+<div id="5754687d" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Population (list of individuals with age groups)</span></span>
@@ -382,13 +387,14 @@ window.Quarto = {
 <span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Stratified sample:"</span>)</span>
 <span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> person <span class="kw">in</span> sample:</span>
 <span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(person[<span class="st">'name'</span>], <span class="st">'-'</span>, person[<span class="st">'age_group'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Stratified sample:
-Person14 - Adult
-Person11 - Adult
-Person5 - Adult
-Person7 - Child
-Person15 - Child</code></pre>
+Person3 - Adult
+Person10 - Adult
+Person8 - Adult
+Person15 - Child
+Person13 - Child</code></pre>
 </div>
 </div>
 <hr>
@@ -407,7 +413,9 @@ Person15 - Child</code></pre>
 <section id="example-3" class="level4">
 <h4 class="anchored" data-anchor-id="example-3">Example</h4>
 <p>Selecting several schools at random from a district and then surveying all students in those schools. This method reduces the cost and time required to collect data from the entire population.</p>
-<div id="26745e69" class="cell" data-execution_count="3">
+<div id="cab51cbb" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Population (list of schools with students)</span></span>
@@ -433,9 +441,10 @@ Person15 - Child</code></pre>
 <span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the sample</span></span>
 <span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Cluster sample of students:"</span>)</span>
 <span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Cluster sample of students:
-['Student1', 'Student2', 'Student3', 'Student13', 'Student14', 'Student15']</code></pre>
+['Student1', 'Student2', 'Student3', 'Student7', 'Student8', 'Student9']</code></pre>
 </div>
 </div>
 <hr>
@@ -454,7 +463,9 @@ Person15 - Child</code></pre>
 <section id="example-4" class="level4">
 <h4 class="anchored" data-anchor-id="example-4">Example</h4>
 <p>Choosing every 10th person on a list of registered voters. This method is easy to implement and ensures that the sample is spread evenly across the population.</p>
-<div id="9852177d" class="cell" data-execution_count="4">
+<div id="f9a692b6" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Population (list of individuals)</span></span>
@@ -480,6 +491,7 @@ Person15 - Child</code></pre>
 <span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the sample</span></span>
 <span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Systematic sample of"</span>, sample_size, <span class="st">"individuals:"</span>)</span>
 <span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Systematic sample of 5 individuals:
 ['Person2', 'Person6', 'Person10', 'Person14', 'Person18']</code></pre>
@@ -501,7 +513,9 @@ Person15 - Child</code></pre>
 <section id="example-5" class="level4">
 <h4 class="anchored" data-anchor-id="example-5">Example</h4>
 <p>Selecting districts randomly, then schools within those districts, and finally students within those schools for a nationwide educational survey.</p>
-<div id="c8fa3797" class="cell" data-execution_count="5">
+<div id="fb253c56" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Population (list of districts with schools and students)</span></span>
@@ -535,9 +549,10 @@ Person15 - Child</code></pre>
 <span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the sample</span></span>
 <span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Multistage sample of students:"</span>)</span>
 <span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Multistage sample of students:
-['Student7', 'Student8', 'Student9', 'Student10', 'Student11', 'Student12', 'Student13', 'Student14', 'Student15', 'Student16', 'Student17', 'Student18']</code></pre>
+['Student13', 'Student14', 'Student15', 'Student16', 'Student17', 'Student18', 'Student7', 'Student8', 'Student9', 'Student10', 'Student11', 'Student12']</code></pre>
 </div>
 </div>
 <hr>
@@ -566,7 +581,9 @@ Person15 - Child</code></pre>
 <section id="example-7" class="level5">
 <h5 class="anchored" data-anchor-id="example-7">Example</h5>
 <p>Assuming the data follows a normal distribution, generate bootstrap samples from this distribution to estimate parameters.</p>
-<div id="40880084" class="cell" data-execution_count="6">
+<div id="8e1f1b00" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample data (income of households)</span></span>
@@ -588,9 +605,10 @@ Person15 - Child</code></pre>
 <span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Print results</span></span>
 <span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Bootstrap estimated mean income:"</span>, np.mean(sample_data))</span>
 <span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"95% Confidence Interval for the mean income:"</span>, confidence_interval)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Bootstrap estimated mean income: 52500.0
-95% Confidence Interval for the mean income: [43000. 61000.]</code></pre>
+95% Confidence Interval for the mean income: [43500. 60500.]</code></pre>
 </div>
 </div>
 <hr>
@@ -605,7 +623,9 @@ Person15 - Child</code></pre>
 <section id="example-8" class="level5">
 <h5 class="anchored" data-anchor-id="example-8">Example</h5>
 <p>Generating bootstrap samples by resampling with replacement directly from the observed data of household incomes.</p>
-<div id="c58dc1f3" class="cell" data-execution_count="7">
+<div id="7b180265" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample data (income of households)</span></span>
@@ -627,9 +647,10 @@ Person15 - Child</code></pre>
 <span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Print results</span></span>
 <span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Bootstrap estimated mean income:"</span>, np.mean(sample_data))</span>
 <span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"95% Confidence Interval for the mean income (non-parametric bootstrap):"</span>, confidence_interval)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Bootstrap estimated mean income: 52500.0
-95% Confidence Interval for the mean income (non-parametric bootstrap): [43500.  62012.5]</code></pre>
+95% Confidence Interval for the mean income (non-parametric bootstrap): [43987.5 62000. ]</code></pre>
 </div>
 </div>
 <hr>
@@ -649,7 +670,9 @@ Person15 - Child</code></pre>
 <section id="example-9" class="level4">
 <h4 class="anchored" data-anchor-id="example-9">Example</h4>
 <p>Estimating the variance of the sample mean by computing the mean for each subsample created by leaving out one observation at a time.</p>
-<div id="fc2149d3" class="cell" data-execution_count="8">
+<div id="4f4d2ae5" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample data (income of households)</span></span>
@@ -674,6 +697,7 @@ Person15 - Child</code></pre>
 <span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Print results</span></span>
 <span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Jackknife estimated mean income:"</span>, np.mean(sample_data))</span>
 <span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Jackknife estimated variance of the mean income:"</span>, jackknife_variance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Jackknife estimated mean income: 52500.0
 Jackknife estimated variance of the mean income: 22916666.666666694</code></pre>
@@ -695,7 +719,9 @@ Jackknife estimated variance of the mean income: 22916666.666666694</code></pre>
 <section id="example-10" class="level4">
 <h4 class="anchored" data-anchor-id="example-10">Example</h4>
 <p>Estimating the tail probabilities of a complex distribution by sampling from a simpler, related distribution and adjusting the weights accordingly.</p>
-<div id="dbddd256" class="cell" data-execution_count="9">
+<div id="7dba93f2" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the target distribution (complex distribution)</span></span>
@@ -720,8 +746,9 @@ Jackknife estimated variance of the mean income: 22916666.666666694</code></pre>
 <span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Print results</span></span>
 <span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Estimated tail probability using importance sampling:"</span>, tail_probability_estimate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Estimated tail probability using importance sampling: 0.007049260758703699</code></pre>
+<pre><code>Estimated tail probability using importance sampling: 0.005959069857569129</code></pre>
 </div>
 </div>
 <hr>
@@ -740,7 +767,9 @@ Jackknife estimated variance of the mean income: 22916666.666666694</code></pre>
 <section id="example-11" class="level4">
 <h4 class="anchored" data-anchor-id="example-11">Example</h4>
 <p>Selecting a random sample of 10 elements from a very large file that cannot be loaded into memory.</p>
-<div id="70c0eb86" class="cell" data-execution_count="10">
+<div id="003b2d12" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> reservoir_sampling(stream, k):</span>
@@ -773,8 +802,9 @@ Jackknife estimated variance of the mean income: 22916666.666666694</code></pre>
 <span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Print the sampled items</span></span>
 <span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Random sample of"</span>, k, <span class="st">"elements:"</span>, sampled_items)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Random sample of 10 elements: [819, 479, 82, 42, 729, 5, 484, 489, 941, 261]</code></pre>
+<pre><code>Random sample of 10 elements: [30, 452, 94, 867, 182, 503, 502, 774, 411, 269]</code></pre>
 </div>
 </div>
 <hr>
@@ -793,7 +823,9 @@ Jackknife estimated variance of the mean income: 22916666.666666694</code></pre>
 <section id="example-12" class="level4">
 <h4 class="anchored" data-anchor-id="example-12">Example</h4>
 <p>Generating samples from a complex distribution using a simpler, uniform distribution and accepting samples based on their likelihood ratios.</p>
-<div id="5a515598" class="cell" data-execution_count="11">
+<div id="59fc83b4" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -834,6 +866,7 @@ Jackknife estimated variance of the mean income: 22916666.666666694</code></pre>
 <span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Density'</span>)</span>
 <span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -858,7 +891,9 @@ Jackknife estimated variance of the mean income: 22916666.666666694</code></pre>
 <section id="example-13" class="level4">
 <h4 class="anchored" data-anchor-id="example-13">Example</h4>
 <p>Sampling from a joint distribution of multiple correlated variables, such as in Bayesian networks or spatial statistics.</p>
-<div id="5afe2ad3" class="cell" data-execution_count="12">
+<div id="974d8e43" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -907,6 +942,7 @@ Jackknife estimated variance of the mean income: 22916666.666666694</code></pre>
 <span id="cb22-46"><a href="#cb22-46" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb22-47"><a href="#cb22-47" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
 <span id="cb22-48"><a href="#cb22-48" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -931,7 +967,9 @@ Jackknife estimated variance of the mean income: 22916666.666666694</code></pre>
 <section id="example-14" class="level4">
 <h4 class="anchored" data-anchor-id="example-14">Example</h4>
 <p>Sampling from a posterior distribution in Bayesian inference where the likelihood and prior are complex.</p>
-<div id="dde5cff1" class="cell" data-execution_count="13">
+<div id="1da0828d" class="cell" data-execution_count="13">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
@@ -974,6 +1012,7 @@ Jackknife estimated variance of the mean income: 22916666.666666694</code></pre>
 <span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
 <span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -998,7 +1037,9 @@ Jackknife estimated variance of the mean income: 22916666.666666694</code></pre>
 <section id="example-15" class="level4">
 <h4 class="anchored" data-anchor-id="example-15">Example</h4>
 <p>Ensuring that a survey sample matches the population demographics by setting quotas for age groups, genders, and income levels.</p>
-<div id="87a8f598" class="cell" data-execution_count="14">
+<div id="0476d000" class="cell" data-execution_count="14">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1043,6 +1084,7 @@ Jackknife estimated variance of the mean income: 22916666.666666694</code></pre>
 <span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the distribution of the sample to verify quotas</span></span>
 <span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Sample Distribution:"</span>)</span>
 <span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sample.groupby([<span class="st">'age'</span>, <span class="st">'gender'</span>, <span class="st">'income'</span>]).size())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Population Data:
      age  gender income
@@ -1111,7 +1153,9 @@ dtype: int64</code></pre>
 <section id="example-16" class="level4">
 <h4 class="anchored" data-anchor-id="example-16">Example</h4>
 <p>Studying hidden or hard-to-reach populations, such as drug users or undocumented immigrants, by leveraging social networks.</p>
-<div id="c691e799" class="cell" data-execution_count="15">
+<div id="4d3a51da" class="cell" data-execution_count="15">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
@@ -1160,6 +1204,7 @@ dtype: int64</code></pre>
 <span id="cb26-46"><a href="#cb26-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the size of the sample</span></span>
 <span id="cb26-47"><a href="#cb26-47" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Sample Size:"</span>)</span>
 <span id="cb26-48"><a href="#cb26-48" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(sample_df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Sample Data:
           name  hidden_population
@@ -1169,16 +1214,16 @@ dtype: int64</code></pre>
 3     Person_6               True
 4    Person_10               True
 ..         ...                ...
-74  Person_486               True
-75  Person_237               True
-76  Person_497               True
-77  Person_244               True
-78  Person_764               True
+86  Person_486               True
+87  Person_237               True
+88  Person_497               True
+89  Person_244               True
+90  Person_764               True
 
-[79 rows x 2 columns]
+[91 rows x 2 columns]
 
 Sample Size:
-79</code></pre>
+91</code></pre>
 </div>
 </div>
 <hr>
@@ -1197,7 +1242,9 @@ Sample Size:
 <section id="example-17" class="level4">
 <h4 class="anchored" data-anchor-id="example-17">Example</h4>
 <p>Environmental surveys where initial data indicates regions of higher biodiversity, prompting increased sampling efforts in those regions.</p>
-<div id="d4c18cdc" class="cell" data-execution_count="16">
+<div id="f9f21e61" class="cell" data-execution_count="16">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1279,6 +1326,7 @@ Sample Size:
 <span id="cb28-79"><a href="#cb28-79" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total samples: </span><span class="sc">{</span><span class="bu">len</span>(all_samples)<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb28-80"><a href="#cb28-80" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Average biodiversity (initial): </span><span class="sc">{</span>initial_samples[<span class="st">'biodiversity'</span>]<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
 <span id="cb28-81"><a href="#cb28-81" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Average biodiversity (all): </span><span class="sc">{</span>all_samples[<span class="st">'biodiversity'</span>]<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1316,7 +1364,9 @@ Average biodiversity (all): 2.19</code></pre>
 <section id="example-18" class="level4">
 <h4 class="anchored" data-anchor-id="example-18">Example</h4>
 <p>If you repeatedly sample the heights of 30 students from a large population and calculate the mean each time, the distribution of those means is the sampling distribution of the sample mean. This distribution helps in understanding the variability of the sample mean.</p>
-<div id="313643e9" class="cell" data-execution_count="17">
+<div id="31063867" class="cell" data-execution_count="17">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1381,6 +1431,7 @@ Average biodiversity (all): 2.19</code></pre>
 <span id="cb30-62"><a href="#cb30-62" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Population Standard Deviation: </span><span class="sc">{</span>population_std<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
 <span id="cb30-63"><a href="#cb30-63" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Theoretical Standard Error: </span><span class="sc">{</span>theoretical_std_error<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
 <span id="cb30-64"><a href="#cb30-64" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Observed Standard Error: </span><span class="sc">{</span>observed_std_error<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>/Users/ravishankar/miniforge3/lib/python3.10/site-packages/seaborn/_oldcore.py:1119: FutureWarning:
 
@@ -1421,7 +1472,9 @@ Observed Standard Error: 1.82</code></pre>
 <section id="example-19" class="level4">
 <h4 class="anchored" data-anchor-id="example-19">Example</h4>
 <p>If you take many samples of size 50 from a skewed population and plot the sample means, the resulting distribution will be approximately normal. This approximation enables the use of normal distribution properties to make inferences about the population mean.</p>
-<div id="9ef58bdc" class="cell" data-execution_count="18">
+<div id="260b6430" class="cell" data-execution_count="18">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1489,6 +1542,7 @@ Observed Standard Error: 1.82</code></pre>
 <span id="cb33-65"><a href="#cb33-65" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Standard Deviation: </span><span class="sc">{</span>pop_std<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
 <span id="cb33-66"><a href="#cb33-66" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Skewness: </span><span class="sc">{</span>pop_skew<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
 <span id="cb33-67"><a href="#cb33-67" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Kurtosis: </span><span class="sc">{</span>pop_kurtosis<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>/Users/ravishankar/miniforge3/lib/python3.10/site-packages/seaborn/_oldcore.py:1119: FutureWarning:
 
@@ -1547,7 +1601,9 @@ Kurtosis: 5.9284</code></pre>
 <section id="example-20" class="level4">
 <h4 class="anchored" data-anchor-id="example-20">Example</h4>
 <p>95% CI for the mean height of a sample of 100 students with a mean height of 170 cm and a standard deviation of 10 cm: 170 ± 1.96*(10/√100) = 170 ± 1.96. This interval suggests that we are 95% confident that the true mean height of the population lies between 168.04 cm and 171.96 cm.</p>
-<div id="f8941e77" class="cell" data-execution_count="19">
+<div id="35a5da7c" class="cell" data-execution_count="19">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1625,6 +1681,7 @@ Kurtosis: 5.9284</code></pre>
 <span id="cb36-75"><a href="#cb36-75" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Confidence Level: </span><span class="sc">{</span>confidence_level<span class="op">*</span><span class="dv">100</span><span class="sc">}</span><span class="ss">%"</span>)</span>
 <span id="cb36-76"><a href="#cb36-76" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Observed Coverage Probability: </span><span class="sc">{</span>coverage_probability<span class="sc">:.2%}</span><span class="ss">"</span>)</span>
 <span id="cb36-77"><a href="#cb36-77" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Average CI Width: </span><span class="sc">{</span>average_ci_width<span class="sc">:.2f}</span><span class="ss"> cm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1656,7 +1713,9 @@ Average CI Width: 3.98 cm</code></pre>
 <section id="example-21" class="level4">
 <h4 class="anchored" data-anchor-id="example-21">Example</h4>
 <p>95% CI for the proportion of voters favoring a candidate in a sample of 1000 with 600 in favor: 0.6 ± 1.96<em>√(0.6</em>0.4/1000) = 0.6 ± 0.03. This interval suggests that we are 95% confident that the true proportion of voters favoring the candidate lies between 0.57 and 0.63.</p>
-<div id="edcd6b62" class="cell" data-execution_count="20">
+<div id="682e36d5" class="cell" data-execution_count="20">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1736,6 +1795,7 @@ Average CI Width: 3.98 cm</code></pre>
 <span id="cb38-77"><a href="#cb38-77" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 6: Calculate theoretical margin of error</span></span>
 <span id="cb38-78"><a href="#cb38-78" aria-hidden="true" tabindex="-1"></a>theoretical_margin_of_error <span class="op">=</span> stats.norm.ppf((<span class="dv">1</span> <span class="op">+</span> confidence_level) <span class="op">/</span> <span class="dv">2</span>) <span class="op">*</span> np.sqrt((population_proportion <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> population_proportion)) <span class="op">/</span> sample_size)</span>
 <span id="cb38-79"><a href="#cb38-79" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Theoretical Margin of Error: </span><span class="sc">{</span>theoretical_margin_of_error<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1767,7 +1827,9 @@ Theoretical Margin of Error: 0.0304</code></pre>
 <section id="example-22" class="level4">
 <h4 class="anchored" data-anchor-id="example-22">Example</h4>
 <p>95% CI for the variance of a sample of 20 with a sample variance of 4: [19<em>4/χ²(0.025,19), 19</em>4/χ²(0.975,19)] = [2.51, 8.89]. This interval suggests that we are 95% confident that the true variance lies between 2.51 and 8.89.</p>
-<div id="d59b40ea" class="cell" data-execution_count="21">
+<div id="7bfa91ad" class="cell" data-execution_count="21">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1853,6 +1915,7 @@ Theoretical Margin of Error: 0.0304</code></pre>
 <span id="cb40-83"><a href="#cb40-83" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Example for a specific sample:"</span>)</span>
 <span id="cb40-84"><a href="#cb40-84" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sample Variance: </span><span class="sc">{</span>specific_sample_var<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
 <span id="cb40-85"><a href="#cb40-85" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"95% CI: [</span><span class="sc">{</span>specific_ci_lower<span class="sc">:.4f}</span><span class="ss">, </span><span class="sc">{</span>specific_ci_upper<span class="sc">:.4f}</span><span class="ss">]"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1892,7 +1955,9 @@ Sample Variance: 2.1125
 </section>
 <section id="one-sample-ci" class="level4">
 <h4 class="anchored" data-anchor-id="one-sample-ci">One-Sample CI</h4>
-<div id="d6d12d9a" class="cell" data-execution_count="22">
+<div id="f81d7b2b" class="cell" data-execution_count="22">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1942,6 +2007,7 @@ Sample Variance: 2.1125
 <span id="cb42-47"><a href="#cb42-47" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Density"</span>)</span>
 <span id="cb42-48"><a href="#cb42-48" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb42-49"><a href="#cb42-49" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Sample Mean: 69.89
 95% Confidence Interval: [67.80, 71.97]</code></pre>
@@ -1964,7 +2030,9 @@ use_inf_as_na option is deprecated and will be removed in a future version. Conv
 </section>
 <section id="two-sample-ci" class="level4">
 <h4 class="anchored" data-anchor-id="two-sample-ci">Two-Sample CI</h4>
-<div id="273e2469" class="cell" data-execution_count="23">
+<div id="7057a885" class="cell" data-execution_count="23">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Define the populations</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>population_mean_A <span class="op">=</span> <span class="dv">70</span></span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>population_std_A <span class="op">=</span> <span class="dv">10</span></span>
@@ -2024,6 +2092,7 @@ use_inf_as_na option is deprecated and will be removed in a future version. Conv
 <span id="cb45-57"><a href="#cb45-57" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Density"</span>)</span>
 <span id="cb45-58"><a href="#cb45-58" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb45-59"><a href="#cb45-59" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Mean Difference: 3.05
 95% Confidence Interval for Difference: [0.01, 6.10]</code></pre>
@@ -2069,7 +2138,9 @@ use_inf_as_na option is deprecated and will be removed in a future version. Conv
 <section id="example-24" class="level4">
 <h4 class="anchored" data-anchor-id="example-24">Example</h4>
 <p>Testing whether a new drug is effective: H0: The drug has no effect. H1: The drug has an effect. The null hypothesis assumes no difference in outcomes between the treatment and control groups, while the alternative hypothesis suggests a difference.</p>
-<div id="4858bc1e" class="cell" data-execution_count="24">
+<div id="43e620ea" class="cell" data-execution_count="24">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -2142,6 +2213,7 @@ use_inf_as_na option is deprecated and will be removed in a future version. Conv
 <span id="cb48-70"><a href="#cb48-70" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Density"</span>)</span>
 <span id="cb48-71"><a href="#cb48-71" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb48-72"><a href="#cb48-72" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Hypothesis Test Results:
 Sample Mean: 3.96
@@ -2202,7 +2274,9 @@ use_inf_as_na option is deprecated and will be removed in a future version. Conv
 <section id="example-25" class="level4">
 <h4 class="anchored" data-anchor-id="example-25">Example</h4>
 <p>If we only want to know if a new drug is more effective than the old drug, we use a one-tailed test. If we want to know if there is any difference in effectiveness, we use a two-tailed test.</p>
-<div id="c1f0ebe4" class="cell" data-execution_count="25">
+<div id="095bf16e" class="cell" data-execution_count="25">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> stats</span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -2295,6 +2369,7 @@ use_inf_as_na option is deprecated and will be removed in a future version. Conv
 <span id="cb53-90"><a href="#cb53-90" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Density"</span>)</span>
 <span id="cb53-91"><a href="#cb53-91" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb53-92"><a href="#cb53-92" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Hypothesis Test Results:
 Old Drug Mean Effect: 4.79
@@ -2361,7 +2436,9 @@ use_inf_as_na option is deprecated and will be removed in a future version. Conv
 <section id="example-27" class="level5">
 <h5 class="anchored" data-anchor-id="example-27">Example</h5>
 <p>Concluding a drug is not effective when it is. The probability of committing a Type II error is denoted by <span class="math inline">\(\beta\)</span>, and it is inversely related to the power of the test.</p>
-<div id="8b3f66a2" class="cell" data-execution_count="26">
+<div id="ee0a4b6e" class="cell" data-execution_count="26">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> stats</span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -2467,6 +2544,7 @@ use_inf_as_na option is deprecated and will be removed in a future version. Conv
 <span id="cb56-103"><a href="#cb56-103" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Probability"</span>)</span>
 <span id="cb56-104"><a href="#cb56-104" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb56-105"><a href="#cb56-105" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Significance level (α): 0.05
 Type I Error Rate: 0.0523
@@ -2507,7 +2585,9 @@ Power: 0.5058</code></pre>
 <section id="example-28" class="level4">
 <h4 class="anchored" data-anchor-id="example-28">Example</h4>
 <p>If a test has a power of 0.8, there is an 80% chance of detecting an effect if there is one. Increasing the sample size or the effect size can increase the power of a test.</p>
-<div id="b2d0fa50" class="cell" data-execution_count="27">
+<div id="8c17ab7b" class="cell" data-execution_count="27">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> stats</span>
 <span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -2599,6 +2679,7 @@ Power: 0.5058</code></pre>
 <span id="cb58-89"><a href="#cb58-89" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Probability Density"</span>)</span>
 <span id="cb58-90"><a href="#cb58-90" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb58-91"><a href="#cb58-91" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2642,7 +2723,9 @@ Power: 0.5058</code></pre>
 <section id="example-30" class="level5">
 <h5 class="anchored" data-anchor-id="example-30">Example</h5>
 <p>If the p-value is 0.03 and <span class="math inline">\(\alpha\)</span> is 0.05, the result is statistically significant, and we reject the null hypothesis. This indicates that there is strong evidence to suggest that the observed effect is real.</p>
-<div id="06035aca" class="cell" data-execution_count="28">
+<div id="aa7a78f3" class="cell" data-execution_count="28">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> stats</span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -2722,6 +2805,7 @@ Power: 0.5058</code></pre>
 <span id="cb60-77"><a href="#cb60-77" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Probability Density"</span>)</span>
 <span id="cb60-78"><a href="#cb60-78" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb60-79"><a href="#cb60-79" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>/Users/ravishankar/miniforge3/lib/python3.10/site-packages/seaborn/_oldcore.py:1119: FutureWarning:
 
@@ -2790,7 +2874,9 @@ d = \frac{\bar{x}_1 - \bar{x}_2}{s_{pooled}}
 <section id="example-32" class="level5">
 <h5 class="anchored" data-anchor-id="example-32">Example</h5>
 <p>A drug might show a statistically significant reduction in blood pressure, but the effect size is so small that it is not practically significant. This highlights the need to consider both statistical and practical significance when interpreting results.</p>
-<div id="1113cd85" class="cell" data-execution_count="29">
+<div id="5ce554d2" class="cell" data-execution_count="29">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> stats</span>
 <span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -2883,6 +2969,7 @@ d = \frac{\bar{x}_1 - \bar{x}_2}{s_{pooled}}
 <span id="cb63-90"><a href="#cb63-90" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"</span><span class="sc">{</span>np<span class="sc">.</span>mean(treatment_group) <span class="op">-</span> np<span class="sc">.</span>mean(control_group)<span class="sc">:.1f}</span><span class="ss"> units. "</span></span>
 <span id="cb63-91"><a href="#cb63-91" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"This is a </span><span class="sc">{</span>interpret_cohens_d(d)<span class="sc">.</span>lower()<span class="sc">}</span><span class="ss">, which may or may not be practically significant "</span></span>
 <span id="cb63-92"><a href="#cb63-92" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"depending on the context of the study and the cost/benefit of the treatment."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2950,7 +3037,9 @@ Practical significance: The treatment increases the outcome by about 0.4 units. 
 <section id="example-35" class="level5">
 <h5 class="anchored" data-anchor-id="example-35">Example</h5>
 <p>In genetic studies with thousands of tests, controlling the FDR allows for more discoveries while limiting the proportion of false positives. This approach is useful when dealing with large datasets and numerous comparisons.</p>
-<div id="509585c4" class="cell" data-execution_count="30">
+<div id="58fad301" class="cell" data-execution_count="30">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -3035,6 +3124,7 @@ Practical significance: The treatment increases the outcome by about 0.4 units. 
 <span id="cb65-82"><a href="#cb65-82" aria-hidden="true" tabindex="-1"></a>sns.heatmap(p_value_matrix, annot<span class="op">=</span><span class="va">True</span>, cmap<span class="op">=</span><span class="st">'coolwarm_r'</span>, xticklabels<span class="op">=</span>groups, yticklabels<span class="op">=</span>groups)</span>
 <span id="cb65-83"><a href="#cb65-83" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Heatmap of Pairwise Comparison p-values'</span>)</span>
 <span id="cb65-84"><a href="#cb65-84" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>One-way ANOVA results:
 F-statistic: 23.2570

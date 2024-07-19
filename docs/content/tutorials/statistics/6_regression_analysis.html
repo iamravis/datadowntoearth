@@ -329,7 +329,9 @@ R^2 = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}
 <section id="example-2" class="level6">
 <h6 class="anchored" data-anchor-id="example-2">Example</h6>
 <p>Adjusted <span class="math inline">\(R^2\)</span> is used to compare models with different numbers of predictors. For example, when adding more variables to predict house prices, Adjusted <span class="math inline">\(R^2\)</span> helps determine if the new model with more variables is actually better.</p>
-<div id="fa9cc985" class="cell" data-execution_count="1">
+<div id="a86c41b6" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -415,6 +417,7 @@ R^2 = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}
 <span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>new_hours_studied <span class="op">=</span> np.array([[<span class="dv">8</span>]])</span>
 <span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>predicted_score <span class="op">=</span> model.predict(new_hours_studied)</span>
 <span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Predicted exam score for 8 hours of study: </span><span class="sc">{</span>predicted_score[<span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Intercept (β0): 41.33
 Slope (β1): 4.74
@@ -551,7 +554,9 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_nx_n + \epsilon
 <section id="example-6" class="level5">
 <h5 class="anchored" data-anchor-id="example-6">Example</h5>
 <p>Time series data, where past values influence future values, can exhibit autocorrelation. For example, predicting stock prices based on past performance.</p>
-<div id="9cdd3a81" class="cell" data-execution_count="2">
+<div id="e557737e" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -619,6 +624,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_nx_n + \epsilon
 <span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Residuals"</span>)</span>
 <span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Residual Plot"</span>)</span>
 <span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Mean Squared Error: 0.011712328380179804
 R-squared: 0.990021330177989
@@ -660,7 +666,9 @@ y = \beta_0 + \beta_1x + \beta_2x^2 + \cdots + \beta_nx^n + \epsilon
 <section id="example-7" class="level4">
 <h4 class="anchored" data-anchor-id="example-7">Example</h4>
 <p>Modelling the relationship between the dosage of a drug and its effect, where the effect is not linear. For example, a small increase in dosage might have a large effect at low doses but a smaller effect at higher doses.</p>
-<div id="31ba7dc6" class="cell" data-execution_count="3">
+<div id="c4c4debb" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> PolynomialFeatures</span>
@@ -715,6 +723,7 @@ y = \beta_0 + \beta_1x + \beta_2x^2 + \cdots + \beta_nx^n + \epsilon
 <span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Degree 1:
 Mean Squared Error: 0.2885

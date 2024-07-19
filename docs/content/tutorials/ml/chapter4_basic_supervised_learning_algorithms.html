@@ -320,7 +320,9 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2 + \cdots + \beta_n x^n + \epsilon
 <li><p><strong>Make predictions:</strong> Use the estimated parameters to predict new values of <span class="math inline">\(y\)</span>.</p></li>
 </ol></li>
 </ul>
-<div id="65433839" class="cell" data-execution_count="1">
+<div id="222f597d" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -430,6 +432,7 @@ y = \beta_0 + \beta_1 x + \beta_2 x^2 + \cdots + \beta_n x^n + \epsilon
 <span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Growth (cm)'</span>)</span>
 <span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Polynomial Regression: Plant Growth vs Time'</span>)</span>
 <span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple Linear Regression MSE: 0.65
 Simple Linear Regression R^2: 0.81</code></pre>
@@ -508,7 +511,9 @@ J(\beta) = \frac{1}{2m} \sum_{i=1}^{m} (h_\beta(x_i) - y_i)^2
 <li><p><strong>Repeat:</strong> Iterate the process until convergence.</p></li>
 </ol></li>
 </ul>
-<div id="56b22bf6" class="cell" data-execution_count="2">
+<div id="187edd93" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -562,6 +567,7 @@ J(\beta) = \frac{1}{2m} \sum_{i=1}^{m} (h_\beta(x_i) - y_i)^2
 <span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Print the optimal parameters</span></span>
 <span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Optimal parameters (theta): </span><span class="sc">{</span>theta_optimal<span class="sc">.</span>flatten()<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -595,7 +601,9 @@ p = \frac{1}{1 + e^{-(\beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p
 \]</span></p></li>
 </ol></li>
 </ul>
-<div id="0798db56" class="cell" data-execution_count="3">
+<div id="0049713c" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -660,6 +668,7 @@ p = \frac{1}{1 + e^{-(\beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p
 <span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the model's parameters</span></span>
 <span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Intercept: </span><span class="sc">{</span>logistic_model<span class="sc">.</span>intercept_[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>)</span>
 <span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Coefficients: </span><span class="sc">{</span>logistic_model<span class="sc">.</span>coef_[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Accuracy: 0.75
 Confusion Matrix:
@@ -709,7 +718,9 @@ Coefficients: [ 6.23708757e-02 -4.22361215e-05]</code></pre>
 <li><p><strong>Make predictions:</strong> Calculate the probability of each category using the logistic function.</p></li>
 </ol></li>
 </ul>
-<div id="2880a0a4" class="cell" data-execution_count="4">
+<div id="90e60943" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -762,6 +773,7 @@ Coefficients: [ 6.23708757e-02 -4.22361215e-05]</code></pre>
 <span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the model's parameters</span></span>
 <span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Intercepts: </span><span class="sc">{</span>logistic_model<span class="sc">.</span>intercept_<span class="sc">}</span><span class="ss">'</span>)</span>
 <span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Coefficients: </span><span class="sc">{</span>logistic_model<span class="sc">.</span>coef_<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Accuracy: 0.57
 Confusion Matrix:
@@ -800,7 +812,9 @@ Coefficients: [[-5.79159626e-02  3.31799508e-05  2.32288011e-04 -4.79284122e-05]
 <li><p><strong>Make predictions:</strong> Calculate the probability of each category using the logistic function.</p></li>
 </ol></li>
 </ul>
-<div id="a7af6bdb" class="cell" data-execution_count="5">
+<div id="6b074c61" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -854,6 +868,7 @@ Coefficients: [[-5.79159626e-02  3.31799508e-05  2.32288011e-04 -4.79284122e-05]
 <span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the model's parameters</span></span>
 <span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Model Parameters:'</span>)</span>
 <span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ordinal_results.params)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Optimization terminated successfully.
          Current function value: 1.086932
@@ -916,7 +931,9 @@ dtype: float64</code></pre>
 <li><p><strong>Validation:</strong> Use cross-validation and bootstrapping to ensure the model generalizes well to unseen data.</p></li>
 <li><p><strong>Interpretability:</strong> Understand the coefficients and their implications, and use tools like SHAP values to explain model predictions.</p></li>
 </ul>
-<div id="179e4d82" class="cell" data-execution_count="6">
+<div id="3a41ad2c" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize</span>
@@ -990,6 +1007,7 @@ dtype: float64</code></pre>
 <span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Residuals'</span>)</span>
 <span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Residual Plot'</span>)</span>
 <span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Estimated parameters (beta): [-0.01385074  0.51100559  0.81264592]
 Accuracy: 0.69
@@ -1104,7 +1122,9 @@ d(x, y) = \left( \sum_{i=1}^{n} |x_i - y_i|^p \right)^{\frac{1}{p}}
 <li><p><strong>Dimensionality Reduction:</strong> Use techniques like PCA to reduce the dimensionality of the data, as high-dimensional spaces can lead to sparse data and reduce the effectiveness of k-NN.</p></li>
 <li><p><strong>Efficiency:</strong> Implement efficient search algorithms like KD-trees or ball trees to speed up the nearest neighbor search, especially for large datasets.</p></li>
 </ul>
-<div id="3aee2f93" class="cell" data-execution_count="7">
+<div id="86d6ebc0" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1210,6 +1230,7 @@ d(x, y) = \left( \sum_{i=1}^{n} |x_i - y_i|^p \right)^{\frac{1}{p}}
 <span id="cb17-103"><a href="#cb17-103" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Predicted Values'</span>)</span>
 <span id="cb17-104"><a href="#cb17-104" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'k-NN Regression: True vs Predicted Values'</span>)</span>
 <span id="cb17-105"><a href="#cb17-105" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Euclidean Distance between [2 3] and [5 7]: 5.0
 Manhattan Distance between [2 3] and [5 7]: 7
@@ -1292,7 +1313,9 @@ Gini(T) = 1 - \sum_{i=1}^{c} p_i^2
 <li><p><strong>Square each proportion and sum them:</strong> Sum the squared proportions.</p></li>
 <li><p><strong>Subtract the sum from 1:</strong> The result is the Gini impurity.</p></li>
 </ol>
-<div id="1d1e732b" class="cell" data-execution_count="8">
+<div id="e348e549" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
@@ -1342,6 +1365,7 @@ Gini(T) = 1 - \sum_{i=1}^{c} p_i^2
 <span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Calculating Gini impurity for the PlayTennis attribute</span></span>
 <span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a>gini_play_tennis <span class="op">=</span> gini_impurity(df[<span class="st">'PlayTennis'</span>])</span>
 <span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Gini Impurity for PlayTennis: </span><span class="sc">{</span>gini_play_tennis<span class="sc">:.4f}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Information Gain for Outlook: 0.2467
 Gini Impurity for PlayTennis: 0.4592</code></pre>
@@ -1392,7 +1416,9 @@ Gini Impurity for PlayTennis: 0.4592</code></pre>
 <ul>
 <li><strong>Example:</strong> Using the CART algorithm to build a decision tree for predicting whether a passenger survived the Titanic disaster.</li>
 </ul>
-<div id="8c450671" class="cell" data-execution_count="9">
+<div id="03da8137" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier, plot_tree</span>
@@ -1440,6 +1466,7 @@ Gini Impurity for PlayTennis: 0.4592</code></pre>
 <span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a>plot_tree(cart_model, feature_names<span class="op">=</span>iris.feature_names, class_names<span class="op">=</span>iris.target_names, filled<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb22-46"><a href="#cb22-46" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Decision Tree Trained on Iris Dataset'</span>)</span>
 <span id="cb22-47"><a href="#cb22-47" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   sepal length (cm)  sepal width (cm)  petal length (cm)  petal width (cm)  \
 0                5.1               3.5                1.4               0.2   
@@ -1516,7 +1543,9 @@ weighted avg       0.97      0.97      0.97        30
 <li><p><strong>Evaluate each node for pruning:</strong> For each non-leaf node, evaluate whether its removal (and replacement with a leaf node) would improve the model’s performance on a validation set.</p></li>
 <li><p><strong>Prune the tree:</strong> Remove nodes that do not contribute to improved performance or reduce complexity without harming the model’s accuracy.</p></li>
 </ol>
-<div id="00879ede" class="cell" data-execution_count="10">
+<div id="8d519cd0" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split, cross_val_score</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier, plot_tree</span>
@@ -1612,8 +1641,9 @@ weighted avg       0.97      0.97      0.97        30
 <span id="cb24-93"><a href="#cb24-93" aria-hidden="true" tabindex="-1"></a>plot_tree(post_pruned_model, feature_names<span class="op">=</span>features, class_names<span class="op">=</span>[<span class="st">'Not Survived'</span>, <span class="st">'Survived'</span>], filled<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb24-94"><a href="#cb24-94" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Post-pruned Decision Tree'</span>)</span>
 <span id="cb24-95"><a href="#cb24-95" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_89677/2672598698.py:21: FutureWarning:
+<pre><code>/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_9620/2672598698.py:21: FutureWarning:
 
 A value is trying to be set on a copy of a DataFrame or Series through chained assignment using an inplace method.
 The behavior will change in pandas 3.0. This inplace method will never work because the intermediate object on which we are setting values always behaves as a copy.
@@ -1622,7 +1652,7 @@ For example, when doing 'df[col].method(value, inplace=True)', try using 'df.met
 
 
 
-/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_89677/2672598698.py:21: FutureWarning:
+/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_9620/2672598698.py:21: FutureWarning:
 
 A value is trying to be set on a copy of a DataFrame or Series through chained assignment using an inplace method.
 The behavior will change in pandas 3.0. This inplace method will never work because the intermediate object on which we are setting values always behaves as a copy.
@@ -1752,7 +1782,9 @@ weighted avg       0.76      0.76      0.76       143
 </ul></li>
 </ol>
 <p>By following these detailed steps and considerations, decision trees can be effectively utilized for various machine learning tasks, providing both predictive power and interpretability.</p>
-<div id="51cc4122" class="cell" data-execution_count="11">
+<div id="b4b10f75" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split, GridSearchCV</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier, plot_tree</span>
@@ -1851,6 +1883,7 @@ weighted avg       0.76      0.76      0.76       143
 <span id="cb28-96"><a href="#cb28-96" aria-hidden="true" tabindex="-1"></a>plt.xticks(<span class="bu">range</span>(X.shape[<span class="dv">1</span>]), [X.columns[i] <span class="cf">for</span> i <span class="kw">in</span> indices], rotation<span class="op">=</span><span class="dv">90</span>)</span>
 <span id="cb28-97"><a href="#cb28-97" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb28-98"><a href="#cb28-98" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>PassengerId      0
 Survived         0
@@ -1934,7 +1967,9 @@ P(x_i | y) = \frac{1}{\sqrt{2 \pi \sigma_y^2}} \exp \left( -\frac{(x_i - \mu_y)^
 <li><p><strong>Compute the posterior probability:</strong> Use Bayes’ theorem to compute the posterior probability for each class.</p></li>
 <li><p><strong>Predict the class:</strong> Choose the class with the highest posterior probability.</p></li>
 </ol>
-<div id="17ea4aa2" class="cell" data-execution_count="12">
+<div id="d3312a95" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -1984,6 +2019,7 @@ P(x_i | y) = \frac{1}{\sqrt{2 \pi \sigma_y^2}} \exp \left( -\frac{(x_i - \mu_y)^
 <span id="cb31-47"><a href="#cb31-47" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Actual'</span>)</span>
 <span id="cb31-48"><a href="#cb31-48" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Confusion Matrix for Gaussian Naive Bayes'</span>)</span>
 <span id="cb31-49"><a href="#cb31-49" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   sepal length (cm)  sepal width (cm)  petal length (cm)  petal width (cm)  \
 0                5.1               3.5                1.4               0.2   
@@ -2042,7 +2078,9 @@ P(x_i | y) = \frac{\text{Count}(x_i, y) + 1}{\sum_{i} \text{Count}(x_i, y) + n}
 <li><p><strong>Compute the posterior probability:</strong> Use Bayes’ theorem to compute the posterior probability for each class.</p></li>
 <li><p><strong>Predict the class:</strong> Choose the class with the highest posterior probability.</p></li>
 </ol>
-<div id="2a073041" class="cell" data-execution_count="13">
+<div id="9e36ce86" class="cell" data-execution_count="13">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -2103,6 +2141,7 @@ P(x_i | y) = \frac{\text{Count}(x_i, y) + 1}{\sum_{i} \text{Count}(x_i, y) + n}
 <span id="cb33-58"><a href="#cb33-58" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Actual'</span>)</span>
 <span id="cb33-59"><a href="#cb33-59" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Confusion Matrix for Multinomial Naive Bayes'</span>)</span>
 <span id="cb33-60"><a href="#cb33-60" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Accuracy: 0.67
 Confusion Matrix:
@@ -2146,7 +2185,9 @@ P(x_i | y) = p_i^{x_i} (1 - p_i)^{1 - x_i}
 <li><p><strong>Compute the posterior probability:</strong> Use Bayes’ theorem to compute the posterior probability for each class.</p></li>
 <li><p><strong>Predict the class:</strong> Choose the class with the highest posterior probability.</p></li>
 </ol>
-<div id="63f74492" class="cell" data-execution_count="14">
+<div id="03b6a6ca" class="cell" data-execution_count="14">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -2201,6 +2242,7 @@ P(x_i | y) = p_i^{x_i} (1 - p_i)^{1 - x_i}
 <span id="cb35-52"><a href="#cb35-52" aria-hidden="true" tabindex="-1"></a>presence_absence_matrix <span class="op">=</span> pd.DataFrame(X, columns<span class="op">=</span>feature_names)</span>
 <span id="cb35-53"><a href="#cb35-53" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Presence/Absence Matrix:'</span>)</span>
 <span id="cb35-54"><a href="#cb35-54" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(presence_absence_matrix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Model Accuracy: 100.00%
 Confusion Matrix:
@@ -2261,7 +2303,9 @@ P(x_i | y) = \frac{\text{Count}(x_i, \text{not } y) + 1}{\sum_{i} \text{Count}(x
 <li><p><strong>Compute the posterior probability:</strong> Use Bayes’ theorem to compute the posterior probability for each class.</p></li>
 <li><p><strong>Predict the class:</strong> Choose the class with the highest posterior probability.</p></li>
 </ol>
-<div id="4c61fe76" class="cell" data-execution_count="15">
+<div id="91633b85" class="cell" data-execution_count="15">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -2321,6 +2365,7 @@ P(x_i | y) = \frac{\text{Count}(x_i, \text{not } y) + 1}{\sum_{i} \text{Count}(x
 <span id="cb37-57"><a href="#cb37-57" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-58"><a href="#cb37-58" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Log Probabilities for Each Class Complement:'</span>)</span>
 <span id="cb37-59"><a href="#cb37-59" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.DataFrame(class_complement_log_probs, columns<span class="op">=</span>feature_names))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Model Accuracy: 100.00%
 Confusion Matrix:
@@ -2404,7 +2449,9 @@ Log Probabilities for Each Class Complement:
 <li><p><strong>Efficiency:</strong> Naive Bayes is highly efficient and scales well to large datasets, making it suitable for real-time prediction tasks.</p></li>
 <li><p><strong>Interpretability:</strong> The model’s probabilistic nature makes it interpretable, allowing easy understanding of how predictions are made based on feature probabilities.</p></li>
 </ul>
-<div id="875b2f68" class="cell" data-execution_count="16">
+<div id="b8f9f9da" class="cell" data-execution_count="16">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -2485,6 +2532,7 @@ Log Probabilities for Each Class Complement:
 <span id="cb39-78"><a href="#cb39-78" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(conf_matrix_quantile)</span>
 <span id="cb39-79"><a href="#cb39-79" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Quantile Transformed Naive Bayes Classification Report:'</span>)</span>
 <span id="cb39-80"><a href="#cb39-80" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(class_report_quantile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Gaussian Naive Bayes Model Accuracy: 100.00%
 Gaussian Naive Bayes Confusion Matrix:
@@ -2572,7 +2620,9 @@ y_i (\mathbf{w} \cdot \mathbf{x_i} + b) \geq 1, \quad \forall i
 <li><p><strong>Solve the dual problem:</strong> Use quadratic programming (QP) solvers to find the optimal values of the Lagrange multipliers.</p></li>
 <li><p><strong>Recover the primal solution:</strong> Use the optimal Lagrange multipliers to compute the weight vector and bias term.</p></li>
 </ol>
-<div id="92df92ad" class="cell" data-execution_count="17">
+<div id="99065a85" class="cell" data-execution_count="17">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize</span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_classification</span>
@@ -2627,6 +2677,7 @@ y_i (\mathbf{w} \cdot \mathbf{x_i} + b) \geq 1, \quad \forall i
 <span id="cb42-52"><a href="#cb42-52" aria-hidden="true" tabindex="-1"></a>new_data <span class="op">=</span> scaler.transform([[<span class="fl">0.5</span>, <span class="op">-</span><span class="fl">1.5</span>], [<span class="fl">2.0</span>, <span class="fl">1.0</span>]])  <span class="co"># Example new data points</span></span>
 <span id="cb42-53"><a href="#cb42-53" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> classify(new_data)</span>
 <span id="cb42-54"><a href="#cb42-54" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Predictions: </span><span class="sc">{</span>predictions<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Accuracy: 100.00%
 Predictions: [-1.  1.]</code></pre>
@@ -2670,7 +2721,9 @@ K(\mathbf{x_i}, \mathbf{x_j}) = \exp \left( -\frac{\|\mathbf{x_i} - \mathbf{x_j}
 <li><p><strong>Solve the dual problem:</strong> Use the kernel matrix in the dual formulation of the SVM optimization problem.</p></li>
 <li><p><strong>Make predictions:</strong> Use the kernel function to compute the decision function for new data points.</p></li>
 </ol>
-<div id="80eea9dd" class="cell" data-execution_count="18">
+<div id="fc8e06b1" class="cell" data-execution_count="18">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -2755,6 +2808,7 @@ K(\mathbf{x_i}, \mathbf{x_j}) = \exp \left( -\frac{\|\mathbf{x_i} - \mathbf{x_j}
 <span id="cb44-82"><a href="#cb44-82" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-83"><a href="#cb44-83" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> text, prediction <span class="kw">in</span> <span class="bu">zip</span>(new_texts, new_predictions_rbf):</span>
 <span id="cb44-84"><a href="#cb44-84" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Text: "</span><span class="sc">{</span>text<span class="sc">}</span><span class="ss">" -&gt; Prediction: </span><span class="sc">{</span><span class="st">"Spam"</span> <span class="cf">if</span> prediction <span class="op">==</span> <span class="dv">1</span> <span class="cf">else</span> <span class="st">"Not Spam"</span><span class="sc">}</span><span class="ss"> (RBF Kernel)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Polynomial Kernel SVM Model Accuracy: 0.00%
 Polynomial Kernel SVM Confusion Matrix:
@@ -2871,7 +2925,9 @@ y_i (\mathbf{w} \cdot \mathbf{x_i} + b) \geq 1 - \xi_i, \quad \xi_i \geq 0, \qua
 <li><p><strong>Recover the primal solution:</strong> Use the optimal Lagrange multipliers to compute the weight vector, bias term, and slack variables.</p></li>
 <li><p><strong>Tune the regularization parameter <span class="math inline">\(C\)</span>:</strong> Use cross-validation to find the optimal value of <span class="math inline">\(C\)</span> that balances margin maximization and error minimization.</p></li>
 </ol>
-<div id="403d5304" class="cell" data-execution_count="19">
+<div id="eac038f6" class="cell" data-execution_count="19">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_digits</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split, GridSearchCV</span>
@@ -2917,6 +2973,7 @@ y_i (\mathbf{w} \cdot \mathbf{x_i} + b) \geq 1 - \xi_i, \quad \xi_i \geq 0, \qua
 <span id="cb47-43"><a href="#cb47-43" aria-hidden="true" tabindex="-1"></a>new_data <span class="op">=</span> scaler.transform(digits.data[:<span class="dv">5</span>])  <span class="co"># Example new data points</span></span>
 <span id="cb47-44"><a href="#cb47-44" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> final_svm.predict(new_data)</span>
 <span id="cb47-45"><a href="#cb47-45" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Predictions: </span><span class="sc">{</span>predictions<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Best C: 0.1
 Final Accuracy: 99.81%

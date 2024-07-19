@@ -315,7 +315,9 @@ window.Quarto = {
 <li>Cons: Computationally intensive for large datasets.</li>
 </ul></li>
 </ul>
-<div id="7549e265" class="cell" data-execution_count="1">
+<div id="a49956b1" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.impute <span class="im">import</span> SimpleImputer, KNNImputer</span>
@@ -386,6 +388,7 @@ window.Quarto = {
 <span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Regression Imputation:</span><span class="ch">\n</span><span class="st">"</span>, df_regression_imputed)</span>
 <span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Multiple Imputation:</span><span class="ch">\n</span><span class="st">"</span>, df_multiple_imputed)</span>
 <span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">K-Nearest Neighbours Imputation:</span><span class="ch">\n</span><span class="st">"</span>, df_knn_imputed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Original DataFrame:
       A    B    C
@@ -467,7 +470,7 @@ K-Nearest Neighbours Imputation:
 4  5.0  5.0  3.5</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_89044/2475623061.py:43: FutureWarning:
+<pre><code>/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_9018/2475623061.py:43: FutureWarning:
 
 DataFrame.fillna with 'method' is deprecated and will raise in a future version. Use obj.ffill() or obj.bfill() instead.
 </code></pre>
@@ -497,7 +500,9 @@ DataFrame.fillna with 'method' is deprecated and will raise in a future version.
 <li>Cons: Subjective; depends on plot interpretation.</li>
 </ul></li>
 </ul>
-<div id="63b4555b" class="cell" data-execution_count="2">
+<div id="28410b71" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -533,6 +538,7 @@ DataFrame.fillna with 'method' is deprecated and will raise in a future version.
 <span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Original DataFrame:</span><span class="ch">\n</span><span class="st">"</span>, df)</span>
 <span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Z-Score Method Outliers:</span><span class="ch">\n</span><span class="st">"</span>, outliers_z)</span>
 <span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">IQR Method Outliers:</span><span class="ch">\n</span><span class="st">"</span>, outliers_iqr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -581,7 +587,9 @@ IQR Method Outliers:
 <li>Cons: Requires significant computational resources; complex implementation.</li>
 </ul></li>
 </ul>
-<div id="0344adef" class="cell" data-execution_count="3">
+<div id="0f1487ea" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -649,6 +657,7 @@ IQR Method Outliers:
 <span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Original DataFrame:
       A   B  C  IsolationForest_Outlier  LOF_Outlier  Autoencoder_Outlier
@@ -723,7 +732,9 @@ n_neighbors (20) is greater than the total number of samples (6). n_neighbors wi
 <li>Cons: Rigid; requires maintenance and updating.</li>
 </ul></li>
 </ul>
-<div id="3c769e25" class="cell" data-execution_count="4">
+<div id="acd8accb" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fuzzywuzzy <span class="im">import</span> fuzz, process</span>
@@ -781,6 +792,7 @@ n_neighbors (20) is greater than the total number of samples (6). n_neighbors wi
 <span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Fuzzy Matches (indexes and score):</span><span class="ch">\n</span><span class="st">"</span>, fuzzy_matches)</span>
 <span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Machine Learning-Based Duplicates:</span><span class="ch">\n</span><span class="st">"</span>, ml_duplicates)</span>
 <span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Rule-Based Duplicates:</span><span class="ch">\n</span><span class="st">"</span>, rule_based)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Original DataFrame:
           Name  Age         City  Cluster
@@ -839,7 +851,9 @@ x' = \frac{x - \min(x)}{\max(x) - \min(x)}
 x' = a + \frac{(x - \min(x)) \times (b - a)}{\max(x) - \min(x)}
 \]</span></p>
 <p>Understanding the impact of Min-Max scaling on model performance and ensuring the transformation is applied consistently in training and test datasets are critical aspects at this level.</p>
-<div id="5750ac7d" class="cell" data-execution_count="5">
+<div id="e556416f" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MinMaxScaler</span>
@@ -896,6 +910,7 @@ x' = a + \frac{(x - \min(x)) \times (b - a)}{\max(x) - \min(x)}
 <span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Original DataFrame:</span><span class="ch">\n</span><span class="st">"</span>, df)</span>
 <span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Min-Max Scaled DataFrame [0, 1]:</span><span class="ch">\n</span><span class="st">"</span>, df_min_max_scaled)</span>
 <span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Min-Max Scaled DataFrame [-1, 1]:</span><span class="ch">\n</span><span class="st">"</span>, df_min_max_scaled_custom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -948,7 +963,9 @@ x' = \frac{x - \mu}{\sigma}
 <li><p>Applying standardization in the presence of skewed data distributions.</p></li>
 <li><p>Understanding the mathematical properties and implications of the transformation in high-dimensional spaces.</p></li>
 </ul>
-<div id="aa612065" class="cell" data-execution_count="6">
+<div id="647920ce" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
@@ -1019,6 +1036,7 @@ x' = \frac{x - \mu}{\sigma}
 <span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a>df_skewed_standardized <span class="op">=</span> pd.DataFrame(standard_scaler.fit_transform(df_skewed), columns<span class="op">=</span>df_skewed.columns)</span>
 <span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Standardized Skewed DataFrame:</span><span class="ch">\n</span><span class="st">"</span>, df_skewed_standardized)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1084,7 +1102,9 @@ x' = \frac{x - \text{median}(x)}{\text{IQR}(x)}
 <li><p>Application of robust scaling to various data distributions.</p></li>
 <li><p>Combining robust scaling with other preprocessing techniques for optimal performance.</p></li>
 </ul>
-<div id="8dec4891" class="cell" data-execution_count="7">
+<div id="fb0773dc" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> RobustScaler</span>
@@ -1157,6 +1177,7 @@ x' = \frac{x - \text{median}(x)}{\text{IQR}(x)}
 <span id="cb16-70"><a href="#cb16-70" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-71"><a href="#cb16-71" aria-hidden="true" tabindex="-1"></a>df_distributions_robust_scaled <span class="op">=</span> pd.DataFrame(robust_scaler.fit_transform(df_distributions), columns<span class="op">=</span>df_distributions.columns)</span>
 <span id="cb16-72"><a href="#cb16-72" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Robust Scaled DataFrame for Different Distributions:</span><span class="ch">\n</span><span class="st">"</span>, df_distributions_robust_scaled)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -1198,17 +1219,17 @@ Detected Outliers after Robust Scaling:
 
 Robust Scaled DataFrame for Different Distributions:
        Normal   Uniform    Skewed
-0   0.562461  0.812717  0.819234
-1  -0.626592  0.581987 -0.409687
-2   1.093909  0.585652  0.730831
-3   0.309740 -0.696758 -0.576079
-4  -0.374076  0.765818 -0.351460
+0   0.239019 -0.237280 -0.401997
+1  -1.001292  0.607345  0.203544
+2   0.198553  0.824995 -0.194502
+3  -0.875136 -0.530485  1.941428
+4  -0.081747 -0.763709  1.064463
 ..       ...       ...       ...
-95  0.529521 -0.117058 -0.170850
-96  0.004837  0.844643 -0.397008
-97 -0.799059 -0.607114  0.283184
-98 -0.004837 -0.045639  0.262398
-99 -0.058743  0.754937  0.397197
+95 -0.713395 -0.163758 -0.684032
+96  0.000243  0.166649  1.067449
+97  0.677328  0.710081 -0.459583
+98 -0.275813 -0.782102 -0.064000
+99 -0.199275  0.415870 -0.099351
 
 [100 rows x 3 columns]</code></pre>
 </div>
@@ -1229,7 +1250,9 @@ x' = \log(x + 1)
 <li><p>Understanding the implications of the transformation in the context of machine learning algorithms.</p></li>
 <li><p>Combining log transformation with other scaling techniques for better performance.</p></li>
 </ul>
-<div id="bf6718e7" class="cell" data-execution_count="8">
+<div id="3146f6a3" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1307,8 +1330,9 @@ x' = \log(x + 1)
 <span id="cb18-75"><a href="#cb18-75" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-76"><a href="#cb18-76" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb18-77"><a href="#cb18-77" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_89044/3728224437.py:15: FutureWarning:
+<pre><code>/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_9018/3728224437.py:15: FutureWarning:
 
 DataFrame.applymap has been deprecated. Use DataFrame.map instead.
 </code></pre>
@@ -1349,39 +1373,39 @@ Log Transformed DataFrame (manual):
 5  4.615121  2.708050  1.098612
 
 Original Skewed DataFrame:
-     Exponential  PowerLaw
-0      0.539746  1.174892
-1      0.789575  1.214270
-2      0.085445  1.045893
-3      4.083041  1.043935
-4      0.612298  1.303029
-..          ...       ...
-95     2.492802  2.799113
-96     1.309699  1.781977
-97     0.727691  1.096020
-98     1.393626  2.014967
-99     1.386448  1.181228
+     Exponential   PowerLaw
+0      3.183849   1.245193
+1      2.033332   1.606494
+2      0.426640   1.120586
+3      0.020485   2.451626
+4      0.764713   8.740930
+..          ...        ...
+95     1.629743   1.061690
+96     1.714027   1.268429
+97     0.801920   1.244807
+98     5.514914  10.274336
+99     0.210712   1.035803
 
 [100 rows x 2 columns]
 
 Log Transformed Skewed DataFrame:
      Exponential  PowerLaw
-0      0.431618  0.776979
-1      0.581978  0.794923
-2      0.081990  0.715834
-3      1.625910  0.714877
-4      0.477661  0.834225
+0      1.431232  0.808791
+1      1.109662  0.958006
+2      0.355322  0.751693
+3      0.020278  1.238845
+4      0.567988  2.276337
 ..          ...       ...
-95     1.250704  1.334768
-96     0.837117  1.023162
-97     0.546786  0.740040
-98     0.872810  1.103589
-99     0.869806  0.779888
+95     0.966886  0.723526
+96     0.998433  0.819087
+97     0.588853  0.808619
+98     1.874094  2.422529
+99     0.191208  0.710891
 
 [100 rows x 2 columns]</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_89044/3728224437.py:62: FutureWarning:
+<pre><code>/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_9018/3728224437.py:62: FutureWarning:
 
 DataFrame.applymap has been deprecated. Use DataFrame.map instead.
 </code></pre>
@@ -1389,7 +1413,7 @@ DataFrame.applymap has been deprecated. Use DataFrame.map instead.
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="chapter2_data_preprocessing_files/figure-html/cell-9-output-5.png" width="1333" height="949" class="figure-img"></p>
+<p><img src="chapter2_data_preprocessing_files/figure-html/cell-9-output-5.png" width="1334" height="949" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1413,7 +1437,9 @@ y(\lambda) =
 <li><p>Applying the transformation to multivariate data and analysing its impact.</p></li>
 <li><p>Integrating Box-Cox transformation with other advanced preprocessing and modelling techniques.</p></li>
 </ul>
-<div id="fb02f38e" class="cell" data-execution_count="9">
+<div id="596dd687" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1505,6 +1531,7 @@ y(\lambda) =
 <span id="cb22-89"><a href="#cb22-89" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-90"><a href="#cb22-90" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb22-91"><a href="#cb22-91" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Lambda for A: -0.6948827121821288
 Lambda for B: 1.6211440208702976
@@ -1546,41 +1573,41 @@ Box-Cox Transformed DataFrame (manual):
 5  1.380839  49.132995  2.515377
 
 Original Skewed DataFrame:
-     Exponential   PowerLaw
-0      0.117973   1.013088
-1      0.271817   3.082621
-2      6.294696   1.266908
-3      0.102722   1.923454
-4      1.786711   2.107540
-..          ...        ...
-95     2.968529   1.454489
-96     0.610104   1.522425
-97     3.940191   1.152053
-98     0.444919   6.182687
-99     0.743526  18.258620
+     Exponential  PowerLaw
+0      0.933533  1.328891
+1      2.324201  2.321040
+2      1.352793  7.111637
+3      0.360744  1.572790
+4      1.217491  1.404037
+..          ...       ...
+95     2.946211  1.286027
+96     0.395443  1.269961
+97     1.085404  1.271907
+98     0.296292  2.246057
+99     1.567880  1.413338
 
 [100 rows x 2 columns]
 
 Box-Cox Transformed Skewed DataFrame:
      Exponential  PowerLaw
-0      0.109242  0.363658
-1      0.230035  0.445936
-2      1.405862  0.387288
-3      0.096030  0.421629
-4      0.852548  0.427454
+0      0.591887  0.317583
+1      0.989764  0.337239
+2      0.744356  0.347491
+3      0.292737  0.325233
+4      0.699390  0.320263
 ..          ...       ...
-95     1.079088  0.400078
-96     0.436592  0.403994
-97     1.205230  0.377673
-98     0.344032  0.462340
-99     0.502333  0.468514
+95     1.101445  0.315898
+96     0.315364  0.315234
+97     0.651816  0.315315
+98     0.248595  0.336487
+99     0.809167  0.320573
 
 [100 rows x 2 columns]</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="chapter2_data_preprocessing_files/figure-html/cell-10-output-4.png" width="1334" height="949" class="figure-img"></p>
+<p><img src="chapter2_data_preprocessing_files/figure-html/cell-10-output-4.png" width="1333" height="949" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1604,7 +1631,9 @@ Box-Cox Transformed Skewed DataFrame:
 <li><p>Memory efficiency and computational considerations in high-dimensional datasets.</p></li>
 <li><p>Using sparse matrices to efficiently store one-hot encoded features.</p></li>
 </ul>
-<div id="f41a0128" class="cell" data-execution_count="10">
+<div id="917c01fa" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OneHotEncoder</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1649,6 +1678,7 @@ Box-Cox Transformed Skewed DataFrame:
 <span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualising the encoded features for original dataframe</span></span>
 <span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">One-hot Encoded Features for Original DataFrame:</span><span class="ch">\n</span><span class="st">"</span>, df_one_hot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Original DataFrame:
     Color Size
@@ -1733,7 +1763,9 @@ One-hot Encoded Features for Original DataFrame:
 <li><p>Handling categorical features with high cardinality using advanced label encoding strategies.</p></li>
 <li><p>Understanding the impact of label encoding on different machine learning algorithms.</p></li>
 </ul>
-<div id="07ea5c23" class="cell" data-execution_count="11">
+<div id="f353f813" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1810,6 +1842,7 @@ One-hot Encoded Features for Original DataFrame:
 <span id="cb27-74"><a href="#cb27-74" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculating accuracy</span></span>
 <span id="cb27-75"><a href="#cb27-75" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> accuracy_score(y_test, y_pred)</span>
 <span id="cb27-76"><a href="#cb27-76" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Decision Tree Classifier Accuracy with Label Encoding:"</span>, accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Original DataFrame:
     Color Size  Color_Encoded  Size_Encoded
@@ -1872,7 +1905,9 @@ Decision Tree Classifier Accuracy with Label Encoding: 0.0</code></pre>
 <li><p>Impact of ordinal encoding on model performance and interpretability.</p></li>
 <li><p>Combining ordinal encoding with other preprocessing techniques.</p></li>
 </ul>
-<div id="3507f764" class="cell" data-execution_count="12">
+<div id="96bcc72c" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OrdinalEncoder</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1967,6 +2002,7 @@ Decision Tree Classifier Accuracy with Label Encoding: 0.0</code></pre>
 <span id="cb29-92"><a href="#cb29-92" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculating mean squared error for scaled data</span></span>
 <span id="cb29-93"><a href="#cb29-93" aria-hidden="true" tabindex="-1"></a>mse_scaled <span class="op">=</span> mean_squared_error(y_test, y_pred_scaled)</span>
 <span id="cb29-94"><a href="#cb29-94" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Linear Regression Mean Squared Error with Ordinal Encoding and Scaling:"</span>, mse_scaled)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Original DataFrame:
       Size Priority  Size_Encoded  Priority_Encoded
@@ -2014,7 +2050,9 @@ Linear Regression Mean Squared Error with Ordinal Encoding and Scaling: 36.46694
 <li><p>Combining binary encoding with other techniques to improve model performance.</p></li>
 <li><p>Understanding the mathematical properties of binary encoding and its impact on algorithms.</p></li>
 </ul>
-<div id="fd741562" class="cell" data-execution_count="13">
+<div id="63eab149" class="cell" data-execution_count="13">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> category_encoders <span class="im">import</span> BinaryEncoder</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
@@ -2091,6 +2129,7 @@ Linear Regression Mean Squared Error with Ordinal Encoding and Scaling: 36.46694
 <span id="cb31-74"><a href="#cb31-74" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculating accuracy</span></span>
 <span id="cb31-75"><a href="#cb31-75" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> accuracy_score(y_test, y_pred)</span>
 <span id="cb31-76"><a href="#cb31-76" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Logistic Regression Accuracy with Binary Encoding:"</span>, accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Original DataFrame:
     Color Size
@@ -2152,7 +2191,9 @@ Logistic Regression Accuracy with Binary Encoding: 1.0</code></pre>
 <li><p>Combining frequency encoding with other techniques to handle categorical data.</p></li>
 <li><p>Impact of frequency encoding on different machine learning models.</p></li>
 </ul>
-<div id="7fcb7e71" class="cell" data-execution_count="14">
+<div id="e9c6fa3c" class="cell" data-execution_count="14">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
@@ -2222,6 +2263,7 @@ Logistic Regression Accuracy with Binary Encoding: 1.0</code></pre>
 <span id="cb33-67"><a href="#cb33-67" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculating accuracy</span></span>
 <span id="cb33-68"><a href="#cb33-68" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> accuracy_score(y_test, y_pred)</span>
 <span id="cb33-69"><a href="#cb33-69" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Logistic Regression Accuracy with Frequency Encoding:"</span>, accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Original DataFrame:
     Color Size  Target  Color_Freq_Encoded  Size_Freq_Encoded
@@ -2293,7 +2335,9 @@ Logistic Regression Accuracy with Frequency Encoding: 0.0</code></pre>
 <li><p>Cross-validation strategies to ensure robust target encoding.</p></li>
 <li><p>Combining target encoding with other encoding methods for improved model performance.</p></li>
 </ul>
-<div id="5ad4947a" class="cell" data-execution_count="15">
+<div id="ef770b84" class="cell" data-execution_count="15">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split, KFold</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
@@ -2395,6 +2439,7 @@ Logistic Regression Accuracy with Frequency Encoding: 0.0</code></pre>
 <span id="cb35-99"><a href="#cb35-99" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculating mean squared error</span></span>
 <span id="cb35-100"><a href="#cb35-100" aria-hidden="true" tabindex="-1"></a>mse <span class="op">=</span> mean_squared_error(y_test, y_pred)</span>
 <span id="cb35-101"><a href="#cb35-101" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Linear Regression Mean Squared Error with Target Encoding:"</span>, mse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Original DataFrame:
     Color Size  Sales
@@ -2453,7 +2498,7 @@ Cross-Validated Target Encoded DataFrame:
 Linear Regression Mean Squared Error with Target Encoding: 280.9782887682148</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_89044/3899796125.py:76: SettingWithCopyWarning:
+<pre><code>/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_9018/3899796125.py:76: SettingWithCopyWarning:
 
 
 A value is trying to be set on a copy of a slice from a DataFrame.
@@ -2461,7 +2506,7 @@ Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
 
-/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_89044/3899796125.py:76: SettingWithCopyWarning:
+/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_9018/3899796125.py:76: SettingWithCopyWarning:
 
 
 A value is trying to be set on a copy of a slice from a DataFrame.
@@ -2469,7 +2514,7 @@ Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
 
-/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_89044/3899796125.py:76: SettingWithCopyWarning:
+/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_9018/3899796125.py:76: SettingWithCopyWarning:
 
 
 A value is trying to be set on a copy of a slice from a DataFrame.
@@ -2477,7 +2522,7 @@ Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
 
-/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_89044/3899796125.py:76: SettingWithCopyWarning:
+/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_9018/3899796125.py:76: SettingWithCopyWarning:
 
 
 A value is trying to be set on a copy of a slice from a DataFrame.
@@ -2485,7 +2530,7 @@ Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
 
-/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_89044/3899796125.py:76: SettingWithCopyWarning:
+/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_9018/3899796125.py:76: SettingWithCopyWarning:
 
 
 A value is trying to be set on a copy of a slice from a DataFrame.
@@ -2493,7 +2538,7 @@ Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
 
-/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_89044/3899796125.py:76: SettingWithCopyWarning:
+/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_9018/3899796125.py:76: SettingWithCopyWarning:
 
 
 A value is trying to be set on a copy of a slice from a DataFrame.
@@ -2501,11 +2546,11 @@ Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
 
-/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_89044/3899796125.py:77: FutureWarning:
+/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_9018/3899796125.py:77: FutureWarning:
 
 Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value '[32.5 32.5]' has dtype incompatible with int64, please explicitly cast to a compatible dtype first.
 
-/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_89044/3899796125.py:76: SettingWithCopyWarning:
+/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_9018/3899796125.py:76: SettingWithCopyWarning:
 
 
 A value is trying to be set on a copy of a slice from a DataFrame.
@@ -2513,7 +2558,7 @@ Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
 
-/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_89044/3899796125.py:76: SettingWithCopyWarning:
+/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_9018/3899796125.py:76: SettingWithCopyWarning:
 
 
 A value is trying to be set on a copy of a slice from a DataFrame.
@@ -2521,7 +2566,7 @@ Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
 
-/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_89044/3899796125.py:76: SettingWithCopyWarning:
+/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_9018/3899796125.py:76: SettingWithCopyWarning:
 
 
 A value is trying to be set on a copy of a slice from a DataFrame.
@@ -2529,7 +2574,7 @@ Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
 
-/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_89044/3899796125.py:76: SettingWithCopyWarning:
+/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_9018/3899796125.py:76: SettingWithCopyWarning:
 
 
 A value is trying to be set on a copy of a slice from a DataFrame.
@@ -2566,7 +2611,9 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <li><p>Compute the ratio of minority to majority samples for each minority sample.</p></li>
 <li><p>Generate synthetic samples, with more samples generated for minority examples with higher difficulty ratios.</p></li>
 </ol>
-<div id="b2a0849e" class="cell" data-execution_count="16">
+<div id="676a2574" class="cell" data-execution_count="16">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_classification</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.over_sampling <span class="im">import</span> RandomOverSampler, SMOTE, ADASYN</span>
@@ -2617,6 +2664,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <span id="cb38-48"><a href="#cb38-48" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-49"><a href="#cb38-49" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Classification Report for ADASYN:</span><span class="ch">\n</span><span class="st">"</span>)</span>
 <span id="cb38-50"><a href="#cb38-50" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, y_pred_adasyn))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Classification Report for Random Oversampling:
 
@@ -2677,7 +2725,9 @@ weighted avg       0.99      0.99      0.99       300
 <li><p>Apply a clustering algorithm to the majority class.</p></li>
 <li><p>Replace each cluster with its centroid.</p></li>
 </ol>
-<div id="6bdefeef" class="cell" data-execution_count="17">
+<div id="4e7d4cb9" class="cell" data-execution_count="17">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_classification</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.under_sampling <span class="im">import</span> RandomUnderSampler, TomekLinks, ClusterCentroids</span>
@@ -2728,6 +2778,7 @@ weighted avg       0.99      0.99      0.99       300
 <span id="cb40-48"><a href="#cb40-48" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-49"><a href="#cb40-49" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Classification Report for Cluster Centroids:</span><span class="ch">\n</span><span class="st">"</span>)</span>
 <span id="cb40-50"><a href="#cb40-50" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, y_pred_cc))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Classification Report for Random Undersampling:
 
@@ -2790,7 +2841,9 @@ The default value of `n_init` will change from 10 to 'auto' in 1.4. Set the valu
 <li><p>Apply SMOTE to create synthetic minority class examples.</p></li>
 <li><p>Use Tomek links to remove overlapping examples from both classes.</p></li>
 </ol>
-<div id="8e70234d" class="cell" data-execution_count="18">
+<div id="6adb1fb8" class="cell" data-execution_count="18">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_classification</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> imblearn.combine <span class="im">import</span> SMOTEENN, SMOTETomek</span>
@@ -2829,6 +2882,7 @@ The default value of `n_init` will change from 10 to 'auto' in 1.4. Set the valu
 <span id="cb43-36"><a href="#cb43-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-37"><a href="#cb43-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Classification Report for SMOTETomek:</span><span class="ch">\n</span><span class="st">"</span>)</span>
 <span id="cb43-38"><a href="#cb43-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, y_pred_smotetomek))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Classification Report for SMOTEENN:
 
@@ -2870,7 +2924,9 @@ weighted avg       0.99      0.99      0.99       300
 <li><p>Combining ensemble methods with oversampling and undersampling techniques.</p></li>
 <li><p>Evaluating model performance using appropriate metrics like precision-recall curves and F1 score.</p></li>
 </ul>
-<div id="01d62e3f" class="cell" data-execution_count="19">
+<div id="391727f9" class="cell" data-execution_count="19">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_classification</span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -2961,6 +3017,7 @@ weighted avg       0.99      0.99      0.99       300
 <span id="cb45-88"><a href="#cb45-88" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"F1 Score for Balanced Bagging Classifier:"</span>, f1_score(y_test, y_pred_bbc))</span>
 <span id="cb45-89"><a href="#cb45-89" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"F1 Score for Easy Ensemble Classifier:"</span>, f1_score(y_test, y_pred_eec))</span>
 <span id="cb45-90"><a href="#cb45-90" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"F1 Score for Balanced Random Forest with SMOTE:"</span>, f1_score(y_test, y_pred_brf_smote))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Classification Report for Balanced Random Forest:
 
@@ -3112,7 +3169,9 @@ F1 Score for Balanced Random Forest with SMOTE: 0.8421052631578948</code></pre>
 <li><p><strong>CutMix:</strong> Cutting and pasting patches from one image onto another. Example: Cutting a patch from an image of a tree and pasting it onto an image of a mountain.</p></li>
 <li><p><strong>MixUp:</strong> Creating a new image by linearly interpolating between two images. Example: Interpolating between an image of a bird and an image of a plane.</p></li>
 </ul>
-<div id="95556dc4" class="cell" data-execution_count="20">
+<div id="397370a4" class="cell" data-execution_count="20">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cv2</span>
@@ -3261,6 +3320,7 @@ F1 Score for Balanced Random Forest with SMOTE: 0.8421052631578948</code></pre>
 <span id="cb51-146"><a href="#cb51-146" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb51-147"><a href="#cb51-147" aria-hidden="true" tabindex="-1"></a>mixup_image <span class="op">=</span> mixup(image, image2, <span class="fl">0.7</span>)</span>
 <span id="cb51-148"><a href="#cb51-148" aria-hidden="true" tabindex="-1"></a>display_image(mixup_image, <span class="st">"MixUp Image (70:30)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -3366,7 +3426,9 @@ F1 Score for Balanced Random Forest with SMOTE: 0.8421052631578948</code></pre>
 <li><p><strong>GPT-3:</strong> Using Generative Pre-trained Transformer models to create synthetic text data. Example: Generating new product reviews based on existing ones.</p></li>
 <li><p><strong>BERT-based Augmentation:</strong> Using BERT models to replace words or phrases with contextually similar alternatives. Example: Replacing “He is going to school” with “He is heading to school.”</p></li>
 </ul>
-<div id="99669494" class="cell" data-execution_count="21">
+<div id="7170c1b9" class="cell" data-execution_count="21">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.corpus <span class="im">import</span> wordnet</span>
@@ -3425,6 +3487,7 @@ F1 Score for Balanced Random Forest with SMOTE: 0.8421052631578948</code></pre>
 <span id="cb52-56"><a href="#cb52-56" aria-hidden="true" tabindex="-1"></a>markov_generator <span class="op">=</span> MarkovTextGenerator(training_text)</span>
 <span id="cb52-57"><a href="#cb52-57" aria-hidden="true" tabindex="-1"></a>generated_text <span class="op">=</span> markov_generator.generate_text()</span>
 <span id="cb52-58"><a href="#cb52-58" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Markov Chain Generated Text:</span><span class="ch">\n</span><span class="st">"</span>, generated_text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>[nltk_data] Downloading package wordnet to
 [nltk_data]     /Users/ravishankar/nltk_data...
@@ -3466,7 +3529,9 @@ Markov Chain Generated Text:
 <li><p>Combining multiple augmentation techniques for better performance.</p></li>
 <li><p>Evaluating the impact of augmented data on model generalizability and robustness.</p></li>
 </ul>
-<div id="6737fe8a" class="cell" data-execution_count="22">
+<div id="a97e7dd8" class="cell" data-execution_count="22">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.interpolate <span class="im">import</span> interp1d</span>
@@ -3532,6 +3597,7 @@ Markov Chain Generated Text:
 <span id="cb55-63"><a href="#cb55-63" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Combined Warping Techniques'</span>)</span>
 <span id="cb55-64"><a href="#cb55-64" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb55-65"><a href="#cb55-65" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -3630,7 +3696,9 @@ Markov Chain Generated Text:
 <li><p><strong>Feature Engineering:</strong> Combine multiple temporal features such as lags, rolling statistics, and date-based features (e.g., day of week, month) for better model performance.</p></li>
 <li><p><strong>Model Evaluation:</strong> Use time-aware validation techniques like walk-forward validation to assess model performance on unseen data.</p></li>
 </ul>
-<div id="4fb256cf" class="cell" data-execution_count="23">
+<div id="424f8fbe" class="cell" data-execution_count="23">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> TimeSeriesSplit</span>
@@ -3723,21 +3791,22 @@ Markov Chain Generated Text:
 <span id="cb56-90"><a href="#cb56-90" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Walk-Forward Validation Predictions'</span>)</span>
 <span id="cb56-91"><a href="#cb56-91" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb56-92"><a href="#cb56-92" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Training set:
          date     value
-0 2022-01-01 -0.159855
-1 2022-01-02 -0.414006
-2 2022-01-03 -1.140640
-3 2022-01-04 -2.007078
-4 2022-01-05 -2.108152
+0 2022-01-01  0.220253
+1 2022-01-02 -0.216133
+2 2022-01-03  0.248988
+3 2022-01-04 -1.816456
+4 2022-01-05 -1.122151
 Testing set:
            date      value
-273 2022-10-01   9.539565
-274 2022-10-02  10.377005
-275 2022-10-03  10.762929
-276 2022-10-04   9.758977
-277 2022-10-05   9.290876
+273 2022-10-01  21.081991
+274 2022-10-02  20.787234
+275 2022-10-03  21.238575
+276 2022-10-04  19.638458
+277 2022-10-05  20.481393
 TRAIN: 2022-01-01 00:00:00 to 2022-03-06 00:00:00, TEST: 2022-03-07 00:00:00 to 2022-05-05 00:00:00
 TRAIN: 2022-01-01 00:00:00 to 2022-05-05 00:00:00, TEST: 2022-05-06 00:00:00 to 2022-07-04 00:00:00
 TRAIN: 2022-01-01 00:00:00 to 2022-07-04 00:00:00, TEST: 2022-07-05 00:00:00 to 2022-09-02 00:00:00
@@ -3745,60 +3814,60 @@ TRAIN: 2022-01-01 00:00:00 to 2022-09-02 00:00:00, TEST: 2022-09-03 00:00:00 to 
 TRAIN: 2022-01-01 00:00:00 to 2022-11-01 00:00:00, TEST: 2022-11-02 00:00:00 to 2022-12-31 00:00:00
 Data with lag features:
          date     value     lag_1     lag_7
-0 2022-01-01 -0.159855       NaN       NaN
-1 2022-01-02 -0.414006 -0.159855       NaN
-2 2022-01-03 -1.140640 -0.414006       NaN
-3 2022-01-04 -2.007078 -1.140640       NaN
-4 2022-01-05 -2.108152 -2.007078       NaN
-5 2022-01-06  0.444538 -2.108152       NaN
-6 2022-01-07 -1.109346  0.444538       NaN
-7 2022-01-08 -0.965885 -1.109346 -0.159855
-8 2022-01-09 -0.082547 -0.965885 -0.414006
-9 2022-01-10 -0.195067 -0.082547 -1.140640
+0 2022-01-01  0.220253       NaN       NaN
+1 2022-01-02 -0.216133  0.220253       NaN
+2 2022-01-03  0.248988 -0.216133       NaN
+3 2022-01-04 -1.816456  0.248988       NaN
+4 2022-01-05 -1.122151 -1.816456       NaN
+5 2022-01-06 -0.934480 -1.122151       NaN
+6 2022-01-07  0.115752 -0.934480       NaN
+7 2022-01-08  1.456726  0.115752  0.220253
+8 2022-01-09  0.364350  1.456726 -0.216133
+9 2022-01-10  0.688577  0.364350  0.248988
 Data with multiple lags and interactions:
           date     value     lag_1     lag_7    lag_14  lag_30  lag_7_14
-0  2022-01-01 -0.159855       NaN       NaN       NaN     NaN       NaN
-1  2022-01-02 -0.414006 -0.159855       NaN       NaN     NaN       NaN
-2  2022-01-03 -1.140640 -0.414006       NaN       NaN     NaN       NaN
-3  2022-01-04 -2.007078 -1.140640       NaN       NaN     NaN       NaN
-4  2022-01-05 -2.108152 -2.007078       NaN       NaN     NaN       NaN
-5  2022-01-06  0.444538 -2.108152       NaN       NaN     NaN       NaN
-6  2022-01-07 -1.109346  0.444538       NaN       NaN     NaN       NaN
-7  2022-01-08 -0.965885 -1.109346 -0.159855       NaN     NaN       NaN
-8  2022-01-09 -0.082547 -0.965885 -0.414006       NaN     NaN       NaN
-9  2022-01-10 -0.195067 -0.082547 -1.140640       NaN     NaN       NaN
-10 2022-01-11 -0.660406 -0.195067 -2.007078       NaN     NaN       NaN
-11 2022-01-12 -0.430592 -0.660406 -2.108152       NaN     NaN       NaN
-12 2022-01-13 -2.513766 -0.430592  0.444538       NaN     NaN       NaN
-13 2022-01-14 -2.692607 -2.513766 -1.109346       NaN     NaN       NaN
-14 2022-01-15 -1.961966 -2.692607 -0.965885 -0.159855     NaN  0.154402
-15 2022-01-16 -2.323212 -1.961966 -0.082547 -0.414006     NaN  0.034175
-16 2022-01-17 -1.911401 -2.323212 -0.195067 -1.140640     NaN  0.222501
-17 2022-01-18 -2.584769 -1.911401 -0.660406 -2.007078     NaN  1.325486
-18 2022-01-19 -2.318302 -2.584769 -0.430592 -2.108152     NaN  0.907753
-19 2022-01-20 -2.288036 -2.318302 -2.513766  0.444538     NaN -1.117465
+0  2022-01-01  0.220253       NaN       NaN       NaN     NaN       NaN
+1  2022-01-02 -0.216133  0.220253       NaN       NaN     NaN       NaN
+2  2022-01-03  0.248988 -0.216133       NaN       NaN     NaN       NaN
+3  2022-01-04 -1.816456  0.248988       NaN       NaN     NaN       NaN
+4  2022-01-05 -1.122151 -1.816456       NaN       NaN     NaN       NaN
+5  2022-01-06 -0.934480 -1.122151       NaN       NaN     NaN       NaN
+6  2022-01-07  0.115752 -0.934480       NaN       NaN     NaN       NaN
+7  2022-01-08  1.456726  0.115752  0.220253       NaN     NaN       NaN
+8  2022-01-09  0.364350  1.456726 -0.216133       NaN     NaN       NaN
+9  2022-01-10  0.688577  0.364350  0.248988       NaN     NaN       NaN
+10 2022-01-11 -0.379052  0.688577 -1.816456       NaN     NaN       NaN
+11 2022-01-12 -0.196976 -0.379052 -1.122151       NaN     NaN       NaN
+12 2022-01-13 -0.459920 -0.196976 -0.934480       NaN     NaN       NaN
+13 2022-01-14 -0.715498 -0.459920  0.115752       NaN     NaN       NaN
+14 2022-01-15 -1.008225 -0.715498  1.456726  0.220253     NaN  0.320848
+15 2022-01-16 -0.414917 -1.008225  0.364350 -0.216133     NaN -0.078748
+16 2022-01-17  1.938531 -0.414917  0.688577  0.248988     NaN  0.171447
+17 2022-01-18  2.338982  1.938531 -0.379052 -1.816456     NaN  0.688531
+18 2022-01-19  1.873405  2.338982 -0.196976 -1.122151     NaN  0.221037
+19 2022-01-20  3.023120  1.873405 -0.459920 -0.934480     NaN  0.429786
 Data with rolling statistics:
           date     value     lag_1     lag_7    lag_14  lag_30  lag_7_14  \
-0  2022-01-01 -0.159855       NaN       NaN       NaN     NaN       NaN   
-1  2022-01-02 -0.414006 -0.159855       NaN       NaN     NaN       NaN   
-2  2022-01-03 -1.140640 -0.414006       NaN       NaN     NaN       NaN   
-3  2022-01-04 -2.007078 -1.140640       NaN       NaN     NaN       NaN   
-4  2022-01-05 -2.108152 -2.007078       NaN       NaN     NaN       NaN   
-5  2022-01-06  0.444538 -2.108152       NaN       NaN     NaN       NaN   
-6  2022-01-07 -1.109346  0.444538       NaN       NaN     NaN       NaN   
-7  2022-01-08 -0.965885 -1.109346 -0.159855       NaN     NaN       NaN   
-8  2022-01-09 -0.082547 -0.965885 -0.414006       NaN     NaN       NaN   
-9  2022-01-10 -0.195067 -0.082547 -1.140640       NaN     NaN       NaN   
-10 2022-01-11 -0.660406 -0.195067 -2.007078       NaN     NaN       NaN   
-11 2022-01-12 -0.430592 -0.660406 -2.108152       NaN     NaN       NaN   
-12 2022-01-13 -2.513766 -0.430592  0.444538       NaN     NaN       NaN   
-13 2022-01-14 -2.692607 -2.513766 -1.109346       NaN     NaN       NaN   
-14 2022-01-15 -1.961966 -2.692607 -0.965885 -0.159855     NaN  0.154402   
-15 2022-01-16 -2.323212 -1.961966 -0.082547 -0.414006     NaN  0.034175   
-16 2022-01-17 -1.911401 -2.323212 -0.195067 -1.140640     NaN  0.222501   
-17 2022-01-18 -2.584769 -1.911401 -0.660406 -2.007078     NaN  1.325486   
-18 2022-01-19 -2.318302 -2.584769 -0.430592 -2.108152     NaN  0.907753   
-19 2022-01-20 -2.288036 -2.318302 -2.513766  0.444538     NaN -1.117465   
+0  2022-01-01  0.220253       NaN       NaN       NaN     NaN       NaN   
+1  2022-01-02 -0.216133  0.220253       NaN       NaN     NaN       NaN   
+2  2022-01-03  0.248988 -0.216133       NaN       NaN     NaN       NaN   
+3  2022-01-04 -1.816456  0.248988       NaN       NaN     NaN       NaN   
+4  2022-01-05 -1.122151 -1.816456       NaN       NaN     NaN       NaN   
+5  2022-01-06 -0.934480 -1.122151       NaN       NaN     NaN       NaN   
+6  2022-01-07  0.115752 -0.934480       NaN       NaN     NaN       NaN   
+7  2022-01-08  1.456726  0.115752  0.220253       NaN     NaN       NaN   
+8  2022-01-09  0.364350  1.456726 -0.216133       NaN     NaN       NaN   
+9  2022-01-10  0.688577  0.364350  0.248988       NaN     NaN       NaN   
+10 2022-01-11 -0.379052  0.688577 -1.816456       NaN     NaN       NaN   
+11 2022-01-12 -0.196976 -0.379052 -1.122151       NaN     NaN       NaN   
+12 2022-01-13 -0.459920 -0.196976 -0.934480       NaN     NaN       NaN   
+13 2022-01-14 -0.715498 -0.459920  0.115752       NaN     NaN       NaN   
+14 2022-01-15 -1.008225 -0.715498  1.456726  0.220253     NaN  0.320848   
+15 2022-01-16 -0.414917 -1.008225  0.364350 -0.216133     NaN -0.078748   
+16 2022-01-17  1.938531 -0.414917  0.688577  0.248988     NaN  0.171447   
+17 2022-01-18  2.338982  1.938531 -0.379052 -1.816456     NaN  0.688531   
+18 2022-01-19  1.873405  2.338982 -0.196976 -1.122151     NaN  0.221037   
+19 2022-01-20  3.023120  1.873405 -0.459920 -0.934480     NaN  0.429786   
 
     rolling_mean_7  rolling_std_7  
 0              NaN            NaN  
@@ -3807,62 +3876,62 @@ Data with rolling statistics:
 3              NaN            NaN  
 4              NaN            NaN  
 5              NaN            NaN  
-6        -0.927791       0.946341  
-7        -1.042938       0.884334  
-8        -0.995587       0.931252  
-9        -0.860505       0.974290  
-10       -0.668124       0.832844  
-11       -0.428472       0.538902  
-12       -0.851087       0.824476  
-13       -1.077267       1.083587  
-14       -1.219564       1.130893  
-15       -1.539659       1.070943  
-16       -1.784850       0.893584  
-17       -2.059759       0.778612  
-18       -2.329432       0.300282  
-19       -2.297185       0.289099  
+6        -0.500604       0.800872  
+7        -0.323965       1.075599  
+8        -0.241039       1.107210  
+9        -0.178240       1.151227  
+10        0.027103       0.914089  
+11        0.159271       0.776799  
+12        0.227065       0.680127  
+13        0.108316       0.769498  
+14       -0.243820       0.593466  
+15       -0.355144       0.530073  
+16       -0.176579       0.969042  
+17        0.211711       1.345729  
+18        0.507480       1.463316  
+19        1.005057       1.658678  
 Data with additional rolling statistics:
           date     value     lag_1     lag_7    lag_14    lag_30   lag_7_14  \
-0  2022-01-01 -0.159855       NaN       NaN       NaN       NaN        NaN   
-1  2022-01-02 -0.414006 -0.159855       NaN       NaN       NaN        NaN   
-2  2022-01-03 -1.140640 -0.414006       NaN       NaN       NaN        NaN   
-3  2022-01-04 -2.007078 -1.140640       NaN       NaN       NaN        NaN   
-4  2022-01-05 -2.108152 -2.007078       NaN       NaN       NaN        NaN   
-5  2022-01-06  0.444538 -2.108152       NaN       NaN       NaN        NaN   
-6  2022-01-07 -1.109346  0.444538       NaN       NaN       NaN        NaN   
-7  2022-01-08 -0.965885 -1.109346 -0.159855       NaN       NaN        NaN   
-8  2022-01-09 -0.082547 -0.965885 -0.414006       NaN       NaN        NaN   
-9  2022-01-10 -0.195067 -0.082547 -1.140640       NaN       NaN        NaN   
-10 2022-01-11 -0.660406 -0.195067 -2.007078       NaN       NaN        NaN   
-11 2022-01-12 -0.430592 -0.660406 -2.108152       NaN       NaN        NaN   
-12 2022-01-13 -2.513766 -0.430592  0.444538       NaN       NaN        NaN   
-13 2022-01-14 -2.692607 -2.513766 -1.109346       NaN       NaN        NaN   
-14 2022-01-15 -1.961966 -2.692607 -0.965885 -0.159855       NaN   0.154402   
-15 2022-01-16 -2.323212 -1.961966 -0.082547 -0.414006       NaN   0.034175   
-16 2022-01-17 -1.911401 -2.323212 -0.195067 -1.140640       NaN   0.222501   
-17 2022-01-18 -2.584769 -1.911401 -0.660406 -2.007078       NaN   1.325486   
-18 2022-01-19 -2.318302 -2.584769 -0.430592 -2.108152       NaN   0.907753   
-19 2022-01-20 -2.288036 -2.318302 -2.513766  0.444538       NaN  -1.117465   
-20 2022-01-21 -2.229944 -2.288036 -2.692607 -1.109346       NaN   2.987033   
-21 2022-01-22 -0.987361 -2.229944 -1.961966 -0.965885       NaN   1.895034   
-22 2022-01-23 -1.361112 -0.987361 -2.323212 -0.082547       NaN   0.191774   
-23 2022-01-24 -1.094514 -1.361112 -1.911401 -0.195067       NaN   0.372851   
-24 2022-01-25 -1.745783 -1.094514 -2.584769 -0.660406       NaN   1.706997   
-25 2022-01-26 -2.614602 -1.745783 -2.318302 -0.430592       NaN   0.998242   
-26 2022-01-27 -3.099211 -2.614602 -2.288036 -2.513766       NaN   5.751587   
-27 2022-01-28 -3.413576 -3.099211 -2.229944 -2.692607       NaN   6.004361   
-28 2022-01-29 -4.333893 -3.413576 -0.987361 -1.961966       NaN   1.937169   
-29 2022-01-30 -4.796134 -4.333893 -1.361112 -2.323212       NaN   3.162152   
-30 2022-01-31 -4.795247 -4.796134 -1.094514 -1.911401 -0.159855   2.092055   
-31 2022-02-01 -5.204955 -4.795247 -1.745783 -2.584769 -0.414006   4.512445   
-32 2022-02-02 -6.706889 -5.204955 -2.614602 -2.318302 -1.140640   6.061438   
-33 2022-02-03 -7.278792 -6.706889 -3.099211 -2.288036 -2.007078   7.091107   
-34 2022-02-04 -7.756690 -7.278792 -3.413576 -2.229944 -2.108152   7.612081   
-35 2022-02-05 -6.951853 -7.756690 -4.333893 -0.987361  0.444538   4.279117   
-36 2022-02-06 -5.697572 -6.951853 -4.796134 -1.361112 -1.109346   6.528074   
-37 2022-02-07 -7.004999 -5.697572 -4.795247 -1.094514 -0.965885   5.248465   
-38 2022-02-08 -7.951053 -7.004999 -5.204955 -1.745783 -0.082547   9.086720   
-39 2022-02-09 -7.702975 -7.951053 -6.706889 -2.614602 -0.195067  17.535848   
+0  2022-01-01  0.220253       NaN       NaN       NaN       NaN        NaN   
+1  2022-01-02 -0.216133  0.220253       NaN       NaN       NaN        NaN   
+2  2022-01-03  0.248988 -0.216133       NaN       NaN       NaN        NaN   
+3  2022-01-04 -1.816456  0.248988       NaN       NaN       NaN        NaN   
+4  2022-01-05 -1.122151 -1.816456       NaN       NaN       NaN        NaN   
+5  2022-01-06 -0.934480 -1.122151       NaN       NaN       NaN        NaN   
+6  2022-01-07  0.115752 -0.934480       NaN       NaN       NaN        NaN   
+7  2022-01-08  1.456726  0.115752  0.220253       NaN       NaN        NaN   
+8  2022-01-09  0.364350  1.456726 -0.216133       NaN       NaN        NaN   
+9  2022-01-10  0.688577  0.364350  0.248988       NaN       NaN        NaN   
+10 2022-01-11 -0.379052  0.688577 -1.816456       NaN       NaN        NaN   
+11 2022-01-12 -0.196976 -0.379052 -1.122151       NaN       NaN        NaN   
+12 2022-01-13 -0.459920 -0.196976 -0.934480       NaN       NaN        NaN   
+13 2022-01-14 -0.715498 -0.459920  0.115752       NaN       NaN        NaN   
+14 2022-01-15 -1.008225 -0.715498  1.456726  0.220253       NaN   0.320848   
+15 2022-01-16 -0.414917 -1.008225  0.364350 -0.216133       NaN  -0.078748   
+16 2022-01-17  1.938531 -0.414917  0.688577  0.248988       NaN   0.171447   
+17 2022-01-18  2.338982  1.938531 -0.379052 -1.816456       NaN   0.688531   
+18 2022-01-19  1.873405  2.338982 -0.196976 -1.122151       NaN   0.221037   
+19 2022-01-20  3.023120  1.873405 -0.459920 -0.934480       NaN   0.429786   
+20 2022-01-21  1.733697  3.023120 -0.715498  0.115752       NaN  -0.082820   
+21 2022-01-22  1.031991  1.733697 -1.008225  1.456726       NaN  -1.468708   
+22 2022-01-23  2.076251  1.031991 -0.414917  0.364350       NaN  -0.151175   
+23 2022-01-24  2.124733  2.076251  1.938531  0.688577       NaN   1.334828   
+24 2022-01-25  2.262336  2.124733  2.338982 -0.379052       NaN  -0.886595   
+25 2022-01-26  3.195369  2.262336  1.873405 -0.196976       NaN  -0.369016   
+26 2022-01-27  3.502901  3.195369  3.023120 -0.459920       NaN  -1.390392   
+27 2022-01-28  6.279846  3.502901  1.733697 -0.715498       NaN  -1.240457   
+28 2022-01-29  4.180164  6.279846  1.031991 -1.008225       NaN  -1.040479   
+29 2022-01-30  4.715502  4.180164  2.076251 -0.414917       NaN  -0.861471   
+30 2022-01-31  3.268195  4.715502  2.124733  1.938531  0.220253   4.118861   
+31 2022-02-01  5.157085  3.268195  2.262336  2.338982 -0.216133   5.291561   
+32 2022-02-02  5.133468  5.157085  3.195369  1.873405  0.248988   5.986220   
+33 2022-02-03  5.980759  5.133468  3.502901  3.023120 -1.816456  10.589692   
+34 2022-02-04  6.843797  5.980759  6.279846  1.733697 -1.122151  10.887348   
+35 2022-02-05  8.119320  6.843797  4.180164  1.031991 -0.934480   4.313892   
+36 2022-02-06  8.824915  8.119320  4.715502  2.076251  0.115752   9.790565   
+37 2022-02-07  8.721292  8.824915  3.268195  2.124733  1.456726   6.944040   
+38 2022-02-08  8.891161  8.721292  5.157085  2.262336  0.364350  11.667056   
+39 2022-02-09  9.006800  8.891161  5.133468  3.195369  0.688577  16.403326   
 
     rolling_mean_7  rolling_std_7  rolling_mean_30  rolling_std_30  \
 0              NaN            NaN              NaN             NaN   
@@ -3871,40 +3940,40 @@ Data with additional rolling statistics:
 3              NaN            NaN              NaN             NaN   
 4              NaN            NaN              NaN             NaN   
 5              NaN            NaN              NaN             NaN   
-6        -0.927791       0.946341              NaN             NaN   
-7        -1.042938       0.884334              NaN             NaN   
-8        -0.995587       0.931252              NaN             NaN   
-9        -0.860505       0.974290              NaN             NaN   
-10       -0.668124       0.832844              NaN             NaN   
-11       -0.428472       0.538902              NaN             NaN   
-12       -0.851087       0.824476              NaN             NaN   
-13       -1.077267       1.083587              NaN             NaN   
-14       -1.219564       1.130893              NaN             NaN   
-15       -1.539659       1.070943              NaN             NaN   
-16       -1.784850       0.893584              NaN             NaN   
-17       -2.059759       0.778612              NaN             NaN   
-18       -2.329432       0.300282              NaN             NaN   
-19       -2.297185       0.289099              NaN             NaN   
-20       -2.231090       0.230598              NaN             NaN   
-21       -2.091861       0.525642              NaN             NaN   
-22       -1.954418       0.578220              NaN             NaN   
-23       -1.837720       0.664365              NaN             NaN   
-24       -1.717864       0.577076              NaN             NaN   
-25       -1.760193       0.636287              NaN             NaN   
-26       -1.876075       0.800991              NaN             NaN   
-27       -2.045166       0.990628              NaN             NaN   
-28       -2.523242       1.183744              NaN             NaN   
-29       -3.013959       1.325227        -1.769974        1.241510   
-30       -3.542635       1.159712        -1.924487        1.320170   
-31       -4.036803       0.991195        -2.084185        1.417349   
-32       -4.621415       1.197853        -2.269727        1.636900   
-33       -5.218498       1.345245        -2.445451        1.873584   
-34       -5.838943       1.375265        -2.633736        2.107713   
-35       -6.212937       1.247825        -2.880282        2.166978   
-36       -6.341714       1.116885        -3.033223        2.199351   
-37       -6.657393       0.897720        -3.234527        2.278555   
-38       -7.049693       0.744099        -3.496810        2.354815   
-39       -7.191991       0.762629        -3.747074        2.390504   
+6        -0.500604       0.800872              NaN             NaN   
+7        -0.323965       1.075599              NaN             NaN   
+8        -0.241039       1.107210              NaN             NaN   
+9        -0.178240       1.151227              NaN             NaN   
+10        0.027103       0.914089              NaN             NaN   
+11        0.159271       0.776799              NaN             NaN   
+12        0.227065       0.680127              NaN             NaN   
+13        0.108316       0.769498              NaN             NaN   
+14       -0.243820       0.593466              NaN             NaN   
+15       -0.355144       0.530073              NaN             NaN   
+16       -0.176579       0.969042              NaN             NaN   
+17        0.211711       1.345729              NaN             NaN   
+18        0.507480       1.463316              NaN             NaN   
+19        1.005057       1.658678              NaN             NaN   
+20        1.354942       1.484416              NaN             NaN   
+21        1.646401       1.091333              NaN             NaN   
+22        2.002282       0.604873              NaN             NaN   
+23        2.028883       0.605695              NaN             NaN   
+24        2.017933       0.599820              NaN             NaN   
+25        2.206785       0.738750              NaN             NaN   
+26        2.275325       0.842134              NaN             NaN   
+27        2.924775       1.685500              NaN             NaN   
+28        3.374514       1.506817              NaN             NaN   
+29        3.751550       1.457203         1.203589        1.934141   
+30        3.914902       1.300062         1.305187        1.960578   
+31        4.328437       1.136949         1.484294        2.059732   
+32        4.605309       1.047501         1.647110        2.149800   
+33        4.959288       1.031423         1.907017        2.187624   
+34        5.039853       1.165123         2.172549        2.288397   
+35        5.602589       1.563778         2.474342        2.455424   
+36        6.189648       1.908595         2.764648        2.672224   
+37        6.968662       1.606377         3.006800        2.871347   
+38        7.502102       1.522332         3.291027        3.018986   
+39        8.055435       1.184302         3.568301        3.150834   
 
     rolling_var_30  
 0              NaN  
@@ -3936,99 +4005,99 @@ Data with additional rolling statistics:
 26             NaN  
 27             NaN  
 28             NaN  
-29        1.541348  
-30        1.742850  
-31        2.008878  
-32        2.679441  
-33        3.510317  
-34        4.442453  
-35        4.695792  
-36        4.837143  
-37        5.191813  
-38        5.545153  
-39        5.714510  </code></pre>
+29        3.740900  
+30        3.843865  
+31        4.242496  
+32        4.621642  
+33        4.785699  
+34        5.236759  
+35        6.029106  
+36        7.140779  
+37        8.244635  
+38        9.114277  
+39        9.927756  </code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="chapter2_data_preprocessing_files/figure-html/cell-24-output-2.png" width="1098" height="579" class="figure-img"></p>
+<p><img src="chapter2_data_preprocessing_files/figure-html/cell-24-output-2.png" width="1087" height="579" class="figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Data with temporal features and target:
-          date      value      lag_1     lag_7    lag_14    lag_30   lag_7_14  \
-30 2022-01-31  -4.795247  -4.796134 -1.094514 -1.911401 -0.159855   2.092055   
-31 2022-02-01  -5.204955  -4.795247 -1.745783 -2.584769 -0.414006   4.512445   
-32 2022-02-02  -6.706889  -5.204955 -2.614602 -2.318302 -1.140640   6.061438   
-33 2022-02-03  -7.278792  -6.706889 -3.099211 -2.288036 -2.007078   7.091107   
-34 2022-02-04  -7.756690  -7.278792 -3.413576 -2.229944 -2.108152   7.612081   
-35 2022-02-05  -6.951853  -7.756690 -4.333893 -0.987361  0.444538   4.279117   
-36 2022-02-06  -5.697572  -6.951853 -4.796134 -1.361112 -1.109346   6.528074   
-37 2022-02-07  -7.004999  -5.697572 -4.795247 -1.094514 -0.965885   5.248465   
-38 2022-02-08  -7.951053  -7.004999 -5.204955 -1.745783 -0.082547   9.086720   
-39 2022-02-09  -7.702975  -7.951053 -6.706889 -2.614602 -0.195067  17.535848   
-40 2022-02-10  -9.255854  -7.702975 -7.278792 -3.099211 -0.660406  22.558516   
-41 2022-02-11  -9.906747  -9.255854 -7.756690 -3.413576 -0.430592  26.478046   
-42 2022-02-12  -9.862692  -9.906747 -6.951853 -4.333893 -2.513766  30.128590   
-43 2022-02-13 -11.824378  -9.862692 -5.697572 -4.796134 -2.692607  27.326316   
-44 2022-02-14 -12.286872 -11.824378 -7.004999 -4.795247 -1.961966  33.590705   
-45 2022-02-15 -12.112133 -12.286872 -7.951053 -5.204955 -2.323212  41.384868   
-46 2022-02-16 -10.935368 -12.112133 -7.702975 -6.706889 -1.911401  51.663004   
-47 2022-02-17 -11.585352 -10.935368 -9.255854 -7.278792 -2.584769  67.371439   
-48 2022-02-18 -12.326566 -11.585352 -9.906747 -7.756690 -2.318302  76.843564   
-49 2022-02-19 -11.537896 -12.326566 -9.862692 -6.951853 -2.288036  68.563989   
+          date      value      lag_1      lag_7    lag_14    lag_30   lag_7_14  \
+30 2022-01-31   3.268195   4.715502   2.124733  1.938531  0.220253   4.118861   
+31 2022-02-01   5.157085   3.268195   2.262336  2.338982 -0.216133   5.291561   
+32 2022-02-02   5.133468   5.157085   3.195369  1.873405  0.248988   5.986220   
+33 2022-02-03   5.980759   5.133468   3.502901  3.023120 -1.816456  10.589692   
+34 2022-02-04   6.843797   5.980759   6.279846  1.733697 -1.122151  10.887348   
+35 2022-02-05   8.119320   6.843797   4.180164  1.031991 -0.934480   4.313892   
+36 2022-02-06   8.824915   8.119320   4.715502  2.076251  0.115752   9.790565   
+37 2022-02-07   8.721292   8.824915   3.268195  2.124733  1.456726   6.944040   
+38 2022-02-08   8.891161   8.721292   5.157085  2.262336  0.364350  11.667056   
+39 2022-02-09   9.006800   8.891161   5.133468  3.195369  0.688577  16.403326   
+40 2022-02-10   7.958452   9.006800   5.980759  3.502901 -0.379052  20.950010   
+41 2022-02-11  10.043107   7.958452   6.843797  6.279846 -0.196976  42.977989   
+42 2022-02-12  10.112443  10.043107   8.119320  4.180164 -0.459920  33.940086   
+43 2022-02-13   9.289507  10.112443   8.824915  4.715502 -0.715498  41.613903   
+44 2022-02-14   9.239068   9.289507   8.721292  3.268195 -1.008225  28.502879   
+45 2022-02-15   8.063181   9.239068   8.891161  5.157085 -0.414917  45.852473   
+46 2022-02-16   9.089009   8.063181   9.006800  5.133468  1.938531  46.236125   
+47 2022-02-17  10.299524   9.089009   7.958452  5.980759  2.338982  47.597581   
+48 2022-02-18  10.788708  10.299524  10.043107  6.843797  1.873405  68.732979   
+49 2022-02-19   9.596334  10.788708  10.112443  8.119320  3.023120  82.106155   
 
     rolling_mean_7  rolling_std_7  rolling_mean_30  rolling_std_30  \
-30       -3.542635       1.159712        -1.924487        1.320170   
-31       -4.036803       0.991195        -2.084185        1.417349   
-32       -4.621415       1.197853        -2.269727        1.636900   
-33       -5.218498       1.345245        -2.445451        1.873584   
-34       -5.838943       1.375265        -2.633736        2.107713   
-35       -6.212937       1.247825        -2.880282        2.166978   
-36       -6.341714       1.116885        -3.033223        2.199351   
-37       -6.657393       0.897720        -3.234527        2.278555   
-38       -7.049693       0.744099        -3.496810        2.354815   
-39       -7.191991       0.762629        -3.747074        2.390504   
-40       -7.474428       1.094168        -4.033589        2.519423   
-41       -7.781579       1.435231        -4.349461        2.643120   
-42       -8.197413       1.570111        -4.594425        2.802844   
-43       -9.072671       1.649981        -4.898817        3.072109   
-44       -9.827225       1.751427        -5.242981        3.301528   
-45      -10.421665       1.714267        -5.569278        3.481818   
-46      -10.883435       1.225579        -5.870077        3.544151   
-47      -11.216220       1.006703        -6.170096        3.636216   
-48      -11.561909       0.890913        -6.503705        3.728580   
-49      -11.801224       0.495764        -6.812034        3.750338   
+30        3.914902       1.300062         1.305187        1.960578   
+31        4.328437       1.136949         1.484294        2.059732   
+32        4.605309       1.047501         1.647110        2.149800   
+33        4.959288       1.031423         1.907017        2.187624   
+34        5.039853       1.165123         2.172549        2.288397   
+35        5.602589       1.563778         2.474342        2.455424   
+36        6.189648       1.908595         2.764648        2.672224   
+37        6.968662       1.606377         3.006800        2.871347   
+38        7.502102       1.522332         3.291027        3.018986   
+39        8.055435       1.184302         3.568301        3.150834   
+40        8.337962       0.770476         3.846218        3.158348   
+41        8.795007       0.680020         4.187554        3.258084   
+42        9.079738       0.762249         4.539966        3.309432   
+43        9.146109       0.756568         4.873466        3.265385   
+44        9.220077       0.733058         5.215043        3.163277   
+45        9.101794       0.852108         5.497646        3.018351   
+46        9.113538       0.851147         5.735995        3.009921   
+47        9.447977       0.778471         6.001347        3.050737   
+48        9.554491       0.912876         6.298523        3.068934   
+49        9.480762       0.880573         6.517630        3.061662   
 
     rolling_var_30     target  day_of_week  month  
-30        1.742850  -5.204955            0      1  
-31        2.008878  -6.706889            1      2  
-32        2.679441  -7.278792            2      2  
-33        3.510317  -7.756690            3      2  
-34        4.442453  -6.951853            4      2  
-35        4.695792  -5.697572            5      2  
-36        4.837143  -7.004999            6      2  
-37        5.191813  -7.951053            0      2  
-38        5.545153  -7.702975            1      2  
-39        5.714510  -9.255854            2      2  
-40        6.347490  -9.906747            3      2  
-41        6.986082  -9.862692            4      2  
-42        7.855934 -11.824378            5      2  
-43        9.437854 -12.286872            6      2  
-44       10.900089 -12.112133            0      2  
-45       12.123058 -10.935368            1      2  
-46       12.561005 -11.585352            2      2  
-47       13.222066 -12.326566            3      2  
-48       13.902306 -11.537896            4      2  
-49       14.065037 -11.107055            5      2  
+30        3.843865   5.157085            0      1  
+31        4.242496   5.133468            1      2  
+32        4.621642   5.980759            2      2  
+33        4.785699   6.843797            3      2  
+34        5.236759   8.119320            4      2  
+35        6.029106   8.824915            5      2  
+36        7.140779   8.721292            6      2  
+37        8.244635   8.891161            0      2  
+38        9.114277   9.006800            1      2  
+39        9.927756   7.958452            2      2  
+40        9.975159  10.043107            3      2  
+41       10.615114  10.112443            4      2  
+42       10.952337   9.289507            5      2  
+43       10.662736   9.239068            6      2  
+44       10.006321   8.063181            0      2  
+45        9.110442   9.089009            1      2  
+46        9.059624  10.299524            2      2  
+47        9.306995  10.788708            3      2  
+48        9.418357   9.596334            4      2  
+49        9.373773   8.296122            5      2  
 Walk-Forward Validation Predictions:
- [-3.4708069414361136, -3.454952115663175, -3.436710947808422, -3.422144953244814, -3.4072721050399526, -3.392068117150227, -3.3746647606974767, -3.3596300016420875, -3.3443396804262364, -3.3295775807298535, -3.3194675449715936, -3.3103046466456996, -3.29495935114332, -3.2775542332810277, -3.257987761191267, -3.2413164246181965, -3.2240519730754698, -3.200769629668011, -3.175679464628325, -3.1496368708823175, -3.1214292449759786, -3.092628643840061, -3.0626068102200192, -3.031440333784333, -2.9968311719030276, -2.965426691276862, -2.9299833193264178, -2.8904414036197177, -2.848708045783624, -2.8079659906969616]</code></pre>
+ [18.33068704125576, 18.357033020423746, 18.378360099558993, 18.40254673194383, 18.424760112103403, 18.448252066375574, 18.474366920451928, 18.496536152412737, 18.520779215205884, 18.544231594780992, 18.565090001135626, 18.57944338032256, 18.59568307727633, 18.616933669853157, 18.64426170441113, 18.668130400804895, 18.691819511604404, 18.715562399256843, 18.739389290301123, 18.764172324819747, 18.791151228922352, 18.81854295495382, 18.844301759560203, 18.870741194875364, 18.896636612559018, 18.92560257502918, 18.953403589701665, 18.983370741786185, 19.009368058631086, 19.03416341484842]</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="chapter2_data_preprocessing_files/figure-html/cell-24-output-4.png" width="1090" height="579" class="figure-img"></p>
+<p><img src="chapter2_data_preprocessing_files/figure-html/cell-24-output-4.png" width="1087" height="579" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -4095,7 +4164,9 @@ Walk-Forward Validation Predictions:
 <li><p><strong>Advanced Indexing:</strong> Use advanced spatial indexing techniques like k-d trees and geohashes for large-scale geospatial datasets.</p></li>
 <li><p><strong>Integration:</strong> Integrate geohashing with other spatial data structures (e.g., spatial databases) for efficient data retrieval and analysis.</p></li>
 </ul>
-<div id="0bb5441b" class="cell" data-execution_count="24">
+<div id="7dafdeca" class="cell" data-execution_count="24">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
 <span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> Point</span>
@@ -4186,6 +4257,7 @@ Walk-Forward Validation Predictions:
 <span id="cb59-88"><a href="#cb59-88" aria-hidden="true" tabindex="-1"></a>query_bbox <span class="op">=</span> geohash_bbox(query_geohash)</span>
 <span id="cb59-89"><a href="#cb59-89" aria-hidden="true" tabindex="-1"></a>matches <span class="op">=</span> <span class="bu">list</span>(geohash_index.intersection((query_bbox[<span class="st">'w'</span>], query_bbox[<span class="st">'s'</span>], query_bbox[<span class="st">'e'</span>], query_bbox[<span class="st">'n'</span>])))</span>
 <span id="cb59-90"><a href="#cb59-90" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Points within geohash bounding box:"</span>, matches)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Original GPS coordinates:
                      geometry
@@ -4221,7 +4293,7 @@ Points within geohash bounding box: [0]</code></pre>
 
 '+init=&lt;authority&gt;:&lt;code&gt;' syntax is deprecated. '&lt;authority&gt;:&lt;code&gt;' is the preferred initialization method. When making the change, be mindful of axis order changes: https://pyproj4.github.io/pyproj/stable/gotchas.html#axis-order-changes-in-proj-6
 
-/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_89044/3536010649.py:27: FutureWarning:
+/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_9018/3536010649.py:27: FutureWarning:
 
 This function is deprecated. See: https://pyproj4.github.io/pyproj/stable/gotchas.html#upgrading-to-pyproj-2-from-pyproj-1
 </code></pre>

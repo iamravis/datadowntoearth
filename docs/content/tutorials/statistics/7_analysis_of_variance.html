@@ -294,7 +294,9 @@ F = \frac{\text{between-group variance}}{\text{within-group variance}}
 <section id="post-hoc-tests" class="level3">
 <h3 class="anchored" data-anchor-id="post-hoc-tests">Post-hoc Tests</h3>
 <p>Post-hoc tests are performed after finding a significant F-ratio to identify which specific groups differ. 1. <strong>Tukey’s HSD (Honestly Significant Difference)</strong>: Used to determine which specific group means are different from each other. 2. <strong>Bonferroni Correction</strong>: Adjusts the significance level to control for Type I errors when multiple comparisons are made, reducing the chances of falsely identifying a difference.</p>
-<div id="818428bd" class="cell" data-execution_count="1">
+<div id="15aed7a1" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -364,6 +366,7 @@ F = \frac{\text{between-group variance}}{\text{within-group variance}}
 <span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>                    (df.groupby(<span class="st">'school'</span>)[<span class="st">'score'</span>].mean() <span class="op">-</span> df[<span class="st">'score'</span>].mean())<span class="op">**</span><span class="dv">2</span>)</span>
 <span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>eta_squared <span class="op">=</span> ss_between <span class="op">/</span> ss_total</span>
 <span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Effect size (Eta-squared): </span><span class="sc">{</span>eta_squared<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -450,7 +453,9 @@ F = \frac{\text{variance due to factor A, factor B, and interaction}}{\text{with
 <section id="example-2" class="level4">
 <h4 class="anchored" data-anchor-id="example-2">Example</h4>
 <p>The effect of teaching method (e.g., traditional vs.&nbsp;interactive) might differ for students who study for 1 hour versus those who study for 3 hours, indicating an interaction between study time and teaching method.</p>
-<div id="f028915c" class="cell" data-execution_count="2">
+<div id="671ce9ad" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -561,6 +566,7 @@ F = \frac{\text{variance due to factor A, factor B, and interaction}}{\text{with
 <span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a>    anova_result <span class="op">=</span> anova_lm(model, typ<span class="op">=</span><span class="dv">2</span>)</span>
 <span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Simple main effect of Study Time for </span><span class="sc">{</span>method<span class="sc">}</span><span class="ss"> method:"</span>)</span>
 <span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(anova_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -609,7 +615,7 @@ Tukey's HSD test results for Study_Time:
 ------------------------------------------------------</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_88193/255884064.py:83: FutureWarning:
+<pre><code>/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_8093/255884064.py:83: FutureWarning:
 
 
 
@@ -713,7 +719,9 @@ Residual       2009.963871  87.0        NaN           NaN</code></pre>
 <li><strong>Discriminant Analysis</strong>: Used to determine which dependent variables contribute most to the group differences.</li>
 <li><strong>Bonferroni Correction</strong>: Adjusts the significance level for multiple comparisons, controlling for Type I errors.</li>
 </ol>
-<div id="bd00786a" class="cell" data-execution_count="3">
+<div id="372b2900" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
@@ -787,6 +795,7 @@ Residual       2009.963871  87.0        NaN           NaN</code></pre>
 <span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> dv <span class="kw">in</span> dependent_vars:</span>
 <span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span>dv<span class="sc">}</span><span class="ss">:"</span>)</span>
 <span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(bonferroni_pairwise(data, dv, <span class="st">'Group'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   Multivariate linear model
 ===============================================================
@@ -878,7 +887,9 @@ Blood_Pressure:
 <li><strong>Pairwise Comparisons</strong>: Used to determine which time points or conditions are significantly different from each other.</li>
 <li><strong>Bonferroni Correction</strong>: Adjusts the significance level for multiple comparisons, reducing the risk of Type I errors.</li>
 </ol>
-<div id="0c433d0d" class="cell" data-execution_count="4">
+<div id="cbdff698" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pingouin <span class="im">as</span> pg</span>
@@ -935,6 +946,7 @@ Blood_Pressure:
 <span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>                            padjust<span class="op">=</span><span class="st">'bonf'</span>, parametric<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Post-hoc Pairwise Comparisons (Bonferroni-corrected):"</span>)</span>
 <span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(posthoc[[<span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'T'</span>, <span class="st">'p-corr'</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Data sample:
    Subject      Time  Performance
@@ -1007,7 +1019,9 @@ Post-hoc Pairwise Comparisons (Bonferroni-corrected):
 <li><strong>Random Effects</strong>: Factors that introduce random variability, often related to experimental units (e.g., patients within hospitals).</li>
 </ol>
 <p>Mixed-effects models allow for more flexible modeling of complex data structures, capturing both the fixed and random sources of variability.</p>
-<div id="efc85f99" class="cell" data-execution_count="5">
+<div id="1e6ab07f" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
@@ -1054,6 +1068,7 @@ Post-hoc Pairwise Comparisons (Bonferroni-corrected):
 <span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Access random effects</span></span>
 <span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Random Effects:"</span>)</span>
 <span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mixed_model_fit.random_effects)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>         Mixed Linear Model Regression Results
 =======================================================
