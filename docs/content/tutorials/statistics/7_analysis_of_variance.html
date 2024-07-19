@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>analysis_of_variance – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="chapter-7-analysis-of-variance" class="level1 text-content">
+<h1>Chapter 7: Analysis Of Variance</h1>
+<section id="one-way-anova" class="level2">
+<h2 class="anchored" data-anchor-id="one-way-anova">One-way ANOVA</h2>
+<section id="definition" class="level3">
+<h3 class="anchored" data-anchor-id="definition">Definition</h3>
+<p>A statistical test used to compare the means of three or more groups based on one independent variable (factor). One-way ANOVA examines if there are any statistically significant differences among the means of the groups. It is called “one-way” because it investigates the effect of a single factor.</p>
+</section>
+<section id="purpose" class="level3">
+<h3 class="anchored" data-anchor-id="purpose">Purpose</h3>
+<p>To determine if there are statistically significant differences between the means of the groups. One-way ANOVA helps in understanding whether the observed variations between group means are due to the independent variable or by random chance.</p>
+</section>
+<section id="assumptions" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
+<ol type="1">
+<li><strong>Independence</strong>: Observations are independent of each other, meaning the outcome of one observation does not influence another.</li>
+<li><strong>Normality</strong>: The data in each group are normally distributed. This assumption can be checked using normality tests like the Shapiro-Wilk test.</li>
+<li><strong>Homogeneity of variances</strong>: The variance among the groups is approximately equal. This can be tested using Levene’s test or Bartlett’s test.</li>
+</ol>
+</section>
+<section id="formula" class="level3">
+<h3 class="anchored" data-anchor-id="formula">Formula</h3>
+<p>The F-statistic in one-way ANOVA is calculated as: <span class="math display">\[
+F = \frac{\text{between-group variance}}{\text{within-group variance}}
+\]</span> where the between-group variance measures the variability due to the interaction between the different groups, and the within-group variance measures the variability within each group.</p>
+</section>
+<section id="example" class="level3">
+<h3 class="anchored" data-anchor-id="example">Example</h3>
+<p>Comparing the mean test scores of students from three different schools can reveal if there are differences in educational outcomes across schools.</p>
+</section>
+<section id="post-hoc-tests" class="level3">
+<h3 class="anchored" data-anchor-id="post-hoc-tests">Post-hoc Tests</h3>
+<p>Post-hoc tests are performed after finding a significant F-ratio to identify which specific groups differ. 1. <strong>Tukey’s HSD (Honestly Significant Difference)</strong>: Used to determine which specific group means are different from each other. 2. <strong>Bonferroni Correction</strong>: Adjusts the significance level to control for Type I errors when multiple comparisons are made, reducing the chances of falsely identifying a difference.</p>
+<div id="818428bd" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.multicomp <span class="im">import</span> pairwise_tukeyhsd</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.formula.api <span class="im">import</span> ols</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.anova <span class="im">import</span> anova_lm</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Set random seed for reproducibility</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate sample data</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>school_a <span class="op">=</span> np.random.normal(<span class="dv">75</span>, <span class="dv">10</span>, <span class="dv">50</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>school_b <span class="op">=</span> np.random.normal(<span class="dv">80</span>, <span class="dv">10</span>, <span class="dv">50</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>school_c <span class="op">=</span> np.random.normal(<span class="dv">85</span>, <span class="dv">10</span>, <span class="dv">50</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a DataFrame</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">'score'</span>: np.concatenate([school_a, school_b, school_c]),</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">'school'</span>: np.repeat([<span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'C'</span>], <span class="dv">50</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Visualize the data</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>sns.boxplot(x<span class="op">=</span><span class="st">'school'</span>, y<span class="op">=</span><span class="st">'score'</span>, data<span class="op">=</span>df)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Test Scores by School'</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Check assumptions</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># 2.1 Normality test (Shapiro-Wilk)</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> check_normality(group):</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    stat, p <span class="op">=</span> stats.shapiro(group)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> p <span class="op">&gt;</span> <span class="fl">0.05</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>normality_results <span class="op">=</span> df.groupby(<span class="st">'school'</span>)[<span class="st">'score'</span>].<span class="bu">apply</span>(check_normality)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Normality assumption met for each group:"</span>)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(normality_results)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="co"># 2.2 Homogeneity of variances (Levene's test)</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>levene_stat, levene_p <span class="op">=</span> stats.levene(school_a, school_b, school_c)</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Homogeneity of variances (Levene's test):"</span>)</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>levene_p<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Assumption met: </span><span class="sc">{</span>levene_p <span class="op">&gt;</span> <span class="fl">0.05</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Perform One-way ANOVA</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> ols(<span class="st">'score ~ C(school)'</span>, data<span class="op">=</span>df).fit()</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>anova_table <span class="op">=</span> anova_lm(model, typ<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">One-way ANOVA results:"</span>)</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(anova_table)</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Post-hoc test (Tukey's HSD)</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>tukey_results <span class="op">=</span> pairwise_tukeyhsd(df[<span class="st">'score'</span>], df[<span class="st">'school'</span>])</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Tukey's HSD test results:"</span>)</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tukey_results)</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Visualize the results</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>sns.violinplot(x<span class="op">=</span><span class="st">'school'</span>, y<span class="op">=</span><span class="st">'score'</span>, data<span class="op">=</span>df, inner<span class="op">=</span><span class="st">"box"</span>)</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Distribution of Test Scores by School'</span>)</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="co"># 6. Effect size (Eta-squared)</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>ss_total <span class="op">=</span> np.<span class="bu">sum</span>((df[<span class="st">'score'</span>] <span class="op">-</span> df[<span class="st">'score'</span>].mean())<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>ss_between <span class="op">=</span> np.<span class="bu">sum</span>(df.groupby(<span class="st">'school'</span>)[<span class="st">'score'</span>].count() <span class="op">*</span> </span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>                    (df.groupby(<span class="st">'school'</span>)[<span class="st">'score'</span>].mean() <span class="op">-</span> df[<span class="st">'score'</span>].mean())<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>eta_squared <span class="op">=</span> ss_between <span class="op">/</span> ss_total</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Effect size (Eta-squared): </span><span class="sc">{</span>eta_squared<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="7_analysis_of_variance_files/figure-html/cell-2-output-1.png" width="816" height="523" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Normality assumption met for each group:
+school
+A    True
+B    True
+C    True
+Name: score, dtype: bool
+
+Homogeneity of variances (Levene's test):
+p-value: 0.5807
+Assumption met: True
+
+One-way ANOVA results:
+                 sum_sq     df          F        PR(&gt;F)
+C(school)   3592.756768    2.0  20.204865  1.768489e-08
+Residual   13069.507012  147.0        NaN           NaN
+
+Tukey's HSD test results:
+Multiple Comparison of Means - Tukey HSD, FWER=0.05 
+====================================================
+group1 group2 meandiff p-adj   lower   upper  reject
+----------------------------------------------------
+     A      B   7.4325 0.0004  2.9675 11.8976   True
+     A      C  11.8619    0.0  7.3968 16.3269   True
+     B      C   4.4293 0.0524 -0.0357  8.8944  False
+----------------------------------------------------</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="7_analysis_of_variance_files/figure-html/cell-2-output-3.png" width="816" height="523" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Effect size (Eta-squared): 0.2156</code></pre>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="two-way-anova" class="level2">
+<h2 class="anchored" data-anchor-id="two-way-anova">Two-way ANOVA</h2>
+<section id="definition-1" class="level3">
+<h3 class="anchored" data-anchor-id="definition-1">Definition</h3>
+<p>A statistical test used to examine the influence of two different independent variables (factors) on one dependent variable. Two-way ANOVA assesses both the main effects of each factor and the interaction effect between the factors.</p>
+</section>
+<section id="purpose-1" class="level3">
+<h3 class="anchored" data-anchor-id="purpose-1">Purpose</h3>
+<p>To determine if there are any significant main effects and interaction effects between the factors on the dependent variable. This helps in understanding how two factors together affect the outcome.</p>
+</section>
+<section id="assumptions-1" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions-1">Assumptions</h3>
+<ol type="1">
+<li><strong>Independence</strong>: Observations are independent.</li>
+<li><strong>Normality</strong>: The data in each cell are normally distributed.</li>
+<li><strong>Homogeneity of variances</strong>: Variances are equal across groups.</li>
+</ol>
+</section>
+<section id="formula-1" class="level3">
+<h3 class="anchored" data-anchor-id="formula-1">Formula</h3>
+<p>The F-statistic for two-way ANOVA is calculated as: <span class="math display">\[
+F = \frac{\text{variance due to factor A, factor B, and interaction}}{\text{within-group variance}}
+\]</span> where the variance due to factors and interaction captures the combined effects of the independent variables and their interaction on the dependent variable.</p>
+</section>
+<section id="example-1" class="level3">
+<h3 class="anchored" data-anchor-id="example-1">Example</h3>
+<p>Examining the effects of different teaching methods (factor A) and different study times (factor B) on student performance can reveal if these factors individually or together influence scores.</p>
+</section>
+<section id="interaction-effects" class="level3">
+<h3 class="anchored" data-anchor-id="interaction-effects">Interaction Effects</h3>
+<section id="definition-2" class="level4">
+<h4 class="anchored" data-anchor-id="definition-2">Definition</h4>
+<p>Occurs when the effect of one factor depends on the level of the other factor. It indicates that the influence of one independent variable on the dependent variable changes across the levels of the second independent variable.</p>
+</section>
+<section id="example-2" class="level4">
+<h4 class="anchored" data-anchor-id="example-2">Example</h4>
+<p>The effect of teaching method (e.g., traditional vs.&nbsp;interactive) might differ for students who study for 1 hour versus those who study for 3 hours, indicating an interaction between study time and teaching method.</p>
+<div id="f028915c" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.multicomp <span class="im">import</span> pairwise_tukeyhsd</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.formula.api <span class="im">import</span> ols</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.anova <span class="im">import</span> anova_lm</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Set random seed for reproducibility</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate sample data</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>teaching_methods <span class="op">=</span> [<span class="st">'Traditional'</span>, <span class="st">'Interactive'</span>]</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>study_times <span class="op">=</span> [<span class="st">'1 hour'</span>, <span class="st">'2 hours'</span>, <span class="st">'3 hours'</span>]</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> []</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> method <span class="kw">in</span> teaching_methods:</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> time <span class="kw">in</span> study_times:</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> method <span class="op">==</span> <span class="st">'Traditional'</span>:</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>            base_score <span class="op">=</span> <span class="dv">70</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>            base_score <span class="op">=</span> <span class="dv">75</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> time <span class="op">==</span> <span class="st">'1 hour'</span>:</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>            time_effect <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> time <span class="op">==</span> <span class="st">'2 hours'</span>:</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>            time_effect <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>            time_effect <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Add interaction effect</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> method <span class="op">==</span> <span class="st">'Interactive'</span> <span class="kw">and</span> time <span class="op">==</span> <span class="st">'3 hours'</span>:</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>            interaction_effect <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>            interaction_effect <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>        scores <span class="op">=</span> np.random.normal(base_score <span class="op">+</span> time_effect <span class="op">+</span> interaction_effect, <span class="dv">5</span>, n_samples)</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>        data.extend([(score, method, time) <span class="cf">for</span> score <span class="kw">in</span> scores])</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Create DataFrame</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data, columns<span class="op">=</span>[<span class="st">'Score'</span>, <span class="st">'Teaching_Method'</span>, <span class="st">'Study_Time'</span>])</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Visualize the data</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>sns.boxplot(x<span class="op">=</span><span class="st">'Study_Time'</span>, y<span class="op">=</span><span class="st">'Score'</span>, hue<span class="op">=</span><span class="st">'Teaching_Method'</span>, data<span class="op">=</span>df)</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Student Scores by Teaching Method and Study Time'</span>)</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Check assumptions</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="co"># 2.1 Normality test (Shapiro-Wilk)</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> check_normality(group):</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>    _, p <span class="op">=</span> stats.shapiro(group)</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> p <span class="op">&gt;</span> <span class="fl">0.05</span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>normality_results <span class="op">=</span> df.groupby([<span class="st">'Teaching_Method'</span>, <span class="st">'Study_Time'</span>])[<span class="st">'Score'</span>].<span class="bu">apply</span>(check_normality)</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Normality assumption met for each group:"</span>)</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(normality_results)</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a><span class="co"># 2.2 Homogeneity of variances (Levene's test)</span></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>levene_stat, levene_p <span class="op">=</span> stats.levene(<span class="op">*</span>[group[<span class="st">'Score'</span>].values <span class="cf">for</span> name, group <span class="kw">in</span> df.groupby([<span class="st">'Teaching_Method'</span>, <span class="st">'Study_Time'</span>])])</span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Homogeneity of variances (Levene's test):"</span>)</span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"p-value: </span><span class="sc">{</span>levene_p<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Assumption met: </span><span class="sc">{</span>levene_p <span class="op">&gt;</span> <span class="fl">0.05</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Perform Two-way ANOVA</span></span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> ols(<span class="st">'Score ~ C(Teaching_Method) + C(Study_Time) + C(Teaching_Method):C(Study_Time)'</span>, data<span class="op">=</span>df).fit()</span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>anova_table <span class="op">=</span> anova_lm(model, typ<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Two-way ANOVA results:"</span>)</span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(anova_table)</span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Post-hoc tests</span></span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a><span class="co"># Tukey's HSD for main effects</span></span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> factor <span class="kw">in</span> [<span class="st">'Teaching_Method'</span>, <span class="st">'Study_Time'</span>]:</span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Tukey's HSD test results for </span><span class="sc">{</span>factor<span class="sc">}</span><span class="ss">:"</span>)</span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>    tukey_results <span class="op">=</span> pairwise_tukeyhsd(df[<span class="st">'Score'</span>], df[factor])</span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(tukey_results)</span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Visualize interaction effects</span></span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span><span class="st">'Study_Time'</span>, y<span class="op">=</span><span class="st">'Score'</span>, hue<span class="op">=</span><span class="st">'Teaching_Method'</span>, data<span class="op">=</span>df, err_style<span class="op">=</span><span class="st">'bars'</span>, ci<span class="op">=</span><span class="dv">68</span>)</span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Interaction Plot: Teaching Method and Study Time'</span>)</span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a><span class="co"># 6. Effect sizes</span></span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> eta_squared(aov):</span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a>    aov[<span class="st">'eta_sq'</span>] <span class="op">=</span> <span class="st">'NaN'</span></span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>    aov[<span class="st">'eta_sq'</span>] <span class="op">=</span> aov[:<span class="op">-</span><span class="dv">1</span>][<span class="st">'sum_sq'</span>] <span class="op">/</span> <span class="bu">sum</span>(aov[<span class="st">'sum_sq'</span>])</span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> aov</span>
+<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>anova_table <span class="op">=</span> eta_squared(anova_table)</span>
+<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">ANOVA table with effect sizes (eta-squared):"</span>)</span>
+<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(anova_table)</span>
+<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a><span class="co"># 7. Simple main effects analysis</span></span>
+<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> time <span class="kw">in</span> study_times:</span>
+<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> df[df[<span class="st">'Study_Time'</span>] <span class="op">==</span> time]</span>
+<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> ols(<span class="st">'Score ~ C(Teaching_Method)'</span>, data<span class="op">=</span>subset).fit()</span>
+<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a>    anova_result <span class="op">=</span> anova_lm(model, typ<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Simple main effect of Teaching Method at </span><span class="sc">{</span>time<span class="sc">}</span><span class="ss">:"</span>)</span>
+<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(anova_result)</span>
+<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> method <span class="kw">in</span> teaching_methods:</span>
+<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a>    subset <span class="op">=</span> df[df[<span class="st">'Teaching_Method'</span>] <span class="op">==</span> method]</span>
+<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> ols(<span class="st">'Score ~ C(Study_Time)'</span>, data<span class="op">=</span>subset).fit()</span>
+<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a>    anova_result <span class="op">=</span> anova_lm(model, typ<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Simple main effect of Study Time for </span><span class="sc">{</span>method<span class="sc">}</span><span class="ss"> method:"</span>)</span>
+<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(anova_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="7_analysis_of_variance_files/figure-html/cell-3-output-1.png" width="965" height="523" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Normality assumption met for each group:
+Teaching_Method  Study_Time
+Interactive      1 hour        True
+                 2 hours       True
+                 3 hours       True
+Traditional      1 hour        True
+                 2 hours       True
+                 3 hours       True
+Name: Score, dtype: bool
+
+Homogeneity of variances (Levene's test):
+p-value: 0.7383
+Assumption met: True
+
+Two-way ANOVA results:
+                                       sum_sq     df           F        PR(&gt;F)
+C(Teaching_Method)                2486.451643    1.0  109.830511  3.126282e-20
+C(Study_Time)                     5815.568130    2.0  128.441432  5.476868e-35
+C(Teaching_Method):C(Study_Time)   345.318080    2.0    7.626624  6.683656e-04
+Residual                          3939.183960  174.0         NaN           NaN
+
+Tukey's HSD test results for Teaching_Method:
+     Multiple Comparison of Means - Tukey HSD, FWER=0.05     
+=============================================================
+   group1      group2   meandiff p-adj  lower   upper  reject
+-------------------------------------------------------------
+Interactive Traditional  -7.4333   0.0 -9.6493 -5.2174   True
+-------------------------------------------------------------
+
+Tukey's HSD test results for Study_Time:
+ Multiple Comparison of Means - Tukey HSD, FWER=0.05  
+======================================================
+ group1  group2 meandiff p-adj   lower   upper  reject
+------------------------------------------------------
+ 1 hour 2 hours   4.9807 0.0001  2.3117  7.6497   True
+ 1 hour 3 hours  13.7502    0.0 11.0812 16.4192   True
+2 hours 3 hours   8.7695    0.0  6.1005 11.4385   True
+------------------------------------------------------</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/var/folders/v8/l5r44ftx4g5bx2y5fhdpcmmh0000gn/T/ipykernel_88193/255884064.py:83: FutureWarning:
+
+
+
+The `ci` parameter is deprecated. Use `errorbar=('ci', 68)` for the same effect.
+
+
+/Users/ravishankar/miniforge3/lib/python3.10/site-packages/seaborn/_oldcore.py:1119: FutureWarning:
+
+use_inf_as_na option is deprecated and will be removed in a future version. Convert inf values to NaN before operating instead.
+
+/Users/ravishankar/miniforge3/lib/python3.10/site-packages/seaborn/_oldcore.py:1119: FutureWarning:
+
+use_inf_as_na option is deprecated and will be removed in a future version. Convert inf values to NaN before operating instead.
+
+/Users/ravishankar/miniforge3/lib/python3.10/site-packages/seaborn/_oldcore.py:1075: FutureWarning:
+
+When grouping with a length-1 list-like, you will need to pass a length-1 tuple to get_group in a future version of pandas. Pass `(name,)` instead of `name` to silence this warning.
+
+/Users/ravishankar/miniforge3/lib/python3.10/site-packages/seaborn/_oldcore.py:1075: FutureWarning:
+
+When grouping with a length-1 list-like, you will need to pass a length-1 tuple to get_group in a future version of pandas. Pass `(name,)` instead of `name` to silence this warning.
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="7_analysis_of_variance_files/figure-html/cell-3-output-4.png" width="808" height="523" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ANOVA table with effect sizes (eta-squared):
+                                       sum_sq     df           F  \
+C(Teaching_Method)                2486.451643    1.0  109.830511   
+C(Study_Time)                     5815.568130    2.0  128.441432   
+C(Teaching_Method):C(Study_Time)   345.318080    2.0    7.626624   
+Residual                          3939.183960  174.0         NaN   
+
+                                        PR(&gt;F)    eta_sq  
+C(Teaching_Method)                3.126282e-20  0.197549  
+C(Study_Time)                     5.476868e-35  0.462047  
+C(Teaching_Method):C(Study_Time)  6.683656e-04  0.027436  
+Residual                                   NaN       NaN  
+
+Simple main effect of Teaching Method at 1 hour:
+                         sum_sq    df          F    PR(&gt;F)
+C(Teaching_Method)   511.492260   1.0  25.012323  0.000006
+Residual            1186.077414  58.0        NaN       NaN
+
+Simple main effect of Teaching Method at 2 hours:
+                         sum_sq    df          F    PR(&gt;F)
+C(Teaching_Method)   394.910767   1.0  16.490209  0.000149
+Residual            1388.995434  58.0        NaN       NaN
+
+Simple main effect of Teaching Method at 3 hours:
+                         sum_sq    df          F        PR(&gt;F)
+C(Teaching_Method)  1925.366696   1.0  81.863763  1.105686e-12
+Residual            1364.111112  58.0        NaN           NaN
+
+Simple main effect of Study Time for Traditional method:
+                    sum_sq    df          F        PR(&gt;F)
+C(Study_Time)  1817.264830   2.0  40.975636  2.893768e-13
+Residual       1929.220089  87.0        NaN           NaN
+
+Simple main effect of Study Time for Interactive method:
+                    sum_sq    df          F        PR(&gt;F)
+C(Study_Time)  4343.621380   2.0  94.005436  1.808708e-22
+Residual       2009.963871  87.0        NaN           NaN</code></pre>
+</div>
+</div>
+<hr>
+</section>
+</section>
+</section>
+<section id="manova" class="level2">
+<h2 class="anchored" data-anchor-id="manova">MANOVA</h2>
+<section id="definition-3" class="level3">
+<h3 class="anchored" data-anchor-id="definition-3">Definition</h3>
+<p>Multivariate analysis of variance, a technique used to compare the means of multiple dependent variables across groups. MANOVA extends ANOVA by considering multiple dependent variables simultaneously.</p>
+</section>
+<section id="purpose-2" class="level3">
+<h3 class="anchored" data-anchor-id="purpose-2">Purpose</h3>
+<p>To determine if the multivariate mean vectors of the groups are significantly different. It helps in understanding if groups differ on a combination of dependent variables.</p>
+</section>
+<section id="assumptions-2" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions-2">Assumptions</h3>
+<ol type="1">
+<li><strong>Independence</strong>: Observations are independent.</li>
+<li><strong>Multivariate Normality</strong>: The data follow a multivariate normal distribution.</li>
+<li><strong>Homogeneity of Covariance Matrices</strong>: The covariance matrices of the dependent variables are equal across groups.</li>
+</ol>
+</section>
+<section id="example-3" class="level3">
+<h3 class="anchored" data-anchor-id="example-3">Example</h3>
+<p>Comparing the effects of different diets on weight loss, cholesterol level, and blood pressure can reveal if dietary interventions influence these health metrics collectively.</p>
+</section>
+<section id="post-hoc-tests-1" class="level3">
+<h3 class="anchored" data-anchor-id="post-hoc-tests-1">Post-hoc Tests</h3>
+<ol type="1">
+<li><strong>Discriminant Analysis</strong>: Used to determine which dependent variables contribute most to the group differences.</li>
+<li><strong>Bonferroni Correction</strong>: Adjusts the significance level for multiple comparisons, controlling for Type I errors.</li>
+</ol>
+<div id="bd00786a" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.multivariate.manova <span class="im">import</span> MANOVA</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.discriminant_analysis <span class="im">import</span> LinearDiscriminantAnalysis</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate sample data</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> <span class="dv">99</span>  <span class="co"># Ensure equal group sizes</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create three groups (e.g., different diets)</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>groups <span class="op">=</span> np.repeat([<span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'C'</span>], n_samples <span class="op">//</span> <span class="dv">3</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate dependent variables (weight loss, cholesterol, blood pressure)</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>weight_loss <span class="op">=</span> np.random.normal(<span class="dv">5</span>, <span class="dv">2</span>, n_samples)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>cholesterol <span class="op">=</span> np.random.normal(<span class="dv">180</span>, <span class="dv">20</span>, n_samples)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>blood_pressure <span class="op">=</span> np.random.normal(<span class="dv">120</span>, <span class="dv">10</span>, n_samples)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Add group effects</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>weight_loss[groups <span class="op">==</span> <span class="st">'B'</span>] <span class="op">+=</span> <span class="dv">2</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>weight_loss[groups <span class="op">==</span> <span class="st">'C'</span>] <span class="op">+=</span> <span class="dv">4</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>cholesterol[groups <span class="op">==</span> <span class="st">'B'</span>] <span class="op">-=</span> <span class="dv">10</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>cholesterol[groups <span class="op">==</span> <span class="st">'C'</span>] <span class="op">-=</span> <span class="dv">20</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>blood_pressure[groups <span class="op">==</span> <span class="st">'B'</span>] <span class="op">-=</span> <span class="dv">5</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>blood_pressure[groups <span class="op">==</span> <span class="st">'C'</span>] <span class="op">-=</span> <span class="dv">10</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a DataFrame</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Group'</span>: groups,</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Weight_Loss'</span>: weight_loss,</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Cholesterol'</span>: cholesterol,</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Blood_Pressure'</span>: blood_pressure</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform MANOVA</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>dependent_vars <span class="op">=</span> [<span class="st">'Weight_Loss'</span>, <span class="st">'Cholesterol'</span>, <span class="st">'Blood_Pressure'</span>]</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>manova <span class="op">=</span> MANOVA.from_formula(<span class="st">'Weight_Loss + Cholesterol + Blood_Pressure ~ Group'</span>, data<span class="op">=</span>data)</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(manova.mv_test())</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Post-hoc tests</span></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a><span class="co">## Discriminant Analysis using sklearn</span></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> data[dependent_vars]</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> data[<span class="st">'Group'</span>]</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>lda <span class="op">=</span> LinearDiscriminantAnalysis()</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>lda.fit(X, y)</span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Discriminant Analysis:"</span>)</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, class_name <span class="kw">in</span> <span class="bu">enumerate</span>(lda.classes_):</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Coefficients for class </span><span class="sc">{</span>class_name<span class="sc">}</span><span class="ss">:"</span>)</span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> feature, coef <span class="kw">in</span> <span class="bu">zip</span>(dependent_vars, lda.coef_[i]):</span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>feature<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>coef<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a><span class="co">## Bonferroni-corrected pairwise comparisons</span></span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> bonferroni_pairwise(data, dv, group):</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>    groups <span class="op">=</span> data[group].unique()</span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>    n_comparisons <span class="op">=</span> <span class="bu">len</span>(groups) <span class="op">*</span> (<span class="bu">len</span>(groups) <span class="op">-</span> <span class="dv">1</span>) <span class="op">//</span> <span class="dv">2</span></span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>    alpha <span class="op">=</span> <span class="fl">0.05</span> <span class="op">/</span> n_comparisons  <span class="co"># Bonferroni correction</span></span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> []</span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, g1 <span class="kw">in</span> <span class="bu">enumerate</span>(groups):</span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> g2 <span class="kw">in</span> groups[i<span class="op">+</span><span class="dv">1</span>:]:</span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>            t_stat, p_value <span class="op">=</span> stats.ttest_ind(data[data[group] <span class="op">==</span> g1][dv], </span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>                                              data[data[group] <span class="op">==</span> g2][dv])</span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a>            results.append((g1, g2, dv, t_stat, p_value, p_value <span class="op">&lt;</span> alpha))</span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame(results, columns<span class="op">=</span>[<span class="st">'Group1'</span>, <span class="st">'Group2'</span>, <span class="st">'Variable'</span>, <span class="st">'T-statistic'</span>, <span class="st">'P-value'</span>, <span class="st">'Significant'</span>])</span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Bonferroni-corrected Pairwise Comparisons:"</span>)</span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> dv <span class="kw">in</span> dependent_vars:</span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="sc">{</span>dv<span class="sc">}</span><span class="ss">:"</span>)</span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(bonferroni_pairwise(data, dv, <span class="st">'Group'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   Multivariate linear model
+===============================================================
+                                                               
+---------------------------------------------------------------
+       Intercept         Value  Num DF  Den DF  F Value  Pr &gt; F
+---------------------------------------------------------------
+          Wilks' lambda  0.0119 3.0000 94.0000 2612.6986 0.0000
+         Pillai's trace  0.9881 3.0000 94.0000 2612.6986 0.0000
+ Hotelling-Lawley trace 83.3840 3.0000 94.0000 2612.6986 0.0000
+    Roy's greatest root 83.3840 3.0000 94.0000 2612.6986 0.0000
+---------------------------------------------------------------
+                                                               
+---------------------------------------------------------------
+           Group          Value  Num DF  Den DF  F Value Pr &gt; F
+---------------------------------------------------------------
+            Wilks' lambda 0.4520 6.0000 188.0000 15.2704 0.0000
+           Pillai's trace 0.5519 6.0000 190.0000 12.0675 0.0000
+   Hotelling-Lawley trace 1.2036 6.0000 123.5714 18.7589 0.0000
+      Roy's greatest root 1.1964 3.0000  95.0000 37.8861 0.0000
+===============================================================
+
+
+Discriminant Analysis:
+
+Coefficients for class A:
+Weight_Loss: -0.5772
+Cholesterol: 0.0194
+Blood_Pressure: 0.0537
+
+Coefficients for class B:
+Weight_Loss: -0.0441
+Cholesterol: -0.0016
+Blood_Pressure: -0.0083
+
+Coefficients for class C:
+Weight_Loss: 0.6213
+Cholesterol: -0.0178
+Blood_Pressure: -0.0454
+
+Bonferroni-corrected Pairwise Comparisons:
+
+Weight_Loss:
+  Group1 Group2     Variable  T-statistic       P-value  Significant
+0      A      B  Weight_Loss    -4.253288  7.000627e-05         True
+1      A      C  Weight_Loss    -9.349441  1.394369e-13         True
+2      B      C  Weight_Loss    -5.203521  2.202444e-06         True
+
+Cholesterol:
+  Group1 Group2     Variable  T-statistic   P-value  Significant
+0      A      B  Cholesterol     1.974127  0.052687        False
+1      A      C  Cholesterol     3.809665  0.000315         True
+2      B      C  Cholesterol     1.933426  0.057609        False
+
+Blood_Pressure:
+  Group1 Group2        Variable  T-statistic   P-value  Significant
+0      A      B  Blood_Pressure     2.576242  0.012306         True
+1      A      C  Blood_Pressure     4.507636  0.000029         True
+2      B      C  Blood_Pressure     1.682561  0.097333        False</code></pre>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="repeated-measures-anova" class="level2">
+<h2 class="anchored" data-anchor-id="repeated-measures-anova">Repeated Measures ANOVA</h2>
+<section id="definition-4" class="level3">
+<h3 class="anchored" data-anchor-id="definition-4">Definition</h3>
+<p>A statistical test used for comparing means when the same subjects are measured multiple times under different conditions or time points.</p>
+</section>
+<section id="purpose-3" class="level3">
+<h3 class="anchored" data-anchor-id="purpose-3">Purpose</h3>
+<p>To determine if there are significant differences across time points or conditions. It accounts for the correlation between measurements on the same subjects.</p>
+</section>
+<section id="assumptions-3" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions-3">Assumptions</h3>
+<ol type="1">
+<li><strong>Sphericity</strong>: The variances of the differences between all combinations of related groups are equal. This can be tested using Mauchly’s test.</li>
+<li><strong>Normality</strong>: The data are normally distributed at each time point.</li>
+</ol>
+</section>
+<section id="example-4" class="level3">
+<h3 class="anchored" data-anchor-id="example-4">Example</h3>
+<p>Comparing the effects of a training program on performance measured at three different time points (baseline, mid, and post-training) helps in assessing the program’s impact over time.</p>
+</section>
+<section id="post-hoc-tests-2" class="level3">
+<h3 class="anchored" data-anchor-id="post-hoc-tests-2">Post-hoc Tests</h3>
+<ol type="1">
+<li><strong>Pairwise Comparisons</strong>: Used to determine which time points or conditions are significantly different from each other.</li>
+<li><strong>Bonferroni Correction</strong>: Adjusts the significance level for multiple comparisons, reducing the risk of Type I errors.</li>
+</ol>
+<div id="0c433d0d" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pingouin <span class="im">as</span> pg</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Suppress specific warnings</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>, category<span class="op">=</span><span class="pp">RuntimeWarning</span>, module<span class="op">=</span><span class="st">"scipy.stats"</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate sample data</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>n_subjects <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data for three time points (baseline, mid, post-training)</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>baseline <span class="op">=</span> np.random.normal(<span class="dv">50</span>, <span class="dv">10</span>, n_subjects)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>mid <span class="op">=</span> baseline <span class="op">+</span> np.random.normal(<span class="dv">5</span>, <span class="dv">5</span>, n_subjects)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>post <span class="op">=</span> mid <span class="op">+</span> np.random.normal(<span class="dv">5</span>, <span class="dv">5</span>, n_subjects)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a DataFrame in long format</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Subject'</span>: np.repeat(<span class="bu">range</span>(<span class="dv">1</span>, n_subjects <span class="op">+</span> <span class="dv">1</span>), <span class="dv">3</span>),</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Time'</span>: np.tile([<span class="st">'Baseline'</span>, <span class="st">'Mid'</span>, <span class="st">'Post'</span>], n_subjects),</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Performance'</span>: np.concatenate([baseline, mid, post])</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Data sample:"</span>)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(data.head(<span class="dv">10</span>))</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Test for normality (for each time point)</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Normality Test (Shapiro-Wilk):"</span>)</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> time <span class="kw">in</span> [<span class="st">'Baseline'</span>, <span class="st">'Mid'</span>, <span class="st">'Post'</span>]:</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>    _, p_value <span class="op">=</span> stats.shapiro(data[data[<span class="st">'Time'</span>] <span class="op">==</span> time][<span class="st">'Performance'</span>])</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>time<span class="sc">}</span><span class="ss">: p-value = </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Test for sphericity</span></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>sphericity <span class="op">=</span> pg.sphericity(data, dv<span class="op">=</span><span class="st">'Performance'</span>, subject<span class="op">=</span><span class="st">'Subject'</span>, within<span class="op">=</span><span class="st">'Time'</span>)</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Sphericity Test (Mauchly's):"</span>)</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">isinstance</span>(sphericity, pd.DataFrame):</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"W = </span><span class="sc">{</span>sphericity[<span class="st">'W'</span>]<span class="sc">.</span>iloc[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">, p-value = </span><span class="sc">{</span>sphericity[<span class="st">'p-value'</span>]<span class="sc">.</span>iloc[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"W = </span><span class="sc">{</span>sphericity[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">, p-value = </span><span class="sc">{</span>sphericity[<span class="dv">1</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform Repeated Measures ANOVA</span></span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>aov <span class="op">=</span> pg.rm_anova(data<span class="op">=</span>data, dv<span class="op">=</span><span class="st">'Performance'</span>, within<span class="op">=</span><span class="st">'Time'</span>, subject<span class="op">=</span><span class="st">'Subject'</span>, correction<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Repeated Measures ANOVA Results:"</span>)</span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(aov)</span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Post-hoc pairwise comparisons with Bonferroni correction</span></span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>posthoc <span class="op">=</span> pg.pairwise_tests(data<span class="op">=</span>data, dv<span class="op">=</span><span class="st">'Performance'</span>, within<span class="op">=</span><span class="st">'Time'</span>, subject<span class="op">=</span><span class="st">'Subject'</span>, </span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>                            padjust<span class="op">=</span><span class="st">'bonf'</span>, parametric<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Post-hoc Pairwise Comparisons (Bonferroni-corrected):"</span>)</span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(posthoc[[<span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'T'</span>, <span class="st">'p-corr'</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Data sample:
+   Subject      Time  Performance
+0        1  Baseline    54.967142
+1        1       Mid    48.617357
+2        1      Post    56.476885
+3        2  Baseline    65.230299
+4        2       Mid    47.658466
+5        2      Post    47.658630
+6        3  Baseline    65.792128
+7        3       Mid    57.674347
+8        3      Post    45.305256
+9        4  Baseline    55.425600
+
+
+Normality Test (Shapiro-Wilk):
+Baseline: p-value = 0.8581
+Mid: p-value = 0.2716
+Post: p-value = 0.9305
+
+
+Sphericity Test (Mauchly's):
+W = 0.0000, p-value = 0.6671
+
+
+Repeated Measures ANOVA Results:
+  Source  ddof1  ddof2         F     p-unc  p-GG-corr       ng2       eps  \
+0   Time      2     58  3.475082  0.037548   0.052321  0.068356  0.750247   
+
+   sphericity   W-spher   p-spher  
+0       False  0.667106  0.003457  
+
+
+Post-hoc Pairwise Comparisons (Bonferroni-corrected):
+          A     B         T    p-corr
+0  Baseline   Mid  3.643375  0.003131
+1  Baseline  Post  1.969708  0.175469
+2       Mid  Post -0.227000  1.000000</code></pre>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="mixed-effects-models" class="level2">
+<h2 class="anchored" data-anchor-id="mixed-effects-models">Mixed-effects Models</h2>
+<section id="definition-5" class="level3">
+<h3 class="anchored" data-anchor-id="definition-5">Definition</h3>
+<p>Models that incorporate both fixed effects (parameters associated with an entire population) and random effects (parameters associated with individual experimental units).</p>
+</section>
+<section id="purpose-4" class="level3">
+<h3 class="anchored" data-anchor-id="purpose-4">Purpose</h3>
+<p>To account for variability within and between experimental units. Mixed-effects models are useful when data have a hierarchical or nested structure.</p>
+</section>
+<section id="assumptions-4" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions-4">Assumptions</h3>
+<ol type="1">
+<li><strong>Independence</strong>: Observations are independent.</li>
+<li><strong>Normality</strong>: The random effects and residuals are normally distributed.</li>
+<li><strong>Homogeneity of variances</strong>: Variances are equal across groups.</li>
+</ol>
+</section>
+<section id="example-5" class="level3">
+<h3 class="anchored" data-anchor-id="example-5">Example</h3>
+<p>Studying the effect of a drug on blood pressure where patients are nested within different hospitals. The fixed effects might include the drug dosage, while random effects account for variability between hospitals.</p>
+</section>
+<section id="components" class="level3">
+<h3 class="anchored" data-anchor-id="components">Components</h3>
+<ol type="1">
+<li><strong>Fixed Effects</strong>: Factors of interest that are consistent and repeatable (e.g., drug dosage).</li>
+<li><strong>Random Effects</strong>: Factors that introduce random variability, often related to experimental units (e.g., patients within hospitals).</li>
+</ol>
+<p>Mixed-effects models allow for more flexible modeling of complex data structures, capturing both the fixed and random sources of variability.</p>
+<div id="efc85f99" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Set random seed for reproducibility</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">123</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create sample data</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>n_subjects <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>n_observations <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Create subject IDs</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>subject_ids <span class="op">=</span> np.repeat(<span class="bu">range</span>(n_subjects), n_observations)</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a continuous predictor (fixed effect)</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="dv">1</span>, n_subjects <span class="op">*</span> n_observations)</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Create random intercepts for each subject</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>random_intercepts <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="dv">1</span>, n_subjects)</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>random_intercepts <span class="op">=</span> np.repeat(random_intercepts, n_observations)</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the response variable</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="dv">2</span> <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> x <span class="op">+</span> random_intercepts <span class="op">+</span> np.random.normal(<span class="dv">0</span>, <span class="dv">1</span>, n_subjects <span class="op">*</span> n_observations)</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a DataFrame</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">'subject'</span>: subject_ids,</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">'x'</span>: x,</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">'y'</span>: y</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit mixed-effects model</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>mixed_model <span class="op">=</span> smf.mixedlm(<span class="st">"y ~ x"</span>, data, groups<span class="op">=</span>data[<span class="st">"subject"</span>])</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>mixed_model_fit <span class="op">=</span> mixed_model.fit()</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the summary of the model</span></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mixed_model_fit.summary())</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Access fixed effects</span></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Fixed Effects:"</span>)</span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mixed_model_fit.fe_params)</span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Access random effects</span></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Random Effects:"</span>)</span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mixed_model_fit.random_effects)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         Mixed Linear Model Regression Results
+=======================================================
+Model:            MixedLM Dependent Variable: y        
+No. Observations: 500     Method:             REML     
+No. Groups:       100     Scale:              0.9343   
+Min. group size:  5       Log-Likelihood:     -786.9526
+Max. group size:  5       Converged:          Yes      
+Mean group size:  5.0                                  
+-------------------------------------------------------
+              Coef. Std.Err.   z    P&gt;|z| [0.025 0.975]
+-------------------------------------------------------
+Intercept     2.046    0.109 18.850 0.000  1.834  2.259
+x             0.502    0.048 10.372 0.000  0.407  0.596
+Group Var     0.991    0.194                           
+=======================================================
+
+
+Fixed Effects:
+Intercept    2.046343
+x            0.501567
+dtype: float64
+
+Random Effects:
+{0: Group    0.833227
+dtype: float64, 1: Group    0.295366
+dtype: float64, 2: Group    0.048599
+dtype: float64, 3: Group    0.602883
+dtype: float64, 4: Group    1.198832
+dtype: float64, 5: Group    0.962903
+dtype: float64, 6: Group   -1.544203
+dtype: float64, 7: Group   -0.669103
+dtype: float64, 8: Group   -1.173802
+dtype: float64, 9: Group   -0.540463
+dtype: float64, 10: Group    0.36338
+dtype: float64, 11: Group   -0.502999
+dtype: float64, 12: Group    1.279509
+dtype: float64, 13: Group    0.530782
+dtype: float64, 14: Group   -1.101358
+dtype: float64, 15: Group    0.756257
+dtype: float64, 16: Group    0.173576
+dtype: float64, 17: Group    0.605264
+dtype: float64, 18: Group   -0.349019
+dtype: float64, 19: Group    0.685224
+dtype: float64, 20: Group   -1.684983
+dtype: float64, 21: Group    0.113525
+dtype: float64, 22: Group   -0.979014
+dtype: float64, 23: Group   -0.446821
+dtype: float64, 24: Group   -0.327696
+dtype: float64, 25: Group    0.928362
+dtype: float64, 26: Group    0.548056
+dtype: float64, 27: Group   -1.021069
+dtype: float64, 28: Group    0.420334
+dtype: float64, 29: Group    1.059521
+dtype: float64, 30: Group    0.282688
+dtype: float64, 31: Group   -1.241975
+dtype: float64, 32: Group   -0.755129
+dtype: float64, 33: Group   -1.075722
+dtype: float64, 34: Group    0.915185
+dtype: float64, 35: Group    1.363179
+dtype: float64, 36: Group    0.751029
+dtype: float64, 37: Group   -0.399462
+dtype: float64, 38: Group   -0.096688
+dtype: float64, 39: Group    0.181529
+dtype: float64, 40: Group   -1.685085
+dtype: float64, 41: Group   -0.773221
+dtype: float64, 42: Group   -0.001646
+dtype: float64, 43: Group    0.556848
+dtype: float64, 44: Group   -0.509259
+dtype: float64, 45: Group    0.976162
+dtype: float64, 46: Group   -2.407184
+dtype: float64, 47: Group   -1.097969
+dtype: float64, 48: Group   -0.180763
+dtype: float64, 49: Group    0.492062
+dtype: float64, 50: Group    0.013466
+dtype: float64, 51: Group   -0.609564
+dtype: float64, 52: Group   -0.417444
+dtype: float64, 53: Group   -1.35041
+dtype: float64, 54: Group    0.866563
+dtype: float64, 55: Group   -0.109798
+dtype: float64, 56: Group    0.024642
+dtype: float64, 57: Group   -0.013562
+dtype: float64, 58: Group    1.258934
+dtype: float64, 59: Group    0.301441
+dtype: float64, 60: Group    0.248565
+dtype: float64, 61: Group   -0.326047
+dtype: float64, 62: Group   -1.721601
+dtype: float64, 63: Group    0.267888
+dtype: float64, 64: Group    1.470895
+dtype: float64, 65: Group    1.187467
+dtype: float64, 66: Group   -1.330296
+dtype: float64, 67: Group    0.657887
+dtype: float64, 68: Group   -0.719584
+dtype: float64, 69: Group    0.801687
+dtype: float64, 70: Group    0.022697
+dtype: float64, 71: Group   -0.54018
+dtype: float64, 72: Group    0.512575
+dtype: float64, 73: Group    0.13111
+dtype: float64, 74: Group    0.837551
+dtype: float64, 75: Group    1.22842
+dtype: float64, 76: Group   -0.175459
+dtype: float64, 77: Group   -0.979212
+dtype: float64, 78: Group    1.059102
+dtype: float64, 79: Group    0.148166
+dtype: float64, 80: Group   -0.674993
+dtype: float64, 81: Group   -1.938613
+dtype: float64, 82: Group    0.957338
+dtype: float64, 83: Group    0.235062
+dtype: float64, 84: Group   -0.914114
+dtype: float64, 85: Group    0.827874
+dtype: float64, 86: Group    0.443387
+dtype: float64, 87: Group   -1.256426
+dtype: float64, 88: Group   -0.30238
+dtype: float64, 89: Group    0.950357
+dtype: float64, 90: Group    2.522972
+dtype: float64, 91: Group   -0.610224
+dtype: float64, 92: Group    0.412832
+dtype: float64, 93: Group    1.76076
+dtype: float64, 94: Group    0.445532
+dtype: float64, 95: Group   -0.066341
+dtype: float64, 96: Group   -0.864054
+dtype: float64, 97: Group   -0.96926
+dtype: float64, 98: Group    0.841861
+dtype: float64, 99: Group   -0.907123
+dtype: float64}</code></pre>
+</div>
+</div>
+<hr>
+</section>
+</section>
+</section>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

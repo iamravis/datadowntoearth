@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>chapter33_graph_neural_networks – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="text-content">
+<section id="chapter-33.-graph-neural-networks" class="level3">
+<h3 class="anchored" data-anchor-id="chapter-33.-graph-neural-networks">Chapter 33. Graph Neural Networks</h3>
+<p>Graph Neural Networks (GNNs) are a class of neural networks designed to perform inference on data structured as graphs. They have become a powerful tool for various applications involving relational data, such as social networks, molecular biology, and recommendation systems.</p>
+<section id="foundations-of-graph-neural-networks" class="level4">
+<h4 class="anchored" data-anchor-id="foundations-of-graph-neural-networks">33.1. Foundations of Graph Neural Networks</h4>
+<p>The foundations of GNNs are built on the principles of graph representation learning and the message passing framework.</p>
+</section>
+<section id="graph-representation-learning" class="level4">
+<h4 class="anchored" data-anchor-id="graph-representation-learning">33.1.1. Graph Representation Learning</h4>
+<p>Graph representation learning focuses on embedding nodes, edges, or entire graphs into a continuous vector space, preserving the graph’s structural and relational information.</p>
+<ul>
+<li><strong>Graph Representation:</strong>
+<ul>
+<li>A graph <span class="math inline">\(G\)</span> is represented as <span class="math inline">\(G = (V, E)\)</span>, where <span class="math inline">\(V\)</span> is the set of nodes (vertices) and <span class="math inline">\(E\)</span> is the set of edges.</li>
+<li>Nodes <span class="math inline">\(v \in V\)</span> can have associated features <span class="math inline">\(\mathbf{x}_v\)</span>.</li>
+<li>Edges <span class="math inline">\((u, v) \in E\)</span> can have associated features <span class="math inline">\(\mathbf{e}_{uv}\)</span>.</li>
+</ul></li>
+<li><strong>Goals of Graph Representation Learning:</strong>
+<ul>
+<li>Capture local and global structural information.</li>
+<li>Preserve node and edge attributes.</li>
+<li>Facilitate downstream tasks such as node classification, link prediction, and graph classification.</li>
+</ul></li>
+<li><strong>Methods:</strong>
+<ul>
+<li><strong>Node Embeddings:</strong> Techniques like Node2Vec, DeepWalk, and GraphSAGE generate embeddings for individual nodes by exploring their neighborhoods.</li>
+<li><strong>Graph-level Embeddings:</strong> Methods such as Graph Isomorphism Networks (GIN) and graph pooling techniques aggregate node embeddings to produce a representation for the entire graph.</li>
+</ul></li>
+</ul>
+</section>
+<section id="message-passing-framework" class="level4">
+<h4 class="anchored" data-anchor-id="message-passing-framework">33.1.2. Message Passing Framework</h4>
+<p>The message passing framework is a fundamental paradigm for designing GNNs, where nodes iteratively exchange information (messages) with their neighbors to update their embeddings.</p>
+<ul>
+<li><strong>General Framework:</strong>
+<ul>
+<li><strong>Initialization:</strong> Initialize node features <span class="math inline">\(\mathbf{h}_v^{(0)} = \mathbf{x}_v\)</span> for all <span class="math inline">\(v \in V\)</span>.</li>
+<li><strong>Message Passing:</strong> For each node <span class="math inline">\(v\)</span>, aggregate messages from its neighbors <span class="math inline">\(\mathcal{N}(v)\)</span> to update its feature representation.</li>
+<li><strong>Update Rule:</strong> <span class="math display">\[
+\mathbf{h}_v^{(k+1)} = \text{UPDATE}^{(k)}\left(\mathbf{h}_v^{(k)}, \text{AGGREGATE}^{(k)}\left(\{\mathbf{h}_u^{(k)} : u \in \mathcal{N}(v)\}\right)\right)
+\]</span> where <span class="math inline">\(k\)</span> denotes the iteration, <span class="math inline">\(\text{AGGREGATE}^{(k)}\)</span> is the aggregation function, and <span class="math inline">\(\text{UPDATE}^{(k)}\)</span> is the update function.</li>
+</ul></li>
+<li><strong>Common Aggregation Functions:</strong>
+<ul>
+<li><strong>Mean Aggregation:</strong> Computes the mean of the neighboring node features. <span class="math display">\[
+\text{AGGREGATE}^{(k)} = \frac{1}{|\mathcal{N}(v)|} \sum_{u \in \mathcal{N}(v)} \mathbf{h}_u^{(k)}
+\]</span></li>
+<li><strong>Sum Aggregation:</strong> Sums the features of neighboring nodes. <span class="math display">\[
+\text{AGGREGATE}^{(k)} = \sum_{u \in \mathcal{N}(v)} \mathbf{h}_u^{(k)}
+\]</span></li>
+<li><strong>Max Aggregation:</strong> Takes the element-wise maximum of the neighboring node features. <span class="math display">\[
+\text{AGGREGATE}^{(k)} = \max_{u \in \mathcal{N}(v)} \mathbf{h}_u^{(k)}
+\]</span></li>
+</ul></li>
+<li><strong>Update Functions:</strong>
+<ul>
+<li>Typically implemented using neural networks, such as multi-layer perceptrons (MLPs) or recurrent neural networks (RNNs), to combine the aggregated message with the node’s current feature.</li>
+</ul></li>
+<li><strong>Graph Convolutional Networks (GCNs):</strong>
+<ul>
+<li>A popular GNN variant that uses a specific form of message passing, where the aggregation is based on normalized adjacency matrix. <span class="math display">\[
+\mathbf{H}^{(k+1)} = \sigma\left(\hat{A} \mathbf{H}^{(k)} \mathbf{W}^{(k)}\right)
+\]</span> where <span class="math inline">\(\mathbf{H}^{(k)}\)</span> is the matrix of node features at layer <span class="math inline">\(k\)</span>, <span class="math inline">\(\hat{A}\)</span> is the normalized adjacency matrix, <span class="math inline">\(\mathbf{W}^{(k)}\)</span> is the weight matrix, and <span class="math inline">\(\sigma\)</span> is an activation function.</li>
+</ul></li>
+</ul>
+<p>By understanding these foundational concepts of GNNs, including graph representation learning and the message passing framework, we can build more complex and effective models for various graph-based tasks. These principles form the basis for numerous advancements in the field of graph neural networks.</p>
+</section>
+</section>
+<section id="graph-convolutional-networks-gcn" class="level3">
+<h3 class="anchored" data-anchor-id="graph-convolutional-networks-gcn">33.2. Graph Convolutional Networks (GCN)</h3>
+<p>Graph Convolutional Networks (GCNs) extend the concept of convolutional neural networks (CNNs) to graph-structured data. GCNs can be broadly categorized into spectral-based and spatial-based approaches.</p>
+<section id="spectral-based-gcns" class="level4">
+<h4 class="anchored" data-anchor-id="spectral-based-gcns">33.2.1. Spectral-based GCNs</h4>
+<p>Spectral-based GCNs leverage the spectral representation of graphs, using graph signal processing techniques to define convolution operations in the spectral domain.</p>
+<ul>
+<li><strong>Key Concepts:</strong>
+<ul>
+<li><strong>Graph Laplacian:</strong> The graph Laplacian matrix <span class="math inline">\(L = D - A\)</span>, where <span class="math inline">\(A\)</span> is the adjacency matrix and <span class="math inline">\(D\)</span> is the degree matrix, plays a central role in spectral-based methods.</li>
+<li><strong>Graph Fourier Transform:</strong> The eigenvectors of the Laplacian matrix define the graph Fourier transform, enabling the transformation of signals (node features) into the spectral domain.</li>
+</ul></li>
+<li><strong>Graph Convolution:</strong>
+<ul>
+<li><strong>Convolution Theorem:</strong> The convolution operation in the spatial domain can be represented as a pointwise multiplication in the spectral domain.</li>
+<li><strong>Spectral Filtering:</strong> Apply a filter <span class="math inline">\(g_\theta\)</span> in the spectral domain: <span class="math display">\[
+g_\theta * x = U g_\theta(\Lambda) U^T x
+\]</span> where <span class="math inline">\(U\)</span> is the matrix of eigenvectors of the Laplacian, <span class="math inline">\(\Lambda\)</span> is the diagonal matrix of eigenvalues, and <span class="math inline">\(x\)</span> is the input signal (node features).</li>
+</ul></li>
+<li><strong>Simplified Graph Convolution (Kipf &amp; Welling, 2016):</strong>
+<ul>
+<li><strong>Chebyshev Polynomial Approximation:</strong> Approximate the filter <span class="math inline">\(g_\theta(\Lambda)\)</span> using Chebyshev polynomials to avoid explicit eigendecomposition.</li>
+<li><strong>First-order Approximation:</strong> Simplified to: <span class="math display">\[
+\mathbf{H}^{(k+1)} = \sigma \left( \tilde{D}^{-1/2} \tilde{A} \tilde{D}^{-1/2} \mathbf{H}^{(k)} \mathbf{W}^{(k)} \right)
+\]</span> where <span class="math inline">\(\tilde{A} = A + I\)</span> (adding self-loops), <span class="math inline">\(\tilde{D}\)</span> is the degree matrix of <span class="math inline">\(\tilde{A}\)</span>, <span class="math inline">\(\mathbf{H}^{(k)}\)</span> is the node feature matrix at layer <span class="math inline">\(k\)</span>, <span class="math inline">\(\mathbf{W}^{(k)}\)</span> is the layer-specific weight matrix, and <span class="math inline">\(\sigma\)</span> is an activation function.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Theoretical foundations in graph signal processing.</li>
+<li>Effective for small to medium-sized graphs.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Computationally expensive for large graphs due to eigendecomposition.</li>
+<li>Difficulty in scaling to dynamic graphs.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Semi-supervised learning on citation networks.</li>
+<li>Molecular property prediction in chemistry.</li>
+</ul></li>
+</ul>
+</section>
+<section id="spatial-based-gcns" class="level4">
+<h4 class="anchored" data-anchor-id="spatial-based-gcns">33.2.2. Spatial-based GCNs</h4>
+<p>Spatial-based GCNs define convolutions directly on the graph in the spatial domain, focusing on aggregating information from a node’s neighbors.</p>
+<ul>
+<li><strong>Key Concepts:</strong>
+<ul>
+<li><strong>Neighborhood Aggregation:</strong> Aggregate features from neighboring nodes to update the feature of a central node.</li>
+<li><strong>Flexible Aggregation Functions:</strong> Various aggregation functions (mean, sum, max) can be used to combine neighbor information.</li>
+</ul></li>
+<li><strong>GraphSAGE (Hamilton et al., 2017):</strong>
+<ul>
+<li><strong>Sampling and Aggregation:</strong> Sample a fixed-size set of neighbors for each node and aggregate their features.</li>
+<li><strong>Update Rule:</strong> <span class="math display">\[
+\mathbf{h}_v^{(k+1)} = \sigma \left( \mathbf{W}^{(k)} \cdot \text{AGGREGATE} \left( \{ \mathbf{h}_u^{(k)}, \forall u \in \mathcal{N}(v) \} \right) \right)
+\]</span></li>
+</ul></li>
+<li><strong>Graph Attention Networks (GATs) (Veličković et al., 2018):</strong>
+<ul>
+<li><strong>Attention Mechanism:</strong> Assign different importance weights to different neighbors using an attention mechanism.</li>
+<li><strong>Attention Coefficients:</strong> <span class="math display">\[
+e_{ij} = \text{LeakyReLU} \left( \mathbf{a}^T [ \mathbf{W} \mathbf{h}_i || \mathbf{W} \mathbf{h}_j ] \right)
+\]</span> <span class="math display">\[
+\alpha_{ij} = \frac{\exp(e_{ij})}{\sum_{k \in \mathcal{N}(i)} \exp(e_{ik})}
+\]</span></li>
+<li><strong>Aggregation:</strong> <span class="math display">\[
+\mathbf{h}_i^{(k+1)} = \sigma \left( \sum_{j \in \mathcal{N}(i)} \alpha_{ij} \mathbf{W} \mathbf{h}_j \right)
+\]</span></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Scalable to large graphs due to localized operations.</li>
+<li>Flexible and can be adapted to various graph structures and types.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Potentially high variance due to sampling in methods like GraphSAGE.</li>
+<li>Requires careful tuning of attention mechanisms in GATs.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Social network analysis for friend recommendation.</li>
+<li>Node classification in large-scale knowledge graphs.</li>
+</ul></li>
+</ul>
+<p>By understanding both spectral-based and spatial-based GCNs, researchers and practitioners can choose the appropriate approach for their specific applications and constraints. These methods provide powerful tools for leveraging graph-structured data across various domains.</p>
+</section>
+</section>
+<section id="graph-attention-networks-gat" class="level3">
+<h3 class="anchored" data-anchor-id="graph-attention-networks-gat">33.3. Graph Attention Networks (GAT)</h3>
+<p>Graph Attention Networks (GATs) introduce attention mechanisms to graph neural networks, allowing for adaptive weighting of neighbor contributions based on their importance.</p>
+<section id="architecture-and-mechanism" class="level4">
+<h4 class="anchored" data-anchor-id="architecture-and-mechanism">33.3.1. Architecture and Mechanism</h4>
+<ul>
+<li><p><strong>Node Features:</strong> Each node <span class="math inline">\(v\)</span> in a graph <span class="math inline">\(G = (V, E)\)</span> has a feature vector <span class="math inline">\(\mathbf{h}_v\)</span>.</p></li>
+<li><p><strong>Attention Mechanism:</strong> Compute the importance of node <span class="math inline">\(j\)</span>’s features to node <span class="math inline">\(i\)</span> using a shared attention mechanism. <span class="math display">\[
+e_{ij} = \text{LeakyReLU} \left( \mathbf{a}^T [ \mathbf{W} \mathbf{h}_i || \mathbf{W} \mathbf{h}_j ] \right)
+\]</span> where <span class="math inline">\(\mathbf{W}\)</span> is a weight matrix, <span class="math inline">\(\mathbf{a}\)</span> is the attention vector, and <span class="math inline">\(||\)</span> denotes concatenation.</p></li>
+<li><p><strong>Attention Coefficients:</strong> Normalize the importance scores using a softmax function. <span class="math display">\[
+\alpha_{ij} = \frac{\exp(e_{ij})}{\sum_{k \in \mathcal{N}(i)} \exp(e_{ik})}
+\]</span></p></li>
+<li><p><strong>Node Update:</strong> Compute the new representation of node <span class="math inline">\(i\)</span> as a weighted sum of its neighbors’ transformed features. <span class="math display">\[
+\mathbf{h}_i^{(k+1)} = \sigma \left( \sum_{j \in \mathcal{N}(i)} \alpha_{ij} \mathbf{W} \mathbf{h}_j \right)
+\]</span></p></li>
+<li><p><strong>Multi-head Attention:</strong> Apply multiple attention heads to stabilize the learning process and concatenate or average their outputs. <span class="math display">\[
+\mathbf{h}_i^{(k+1)} = \Bigg\|_{m=1}^M \sigma \left( \sum_{j \in \mathcal{N}(i)} \alpha_{ij}^m \mathbf{W}^m \mathbf{h}_j \right)
+\]</span></p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Allows for dynamic weighting of neighbor contributions, enhancing model flexibility and performance.</li>
+<li>Improves interpretability by highlighting important neighbors for each node’s representation.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Computationally expensive due to the attention mechanism.</li>
+<li>Requires careful tuning of attention parameters and multiple attention heads.</li>
+</ul></li>
+<li><p><strong>Applications:</strong></p>
+<ul>
+<li>Node classification in citation networks.</li>
+<li>Link prediction in social networks.</li>
+<li>Protein-protein interaction networks.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="graphsage" class="level3">
+<h3 class="anchored" data-anchor-id="graphsage">33.4. GraphSAGE</h3>
+<p>GraphSAGE (Graph Sample and Aggregate) is designed to efficiently generate node embeddings for large graphs by sampling and aggregating features from a node’s local neighborhood.</p>
+<section id="architecture-and-mechanism-1" class="level4">
+<h4 class="anchored" data-anchor-id="architecture-and-mechanism-1">33.4.1. Architecture and Mechanism</h4>
+<ul>
+<li><p><strong>Sampling:</strong> Sample a fixed-size set of neighbors for each node instead of using all neighbors, which reduces computational complexity.</p></li>
+<li><p><strong>Aggregation:</strong> Use a function to aggregate the features of the sampled neighbors.</p>
+<ul>
+<li><strong>Mean Aggregator:</strong> <span class="math display">\[
+\text{AGGREGATE}_\text{mean}(\{ \mathbf{h}_u : u \in \mathcal{N}(v) \}) = \frac{1}{|\mathcal{N}(v)|} \sum_{u \in \mathcal{N}(v)} \mathbf{h}_u
+\]</span></li>
+<li><strong>LSTM Aggregator:</strong> Uses an LSTM to aggregate neighbor features, capturing order information.</li>
+<li><strong>Pooling Aggregator:</strong> Applies a pooling operation, such as max-pooling, on a neural network transformation of neighbor features.</li>
+</ul></li>
+<li><p><strong>Node Update:</strong> Combine the aggregated neighbor features with the node’s own features. <span class="math display">\[
+\mathbf{h}_v^{(k+1)} = \sigma \left( \mathbf{W}^{(k)} \cdot \left[ \mathbf{h}_v^{(k)} || \text{AGGREGATE} \left( \{ \mathbf{h}_u^{(k)} : u \in \mathcal{N}(v) \} \right) \right] \right)
+\]</span></p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Scalable to large graphs due to sampling.</li>
+<li>Flexible framework allowing various aggregation functions.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Aggregation might lose important structural information.</li>
+<li>Performance depends on the choice of aggregation function and sampling strategy.</li>
+</ul></li>
+<li><p><strong>Applications:</strong></p>
+<ul>
+<li>Large-scale node classification.</li>
+<li>Embedding generation for recommendation systems.</li>
+<li>Graph-based semi-supervised learning tasks.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="graph-autoencoders" class="level3">
+<h3 class="anchored" data-anchor-id="graph-autoencoders">33.5. Graph Autoencoders</h3>
+<p>Graph Autoencoders (GAEs) are unsupervised models designed to learn low-dimensional representations of graphs by reconstructing the graph structure or node attributes.</p>
+<section id="architecture-and-mechanism-2" class="level4">
+<h4 class="anchored" data-anchor-id="architecture-and-mechanism-2">33.5.1. Architecture and Mechanism</h4>
+<ul>
+<li><p><strong>Encoder:</strong> Encodes the graph structure and node features into a latent space. <span class="math display">\[
+\mathbf{Z} = \text{Encoder}(A, X)
+\]</span> where <span class="math inline">\(A\)</span> is the adjacency matrix and <span class="math inline">\(X\)</span> is the feature matrix.</p></li>
+<li><p><strong>Decoder:</strong> Reconstructs the graph structure or node features from the latent representations. <span class="math display">\[
+\hat{A} = \text{Decoder}(\mathbf{Z})
+\]</span></p></li>
+<li><p><strong>Loss Function:</strong></p>
+<ul>
+<li><strong>Reconstruction Loss:</strong> Measures the difference between the original and reconstructed adjacency matrix. <span class="math display">\[
+\mathcal{L}_{\text{rec}} = \|A - \hat{A}\|^2
+\]</span></li>
+<li><strong>Attribute Reconstruction Loss:</strong> Measures the difference between original and reconstructed node attributes if applicable.</li>
+</ul></li>
+<li><p><strong>Variational Graph Autoencoders (VGAEs):</strong> Extend GAEs by learning a probabilistic latent space using techniques from variational autoencoders.</p>
+<ul>
+<li><strong>Latent Variable Model:</strong> Assume a distribution over the latent variables and maximize the evidence lower bound (ELBO). <span class="math display">\[
+\mathcal{L}_{\text{ELBO}} = \mathbb{E}_{q(\mathbf{Z}|X, A)}[\log p(A|\mathbf{Z})] - D_{\text{KL}}(q(\mathbf{Z}|X, A) \| p(\mathbf{Z}))
+\]</span></li>
+</ul></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Effective for unsupervised representation learning on graphs.</li>
+<li>Can be used for various tasks like link prediction, node clustering, and graph generation.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Reconstruction might not capture complex graph structures accurately.</li>
+<li>Computational complexity can be high for large graphs.</li>
+</ul></li>
+<li><p><strong>Applications:</strong></p>
+<ul>
+<li>Link prediction in social and biological networks.</li>
+<li>Node clustering and community detection.</li>
+<li>Graph anomaly detection.</li>
+</ul></li>
+</ul>
+<p>By exploring GATs, GraphSAGE, and Graph Autoencoders, researchers can tackle various graph-based tasks with different strengths and applications, enhancing the capability to process and analyze complex graph-structured data.</p>
+</section>
+</section>
+<section id="temporal-graph-networks" class="level3">
+<h3 class="anchored" data-anchor-id="temporal-graph-networks">33.6. Temporal Graph Networks</h3>
+<p>Temporal Graph Networks (TGNs) are designed to handle dynamic graphs where the structure and features evolve over time. These networks integrate temporal information into traditional graph neural network frameworks to model changes in the graph.</p>
+<section id="dynamic-graph-cnn" class="level4">
+<h4 class="anchored" data-anchor-id="dynamic-graph-cnn">33.6.1. Dynamic Graph CNN</h4>
+<p>Dynamic Graph CNNs (DGCNNs) extend traditional GNNs to capture temporal dynamics in graph-structured data.</p>
+<ul>
+<li><strong>Key Concepts:</strong>
+<ul>
+<li><strong>Dynamic Graph Construction:</strong> At each time step, construct a graph using the most recent data, allowing the graph structure to evolve over time.</li>
+<li><strong>Temporal Convolutions:</strong> Apply temporal convolutional layers to capture the temporal evolution of node features.</li>
+</ul></li>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Edge Construction:</strong> Dynamically construct edges based on node proximity or similarity at each time step.</li>
+<li><strong>EdgeConv Layer:</strong> Use an edge convolution operation to aggregate features from neighboring nodes, which are updated dynamically. <span class="math display">\[
+\mathbf{h}_v^{(k+1)} = \text{AGGREGATE} \left( \left\{ \mathbf{h}_v^{(k)}, \max_{u \in \mathcal{N}(v)} \phi \left( \mathbf{h}_v^{(k)}, \mathbf{h}_u^{(k)} \right) \right\} \right)
+\]</span> where <span class="math inline">\(\phi\)</span> is a function combining node features and <span class="math inline">\(\text{AGGREGATE}\)</span> is an aggregation function like max pooling.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Captures both spatial and temporal dependencies.</li>
+<li>Adapts to changes in the graph structure over time.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Computationally intensive due to dynamic graph construction.</li>
+<li>Sensitive to the quality of edge construction criteria.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Traffic prediction in road networks.</li>
+<li>Real-time recommendation systems.</li>
+</ul></li>
+</ul>
+</section>
+<section id="spatio-temporal-graph-convolutional-networks" class="level4">
+<h4 class="anchored" data-anchor-id="spatio-temporal-graph-convolutional-networks">33.6.2. Spatio-Temporal Graph Convolutional Networks</h4>
+<p>Spatio-Temporal Graph Convolutional Networks (ST-GCNs) integrate spatial and temporal dimensions to model time-evolving graph data.</p>
+<ul>
+<li><strong>Key Concepts:</strong>
+<ul>
+<li><strong>Spatial Convolution:</strong> Capture the spatial dependencies among nodes using graph convolutions.</li>
+<li><strong>Temporal Convolution:</strong> Capture temporal dependencies using temporal convolutional layers or recurrent neural networks.</li>
+</ul></li>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Spatio-Temporal Block:</strong> Combines spatial graph convolutions and temporal convolutions. <span class="math display">\[
+\mathbf{H}^{(k+1)} = \sigma \left( \text{TemporalConv} \left( \text{SpatialConv} \left( \mathbf{H}^{(k)} \right) \right) \right)
+\]</span></li>
+<li><strong>Graph Convolution Layer:</strong> Apply a GCN to extract spatial features from the graph at each time step. <span class="math display">\[
+\mathbf{H}_{\text{spatial}}^{(k+1)} = \sigma \left( \tilde{D}^{-1/2} \tilde{A} \tilde{D}^{-1/2} \mathbf{H}^{(k)} \mathbf{W}^{(k)} \right)
+\]</span></li>
+<li><strong>Temporal Convolution Layer:</strong> Apply a temporal convolution or an RNN to capture the temporal evolution of node features. <span class="math display">\[
+\mathbf{H}_{\text{temporal}}^{(k+1)} = \text{RNN} \left( \mathbf{H}_{\text{spatial}}^{(k+1)} \right)
+\]</span></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Effectively models complex spatio-temporal dependencies.</li>
+<li>Suitable for applications with strong temporal dynamics.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>High computational and memory requirements.</li>
+<li>Requires careful tuning of spatial and temporal convolution parameters.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Human action recognition from video sequences.</li>
+<li>Predictive maintenance in industrial systems.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="graph-generation" class="level3">
+<h3 class="anchored" data-anchor-id="graph-generation">33.7. Graph Generation</h3>
+<p>Graph generation involves creating new graphs that exhibit similar properties to a given set of graphs. This is useful in domains like chemistry, where new molecular structures need to be generated.</p>
+<section id="graphrnn" class="level4">
+<h4 class="anchored" data-anchor-id="graphrnn">33.7.1. GraphRNN</h4>
+<p>GraphRNN generates graphs by modeling the sequential process of graph construction, treating graph generation as a sequence generation problem.</p>
+<ul>
+<li><strong>Key Concepts:</strong>
+<ul>
+<li><strong>Sequential Generation:</strong> Model the graph generation process as a sequence of node and edge additions.</li>
+<li><strong>Recurrent Neural Networks:</strong> Use RNNs to generate the sequence of graph construction steps.</li>
+</ul></li>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Node Generation:</strong> Generate nodes sequentially using an RNN. <span class="math display">\[
+\mathbf{h}_v = \text{RNN}_{\text{node}} \left( \mathbf{h}_{v-1} \right)
+\]</span></li>
+<li><strong>Edge Generation:</strong> For each generated node, use another RNN to decide its connectivity to previously generated nodes. <span class="math display">\[
+p(e_{uv}) = \sigma \left( \mathbf{h}_{\text{edge}}^{uv} \right)
+\]</span> where <span class="math inline">\(e_{uv}\)</span> is the edge between nodes <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> and <span class="math inline">\(\sigma\)</span> is the sigmoid function.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Can generate diverse and complex graph structures.</li>
+<li>Captures sequential dependencies in graph construction.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Can be computationally expensive for large graphs.</li>
+<li>Training requires a large amount of graph data.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Molecular structure generation in drug discovery.</li>
+<li>Network topology generation for simulations.</li>
+</ul></li>
+</ul>
+</section>
+<section id="graph-vae" class="level4">
+<h4 class="anchored" data-anchor-id="graph-vae">33.7.2. Graph VAE</h4>
+<p>Graph Variational Autoencoders (Graph VAEs) extend variational autoencoders to graph data, enabling probabilistic graph generation.</p>
+<ul>
+<li><strong>Key Concepts:</strong>
+<ul>
+<li><strong>Latent Variable Model:</strong> Use latent variables to represent the underlying distribution of graphs.</li>
+<li><strong>Variational Inference:</strong> Use variational inference to approximate the posterior distribution of latent variables.</li>
+</ul></li>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Encoder:</strong> Encode the graph into a latent space using GNNs. <span class="math display">\[
+q(\mathbf{Z}|A, X) = \text{GNN}_{\text{enc}}(A, X)
+\]</span></li>
+<li><strong>Decoder:</strong> Reconstruct the graph from the latent space. <span class="math display">\[
+p(A| \mathbf{Z}) = \text{GNN}_{\text{dec}}(\mathbf{Z})
+\]</span></li>
+</ul></li>
+<li><strong>Loss Function:</strong>
+<ul>
+<li><strong>Evidence Lower Bound (ELBO):</strong> Maximize the ELBO to optimize the model. <span class="math display">\[
+\mathcal{L}_{\text{ELBO}} = \mathbb{E}_{q(\mathbf{Z}|A, X)}[\log p(A|\mathbf{Z})] - D_{\text{KL}}(q(\mathbf{Z}|A, X) \| p(\mathbf{Z}))
+\]</span></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Captures the probabilistic nature of graph generation.</li>
+<li>Can generate graphs with desired properties by manipulating the latent space.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Training can be challenging due to the complexity of variational inference.</li>
+<li>Computationally intensive for large graphs.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Molecular generation for material science.</li>
+<li>Network simulation and anomaly detection.</li>
+</ul></li>
+</ul>
+<p>By understanding and implementing these advanced techniques in temporal graph networks and graph generation, researchers and practitioners can tackle a wide range of dynamic and generative graph-based tasks, leading to significant advancements in fields such as social network analysis, drug discovery, and predictive maintenance.</p>
+</section>
+</section>
+<section id="graph-neural-networks-for-recommender-systems" class="level3">
+<h3 class="anchored" data-anchor-id="graph-neural-networks-for-recommender-systems">33.8. Graph Neural Networks for Recommender Systems</h3>
+<p>Graph Neural Networks (GNNs) can significantly enhance recommender systems by capturing complex relationships and dependencies between users and items through graph structures.</p>
+<section id="collaborative-filtering-with-gnns" class="level4">
+<h4 class="anchored" data-anchor-id="collaborative-filtering-with-gnns">33.8.1. Collaborative Filtering with GNNs</h4>
+<ul>
+<li><p><strong>User-Item Interaction Graph:</strong> Represent the interactions between users and items as a bipartite graph.</p>
+<ul>
+<li><strong>Nodes:</strong> Users and items.</li>
+<li><strong>Edges:</strong> Interactions such as ratings, clicks, or purchases.</li>
+</ul></li>
+<li><p><strong>Message Passing for Recommendations:</strong></p>
+<ul>
+<li><strong>Node Embeddings:</strong> Initialize user and item embeddings. <span class="math display">\[
+\mathbf{h}_u^{(0)} = \mathbf{e}_u, \quad \mathbf{h}_i^{(0)} = \mathbf{e}_i
+\]</span></li>
+<li><strong>Propagation:</strong> Aggregate information from neighboring nodes (user-item interactions) to update embeddings. <span class="math display">\[
+\mathbf{h}_u^{(k+1)} = \sigma \left( \sum_{i \in \mathcal{N}(u)} \mathbf{W}_1 \mathbf{h}_i^{(k)} \right), \quad \mathbf{h}_i^{(k+1)} = \sigma \left( \sum_{u \in \mathcal{N}(i)} \mathbf{W}_2 \mathbf{h}_u^{(k)} \right)
+\]</span></li>
+</ul></li>
+<li><p><strong>Prediction:</strong> Predict user preferences using the learned embeddings. <span class="math display">\[
+\hat{y}_{ui} = f(\mathbf{h}_u^{(K)}, \mathbf{h}_i^{(K)})
+\]</span></p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Captures higher-order connectivity in the user-item interaction graph.</li>
+<li>Can incorporate additional information such as user profiles and item attributes.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Computationally intensive for large-scale recommendation tasks.</li>
+<li>Requires careful tuning of propagation steps and aggregation functions.</li>
+</ul></li>
+<li><p><strong>Applications:</strong></p>
+<ul>
+<li>Personalized content recommendation.</li>
+<li>E-commerce product recommendation.</li>
+<li>Social media friend and content suggestion.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="graph-neural-networks-for-natural-language-processing" class="level3">
+<h3 class="anchored" data-anchor-id="graph-neural-networks-for-natural-language-processing">33.9. Graph Neural Networks for Natural Language Processing</h3>
+<p>GNNs can be applied to various tasks in natural language processing (NLP) by representing text as graphs, capturing semantic and syntactic relationships.</p>
+<section id="text-representation-with-gnns" class="level4">
+<h4 class="anchored" data-anchor-id="text-representation-with-gnns">33.9.1. Text Representation with GNNs</h4>
+<ul>
+<li><strong>Word Co-occurrence Graphs:</strong> Represent text as graphs where nodes are words, and edges represent co-occurrences or syntactic dependencies.
+<ul>
+<li><strong>Nodes:</strong> Words or phrases.</li>
+<li><strong>Edges:</strong> Co-occurrences within a window, syntactic dependencies, or semantic relationships.</li>
+</ul></li>
+<li><strong>Graph Convolutions for Text:</strong>
+<ul>
+<li><strong>Node Embeddings:</strong> Initialize word embeddings (e.g., Word2Vec, GloVe). <span class="math display">\[
+\mathbf{h}_w^{(0)} = \mathbf{e}_w
+\]</span></li>
+<li><strong>Message Passing:</strong> Aggregate information from neighboring words. <span class="math display">\[
+\mathbf{h}_w^{(k+1)} = \sigma \left( \sum_{v \in \mathcal{N}(w)} \mathbf{W} \mathbf{h}_v^{(k)} \right)
+\]</span></li>
+</ul></li>
+<li><strong>Text Classification:</strong>
+<ul>
+<li><strong>Pooling:</strong> Aggregate node embeddings to obtain a graph-level representation. <span class="math display">\[
+\mathbf{h}_G = \text{pool}(\{\mathbf{h}_w^{(K)} \mid w \in G\})
+\]</span></li>
+<li><strong>Prediction:</strong> Use the graph-level representation for classification. <span class="math display">\[
+\hat{y} = \text{softmax}(\mathbf{W} \mathbf{h}_G + \mathbf{b})
+\]</span></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Captures complex relationships between words beyond sequential order.</li>
+<li>Incorporates syntactic and semantic structures into text representations.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Requires graph construction, which can be computationally expensive.</li>
+<li>May need large amounts of data to learn effective representations.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Document classification and categorization.</li>
+<li>Question answering and semantic parsing.</li>
+<li>Named entity recognition and relation extraction.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="graph-neural-networks-for-computer-vision" class="level3">
+<h3 class="anchored" data-anchor-id="graph-neural-networks-for-computer-vision">33.10. Graph Neural Networks for Computer Vision</h3>
+<p>GNNs can enhance computer vision tasks by modeling relationships and dependencies between different parts of an image or multiple images.</p>
+<section id="object-detection-and-recognition" class="level4">
+<h4 class="anchored" data-anchor-id="object-detection-and-recognition">33.10.1. Object Detection and Recognition</h4>
+<ul>
+<li><strong>Region-based Graphs:</strong> Represent an image as a graph where nodes correspond to regions or objects, and edges represent spatial relationships.
+<ul>
+<li><strong>Nodes:</strong> Regions of interest or detected objects.</li>
+<li><strong>Edges:</strong> Spatial or semantic relationships between regions.</li>
+</ul></li>
+<li><strong>Graph Convolution for Object Detection:</strong>
+<ul>
+<li><strong>Node Features:</strong> Extract features for each region using a CNN. <span class="math display">\[
+\mathbf{h}_r^{(0)} = \text{CNN}(\mathbf{x}_r)
+\]</span></li>
+<li><strong>Message Passing:</strong> Aggregate information from neighboring regions. <span class="math display">\[
+\mathbf{h}_r^{(k+1)} = \sigma \left( \sum_{s \in \mathcal{N}(r)} \mathbf{W} \mathbf{h}_s^{(k)} \right)
+\]</span></li>
+</ul></li>
+<li><strong>Prediction:</strong>
+<ul>
+<li><strong>Region Classification:</strong> Classify each region using the updated embeddings. <span class="math display">\[
+\hat{y}_r = \text{softmax}(\mathbf{W}_c \mathbf{h}_r^{(K)} + \mathbf{b}_c)
+\]</span></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Captures relationships between different regions, improving context understanding.</li>
+<li>Enhances the accuracy of object detection and recognition by incorporating relational information.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Computationally intensive due to graph construction and message passing.</li>
+<li>Requires well-defined relationships between regions for effective modeling.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Scene graph generation for image understanding.</li>
+<li>Multi-object tracking in video analysis.</li>
+<li>Semantic segmentation and relationship detection.</li>
+</ul></li>
+</ul>
+<p>By leveraging GNNs for recommender systems, NLP, and computer vision, researchers and practitioners can improve the performance and interpretability of models across these domains. These advanced techniques enable the incorporation of rich relational information, enhancing the capability to handle complex, structured data.</p>
+</section>
+</section>
+<section id="graph-neural-networks-for-bioinformatics-and-chemistry" class="level3">
+<h3 class="anchored" data-anchor-id="graph-neural-networks-for-bioinformatics-and-chemistry">33.11. Graph Neural Networks for Bioinformatics and Chemistry</h3>
+<p>Graph Neural Networks (GNNs) have shown significant promise in bioinformatics and chemistry by representing molecules, proteins, and other biological structures as graphs.</p>
+<section id="molecular-graphs" class="level4">
+<h4 class="anchored" data-anchor-id="molecular-graphs">33.11.1. Molecular Graphs</h4>
+<p>In molecular graphs, atoms are represented as nodes and bonds as edges, capturing the chemical structure of molecules.</p>
+<ul>
+<li><strong>Key Concepts:</strong>
+<ul>
+<li><strong>Nodes:</strong> Atoms with features such as atom type, valence, and charge.</li>
+<li><strong>Edges:</strong> Bonds between atoms with features like bond type and bond order.</li>
+</ul></li>
+<li><strong>Message Passing for Molecular Graphs:</strong>
+<ul>
+<li><strong>Node Features:</strong> Initialize node features based on atom properties. <span class="math display">\[
+\mathbf{h}_v^{(0)} = \text{AtomFeatures}(v)
+\]</span></li>
+<li><strong>Message Passing:</strong> Aggregate information from neighboring atoms. <span class="math display">\[
+\mathbf{h}_v^{(k+1)} = \sigma \left( \mathbf{W}_1 \mathbf{h}_v^{(k)} + \sum_{u \in \mathcal{N}(v)} \mathbf{W}_2 \mathbf{h}_u^{(k)} \right)
+\]</span></li>
+</ul></li>
+<li><strong>Prediction Tasks:</strong>
+<ul>
+<li><strong>Molecular Property Prediction:</strong> Predict properties like solubility, toxicity, or activity using the final node embeddings. <span class="math display">\[
+\hat{y} = \text{MLP} \left( \sum_{v \in G} \mathbf{h}_v^{(K)} \right)
+\]</span></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Captures the detailed chemical structure and properties of molecules.</li>
+<li>Suitable for various tasks such as property prediction, molecular generation, and reaction prediction.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Requires large and diverse datasets for training.</li>
+<li>High computational cost for large molecular graphs.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Drug discovery and development.</li>
+<li>Predicting molecular interactions and activities.</li>
+<li>Chemical synthesis planning.</li>
+</ul></li>
+</ul>
+</section>
+<section id="protein-interaction-networks" class="level4">
+<h4 class="anchored" data-anchor-id="protein-interaction-networks">33.11.2. Protein Interaction Networks</h4>
+<p>Protein-protein interaction (PPI) networks represent proteins as nodes and their interactions as edges, capturing the complex interactions in biological systems.</p>
+<ul>
+<li><strong>Key Concepts:</strong>
+<ul>
+<li><strong>Nodes:</strong> Proteins with features such as sequence, structure, and function.</li>
+<li><strong>Edges:</strong> Interactions between proteins, often weighted by interaction strength.</li>
+</ul></li>
+<li><strong>Graph Convolution for PPI Networks:</strong>
+<ul>
+<li><strong>Node Features:</strong> Initialize features based on protein properties. <span class="math display">\[
+\mathbf{h}_p^{(0)} = \text{ProteinFeatures}(p)
+\]</span></li>
+<li><strong>Message Passing:</strong> Aggregate information from interacting proteins. <span class="math display">\[
+\mathbf{h}_p^{(k+1)} = \sigma \left( \mathbf{W}_1 \mathbf{h}_p^{(k)} + \sum_{q \in \mathcal{N}(p)} \mathbf{W}_2 \mathbf{h}_q^{(k)} \right)
+\]</span></li>
+</ul></li>
+<li><strong>Prediction Tasks:</strong>
+<ul>
+<li><strong>Interaction Prediction:</strong> Predict the likelihood of interactions between proteins. <span class="math display">\[
+\hat{y}_{pq} = \text{MLP} \left( [\mathbf{h}_p^{(K)} || \mathbf{h}_q^{(K)}] \right)
+\]</span></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Models the complex interactions in biological systems.</li>
+<li>Can integrate various data types, such as sequence data and experimental interaction data.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Requires comprehensive and high-quality interaction data.</li>
+<li>Computational challenges for large and dense PPI networks.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Understanding disease mechanisms and identifying therapeutic targets.</li>
+<li>Functional annotation of proteins.</li>
+<li>Pathway and network analysis in systems biology.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="scalability-in-graph-neural-networks" class="level3">
+<h3 class="anchored" data-anchor-id="scalability-in-graph-neural-networks">33.12. Scalability in Graph Neural Networks</h3>
+<p>Scalability is a critical challenge for GNNs, particularly when dealing with large-scale graphs in real-world applications.</p>
+<section id="techniques-for-scalability" class="level4">
+<h4 class="anchored" data-anchor-id="techniques-for-scalability">33.12.1. Techniques for Scalability</h4>
+<ul>
+<li><p><strong>Graph Sampling:</strong> Sample subgraphs or neighborhoods to reduce the size of the graph processed at each step.</p>
+<ul>
+<li><strong>GraphSAGE:</strong> Samples fixed-size neighborhoods.</li>
+<li><strong>FastGCN:</strong> Samples nodes instead of neighbors to reduce the computational burden.</li>
+</ul></li>
+<li><p><strong>Sparse Matrices:</strong> Utilize sparse matrix representations and operations to handle large, sparse adjacency matrices efficiently.</p></li>
+<li><p><strong>Distributed Training:</strong> Distribute the graph and computations across multiple machines.</p>
+<ul>
+<li><strong>Cluster-GCN:</strong> Partitions the graph into clusters and processes them in parallel.</li>
+<li><strong>GraphSAINT:</strong> Uses subgraph sampling for efficient training on large graphs.</li>
+</ul></li>
+<li><p><strong>Memory Optimization:</strong> Optimize memory usage through techniques like mini-batch training and gradient checkpointing.</p></li>
+<li><p><strong>Graph Coarsening:</strong> Reduce the size of the graph by merging nodes or edges, performing computations on the coarsened graph, and then refining the results.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Enables the application of GNNs to large-scale graphs.</li>
+<li>Reduces computational and memory requirements.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Potential loss of information due to sampling and coarsening.</li>
+<li>Requires careful balancing of efficiency and accuracy.</li>
+</ul></li>
+<li><p><strong>Applications:</strong></p>
+<ul>
+<li>Social network analysis on platforms with millions of users.</li>
+<li>Large-scale recommendation systems.</li>
+<li>Real-time graph analytics.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="explainability-in-graph-neural-networks" class="level3">
+<h3 class="anchored" data-anchor-id="explainability-in-graph-neural-networks">33.13. Explainability in Graph Neural Networks</h3>
+<p>Explainability is essential for understanding the decisions made by GNNs, particularly in critical applications like healthcare and finance.</p>
+<section id="techniques-for-explainability" class="level4">
+<h4 class="anchored" data-anchor-id="techniques-for-explainability">33.13.1. Techniques for Explainability</h4>
+<ul>
+<li><p><strong>Node and Edge Importance:</strong> Identify the most influential nodes and edges for a given prediction.</p>
+<ul>
+<li><strong>Graph Attention Mechanism:</strong> Use attention weights to highlight important nodes and edges. <span class="math display">\[
+\alpha_{ij} = \frac{\exp(e_{ij})}{\sum_{k \in \mathcal{N}(i)} \exp(e_{ik})}
+\]</span></li>
+</ul></li>
+<li><p><strong>Subgraph Extraction:</strong> Extract a subgraph that significantly contributes to the model’s prediction.</p>
+<ul>
+<li><strong>GNNExplainer:</strong> Provides explanations by identifying the smallest subgraph and feature subset that is important for the prediction. <span class="math display">\[
+\text{argmin}_{\mathcal{G}_s, \mathcal{F}_s} \mathcal{L}_{\text{expl}} (G, \mathcal{G}_s, \mathcal{F}_s)
+\]</span></li>
+</ul></li>
+<li><p><strong>Feature Attribution:</strong> Attribute the prediction to the input features using techniques like Integrated Gradients or Layer-wise Relevance Propagation (LRP).</p>
+<ul>
+<li><strong>Integrated Gradients:</strong> <span class="math display">\[
+\text{IG}_i(x) = (x_i - x_i') \int_{\alpha=0}^1 \frac{\partial F(x' + \alpha (x - x'))}{\partial x_i} d\alpha
+\]</span></li>
+</ul></li>
+<li><p><strong>Model-Agnostic Methods:</strong> Apply general explainability techniques, such as SHAP (SHapley Additive exPlanations) and LIME (Local Interpretable Model-agnostic Explanations), to GNNs.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Enhances trust and transparency in GNN models.</li>
+<li>Provides insights into model behavior and decision-making processes.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Explainability methods can be computationally intensive.</li>
+<li>May introduce additional complexity to the model interpretation.</li>
+</ul></li>
+<li><p><strong>Applications:</strong></p>
+<ul>
+<li>Healthcare: Explaining predictions in disease diagnosis and treatment.</li>
+<li>Finance: Understanding decisions in credit scoring and fraud detection.</li>
+<li>Social Sciences: Analyzing social networks and influence dynamics.</li>
+</ul></li>
+</ul>
+<p>By leveraging these advanced topics in GNNs, including their applications in bioinformatics, scalability techniques, and explainability methods, researchers and practitioners can develop more robust, scalable, and interpretable graph-based models. These advancements enable the application of GNNs to a broader range of complex and large-scale real-world problems.</p>
+</section>
+</section>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

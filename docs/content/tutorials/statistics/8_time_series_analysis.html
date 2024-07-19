@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>time_series_analysis – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="chapter-8-time-series-analysis" class="level1 text-content">
+<h1>Chapter 8: Time Series Analysis</h1>
+<section id="arima-models" class="level3">
+<h3 class="anchored" data-anchor-id="arima-models">ARIMA Models</h3>
+<section id="ar-autoregressive" class="level4">
+<h4 class="anchored" data-anchor-id="ar-autoregressive">1. AR (Autoregressive)</h4>
+<p><strong>Question:</strong> How would you use an autoregressive (AR) model to forecast user engagement on Instagram based on past engagement data?</p>
+<p><strong>Answer:</strong> An AR model predicts a variable using its own past values. The AR(p) model is defined as:</p>
+<p><span class="math display">\[
+Y_t = c + \sum_{i=1}^{p} \phi_i Y_{t-i} + \epsilon_t
+\]</span></p>
+<p>where <span class="math inline">\(Y_t\)</span> is the current value, <span class="math inline">\(c\)</span> is a constant, <span class="math inline">\(\phi_i\)</span> are the parameters, and <span class="math inline">\(\epsilon_t\)</span> is white noise.</p>
+<p>Example: If we have daily user engagement data, we fit an AR model (e.g., AR(1) if <span class="math inline">\(p=1\)</span>) to predict future engagement based on past values. For instance, if yesterday’s engagement was 100 and the AR(1) coefficient is 0.8, today’s forecast would be <span class="math inline">\(100 \times 0.8\)</span>.</p>
+</section>
+<section id="ma-moving-average" class="level4">
+<h4 class="anchored" data-anchor-id="ma-moving-average">2. MA (Moving Average)</h4>
+<p><strong>Question:</strong> Explain how a moving average (MA) model can be used to smooth user activity data on Facebook.</p>
+<p><strong>Answer:</strong> An MA model uses past forecast errors in a regression-like model. The MA(q) model is:</p>
+<p><span class="math display">\[
+Y_t = c + \epsilon_t + \sum_{i=1}^{q} \theta_i \epsilon_{t-i}
+\]</span></p>
+<p>where <span class="math inline">\(Y_t\)</span> is the current value, <span class="math inline">\(c\)</span> is a constant, <span class="math inline">\(\theta_i\)</span> are the parameters, and <span class="math inline">\(\epsilon_t\)</span> is white noise.</p>
+<p>Example: If we have daily user activity data with an MA(1) model, we smooth the data by incorporating past errors. For instance, if the previous day’s error was 10 and the MA(1) coefficient is 0.5, today’s forecast error would adjust by <span class="math inline">\(10 \times 0.5\)</span>.</p>
+</section>
+<section id="arma" class="level4">
+<h4 class="anchored" data-anchor-id="arma">3. ARMA</h4>
+<p><strong>Question:</strong> Describe how an ARMA model combines AR and MA components to analyse time series data such as the number of daily posts on Instagram.</p>
+<p><strong>Answer:</strong> The ARMA(p, q) model combines autoregressive (AR) and moving average (MA) components:</p>
+<p><span class="math display">\[
+Y_t = c + \sum_{i=1}^{p} \phi_i Y_{t-i} + \sum_{j=1}^{q} \theta_j \epsilon_{t-j} + \epsilon_t
+\]</span></p>
+<p>Example: For daily post counts, we fit an ARMA(2, 1) model to capture both the influence of past posts (AR) and past errors (MA) on current post counts.</p>
+</section>
+<section id="sarima-seasonal-arima" class="level4">
+<h4 class="anchored" data-anchor-id="sarima-seasonal-arima">4. SARIMA (Seasonal ARIMA)</h4>
+<p><strong>Question:</strong> Explain how a Seasonal ARIMA (SARIMA) model can be used to forecast user engagement on Instagram, considering seasonal effects.</p>
+<p><strong>Answer:</strong> SARIMA extends ARIMA to include seasonal components:</p>
+<p><span class="math display">\[
+(Y_t - Y_{t-s}) = c + \sum_{i=1}^{p} \phi_i (Y_{t-i} - Y_{t-i-s}) + \sum_{j=1}^{q} \theta_j (\epsilon_{t-j} - \epsilon_{t-j-s}) + \epsilon_t
+\]</span></p>
+<p>where <span class="math inline">\(s\)</span> is the seasonal period.</p>
+<p>Example: For monthly engagement data, if there is a yearly seasonal effect, we set <span class="math inline">\(s=12\)</span>. A SARIMA(1, 1, 1)(1, 1, 1)<span class="math inline">\(_{12}\)</span> model captures both non-seasonal and seasonal patterns.</p>
+</section>
+</section>
+<section id="seasonal-decomposition" class="level3">
+<h3 class="anchored" data-anchor-id="seasonal-decomposition">Seasonal Decomposition</h3>
+<section id="trend" class="level4">
+<h4 class="anchored" data-anchor-id="trend">5. Trend</h4>
+<p><strong>Question:</strong> How would you use seasonal decomposition to identify the trend component in the number of daily active users on Facebook?</p>
+<p><strong>Answer:</strong> Seasonal decomposition separates a time series into trend, seasonal, and residual components:</p>
+<p><span class="math display">\[
+Y_t = T_t + S_t + R_t
+\]</span></p>
+<p>Example: For daily active users, we use decomposition to isolate the trend component <span class="math inline">\(T_t\)</span>, showing the long-term movement in user activity, removing regular seasonal effects and irregular variations.</p>
+</section>
+<section id="seasonality" class="level4">
+<h4 class="anchored" data-anchor-id="seasonality">6. Seasonality</h4>
+<p><strong>Question:</strong> Describe how you would identify and interpret the seasonality component in user activity data on Instagram.</p>
+<p><strong>Answer:</strong> The seasonality component <span class="math inline">\(S_t\)</span> captures regular, repeating patterns in the data.</p>
+<p>Example: For weekly user activity data, we might find higher activity on weekends. Decomposition reveals <span class="math inline">\(S_t\)</span> as the pattern repeating every week, helping in understanding peak times for user engagement.</p>
+</section>
+<section id="residuals" class="level4">
+<h4 class="anchored" data-anchor-id="residuals">7. Residuals</h4>
+<p><strong>Question:</strong> How would you analyse the residuals from seasonal decomposition of user engagement data on Facebook?</p>
+<p><strong>Answer:</strong> Residuals <span class="math inline">\(R_t\)</span> are the remaining part of the time series after removing trend and seasonality, representing irregular fluctuations.</p>
+<p>Example: Analysing residuals helps in detecting anomalies or unusual spikes in user engagement that are not explained by trend or seasonality, indicating events like a viral post or technical issues.</p>
+</section>
+</section>
+<section id="forecasting-techniques" class="level3">
+<h3 class="anchored" data-anchor-id="forecasting-techniques">Forecasting Techniques</h3>
+<section id="exponential-smoothing" class="level4">
+<h4 class="anchored" data-anchor-id="exponential-smoothing">8. Exponential Smoothing</h4>
+<p><strong>Question:</strong> Explain how exponential smoothing can be used to forecast future user activity on a social media platform.</p>
+<p><strong>Answer:</strong> Exponential smoothing forecasts future values by weighting past observations with exponentially decreasing weights:</p>
+<p><span class="math display">\[
+S_t = \alpha Y_t + (1-\alpha) S_{t-1}
+\]</span></p>
+<p>where <span class="math inline">\(S_t\)</span> is the smoothed value, <span class="math inline">\(Y_t\)</span> is the actual value, and <span class="math inline">\(\alpha\)</span> is the smoothing parameter.</p>
+<p>Example: For daily user activity, we use exponential smoothing to generate a forecast that reacts quickly to recent changes but still accounts for the overall trend.</p>
+</section>
+<section id="holt-winters-method" class="level4">
+<h4 class="anchored" data-anchor-id="holt-winters-method">9. Holt-Winters Method</h4>
+<p><strong>Question:</strong> How would you use the Holt-Winters method to forecast seasonal data like monthly active users on Instagram?</p>
+<p><strong>Answer:</strong> The Holt-Winters method extends exponential smoothing to include trend and seasonality:</p>
+<p><span class="math display">\[
+\text{Level}: L_t = \alpha (Y_t - S_{t-s}) + (1-\alpha)(L_{t-1} + T_{t-1})
+\]</span></p>
+<p><span class="math display">\[
+\text{Trend}: T_t = \beta (L_t - L_{t-1}) + (1-\beta) T_{t-1}
+\]</span></p>
+<p><span class="math display">\[
+\text{Seasonal}: S_t = \gamma (Y_t - L_t) + (1-\gamma) S_{t-s}
+\]</span></p>
+<p><span class="math display">\[
+\text{Forecast}: \hat{Y}_{t+h} = L_t + hT_t + S_{t+h-s}
+\]</span></p>
+<p>Example: For monthly active users with yearly seasonality, Holt-Winters generates forecasts accounting for both the increasing trend and seasonal peaks and troughs.</p>
+</section>
+<section id="prophet" class="level4">
+<h4 class="anchored" data-anchor-id="prophet">10. Prophet</h4>
+<p><strong>Question:</strong> Describe how you would use the Prophet forecasting model to predict future user engagement on Facebook.</p>
+<p><strong>Answer:</strong> Prophet is a forecasting tool developed by Facebook that handles seasonality, holidays, and trend changes:</p>
+<p><span class="math display">\[
+y(t) = g(t) + s(t) + h(t) + \epsilon_t
+\]</span></p>
+<p>where <span class="math inline">\(g(t)\)</span> is the trend, <span class="math inline">\(s(t)\)</span> is the seasonality, and <span class="math inline">\(h(t)\)</span> is the holidays effect.</p>
+<p>Example: For daily user engagement, Prophet automatically detects and incorporates seasonal patterns and holiday effects, providing robust and flexible forecasts.</p>
+</section>
+<section id="tbats" class="level4">
+<h4 class="anchored" data-anchor-id="tbats">11. TBATS</h4>
+<p><strong>Question:</strong> Explain how the TBATS model can be used for complex seasonal time series forecasting of user interactions on Instagram.</p>
+<p><strong>Answer:</strong> TBATS models multiple seasonalities and nonlinear patterns:</p>
+<p><span class="math display">\[
+\text{TBATS}: Y_t = \Lambda_t + \sum \text{trigonometric terms} + \text{ARMA terms} + \epsilon_t
+\]</span></p>
+<p>where <span class="math inline">\(\Lambda_t\)</span> represents Box-Cox transformation.</p>
+<p>Example: For user interactions with daily, weekly, and yearly seasonality, TBATS captures all these patterns, providing accurate forecasts.</p>
+</section>
+</section>
+<section id="trend-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="trend-analysis">Trend Analysis</h3>
+<section id="trend-analysis-1" class="level4">
+<h4 class="anchored" data-anchor-id="trend-analysis-1">12. Trend Analysis</h4>
+<p><strong>Question:</strong> How would you conduct trend analysis to determine the long-term growth of user engagement on Instagram?</p>
+<p><strong>Answer:</strong> Trend analysis identifies the underlying direction in the data over time.</p>
+<p>Example: By applying moving averages or fitting a linear regression to engagement data, we detect if user engagement is increasing, decreasing, or stable over the long term, helping in strategic planning.</p>
+</section>
+</section>
+<section id="stationarity-and-differencing" class="level3">
+<h3 class="anchored" data-anchor-id="stationarity-and-differencing">Stationarity and Differencing</h3>
+<section id="stationarity-and-differencing-1" class="level4">
+<h4 class="anchored" data-anchor-id="stationarity-and-differencing-1">13. Stationarity and Differencing</h4>
+<p><strong>Question:</strong> Explain the concept of stationarity and how you would use differencing to make a time series stationary for analysis.</p>
+<p><strong>Answer:</strong> A stationary time series has constant mean, variance, and autocorrelation over time. Differencing removes trends and seasonality:</p>
+<p><span class="math display">\[
+Y'_t = Y_t - Y_{t-1}
+\]</span></p>
+<p>Example: For non-stationary user engagement data with an increasing trend, we apply differencing <span class="math inline">\(Y'_t = Y_t - Y_{t-1}\)</span> to achieve stationarity, enabling the use of ARIMA models.</p>
+</section>
+</section>
+<section id="autocorrelation-and-partial-autocorrelation" class="level3">
+<h3 class="anchored" data-anchor-id="autocorrelation-and-partial-autocorrelation">Autocorrelation and Partial Autocorrelation</h3>
+<section id="autocorrelation-and-partial-autocorrelation-1" class="level4">
+<h4 class="anchored" data-anchor-id="autocorrelation-and-partial-autocorrelation-1">14. Autocorrelation and Partial Autocorrelation</h4>
+<p><strong>Question:</strong> How would you use autocorrelation and partial autocorrelation functions to identify appropriate lags in an ARIMA model for user activity data on Facebook?</p>
+<p><strong>Answer:</strong> Autocorrelation (ACF) measures the correlation of the time series with its past values, while partial autocorrelation (PACF) measures the correlation with past values, controlling for intermediate lags.</p>
+<p>Example: By examining ACF and PACF plots for user activity data, we determine significant lags for AR and MA components. An ACF tailing off and PACF cutting off after lag 1 suggests an AR(1) model.</p>
+</section>
+</section>
+<section id="garch-models-for-volatility" class="level3">
+<h3 class="anchored" data-anchor-id="garch-models-for-volatility">GARCH Models for Volatility</h3>
+<section id="garch-models" class="level4">
+<h4 class="anchored" data-anchor-id="garch-models">15. GARCH Models</h4>
+<p><strong>Question:</strong> Describe how GARCH models can be used to analyse and forecast the volatility of user engagement on Instagram.</p>
+<p><strong>Answer:</strong> GARCH (Generalised Autoregressive Conditional Heteroskedasticity) models capture volatility clustering in time series data:</p>
+<p><span class="math display">\[
+\sigma_t^2 = \alpha_0 + \alpha_1 \epsilon_{t-1}^2 + \beta_1 \sigma_{t-1}^2
+\]</span></p>
+<p>where <span class="math inline">\(\sigma_t^2\)</span> is the variance.</p>
+<p>Example: For user engagement data with periods of high and low volatility, GARCH models the changing variance, providing insights into periods of stable and volatile engagement.</p>
+</section>
+</section>
+<section id="vector-autoregression-var" class="level3">
+<h3 class="anchored" data-anchor-id="vector-autoregression-var">Vector Autoregression (VAR)</h3>
+<section id="var-models" class="level4">
+<h4 class="anchored" data-anchor-id="var-models">16. VAR Models</h4>
+<p><strong>Question:</strong> How would you use vector autoregression (VAR) models to analyse the relationship between different social media metrics, such as likes and shares on Instagram?</p>
+<p><strong>Answer:</strong> VAR models capture the interdependencies among multiple time series:</p>
+<p><span class="math display">\[
+Y_t = c + A_1 Y_{t-1} + \cdots + A_p Y_{t-p} + \epsilon_t
+\]</span></p>
+<p>where <span class="math inline">\(Y_t\)</span> is a vector of time series.</p>
+<p>Example: To analyse likes and shares, we fit a VAR model with both metrics, examining how past values of likes and shares influence current values, revealing dynamic relationships.</p>
+</section>
+</section>
+<section id="cointegration-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="cointegration-analysis">Cointegration Analysis</h3>
+<section id="cointegration-analysis-1" class="level4">
+<h4 class="anchored" data-anchor-id="cointegration-analysis-1">17. Cointegration Analysis</h4>
+<p><strong>Question:</strong> Explain the concept of cointegration and how it can be used to analyse long-term relationships between user metrics like engagement and active users on Facebook.</p>
+<p><strong>Answer:</strong> Cointegration occurs when a linear combination of non-stationary series is stationary, indicating a long-term equilibrium relationship.</p>
+<p>Example: If engagement and active users are individually non-stationary but cointegrated, we infer a long-term relationship. Using cointegration tests, we model this relationship, helping in strategic decisions based on these metrics.</p>
+</section>
+</section>
+<section id="spectral-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="spectral-analysis">Spectral Analysis</h3>
+<section id="spectral-analysis-1" class="level4">
+<h4 class="anchored" data-anchor-id="spectral-analysis-1">18. Spectral Analysis</h4>
+<p><strong>Question:</strong> How would you use spectral analysis to identify periodic patterns in user activity data on Instagram?</p>
+<p><strong>Answer:</strong> Spectral analysis decomposes a time series into its frequency components.</p>
+<p>Example: By applying Fourier transform to user activity data, we identify dominant frequencies corresponding to periodic patterns, such as daily or weekly cycles, providing insights into user behaviour.</p>
+</section>
+</section>
+<section id="state-space-models" class="level3">
+<h3 class="anchored" data-anchor-id="state-space-models">State Space Models</h3>
+<section id="kalman-filter" class="level4">
+<h4 class="anchored" data-anchor-id="kalman-filter">19. Kalman Filter</h4>
+<p><strong>Question:</strong> Describe how you would use the Kalman filter for real-time estimation of user engagement on Facebook.</p>
+<p><strong>Answer:</strong> The Kalman filter is an algorithm that provides estimates of unknown variables from a series of measurements over time:</p>
+<p><span class="math display">\[
+x_{t|t-1} = A x_{t-1|t-1} + B u_{t-1}
+\]</span></p>
+<p><span class="math display">\[
+P_{t|t-1} = A P_{t-1|t-1} A^T + Q
+\]</span></p>
+<p>Example: For real-time estimation of user engagement, we use the Kalman filter to update estimates as new data arrives, providing accurate and timely insights into user behaviour.</p>
+</section>
+<section id="hidden-markov-models-hmm" class="level4">
+<h4 class="anchored" data-anchor-id="hidden-markov-models-hmm">20. Hidden Markov Models (HMM)</h4>
+<p><strong>Question:</strong> Explain how hidden Markov models (HMM) can be used to model user behaviour states on a social media platform.</p>
+<p><strong>Answer:</strong> HMMs model systems where the observed data depends on hidden states:</p>
+<p><span class="math display">\[
+P(Y_t | X_t)
+\]</span></p>
+<p>where <span class="math inline">\(Y_t\)</span> are observations and <span class="math inline">\(X_t\)</span> are hidden states.</p>
+<p>Example: Modelling user behaviour states (e.g., active, passive) on a social media platform with HMMs helps in understanding transitions between states based on observed interactions.</p>
+</section>
+</section>
+<section id="long-memory-models-arfima" class="level3">
+<h3 class="anchored" data-anchor-id="long-memory-models-arfima">Long Memory Models (ARFIMA)</h3>
+<section id="arfima-models" class="level4">
+<h4 class="anchored" data-anchor-id="arfima-models">21. ARFIMA Models</h4>
+<p><strong>Question:</strong> Describe the use of ARFIMA models in analysing long-term dependencies in user engagement data on Instagram.</p>
+<p><strong>Answer:</strong> ARFIMA (Autoregressive Fractionally Integrated Moving Average) models capture long memory properties:</p>
+<p><span class="math display">\[
+(1-L)^d Y_t = c + \sum \phi_i Y_{t-i} + \sum \theta_j \epsilon_{t-j} + \epsilon_t
+\]</span></p>
+<p>where <span class="math inline">\(d\)</span> is a fractional differencing parameter.</p>
+<p>Example: For user engagement data exhibiting long-term dependencies, ARFIMA models the persistent effects, providing better forecasts than standard ARIMA.</p>
+</section>
+</section>
+<section id="intervention-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="intervention-analysis">Intervention Analysis</h3>
+<section id="intervention-analysis-1" class="level4">
+<h4 class="anchored" data-anchor-id="intervention-analysis-1">22. Intervention Analysis</h4>
+<p><strong>Question:</strong> How would you use intervention analysis to assess the impact of a major change, such as a new feature rollout, on user activity on Facebook?</p>
+<p><strong>Answer:</strong> Intervention analysis models the effect of external changes on a time series:</p>
+<p><span class="math display">\[
+Y_t = T_t + I_t + R_t
+\]</span></p>
+<p>where <span class="math inline">\(I_t\)</span> represents the intervention effect.</p>
+<p>Example: To assess the impact of a new feature, we include an intervention term in the model and analyse changes in user activity pre- and post-intervention, quantifying the feature’s effect.</p>
+</section>
+</section>
+<section id="transfer-function-models" class="level3">
+<h3 class="anchored" data-anchor-id="transfer-function-models">Transfer Function Models</h3>
+<section id="transfer-function-models-1" class="level4">
+<h4 class="anchored" data-anchor-id="transfer-function-models-1">23. Transfer Function Models</h4>
+<p><strong>Question:</strong> Explain how transfer function models can be used to analyse the relationship between advertising spend and user acquisition on a social media platform.</p>
+<p><strong>Answer:</strong> Transfer function models relate input series (advertising spend) to output series (user acquisition):</p>
+<p><span class="math display">\[
+Y_t = \sum B(L) X_t + N_t
+\]</span></p>
+<p>where <span class="math inline">\(B(L)\)</span> is the transfer function.</p>
+<p>Example: By modelling the relationship between advertising spend and user acquisition, we determine the lagged effects and quantify the impact of spend on acquisition, optimising marketing strategies.</p>
+</section>
+</section>
+<section id="dynamic-regression-models" class="level3">
+<h3 class="anchored" data-anchor-id="dynamic-regression-models">Dynamic Regression Models</h3>
+<section id="dynamic-regression-models-1" class="level4">
+<h4 class="anchored" data-anchor-id="dynamic-regression-models-1">24. Dynamic Regression Models</h4>
+<p><strong>Question:</strong> How would you use dynamic regression models to predict user engagement on Instagram based on external factors such as marketing campaigns?</p>
+<p><strong>Answer:</strong> Dynamic regression models include external regressors with time series components:</p>
+<p><span class="math display">\[
+Y_t = \beta_0 + \sum \beta_i X_{t-i} + \sum \phi_j Y_{t-j} + \epsilon_t
+\]</span></p>
+<p>Example: By including marketing campaign data as external regressors, we predict user engagement, accounting for both historical engagement patterns and external influences, providing more accurate forecasts.</p>
+</section>
+</section>
+<section id="trend-analysis-in-social-media-posts" class="level3">
+<h3 class="anchored" data-anchor-id="trend-analysis-in-social-media-posts">Trend Analysis in Social Media Posts</h3>
+<section id="trend-analysis-in-social-media-posts-1" class="level4">
+<h4 class="anchored" data-anchor-id="trend-analysis-in-social-media-posts-1">1. Trend Analysis in Social Media Posts</h4>
+<p><strong>Question:</strong> How would you conduct trend analysis to identify long-term changes in the volume of social media posts on Instagram?</p>
+<p><strong>Answer:</strong> Trend analysis identifies the long-term movement in data over time. Steps: 1. <strong>Collect data</strong>: Gather time series data of social media post volumes.</p>
+<ol start="2" type="1">
+<li><p><strong>Decompose series</strong>: Use methods like LOESS or moving averages to decompose the series into trend, seasonality, and residuals.</p></li>
+<li><p><strong>Analyze trend</strong>: Examine the trend component to identify long-term changes.</p></li>
+</ol>
+<p>Example: For Instagram post volumes, trend analysis reveals whether posting activity is increasing, decreasing, or stable over time, aiding in strategic planning.</p>
+</section>
+</section>
+<section id="seasonality-detection-in-user-activity" class="level3">
+<h3 class="anchored" data-anchor-id="seasonality-detection-in-user-activity">Seasonality Detection in User Activity</h3>
+<section id="seasonality-detection-in-user-activity-1" class="level4">
+<h4 class="anchored" data-anchor-id="seasonality-detection-in-user-activity-1">2. Seasonality Detection in User Activity</h4>
+<p><strong>Question:</strong> Explain how you would detect seasonality in user activity data on Facebook.</p>
+<p><strong>Answer:</strong> Seasonality detection identifies regular, repeating patterns within a time series. Steps: 1. <strong>Collect data</strong>: Gather time series data of user activity.</p>
+<ol start="2" type="1">
+<li><p><strong>Decompose series</strong>: Use seasonal decomposition techniques like STL (Seasonal-Trend decomposition using LOESS) to separate seasonality from trend and noise.</p></li>
+<li><p><strong>Analyze seasonal component</strong>: Examine the seasonal component to identify periodic patterns.</p></li>
+</ol>
+<p>Example: For user activity data, seasonality detection reveals weekly or monthly usage patterns, helping to optimize content scheduling and marketing efforts.</p>
+</section>
+</section>
+<section id="forecasting-viral-content-spread" class="level3">
+<h3 class="anchored" data-anchor-id="forecasting-viral-content-spread">Forecasting Viral Content Spread</h3>
+<section id="forecasting-viral-content-spread-1" class="level4">
+<h4 class="anchored" data-anchor-id="forecasting-viral-content-spread-1">3. Forecasting Viral Content Spread</h4>
+<p><strong>Question:</strong> How would you use time series analysis to forecast the spread of viral content on Instagram?</p>
+<p><strong>Answer:</strong> Forecasting viral content spread involves predicting future data points based on past patterns. Steps: 1. <strong>Collect data</strong>: Gather time series data of content spread (e.g., likes, shares, comments).</p>
+<ol start="2" type="1">
+<li><p><strong>Choose model</strong>: Use models like ARIMA, Prophet, or exponential growth models.</p></li>
+<li><p><strong>Fit model</strong>: Train the model on historical data.</p></li>
+<li><p><strong>Make predictions</strong>: Forecast future spread and assess model accuracy.</p></li>
+</ol>
+<p>Example: For viral content, forecasting models predict how quickly and widely content will spread, enabling proactive management and optimization of content strategies.</p>
+</section>
+</section>
+<section id="change-point-detection-in-user-behavior" class="level3">
+<h3 class="anchored" data-anchor-id="change-point-detection-in-user-behavior">Change Point Detection in User Behavior</h3>
+<section id="change-point-detection-in-user-behavior-1" class="level4">
+<h4 class="anchored" data-anchor-id="change-point-detection-in-user-behavior-1">4. Change Point Detection in User Behavior</h4>
+<p><strong>Question:</strong> Describe how you would detect change points in user behavior on Facebook.</p>
+<p><strong>Answer:</strong> Change point detection identifies points in time where the statistical properties of a time series change. Steps: 1. <strong>Collect data</strong>: Gather time series data of user behavior metrics.</p>
+<ol start="2" type="1">
+<li><p><strong>Apply detection algorithms</strong>: Use methods like Bayesian Change Point detection, PELT, or CUSUM.</p></li>
+<li><p><strong>Analyze change points</strong>: Identify and interpret significant changes in behavior patterns.</p></li>
+</ol>
+<p>Example: For user behavior data, change point detection highlights shifts in engagement levels, helping to investigate causes such as feature updates or external events.</p>
+</section>
+</section>
+<section id="dynamic-time-warping-for-pattern-recognition" class="level3">
+<h3 class="anchored" data-anchor-id="dynamic-time-warping-for-pattern-recognition">Dynamic Time Warping for Pattern Recognition</h3>
+<section id="dynamic-time-warping-for-pattern-recognition-1" class="level4">
+<h4 class="anchored" data-anchor-id="dynamic-time-warping-for-pattern-recognition-1">5. Dynamic Time Warping for Pattern Recognition</h4>
+<p><strong>Question:</strong> How would you use dynamic time warping (DTW) to recognize patterns in user engagement on Instagram?</p>
+<p><strong>Answer:</strong> DTW measures the similarity between time series by aligning them optimally. Steps: 1. <strong>Collect data</strong>: Gather time series data of user engagement.</p>
+<ol start="2" type="1">
+<li><p><strong>Compute DTW</strong>: Use DTW to align and compare different engagement patterns.</p></li>
+<li><p><strong>Identify patterns</strong>: Recognize similar engagement behaviors across users or time periods.</p></li>
+</ol>
+<p>Example: For user engagement, DTW identifies recurring patterns such as peak activity times, aiding in content optimization and targeting.</p>
+</section>
+</section>
+<section id="time-series-clustering-of-user-engagement" class="level3">
+<h3 class="anchored" data-anchor-id="time-series-clustering-of-user-engagement">Time Series Clustering of User Engagement</h3>
+<section id="time-series-clustering-of-user-engagement-1" class="level4">
+<h4 class="anchored" data-anchor-id="time-series-clustering-of-user-engagement-1">6. Time Series Clustering of User Engagement</h4>
+<p><strong>Question:</strong> Explain how you would cluster user engagement time series data on Facebook.</p>
+<p><strong>Answer:</strong> Time series clustering groups similar time series data to identify patterns. Steps: 1. <strong>Collect data</strong>: Gather time series data of user engagement metrics.</p>
+<ol start="2" type="1">
+<li><p><strong>Compute similarity</strong>: Use distance measures like DTW or Euclidean distance.</p></li>
+<li><p><strong>Apply clustering algorithm</strong>: Use algorithms like k-means, hierarchical clustering, or DBSCAN.</p></li>
+<li><p><strong>Analyze clusters</strong>: Interpret the characteristics of each cluster.</p></li>
+</ol>
+<p>Example: For user engagement, clustering reveals distinct user groups with similar engagement patterns, enabling targeted strategies for each group.</p>
+</section>
+</section>
+<section id="multivariate-time-series-analysis-for-cross-platform-trends" class="level3">
+<h3 class="anchored" data-anchor-id="multivariate-time-series-analysis-for-cross-platform-trends">Multivariate Time Series Analysis for Cross-Platform Trends</h3>
+<section id="multivariate-time-series-analysis-for-cross-platform-trends-1" class="level4">
+<h4 class="anchored" data-anchor-id="multivariate-time-series-analysis-for-cross-platform-trends-1">7. Multivariate Time Series Analysis for Cross-Platform Trends</h4>
+<p><strong>Question:</strong> How would you use multivariate time series analysis to analyze cross-platform trends in user activity?</p>
+<p><strong>Answer:</strong> Multivariate time series analysis models the relationships among multiple time series. Steps: 1. <strong>Collect data</strong>: Gather time series data from multiple platforms.</p>
+<ol start="2" type="1">
+<li><p><strong>Fit model</strong>: Use models like VAR (Vector Autoregression) or VECM (Vector Error Correction Model).</p></li>
+<li><p><strong>Analyze interdependencies</strong>: Examine how trends on one platform influence others.</p></li>
+</ol>
+<p>Example: For cross-platform trends, multivariate analysis reveals how user activity on Facebook impacts Instagram and vice versa, informing integrated marketing strategies.</p>
+</section>
+</section>
+<section id="wavelet-analysis-for-multi-scale-temporal-patterns" class="level3">
+<h3 class="anchored" data-anchor-id="wavelet-analysis-for-multi-scale-temporal-patterns">Wavelet Analysis for Multi-Scale Temporal Patterns</h3>
+<section id="wavelet-analysis-for-multi-scale-temporal-patterns-1" class="level4">
+<h4 class="anchored" data-anchor-id="wavelet-analysis-for-multi-scale-temporal-patterns-1">8. Wavelet Analysis for Multi-Scale Temporal Patterns</h4>
+<p><strong>Question:</strong> Describe how wavelet analysis can be used to identify multi-scale temporal patterns in user interactions on Instagram.</p>
+<p><strong>Answer:</strong> Wavelet analysis decomposes time series into different frequency components, capturing patterns at multiple scales. Steps: 1. <strong>Choose wavelet</strong>: Select a wavelet function (e.g., Haar, Daubechies).</p>
+<ol start="2" type="1">
+<li><p><strong>Apply wavelet transform</strong>: Decompose the time series into wavelet coefficients.</p></li>
+<li><p><strong>Analyze scales</strong>: Identify patterns at different temporal scales.</p></li>
+</ol>
+<p>Example: For user interactions, wavelet analysis reveals short-term fluctuations and long-term trends, providing a comprehensive understanding of interaction dynamics.</p>
+</section>
+</section>
+<section id="state-space-models-for-user-growth-prediction" class="level3">
+<h3 class="anchored" data-anchor-id="state-space-models-for-user-growth-prediction">State Space Models for User Growth Prediction</h3>
+<section id="state-space-models-for-user-growth-prediction-1" class="level4">
+<h4 class="anchored" data-anchor-id="state-space-models-for-user-growth-prediction-1">9. State Space Models for User Growth Prediction</h4>
+<p><strong>Question:</strong> How would you use state space models to predict user growth on Instagram?</p>
+<p><strong>Answer:</strong> State space models describe the evolution of time series using state variables. Steps: 1. <strong>Define state space model</strong>: Specify the state and observation equations.</p>
+<ol start="2" type="1">
+<li><p><strong>Estimate parameters</strong>: Use algorithms like Kalman filter for linear models or particle filter for non-linear models.</p></li>
+<li><p><strong>Make predictions</strong>: Forecast future user growth based on the model.</p></li>
+</ol>
+<p>Example: For user growth prediction, state space models capture underlying growth dynamics and provide accurate forecasts, accounting for uncertainties and external factors.</p>
+</section>
+</section>
+<section id="long-short-term-memory-lstm-networks-for-sequence-prediction" class="level3">
+<h3 class="anchored" data-anchor-id="long-short-term-memory-lstm-networks-for-sequence-prediction">Long Short-Term Memory (LSTM) Networks for Sequence Prediction</h3>
+<section id="long-short-term-memory-lstm-networks-for-sequence-prediction-1" class="level4">
+<h4 class="anchored" data-anchor-id="long-short-term-memory-lstm-networks-for-sequence-prediction-1">10. Long Short-Term Memory (LSTM) Networks for Sequence Prediction</h4>
+<p><strong>Question:</strong> Explain how LSTM networks can be used to predict future user engagement on Facebook.</p>
+<p><strong>Answer:</strong> LSTM networks are a type of recurrent neural network (RNN) that capture long-term dependencies in sequential data. Steps: 1. <strong>Prepare data</strong>: Preprocess time series data and create sequences.</p>
+<ol start="2" type="1">
+<li><p><strong>Define LSTM model</strong>: Build an LSTM network with appropriate layers and units.</p></li>
+<li><p><strong>Train model</strong>: Train the LSTM network on historical engagement data.</p></li>
+<li><p><strong>Make predictions</strong>: Use the trained model to forecast future engagement.</p></li>
+</ol>
+<p>Example: For user engagement prediction, LSTM networks leverage historical data to predict future trends, capturing complex temporal dependencies for accurate forecasting.</p>
+</section>
+</section>
+</section>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

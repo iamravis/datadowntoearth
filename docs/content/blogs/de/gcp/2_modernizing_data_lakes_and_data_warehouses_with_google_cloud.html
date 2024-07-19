@@ -1,0 +1,2985 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>modernizing_data_lakes_and_data_warehouses_with_google_cloud – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<link href="../../../../logo.png" rel="icon" type="image/png">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../../styles.css">
+<link rel="stylesheet" href="../../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title"></h1>
+        </a>     
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../content/blogs/de/gcp/1_google_cloud_big_data_and_machine_learning_fundamentals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Google Cloud Big Data and Machine Learning Fundamentals</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../content/blogs/de/gcp/2_modernizing_data_lakes_and_data_warehouses_with_google_cloud.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">2. Modernizing Data Lakes and Data Warehouses with Google Cloud</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../content/blogs/de/gcp/3_building_batch_data_pipelines_on_google_cloud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Building Batch Data Pipelines on Google Cloud</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../content/blogs/de/gcp/4_building_resilient_streaming_analytics_systems_on_google_cloud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4. Building Resilient Streaming Analytics Systems on Google Cloud</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../content/blogs/de/gcp/5_smart_analytics_machine_learning_and_ai_on_google_cloud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5. Smart Analytics, Machine Learning, and AI on Google Cloud</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../content/blogs/de/gcp/6_preparing_for_your_professional_data_engineer_journey.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6. Preparing for your Professional Data Engineer Journey</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="text-content">
+<section id="module-1" class="level1">
+<h1>Module 1</h1>
+<section id="introduction-to-data-engineering" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-to-data-engineering">Introduction to Data Engineering</h2>
+<p>In this module, we will describe the role of a data engineer and explain why data engineering should be done in the Cloud.</p>
+<section id="role-of-a-data-engineer" class="level3">
+<h3 class="anchored" data-anchor-id="role-of-a-data-engineer">Role of a Data Engineer</h3>
+<p>A data engineer is someone who builds data pipelines. We will start by examining:</p>
+<ul>
+<li><p>What this entails</p></li>
+<li><p>The kinds of pipelines a data engineer builds</p></li>
+<li><p>The purpose of these pipelines</p></li>
+</ul>
+</section>
+<section id="challenges-in-data-engineering" class="level3">
+<h3 class="anchored" data-anchor-id="challenges-in-data-engineering">Challenges in Data Engineering</h3>
+<p>We will explore the challenges associated with data engineering and how many of these challenges are easier to address when you build your data pipelines in the Cloud.</p>
+<hr>
+</section>
+</section>
+<section id="introduction-to-bigquery" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-to-bigquery">Introduction to BigQuery</h2>
+<p>Next, we’ll introduce you to BigQuery, Google Cloud’s petabyte-scale serverless Data Warehouse.</p>
+<section id="data-lakes-and-data-warehouses" class="level3">
+<h3 class="anchored" data-anchor-id="data-lakes-and-data-warehouses">Data Lakes and Data Warehouses</h3>
+<p>Having defined what data lakes and data warehouses are, we will then discuss these in more detail. Data engineers may be responsible for both:</p>
+<ul>
+<li><p>The back-end transactional database systems that support a company’s applications</p></li>
+<li><p>The Data Warehouses that support their analytic workloads</p></li>
+</ul>
+</section>
+<section id="databases-vs.-data-warehouses" class="level3">
+<h3 class="anchored" data-anchor-id="databases-vs.-data-warehouses">Databases vs.&nbsp;Data Warehouses</h3>
+<p>In this lesson, we’ll explore the differences between databases and data warehouses and the Google Cloud Solutions for each of these workloads.</p>
+<hr>
+</section>
+</section>
+<section id="partnering-with-other-teams" class="level2">
+<h2 class="anchored" data-anchor-id="partnering-with-other-teams">Partnering with Other Teams</h2>
+<p>Since the Data Warehouse also serves other teams, it’s crucial to learn how to partner effectively with them. As part of being an effective partner, your engineering team will be asked to:</p>
+<ul>
+<li><p>Set up data access policies</p></li>
+<li><p>Manage overall governance of how data is to be used and not used by your users</p></li>
+</ul>
+<section id="data-governance" class="level3">
+<h3 class="anchored" data-anchor-id="data-governance">Data Governance</h3>
+<p>We’ll discuss how to provide access to the data warehouse while keeping to data governance best practices.</p>
+</section>
+<section id="productionizing-operations" class="level3">
+<h3 class="anchored" data-anchor-id="productionizing-operations">Productionizing Operations</h3>
+<p>We’ll also discuss productionizing the whole operation and automating and monitoring as much of it as possible.</p>
+<hr>
+</section>
+<section id="case-study-and-hands-on-lab" class="level3">
+<h3 class="anchored" data-anchor-id="case-study-and-hands-on-lab">Case Study and Hands-on Lab</h3>
+<p>Finally, we’ll look at a case study of how a Google Cloud customer solved a specific business problem before you complete a hands-on lab where you will use BigQuery to analyze data.</p>
+<hr>
+</section>
+</section>
+<section id="exploring-the-role-of-a-data-engineer" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-the-role-of-a-data-engineer">Exploring the Role of a Data Engineer</h2>
+<p>Let’s start by exploring the role of a data engineer in a little more detail.</p>
+<section id="what-does-a-data-engineer-do" class="level3">
+<h3 class="anchored" data-anchor-id="what-does-a-data-engineer-do">What Does a Data Engineer Do?</h3>
+<p>A data engineer builds data pipelines. Why does the data engineer build data pipelines?</p>
+<ul>
+<li><p><strong>Purpose</strong>: To get data into a place such as a dashboard, report, or machine learning model, from where the business can make data-driven decisions.</p></li>
+<li><p><strong>Usability</strong>: The data has to be in a usable condition so that someone can use this data to make decisions. Often, raw data is not very useful by itself.</p></li>
+</ul>
+</section>
+<section id="the-concept-of-a-data-lake" class="level3">
+<h3 class="anchored" data-anchor-id="the-concept-of-a-data-lake">The Concept of a Data Lake</h3>
+<p>One term you will hear a lot in data engineering is the concept of a data lake.</p>
+<ul>
+<li><p><strong>Definition</strong>: A data lake brings together data from across the enterprise into a single location.</p></li>
+<li><p><strong>Sources</strong>: You might get data from a relational database or from a spreadsheet and store the raw data in a data lake.</p></li>
+<li><p><strong>Storage</strong>: One option for this single location to store the raw data is to use a Cloud Storage bucket.</p></li>
+</ul>
+</section>
+<section id="key-considerations-for-data-lake-options" class="level3">
+<h3 class="anchored" data-anchor-id="key-considerations-for-data-lake-options">Key Considerations for Data Lake Options</h3>
+<p>What are the key considerations when deciding between data lake options?</p>
+<ul>
+<li><p><strong>Data Types</strong>: Does your data lake handle all the types of data you have?</p></li>
+<li><p><strong>Scalability</strong>: Can it elastically scale to meet the demand? This is more of a problem with on-premises systems than with cloud storage.</p></li>
+<li><p><strong>High-Throughput Ingestion</strong>: Does it support high-throughput ingestion? What is the network bandwidth? Do you have edge points of presence?</p></li>
+<li><p><strong>Access Control</strong>: Is there fine-grained access control to objects? Do users need to seek within a file? Or is it enough to get a file as a whole? Cloud Storage is blob storage, so you might need to think about the granularity of what you store.</p></li>
+<li><p><strong>Tool Integration</strong>: Can other tools connect easily? How do they access the store? Don’t lose sight of the fact that the purpose of a data lake is to make data accessible for analytics.</p></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="introduction-to-google-cloud-storage" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-to-google-cloud-storage">Introduction to Google Cloud Storage</h2>
+<p>We mentioned our first Google Cloud product, the Cloud Storage bucket, which is a good option for staging all of your raw data in one place before building transformation pipelines into your data warehouse.</p>
+<section id="why-choose-google-cloud-storage" class="level3">
+<h3 class="anchored" data-anchor-id="why-choose-google-cloud-storage">Why Choose Google Cloud Storage?</h3>
+<ul>
+<li><p><strong>Backup and Archival Utility</strong>: Commonly, businesses use Cloud Storage as a backup and archival utility for their businesses.</p></li>
+<li><p><strong>Durability and Performance</strong>: Because of Google’s many data center locations and high network availability, storing data in a Cloud Storage bucket is durable and performant.</p></li>
+<li><p><strong>Usage in Data Lakes</strong>: For a data engineer, you will often use a cloud storage bucket as part of your data lake to store many different raw data files, such as CSV, JSON, or Avro. You could then load or query them directly from BigQuery as a data warehouse.</p></li>
+</ul>
+</section>
+<section id="setting-up-cloud-storage-buckets" class="level3">
+<h3 class="anchored" data-anchor-id="setting-up-cloud-storage-buckets">Setting Up Cloud Storage Buckets</h3>
+<p>Later in the course, you’ll create Cloud Shell buckets using the Cloud Console and command line like you see here. Other Google Cloud products and services can easily query and integrate with your bucket once you’ve got it setup and loaded with data.</p>
+<hr>
+</section>
+</section>
+<section id="processing-raw-data" class="level2">
+<h2 class="anchored" data-anchor-id="processing-raw-data">Processing Raw Data</h2>
+<section id="extract-transform-load-etl" class="level3">
+<h3 class="anchored" data-anchor-id="extract-transform-load-etl">Extract, Transform, Load (ETL)</h3>
+<p>What if your raw data needs additional processing? You may need to extract the data from its original location, transform it, and then load it in.</p>
+<ul>
+<li><strong>Data Processing</strong>: This is often done using Dataproc or Dataflow. We’ll discuss using these products to carry out batch pipelines later in this course.</li>
+</ul>
+</section>
+<section id="real-time-analytics" class="level3">
+<h3 class="anchored" data-anchor-id="real-time-analytics">Real-Time Analytics</h3>
+<p>But what if batch pipelines are not enough? What if you need real-time analytics on data that arrives continuously and endlessly?</p>
+<ul>
+<li><strong>Streaming Pipelines</strong>: In that case, you might receive the data in Pub/Sub, transform it using Dataflow, and stream it into BigQuery. We’ll discuss streaming pipelines later in this course.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="challenges-faced-by-data-engineers" class="level2">
+<h2 class="anchored" data-anchor-id="challenges-faced-by-data-engineers">Challenges Faced by Data Engineers</h2>
+<p>Let’s look at some of the challenges that a data engineer faces.</p>
+<section id="common-problems-in-building-data-pipelines" class="level3">
+<h3 class="anchored" data-anchor-id="common-problems-in-building-data-pipelines">Common Problems in Building Data Pipelines</h3>
+<p>As a data engineer, you’ll usually encounter a few problems when building data pipelines:</p>
+<ul>
+<li><p><strong>Data Access</strong>: You might find it difficult to access the data that you need.</p></li>
+<li><p><strong>Data Quality</strong>: Even after accessing the data, it might not have the quality required by the analytics or machine learning model you plan to build.</p></li>
+<li><p><strong>Computational Resources</strong>: The transformations required might need computational resources that are not available to you.</p></li>
+<li><p><strong>Query Performance</strong>: You might face challenges around query performance and the ability to run all the queries and transformations you need with the available computational resources.</p></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="consolidating-disparate-data-sets" class="level2">
+<h2 class="anchored" data-anchor-id="consolidating-disparate-data-sets">Consolidating Disparate Data Sets</h2>
+<section id="accessing-and-managing-data-at-scale" class="level3">
+<h3 class="anchored" data-anchor-id="accessing-and-managing-data-at-scale">Accessing and Managing Data at Scale</h3>
+<p>For example, you want to compute the customer acquisition cost (CAC). How much does it cost in terms of marketing, promotions, and discounts to acquire a customer?</p>
+<ul>
+<li><p><strong>Data Scattering</strong>: That data might be scattered across various marketing products and customer relationship management software.</p></li>
+<li><p><strong>Tool Integration</strong>: Finding a tool that can analyze all of this data might be difficult because it comes from different organizations, tools, and schemas, and some of the data may not even be structured.</p></li>
+</ul>
+</section>
+<section id="data-silos" class="level3">
+<h3 class="anchored" data-anchor-id="data-silos">Data Silos</h3>
+<p>To determine something essential to your business, such as the cost of acquiring a new customer, your data cannot exist in silos.</p>
+<ul>
+<li><p><strong>Departmental Silos</strong>: Data in many businesses is siloed by departments, each creating its own transactional systems to support its business processes.</p>
+<ul>
+<li><p><strong>Store Systems</strong>: Operational systems that correspond to store systems.</p></li>
+<li><p><strong>Product Warehouses</strong>: Different operational systems maintained by your product warehouses to manage inventory.</p></li>
+<li><p><strong>Marketing Department</strong>: Systems that manage all promotions.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="combining-data" class="level3">
+<h3 class="anchored" data-anchor-id="combining-data">Combining Data</h3>
+<p>Building an analytics system that uses multiple data sets to answer an ad hoc query can be very difficult because:</p>
+<ul>
+<li><p><strong>Separate Systems</strong>: These data sets are stored in separate systems, some of which have restricted access.</p></li>
+<li><p><strong>Example Query</strong>: Combining data from stores, promotions, and inventory levels to answer a query like “Give me all the in-store promotions for recent orders and their inventory levels.”</p></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="etl-pipelines-and-data-warehouses" class="level2">
+<h2 class="anchored" data-anchor-id="etl-pipelines-and-data-warehouses">ETL Pipelines and Data Warehouses</h2>
+<section id="ensuring-data-accuracy-and-quality" class="level3">
+<h3 class="anchored" data-anchor-id="ensuring-data-accuracy-and-quality">Ensuring Data Accuracy and Quality</h3>
+<p>Cleaning, formatting, and preparing the data for insights requires building ETL (Extract, Transform, Load) pipelines.</p>
+<ul>
+<li><p><strong>ETL Pipelines</strong>: Necessary to ensure data accuracy and quality.</p></li>
+<li><p><strong>Data Warehouses</strong>: Clean and transformed data is typically stored in a data warehouse, not in a data lake.</p></li>
+</ul>
+</section>
+<section id="advantages-of-data-warehouses" class="level3">
+<h3 class="anchored" data-anchor-id="advantages-of-data-warehouses">Advantages of Data Warehouses</h3>
+<ul>
+<li><p><strong>Consolidation</strong>: A data warehouse is a consolidated place to store data, making all data easily joinable and queryable.</p></li>
+<li><p><strong>Efficient Queries</strong>: Unlike a data lake where data is in raw format, a data warehouse stores data in a way that makes it efficient to query.</p></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="use-case-retail-data-consolidation" class="level2">
+<h2 class="anchored" data-anchor-id="use-case-retail-data-consolidation">Use Case: Retail Data Consolidation</h2>
+<section id="example-scenario" class="level3">
+<h3 class="anchored" data-anchor-id="example-scenario">Example Scenario</h3>
+<p>Let’s say you’re a retailer and need to consolidate data from multiple source systems.</p>
+<ul>
+<li><p><strong>Use Case</strong>: Get the best performing in-store promotions in France.</p></li>
+<li><p><strong>Data Sources</strong>: Store data, promotion data, and possibly unstructured data.</p></li>
+</ul>
+</section>
+<section id="data-challenges" class="level3">
+<h3 class="anchored" data-anchor-id="data-challenges">Data Challenges</h3>
+<ul>
+<li><p><strong>Missing Information</strong>: Some store transactions may be in cash with no customer information, or spread over multiple receipts.</p></li>
+<li><p><strong>Time Stamps</strong>: Products might have local time stamps, needing conversion to UTC for global consistency.</p></li>
+<li><p><strong>Promotion Data</strong>: Might not be in the transaction database but in a separate text file used by the web application.</p></li>
+</ul>
+</section>
+<section id="query-complexity" class="level3">
+<h3 class="anchored" data-anchor-id="query-complexity">Query Complexity</h3>
+<p>Finding the best performing in-store promotions can be difficult due to the data’s complexity.</p>
+<ul>
+<li><p><strong>Raw Data Transformation</strong>: Raw data must be transformed into a form suitable for analysis.</p></li>
+<li><p><strong>Single Clean-up</strong>: Best if clean-up and consolidation are done once and stored to make further analysis easy. This is the point of a data warehouse.</p></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="computational-resource-challenges" class="level2">
+<h2 class="anchored" data-anchor-id="computational-resource-challenges">Computational Resource Challenges</h2>
+<section id="compute-availability" class="level3">
+<h3 class="anchored" data-anchor-id="compute-availability">Compute Availability</h3>
+<p>If you’re on an on-premises system, managing server and cluster capacity to carry out detailed</p>
+<p>jobs can be challenging.</p>
+<ul>
+<li><p><strong>Variable Compute Needs</strong>: ETL jobs’ compute needs vary over time, influenced by factors like holidays and promotional sales.</p>
+<ul>
+<li><p><strong>Low Traffic</strong>: Wasting money during low traffic periods.</p></li>
+<li><p><strong>High Traffic</strong>: Jobs take too long during high traffic periods.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="query-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="query-optimization">Query Optimization</h3>
+<p>Once data is in the data warehouse, optimizing queries to make efficient use of compute resources is crucial.</p>
+<ul>
+<li><strong>Managing On-Premises Clusters</strong>: Responsible for choosing, installing, and maintaining query engine software and provisioning additional servers for capacity.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Isn’t there a better way to manage server overhead so we can focus on insights?</p>
+<hr>
+</section>
+<section id="managing-server-overhead-with-serverless-data-warehouses" class="level2">
+<h2 class="anchored" data-anchor-id="managing-server-overhead-with-serverless-data-warehouses">Managing Server Overhead with Serverless Data Warehouses</h2>
+<p>There is a much better way to manage server overhead so we can focus on insights.</p>
+<section id="serverless-data-warehouse" class="level3">
+<h3 class="anchored" data-anchor-id="serverless-data-warehouse">Serverless Data Warehouse</h3>
+<p>BigQuery is Google Cloud’s petabyte-scale serverless data warehouse.</p>
+<ul>
+<li><strong>No Cluster Management</strong>: You don’t have to manage clusters. Just focus on insights.</li>
+</ul>
+</section>
+<section id="bigquery-service" class="level3">
+<h3 class="anchored" data-anchor-id="bigquery-service">BigQuery Service</h3>
+<p>The BigQuery service replaces the typical hardware setup for a traditional data warehouse.</p>
+<ul>
+<li><p><strong>Analytical Data Home</strong>: Serves as a collective home for all analytical data in an organization.</p></li>
+<li><p><strong>Datasets</strong>: Collections of tables that can be divided along business lines or a given analytical domain. Each dataset is tied to a Google Cloud project.</p></li>
+</ul>
+</section>
+<section id="data-sources-and-queries" class="level3">
+<h3 class="anchored" data-anchor-id="data-sources-and-queries">Data Sources and Queries</h3>
+<p>A data lake might contain files in Cloud Storage or Google Drive or even transactional data from Bigtable.</p>
+<ul>
+<li><p><strong>Federated Data Sources</strong>: BigQuery can define a schema and issue queries directly on external data as federated data sources.</p></li>
+<li><p><strong>Tables and Views</strong>: Function the same way in BigQuery as they do in a traditional data warehouse, supporting queries written in a standard SQL dialect which is ANSI: 2011 compliant.</p></li>
+</ul>
+</section>
+<section id="identity-and-access-management-iam" class="level3">
+<h3 class="anchored" data-anchor-id="identity-and-access-management-iam">Identity and Access Management (IAM)</h3>
+<p>Identity and Access Management is used to grant permission to perform specific actions in BigQuery.</p>
+<ul>
+<li><strong>Replacing SQL GRANT and REVOKE</strong>: This replaces the SQL GRANT and REVOKE statements that are used to manage access permissions in traditional SQL databases.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="agility-and-efficiency" class="level2">
+<h2 class="anchored" data-anchor-id="agility-and-efficiency">Agility and Efficiency</h2>
+<section id="doing-more-with-less" class="level3">
+<h3 class="anchored" data-anchor-id="doing-more-with-less">Doing More with Less</h3>
+<p>A key consideration behind agility is being able to do more with less. It’s important to ensure that you’re not doing things that don’t add value.</p>
+<ul>
+<li><strong>Common Work Across Industries</strong>: If you do work that is common across multiple industries, it’s probably not something that your business wants to pay for.</li>
+</ul>
+</section>
+<section id="cloud-benefits-for-data-engineers" class="level3">
+<h3 class="anchored" data-anchor-id="cloud-benefits-for-data-engineers">Cloud Benefits for Data Engineers</h3>
+<p>The cloud lets you, the data engineer, spend less time managing hardware and more time doing things that are much more customized and specific to the business.</p>
+<ul>
+<li><p><strong>Provisioning and Reliability</strong>: You don’t have to be concerned about provisioning, reliability, or performance tuning on the cloud.</p></li>
+<li><p><strong>Focus on Insights</strong>: Spend all your time thinking about how to get better insights from your data.</p></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="dynamic-resource-allocation-in-bigquery" class="level2">
+<h2 class="anchored" data-anchor-id="dynamic-resource-allocation-in-bigquery">Dynamic Resource Allocation in BigQuery</h2>
+<section id="no-pre-provisioning-needed" class="level3">
+<h3 class="anchored" data-anchor-id="no-pre-provisioning-needed">No Pre-Provisioning Needed</h3>
+<p>You don’t need to provision resources before using BigQuery, unlike many RDBMS systems.</p>
+<ul>
+<li><strong>Dynamic Allocation</strong>: BigQuery allocates storage and query resources dynamically based on your usage patterns.</li>
+</ul>
+</section>
+<section id="storage-and-query-resources" class="level3">
+<h3 class="anchored" data-anchor-id="storage-and-query-resources">Storage and Query Resources</h3>
+<ul>
+<li><p><strong>Storage Resources</strong>: Allocated as you consume them and deallocated as you remove data or drop tables.</p></li>
+<li><p><strong>Query Resources</strong>: Allocated according to query type and complexity.</p></li>
+<li><p><strong>Slots</strong>: Each query uses some number of slots, which are units of computation that comprise a certain amount of CPU and RAM.</p></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="data-lakes-vs.-data-warehouses" class="level2">
+<h2 class="anchored" data-anchor-id="data-lakes-vs.-data-warehouses">Data Lakes vs.&nbsp;Data Warehouses</h2>
+<section id="usable-data" class="level3">
+<h3 class="anchored" data-anchor-id="usable-data">Usable Data</h3>
+<p>We’ve defined what a data lake is and what a data warehouse is. Let’s look at these in a bit more detail.</p>
+<ul>
+<li><p><strong>Usability</strong>: The data has to be in a usable condition so that someone can use this data to make decisions. Many times, raw data is by itself not very useful.</p></li>
+<li><p><strong>Data Lakes</strong>: Raw data gets replicated and stored in a data lake.</p></li>
+<li><p><strong>ETL Pipelines</strong>: To make the data usable, you use extract, transform, load (ETL) pipelines and store this more usable data in a data warehouse.</p></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="key-considerations-for-data-warehouse-options" class="level2">
+<h2 class="anchored" data-anchor-id="key-considerations-for-data-warehouse-options">Key Considerations for Data Warehouse Options</h2>
+<p>When deciding between data warehouse options, we need to ask ourselves several key questions:</p>
+<section id="data-feeding-method" class="level3">
+<h3 class="anchored" data-anchor-id="data-feeding-method">Data Feeding Method</h3>
+<ul>
+<li><p><strong>Batch vs.&nbsp;Streaming</strong>: Will the warehouse be fed by a batch pipeline or a streaming pipeline?</p></li>
+<li><p><strong>Data Accuracy</strong>: Does the warehouse need to be accurate up to the minute, or is it enough to load data into it once a day or once a week?</p></li>
+</ul>
+</section>
+<section id="scalability-and-query-limits" class="level3">
+<h3 class="anchored" data-anchor-id="scalability-and-query-limits">Scalability and Query Limits</h3>
+<ul>
+<li><p><strong>Scalability</strong>: Will the data warehouse scale to meet my needs?</p></li>
+<li><p><strong>Concurrent Query Limits</strong>: Many cluster-based data warehouses set per cluster concurrent query limits. Will those query limits cause a problem?</p></li>
+<li><p><strong>Cluster Size</strong>: Will the cluster size be large enough to store and traverse your data?</p></li>
+</ul>
+</section>
+<section id="data-organization-and-access" class="level3">
+<h3 class="anchored" data-anchor-id="data-organization-and-access">Data Organization and Access</h3>
+<ul>
+<li><p><strong>Organization and Cataloging</strong>: How is the data organized, cataloged, and access controlled?</p></li>
+<li><p><strong>Access Sharing</strong>: Will you be able to share access to the data with all your stakeholders? What happens if they want to query the data?</p></li>
+<li><p><strong>Query Cost</strong>: Who will pay for the querying?</p></li>
+</ul>
+</section>
+<section id="performance-and-maintenance" class="level3">
+<h3 class="anchored" data-anchor-id="performance-and-maintenance">Performance and Maintenance</h3>
+<ul>
+<li><p><strong>Performance Design</strong>: Is the warehouse designed for performance? Consider concurrent query performance, and whether that performance is out-of-the-box or requires creating indexes and tuning.</p></li>
+<li><p><strong>Maintenance Level</strong>: What level of maintenance is required by your engineering team? Traditional data warehouses are hard to manage and operate.</p></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="traditional-data-warehouses-vs.-bigquery" class="level2">
+<h2 class="anchored" data-anchor-id="traditional-data-warehouses-vs.-bigquery">Traditional Data Warehouses vs.&nbsp;BigQuery</h2>
+<section id="traditional-data-warehouses" class="level3">
+<h3 class="anchored" data-anchor-id="traditional-data-warehouses">Traditional Data Warehouses</h3>
+<ul>
+<li><p><strong>Design Paradigm</strong>: Designed for a batch paradigm of data analytics and operational reporting needs.</p></li>
+<li><p><strong>Usage</strong>: Data was meant to be used by only a few management folks for reporting purposes.</p></li>
+</ul>
+</section>
+<section id="bigquery" class="level3">
+<h3 class="anchored" data-anchor-id="bigquery">BigQuery</h3>
+<p>BigQuery is a modern data warehouse that changes the conventional mode of data warehousing.</p>
+<ul>
+<li><p><strong>Automated Data Transfer</strong>: Provides mechanisms for automated data transfer and powers business applications using technology that teams already know and use, so everyone has access to data insights.</p></li>
+<li><p><strong>Read-Only Shared Data Sources</strong>: Create read-only shared data sources that both internal and external users can query, and make query results accessible through user-friendly tools such as Looker, Google Sheets, Tableau, or Google Data Studio.</p></li>
+<li><p><strong>Foundation for AI</strong>: Train TensorFlow on Google Cloud machine learning models directly with datasets stored in BigQuery. Use BigQuery ML to build and train machine learning models with simple SQL.</p></li>
+<li><p><strong>BigQuery GIS</strong>: Analyze geographic data in BigQuery, essential for business decisions revolving around location data.</p></li>
+<li><p><strong>Real-Time Analysis</strong>: Analyze business events in real-time as they unfold by automatically ingesting data and making it immediately available to query. BigQuery can ingest up to 100,000 rows of data per second and query petabytes of data at lightning-fast speeds.</p></li>
+<li><p><strong>Serverless Infrastructure</strong>: Google’s fully-managed serverless infrastructure and globally available network eliminate the work associated with provisioning and maintaining a traditional data warehousing infrastructure.</p></li>
+<li><p><strong>Simplified Data Operations</strong>: Use identity and access management to control user access to resources, creating roles and groups, and assigning permissions for running jobs and queries. Provide automatic data backup and replication.</p></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="querying-data-in-place-with-bigquery" class="level2">
+<h2 class="anchored" data-anchor-id="querying-data-in-place-with-bigquery">Querying Data In-Place with BigQuery</h2>
+<p>Even though we talked about getting data into BigQuery by running ETL pipelines, there is another option: treating BigQuery as a query engine and allowing it to query the data in place.</p>
+<section id="querying-external-data" class="level3">
+<h3 class="anchored" data-anchor-id="querying-external-data">Querying External Data</h3>
+<ul>
+<li><p><strong>Cloud SQL</strong>: Use BigQuery to directly query database data in Cloud SQL, managed relational databases like PostgreSQL, MySQL, and SQL Server.</p></li>
+<li><p><strong>Cloud Storage</strong>: Use BigQuery to directly query files on Cloud Storage, provided these files are in formats like CSV or Parquet.</p></li>
+</ul>
+</section>
+<section id="power-of-in-place-queries" class="level3">
+<h3 class="anchored" data-anchor-id="power-of-in-place-queries">Power of In-Place Queries</h3>
+<ul>
+<li><strong>Join Capabilities</strong>: The real power comes when you can leave your data in place and still join it against other data in the data warehouse.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="differences-between-databases-and-data-warehouses" class="level2">
+<h2 class="anchored" data-anchor-id="differences-between-databases-and-data-warehouses">Differences Between Databases and Data Warehouses</h2>
+<p>Data engineers may be responsible for both the backend transactional database systems that support your company’s applications and the data warehouses that support your analytic workloads. In this lesson, you’ll explore the differences between databases and data warehouses and the Google Cloud solutions for each workload.</p>
+<section id="google-cloud-solutions-for-rdbms" class="level3">
+<h3 class="anchored" data-anchor-id="google-cloud-solutions-for-rdbms">Google Cloud Solutions for RDBMS</h3>
+<p>If you have SQL Server, MySQL, or PostgreSQL as your relational database, you can migrate it to Cloud SQL, which is Google Cloud’s fully managed relational database solution.</p>
+<ul>
+<li><p><strong>Cloud SQL Capabilities</strong>:</p>
+<ul>
+<li><p>High performance and scalability with up to 64 terabytes of storage capacity.</p></li>
+<li><p>60,000 IOPS and 624 gigabytes of RAM per instance.</p></li>
+<li><p>Storage auto-scale to handle growing database needs with zero downtime.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="cloud-sql-vs.-bigquery" class="level3">
+<h3 class="anchored" data-anchor-id="cloud-sql-vs.-bigquery">Cloud SQL vs.&nbsp;BigQuery</h3>
+<p>One question you might get asked is: “Why not simply use Cloud SQL for reporting workflows? You can run SQL directly on the database, right?” This is a great question and will be answered in greater detail in the “Building a Data Warehouse” module.</p>
+<ul>
+<li><p><strong>Cloud SQL</strong>: Optimized for transactions (writes).</p></li>
+<li><p><strong>BigQuery</strong>: Optimized for reporting workloads (mostly reads).</p></li>
+</ul>
+</section>
+<section id="fundamental-architecture-differences" class="level3">
+<h3 class="anchored" data-anchor-id="fundamental-architecture-differences">Fundamental Architecture Differences</h3>
+<ul>
+<li><p><strong>Cloud SQL</strong>:</p>
+<ul>
+<li><strong>Record-Based Storage</strong>: The entire record must be opened on disk, even if you just selected a single column in your query.</li>
+</ul></li>
+<li><p><strong>BigQuery</strong>:</p>
+<ul>
+<li><strong>Column-Based Storage</strong>: Allows for really wide reporting schemas, as you can simply read individual columns from disk.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="purpose-of-rdbms-vs.-data-warehouses" class="level2">
+<h2 class="anchored" data-anchor-id="purpose-of-rdbms-vs.-data-warehouses">Purpose of RDBMS vs.&nbsp;Data Warehouses</h2>
+<p>This isn’t to say RDBMS’s aren’t as performant as Data Warehouses. They serve two different purposes:</p>
+<section id="rdbms-relational-database-management-systems" class="level3">
+<h3 class="anchored" data-anchor-id="rdbms-relational-database-management-systems">RDBMS (Relational Database Management Systems)</h3>
+<ul>
+<li><p><strong>Transactional Management</strong>: Helps your business manage new transactions.</p></li>
+<li><p><strong>Example</strong>: Point of sale terminal at a storefront</p></li>
+</ul>
+<p>.</p>
+<ul>
+<li><p>Each order and product is likely written out as new records in a relational database somewhere.</p></li>
+<li><p>This database may store all of the orders received from their website, all products listed in the catalog, or the number of items in their inventory.</p></li>
+<li><p>Allows for quick updates to existing orders.</p></li>
+<li><p><strong>Relational Principles</strong>:</p>
+<ul>
+<li><strong>Referential Integrity</strong>: Guards against cases like a customer ordering a product that doesn’t exist in the product table.</li>
+</ul></li>
+</ul>
+</section>
+<section id="data-warehousing" class="level3">
+<h3 class="anchored" data-anchor-id="data-warehousing">Data Warehousing</h3>
+<p>Where does all this raw data end up in our data lake and data warehouse discussion? Here’s the complete picture:</p>
+<ul>
+<li><p><strong>Operational Systems</strong>: Relational databases that store online orders, inventory, and promotions are our raw data sources.</p></li>
+<li><p><strong>Data Lake</strong>: Upstream data sources, including manual sources like CSV files or spreadsheets, are gathered in a single consolidated location, designed for durability and high availability.</p></li>
+<li><p><strong>Data Processing</strong>: Data in the data lake often needs to be processed via transformations and then output into our data warehouse.</p></li>
+<li><p><strong>Data Warehouse</strong>: Ready for use by downstream teams.</p></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="teams-using-data-warehouses" class="level2">
+<h2 class="anchored" data-anchor-id="teams-using-data-warehouses">Teams Using Data Warehouses</h2>
+<p>Here are three quick examples of other teams that often build pipelines on our data warehouse:</p>
+<ul>
+<li><p><strong>ML Team</strong>: Builds pipelines to get features for their models.</p></li>
+<li><p><strong>Engineering Team</strong>: Uses data as part of their data warehouse.</p></li>
+<li><p><strong>BI Team</strong>: Builds dashboards using some of the data.</p></li>
+</ul>
+<section id="collaboration-with-data-engineering-team" class="level3">
+<h3 class="anchored" data-anchor-id="collaboration-with-data-engineering-team">Collaboration with Data Engineering Team</h3>
+<p>So who works on these teams and how do they partner with our data engineering team?</p>
+<ul>
+<li><p><strong>ML Team</strong>: Partners to ensure data features are accurate and relevant for machine learning models.</p></li>
+<li><p><strong>Engineering Team</strong>: Collaborates to integrate data into engineering projects and applications.</p></li>
+<li><p><strong>BI Team</strong>: Works with data engineers to access and visualize data for business insights.</p></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="partnering-effectively-with-other-teams" class="level2">
+<h2 class="anchored" data-anchor-id="partnering-effectively-with-other-teams">Partnering Effectively with Other Teams</h2>
+<p>Since a data warehouse also serves other teams, it is crucial to learn how to partner effectively with them. Once you’ve got data where it can be useful and in a usable condition, new value can be added to the data through analytics and machine learning.</p>
+<section id="teams-relying-on-your-data-warehouse" class="level3">
+<h3 class="anchored" data-anchor-id="teams-relying-on-your-data-warehouse">Teams Relying on Your Data Warehouse</h3>
+<p>There are many data teams that rely on your data warehouse and partnerships with data engineering to build and maintain new data pipelines. The three most common clients are:</p>
+<ul>
+<li><p>The machine learning engineer</p></li>
+<li><p>The data or BI analyst</p></li>
+<li><p>Other data engineers</p></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="interactions-with-data-warehouse" class="level2">
+<h2 class="anchored" data-anchor-id="interactions-with-data-warehouse">Interactions with Data Warehouse</h2>
+<section id="machine-learning-engineer" class="level3">
+<h3 class="anchored" data-anchor-id="machine-learning-engineer">Machine Learning Engineer</h3>
+<p>As you’ll see in our course on machine learning, an ML team’s models rely on having lots of high-quality input data to create, train, test, evaluate, and serve their models. They will often partner with data engineering teams to build pipelines and datasets for use in their models.</p>
+<ul>
+<li><p><strong>Common Questions</strong>:</p>
+<ul>
+<li><p>“How long does it take for a transaction to make it from raw data all the way into the data warehouse?” This is crucial because any data they train their models on must also be available at prediction-time.</p></li>
+<li><p>“How difficult would it be to add more columns or rows of data into certain datasets?” The ML team relies on discovering relationships between the columns of data and having a rich history to train models on.</p></li>
+</ul></li>
+<li><p><strong>Best Practices</strong>:</p>
+<ul>
+<li>Make your datasets easily discoverable, documented, and available to ML teams to experiment on quickly.</li>
+</ul></li>
+<li><p><strong>BigQuery ML</strong>: A unique feature of BigQuery is that you can create high-performing machine learning models directly in BigQuery using just SQL.</p>
+<ul>
+<li><p><strong>Model Creation Example</strong>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> MODEL `my_dataset.my_model`</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>OPTIONS(model_type<span class="op">=</span><span class="st">'linear_reg'</span>) <span class="kw">AS</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  input_col1,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  input_col2,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  output_col</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  `my_dataset.my_table`;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="business-intelligence-and-data-analysts" class="level3">
+<h3 class="anchored" data-anchor-id="business-intelligence-and-data-analysts">Business Intelligence and Data Analysts</h3>
+<p>Critical stakeholders like your business intelligence and data analyst teams rely on good clean data to query for insights and build dashboards.</p>
+<ul>
+<li><p><strong>Requirements</strong>:</p>
+<ul>
+<li><p>Clearly defined schema definitions</p></li>
+<li><p>Ability to quickly preview rows</p></li>
+<li><p>Performance to scale to many concurrent dashboard users</p></li>
+</ul></li>
+<li><p><strong>BigQuery BI Engine</strong>: A fast, in-memory analysis service built directly into BigQuery to speed up business intelligence applications.</p>
+<ul>
+<li><p><strong>Advantages</strong>:</p>
+<ul>
+<li><p>Sub-second query response time without needing to create OLAP cubes.</p></li>
+<li><p>Built on the same BigQuery storage and compute architecture, serving as an intelligent caching service that maintains state.</p></li>
+</ul></li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="other-data-engineers" class="level3">
+<h3 class="anchored" data-anchor-id="other-data-engineers">Other Data Engineers</h3>
+<p>Other data engineers rely on the uptime and performance of your data warehouse and pipelines for their downstream data lakes and data warehouses.</p>
+<ul>
+<li><p><strong>Common Questions</strong>:</p>
+<ul>
+<li><p>“How can you ensure that the data pipeline we depend on will always be available when we need it?”</p></li>
+<li><p>“We are noticing high demand for certain popular datasets. How can you monitor and scale the health of your entire data ecosystem?”</p></li>
+</ul></li>
+<li><p><strong>Monitoring Tools</strong>:</p>
+<ul>
+<li><p><strong>Cloud Monitoring</strong>: Built-in Cloud Monitoring for all resources on Google Cloud. Set up alerts and notifications for metrics like “Statement Scanned Bytes” or “Query Count” to better track usage and performance.</p></li>
+<li><p><strong>Tracking Spending and Billing Trends</strong>: Cloud Monitoring helps track spending and billing trends for your team or organization.</p></li>
+<li><p><strong>Cloud Audit Logs</strong>: View actual query job information to see granular level details about which queries were executed and by whom. Useful for monitoring sensitive datasets.</p></li>
+</ul></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="conclusion-1" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion-1">Conclusion</h2>
+<p>Partnering effectively with other teams involves understanding their specific needs and providing reliable, well-documented, and high-quality data. Tools like BigQuery, BigQuery ML, BigQuery BI Engine, and Cloud Monitoring help streamline these partnerships, ensuring that data is accessible, usable, and valuable for all stakeholders.</p>
+<hr>
+</section>
+<section id="data-access-policies-and-governance" class="level2">
+<h2 class="anchored" data-anchor-id="data-access-policies-and-governance">Data Access Policies and Governance</h2>
+<p>As part of being an effective partner, your engineering team will be asked to set up data access policies and overall governance of how data is to be used and not used by your users. This is what we mean when we say a data engineer must manage the data. This includes critical topics such as privacy and security.</p>
+<hr>
+<section id="key-considerations-when-managing-data-sets" class="level3">
+<h3 class="anchored" data-anchor-id="key-considerations-when-managing-data-sets">Key Considerations When Managing Data Sets</h3>
+<ul>
+<li><p><strong>Privacy and Security</strong>: Ensuring that sensitive information is protected.</p>
+<ul>
+<li>Implementing access controls to prevent unauthorized access.</li>
+</ul></li>
+<li><p><strong>Data Governance Model</strong>: Clearly communicating who should and should not have access to specific data sets.</p>
+<ul>
+<li>Defining roles and responsibilities for data management.</li>
+</ul></li>
+<li><p><strong>Handling Personally Identifiable Information (PII)</strong>: Protecting information like phone numbers and email addresses.</p>
+<ul>
+<li>Using encryption and other security measures to safeguard PII.</li>
+</ul></li>
+<li><p><strong>Data Discovery</strong>: Enabling end users to easily discover and access the data sets available for analysis.</p>
+<ul>
+<li>Organizing data sets and making them searchable.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="solutions-for-data-governance" class="level3">
+<h3 class="anchored" data-anchor-id="solutions-for-data-governance">Solutions for Data Governance</h3>
+<ul>
+<li><p><strong>Cloud Data Catalog</strong>: Makes all the metadata about your data sets available to search for your users.</p>
+<ul>
+<li><p>Group data sets together with tags and flag certain columns as sensitive.</p></li>
+<li><p>Provides a single unified user experience for discovering data sets quickly, eliminating the need to hunt for specific table names and SQL first.</p></li>
+</ul></li>
+<li><p><strong>Data Loss Prevention API (DLP API)</strong>: Helps you better understand and manage sensitive data.</p>
+<ul>
+<li>Provides fast, scalable classification and reduction for sensitive data elements like credit card numbers, names, social security numbers, US and selected international identifier numbers, phone numbers, and Google Cloud credentials.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="productionalizing-data-processes" class="level2">
+<h2 class="anchored" data-anchor-id="productionalizing-data-processes">Productionalizing Data Processes</h2>
+<p>Once your data lakes and data warehouses are set up and your governance policy is in place, it’s time to productionalize the whole operation and automate and monitor as much of it as we can. This is what we mean by productionalizing the data process. It has to be an end-to-end and scalable data processing system.</p>
+<hr>
+<section id="responsibilities-of-the-data-engineering-team" class="level3">
+<h3 class="anchored" data-anchor-id="responsibilities-of-the-data-engineering-team">Responsibilities of the Data Engineering Team</h3>
+<ul>
+<li><p><strong>Pipeline Health</strong>: Ensuring the pipelines are functioning properly.</p>
+<ul>
+<li>Maintaining data cleanliness and integrity.</li>
+</ul></li>
+<li><p><strong>Data Availability</strong>: Ensuring data is up-to-date for analytic and ML workloads.</p></li>
+</ul>
+<hr>
+</section>
+<section id="key-questions-to-ask" class="level3">
+<h3 class="anchored" data-anchor-id="key-questions-to-ask">Key Questions to Ask</h3>
+<ul>
+<li><p><strong>Ensuring Pipeline Health and Data Cleanliness</strong>: How can we ensure pipeline health and data cleanliness?</p>
+<ul>
+<li>What measures are in place to monitor and maintain these standards?</li>
+</ul></li>
+<li><p><strong>Productionalizing Pipelines</strong>: How do we productionalize these pipelines to minimize maintenance and maximize up-time?</p>
+<ul>
+<li>What strategies can we implement to automate and monitor the pipelines effectively?</li>
+</ul></li>
+<li><p><strong>Adapting to Changes</strong>: How do we respond and adapt to changing schemas and business needs?</p>
+<ul>
+<li>Are we using the latest data engineering tools and best practices?</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="workflow-orchestration-with-apache-airflow-and-cloud-composer" class="level3">
+<h3 class="anchored" data-anchor-id="workflow-orchestration-with-apache-airflow-and-cloud-composer">Workflow Orchestration with Apache Airflow and Cloud Composer</h3>
+<ul>
+<li><p><strong>Apache Airflow</strong>: A common workflow orchestration tool used by enterprises.</p></li>
+<li><p><strong>Google Cloud Composer</strong>: A fully managed version of Airflow on Google Cloud.</p>
+<ul>
+<li>Helps your data engineering team orchestrate all the pieces of the data engineering puzzle.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="example-workflow-with-cloud-composer" class="level3">
+<h3 class="anchored" data-anchor-id="example-workflow-with-cloud-composer">Example Workflow with Cloud Composer</h3>
+<ul>
+<li><p><strong>Event-Driven Data Processing</strong>: When a new CSV file gets dropped into cloud storage, it triggers an event.</p>
+<ul>
+<li>This event kicks off a data processing workflow that puts the data directly into your data warehouse.</li>
+</ul></li>
+<li><p><strong>Automation and Scheduling</strong>: Cloud Composer jobs can run at regular intervals (e.g., nightly or hourly).</p>
+<ul>
+<li>It can automate the entire pipeline from raw data to the data lake and into the data warehouse.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="upcoming-modules" class="level3">
+<h3 class="anchored" data-anchor-id="upcoming-modules">Upcoming Modules</h3>
+<ul>
+<li><p><strong>Workflow Orchestration</strong>: We’ll discuss workflow orchestration in greater detail in later modules.</p>
+<ul>
+<li>You will also do a lab on Cloud Composer to gain hands-on experience.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="case-study-solving-a-business-problem-with-google-cloud" class="level2">
+<h2 class="anchored" data-anchor-id="case-study-solving-a-business-problem-with-google-cloud">Case Study: Solving a Business Problem with Google Cloud</h2>
+<p>We have looked at a lot of different aspects of what a data engineer has to do. Let’s look at a case study of how a Google Cloud customer solves a specific business problem. This will help tie all these different aspects together.</p>
+<hr>
+<section id="case-study-twitter" class="level3">
+<h3 class="anchored" data-anchor-id="case-study-twitter">Case Study: Twitter</h3>
+<ul>
+<li><p><strong>Problem</strong>: Twitter has large amounts of data and high-powered sales and marketing teams.</p>
+<ul>
+<li>These teams did not have access to the data and couldn’t use it for</li>
+</ul></li>
+</ul>
+<p>their analysis needs.</p>
+<ul>
+<li><p>Much of the data was stored on Hadoop clusters that were completely overtaxed.</p></li>
+<li><p><strong>Solution</strong>: Twitter replicated some of that data from HDFS onto Cloud Storage.</p>
+<ul>
+<li><p>They loaded this data into BigQuery.</p></li>
+<li><p>BigQuery was then provided to the rest of the organization.</p></li>
+</ul></li>
+<li><p><strong>Outcome</strong>: These were some of the most frequently requested datasets within Twitter.</p>
+<ul>
+<li><p>With ready access to the data, many employees who were not data analysts started analyzing data.</p></li>
+<li><p>As a result, better decisions were made across the organization.</p></li>
+</ul></li>
+</ul>
+<hr>
+<p>For more information, a link to the blog post is available in the PDF version of this content under course resources.</p>
+<hr>
+</section>
+</section>
+<section id="summary-of-major-topics" class="level2">
+<h2 class="anchored" data-anchor-id="summary-of-major-topics">Summary of Major Topics</h2>
+<p>Let’s summarize the major topics we covered so far in this introduction.</p>
+<hr>
+<section id="data-sources" class="level3">
+<h3 class="anchored" data-anchor-id="data-sources">Data Sources</h3>
+<ul>
+<li><p><strong>Definition</strong>: Your upstream systems like RDBMS and other raw data sources.</p>
+<ul>
+<li>Data comes from your business in different formats.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="data-lakes" class="level3">
+<h3 class="anchored" data-anchor-id="data-lakes">Data Lakes</h3>
+<ul>
+<li><p><strong>Definition</strong>: A consolidated location for raw data that is durable and highly available.</p>
+<ul>
+<li>In this example, our data lake is Cloud Storage.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="data-warehouses" class="level3">
+<h3 class="anchored" data-anchor-id="data-warehouses">Data Warehouses</h3>
+<ul>
+<li><p><strong>Definition</strong>: The end result of preprocessing the raw data in your data lake.</p>
+<ul>
+<li>Getting it ready for analytic and ML workloads.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="additional-google-cloud-products" class="level3">
+<h3 class="anchored" data-anchor-id="additional-google-cloud-products">Additional Google Cloud Products</h3>
+<ul>
+<li><p><strong>Batch and Streaming Data</strong>: Methods for loading data into your lake.</p></li>
+<li><p><strong>Running ML on Your Data</strong>: Applying machine learning algorithms to your processed data.</p></li>
+</ul>
+<hr>
+</section>
+<section id="reference-materials" class="level3">
+<h3 class="anchored" data-anchor-id="reference-materials">Reference Materials</h3>
+<ul>
+<li><p><strong>Google Cloud Products in 4 Words or Less</strong>: A useful cheatsheet actively maintained on GitHub by the Google Developer Relations team.</p>
+<ul>
+<li>A great way to stay updated on new products and services by following the GitHub commits.</li>
+</ul></li>
+</ul>
+<hr>
+<p>We’ll cover batch and streaming data, as well as running ML on your data, in detail later in this course.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="module-2" class="level1">
+<h1>Module 2</h1>
+<section id="module-building-a-data-lake" class="level2">
+<h2 class="anchored" data-anchor-id="module-building-a-data-lake">Module: Building a Data Lake</h2>
+<p>Welcome to the module on building a data lake.</p>
+<hr>
+<section id="overview" class="level3">
+<h3 class="anchored" data-anchor-id="overview">Overview</h3>
+<ul>
+<li><p><strong>Revisiting Data Lakes</strong>: Definition and purpose of data lakes.</p></li>
+<li><p><strong>Data Storage and ETL Options</strong>: Discussing your options for extracting, transforming, and loading (ETL) data into Google Cloud.</p></li>
+</ul>
+<hr>
+</section>
+<section id="google-cloud-storage-as-a-data-lake" class="level3">
+<h3 class="anchored" data-anchor-id="google-cloud-storage-as-a-data-lake">Google Cloud Storage as a Data Lake</h3>
+<ul>
+<li><p><strong>Why Choose Google Cloud Storage?</strong>: Benefits and features of using Google Cloud Storage as a data lake.</p></li>
+<li><p><strong>Securing Your Data Lake</strong>: Key security features to control access to your objects.</p>
+<ul>
+<li>Importance of securing your data lake running on cloud storage.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="storing-different-data-types" class="level3">
+<h3 class="anchored" data-anchor-id="storing-different-data-types">Storing Different Data Types</h3>
+<ul>
+<li><strong>Alternative Storage Options</strong>: Exploring other storage choices on Google Cloud for various data types.</li>
+</ul>
+<hr>
+</section>
+<section id="cloud-sql-for-oltp-workloads" class="level3">
+<h3 class="anchored" data-anchor-id="cloud-sql-for-oltp-workloads">Cloud SQL for OLTP Workloads</h3>
+<ul>
+<li><p><strong>Introduction to Cloud SQL</strong>: The default choice for online transaction processing (OLTP) workloads on Google Cloud.</p></li>
+<li><p><strong>Hands-On Lab</strong>: Practice creating a data lake for your relational data with Cloud SQL.</p></li>
+</ul>
+<hr>
+<p>By the end of this module, you will have a comprehensive understanding of building and securing a data lake on Google Cloud, as well as practical experience with Cloud SQL.</p>
+<hr>
+</section>
+</section>
+<section id="introduction-to-data-lakes" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-to-data-lakes">Introduction to Data Lakes</h2>
+<p>Let’s start with a discussion about what data lakes are and where they fit in as a critical component of your overall data engineering ecosystem.</p>
+<hr>
+<section id="what-is-a-data-lake" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-a-data-lake">What is a Data Lake?</h3>
+<ul>
+<li><p><strong>Definition</strong>: A place where you can securely store various types of data of all scales for processing and analytics.</p>
+<ul>
+<li><p>Drive data analytics, data science, and ML workloads.</p></li>
+<li><p>Support batch and streaming data pipelines.</p></li>
+</ul></li>
+<li><p><strong>Characteristics</strong>: Accepts all types of data.</p>
+<ul>
+<li>Portable, can be on-premise or in the cloud.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="role-of-data-lakes-in-the-data-engineering-ecosystem" class="level3">
+<h3 class="anchored" data-anchor-id="role-of-data-lakes-in-the-data-engineering-ecosystem">Role of Data Lakes in the Data Engineering Ecosystem</h3>
+<ul>
+<li><p><strong>Data Sources</strong>: Originating systems that are the source of all your data.</p></li>
+<li><p><strong>Data Sinks</strong>: Reliable ways of retrieving and storing data.</p></li>
+<li><p><strong>First Line of Defense</strong>: Data lakes act as the central repository for all types of data at any volume, variety, and velocity.</p></li>
+</ul>
+<hr>
+</section>
+<section id="building-a-data-lake" class="level3">
+<h3 class="anchored" data-anchor-id="building-a-data-lake">Building a Data Lake</h3>
+<ul>
+<li><p><strong>Key Considerations</strong>: Options for extracting, transforming, and loading (ETL) data into Google Cloud.</p>
+<ul>
+<li>Securing the data lake and controlling access to your objects.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="data-pipeline-and-orchestration" class="level3">
+<h3 class="anchored" data-anchor-id="data-pipeline-and-orchestration">Data Pipeline and Orchestration</h3>
+<ul>
+<li><p><strong>Data Pipelines</strong>: Perform the cleanup and processing of data at scale.</p>
+<ul>
+<li>Transform raw data into a useful format for the business.</li>
+</ul></li>
+<li><p><strong>Orchestration Workflow</strong>: Coordinates efforts between different components at regular or event-driven cadences.</p>
+<ul>
+<li>Kicks off data pipelines when new raw data is available.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="analogy-data-engineering-and-civil-engineering" class="level3">
+<h3 class="anchored" data-anchor-id="analogy-data-engineering-and-civil-engineering">Analogy: Data Engineering and Civil Engineering</h3>
+<ul>
+<li><p><strong>Construction Site Analogy</strong>: Raw Materials: Data coming from source systems into your lake.</p>
+<ul>
+<li><p>Workers: Virtual machines (VMs) transforming raw materials into useful pieces.</p></li>
+<li><p>Building: The end-goal (e.g., analytical insights, ML models).</p></li>
+<li><p>Manager/Supervisor: Orchestration layer managing dependencies and workflows.</p></li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="example-solution-architecture" class="level3">
+<h3 class="anchored" data-anchor-id="example-solution-architecture">Example Solution Architecture</h3>
+<ul>
+<li><p><strong>Cloud Storage Buckets</strong>: Serve as the consolidated location for raw data that is durable and highly available.</p>
+<ul>
+<li>Example data lake in Google Cloud.</li>
+</ul></li>
+<li><p><strong>BigQuery</strong>: Can serve as both a Data Lake and Data Warehouse in some scenarios.</p></li>
+</ul>
+<hr>
+</section>
+<section id="core-google-cloud-big-data-products" class="level3">
+<h3 class="anchored" data-anchor-id="core-google-cloud-big-data-products">Core Google Cloud Big Data Products</h3>
+<ul>
+<li><p><strong>Storage Products</strong>: <strong>Cloud Storage</strong></p>
+<ul>
+<li><strong>Cloud SQL</strong> for relational data.</li>
+</ul></li>
+<li><p><strong>High-Throughput Streaming Pipelines</strong>: <strong>Bigtable</strong></p></li>
+</ul>
+<hr>
+</section>
+<section id="difference-between-data-lake-and-data-warehouse" class="level3">
+<h3 class="anchored" data-anchor-id="difference-between-data-lake-and-data-warehouse">Difference Between Data Lake and Data Warehouse</h3>
+<ul>
+<li><p><strong>Data Lake</strong>: Captures every aspect of business operations.</p>
+<ul>
+<li>Stores data in its natural raw format (e.g., log files).</li>
+</ul></li>
+<li><p><strong>Data Warehouse</strong>: Structured and semi-structured data organized for querying and analysis.</p>
+<ul>
+<li>Data is cleaned, processed, and stored after defining a schema and identifying use cases.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="data-storage-and-etl-options-on-google-cloud" class="level2">
+<h2 class="anchored" data-anchor-id="data-storage-and-etl-options-on-google-cloud">Data Storage and ETL Options on Google Cloud</h2>
+<p>Next, let’s discuss your data storage and Extract, Transform, and Load (ETL) options on Google Cloud.</p>
+<hr>
+<section id="data-storage-solutions-for-building-a-data-lake" class="level3">
+<h3 class="anchored" data-anchor-id="data-storage-solutions-for-building-a-data-lake">Data Storage Solutions for Building a Data Lake</h3>
+<ul>
+<li><p><strong>Cloud Storage</strong>: Great catch-all solution for various types of data.</p></li>
+<li><p><strong>Cloud SQL and Spanner</strong>: Ideal for relational data.</p></li>
+<li><p><strong>Firestore and Bigtable</strong>: Designed for NoSQL data.</p></li>
+<li><p><strong>Choosing the Right Option</strong>: Depends heavily on your use case and what you’re trying to build.</p>
+<ul>
+<li>Focus on Cloud Storage and Cloud SQL for now, with Bigtable discussed later for high-throughput streaming.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="deciding-the-path-for-your-data-lake" class="level3">
+<h3 class="anchored" data-anchor-id="deciding-the-path-for-your-data-lake">Deciding the Path for Your Data Lake</h3>
+<ul>
+<li><p><strong>Considerations</strong>: Where your data is now.</p>
+<ul>
+<li><p>The volume of your data (Volume component of the 3 Vs of Big Data).</p></li>
+<li><p>The final destination for your data (data sink).</p></li>
+</ul></li>
+<li><p><strong>Processing and Transformation</strong>: How much processing and transformation your data needs before it is useful to your business.</p>
+<ul>
+<li>Deciding whether to process data before loading into the Data Lake or afterward.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="etl-patterns" class="level3">
+<h3 class="anchored" data-anchor-id="etl-patterns">ETL Patterns</h3>
+<ul>
+<li><p><strong>Extract and Load (E-L)</strong>: <strong>Definition</strong>: When data can be imported “as is” into a system.</p>
+<ul>
+<li><p><strong>Use Case</strong>: Data is in a format readily ingested by the target cloud product.</p></li>
+<li><p><strong>Example</strong>: Loading Avro files directly into BigQuery.</p></li>
+</ul></li>
+<li><p><strong>Extract, Load, and Transform (E-L-T)</strong>: <strong>Definition</strong>: Data is loaded into the cloud product and then transformed.</p>
+<ul>
+<li><p><strong>Use Case</strong>: Transformation needed is minimal and doesn’t greatly reduce data size.</p></li>
+<li><p><strong>Example</strong>: Using SQL in BigQuery to transform and write new tables.</p></li>
+</ul></li>
+<li><p><strong>Extract, Transform, and Load (E-T-L)</strong>: <strong>Definition</strong>: Data is transformed before being loaded into the cloud product.</p>
+<ul>
+<li><p><strong>Use Case</strong>: Essential transformations or transformations that greatly reduce data size.</p></li>
+<li><p><strong>Example</strong>: Using Dataflow to transform data before loading into BigQuery.</p></li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="summary-of-etl-patterns" class="level3">
+<h3 class="anchored" data-anchor-id="summary-of-etl-patterns">Summary of ETL Patterns</h3>
+<ul>
+<li><p><strong>E-L</strong>: Directly loading data in a compatible format.</p></li>
+<li><p><strong>E-L-T</strong>: Loading raw data first, then transforming it in the cloud.</p></li>
+<li><p><strong>E-T-L</strong>: Transforming data before loading it to reduce size and complexity.</p></li>
+</ul>
+<hr>
+<p>By understanding these ETL patterns and storage options, you can make informed decisions on how to best build and manage your data lake on Google Cloud.</p>
+<hr>
+</section>
+</section>
+<section id="deep-dive-into-google-cloud-storage" class="level2">
+<h2 class="anchored" data-anchor-id="deep-dive-into-google-cloud-storage">Deep Dive into Google Cloud Storage</h2>
+<p>Cloud Storage is the essential storage service for working with data, especially unstructured data, in the cloud. Let’s explore why Google Cloud Storage is a popular choice for serving as a data lake.</p>
+<hr>
+<section id="key-features-of-google-cloud-storage" class="level3">
+<h3 class="anchored" data-anchor-id="key-features-of-google-cloud-storage">Key Features of Google Cloud Storage</h3>
+<ul>
+<li><p><strong>Persistence and Cost</strong>: Data in Cloud Storage persists beyond the lifetime of VMs or clusters.</p>
+<ul>
+<li>It is relatively inexpensive compared to the cost of compute.</li>
+</ul></li>
+<li><p><strong>Object Store</strong>: Stores and retrieves binary objects without regard to data content.</p>
+<ul>
+<li>Provides file system compatibility, making objects appear and function like files.</li>
+</ul></li>
+<li><p><strong>Durability and Consistency</strong>: Data is durable and available instantly, with strong consistency.</p></li>
+<li><p><strong>Global Availability</strong>: Share data globally, with encryption and complete control.</p>
+<ul>
+<li>Option to keep data in a single geographic location if needed.</li>
+</ul></li>
+<li><p><strong>Performance</strong>: Moderate latency and high throughput.</p></li>
+</ul>
+<hr>
+</section>
+<section id="buckets-and-objects" class="level3">
+<h3 class="anchored" data-anchor-id="buckets-and-objects">Buckets and Objects</h3>
+<ul>
+<li><p><strong>Buckets</strong>: Containers for objects, identified in a globally unique namespace.</p>
+<ul>
+<li>Associated with a specific region or multiple regions.</li>
+</ul></li>
+<li><p><strong>Objects</strong>: Stored within buckets and replicated for durability.</p>
+<ul>
+<li>Served from the closest replica to the requester.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="metadata-and-additional-features" class="level3">
+<h3 class="anchored" data-anchor-id="metadata-and-additional-features">Metadata and Additional Features</h3>
+<ul>
+<li><p><strong>Metadata</strong>: Information about the object used for access control, compression, encryption, and lifecycle management.</p></li>
+<li><p><strong>Lifecycle Management</strong>: Automatically move data to lower cost storage classes as it is accessed less frequently.</p></li>
+<li><p><strong>Retention Policies and Versioning</strong>: Set retention policies and track multiple versions of an object.</p></li>
+</ul>
+<hr>
+</section>
+<section id="storage-classes" class="level3">
+<h3 class="anchored" data-anchor-id="storage-classes">Storage Classes</h3>
+<ul>
+<li><strong>Standard Storage</strong>: Best</li>
+</ul>
+<p>for frequently accessed (“hot”) data.</p>
+<ul>
+<li><p>Optimized for data-intensive computations and global access.</p></li>
+<li><p><strong>Nearline Storage</strong>: Low-cost storage for infrequently accessed data.</p>
+<ul>
+<li>Ideal for data accessed or modified once per month or less.</li>
+</ul></li>
+<li><p><strong>Coldline Storage</strong>: Very-low-cost storage for infrequently accessed data.</p>
+<ul>
+<li>Suitable for data accessed or modified at most once a quarter.</li>
+</ul></li>
+<li><p><strong>Archive Storage</strong>: Lowest-cost storage for data archiving and disaster recovery.</p>
+<ul>
+<li>Best for data accessed less than once a year.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="example-file-system-simulation" class="level3">
+<h3 class="anchored" data-anchor-id="example-file-system-simulation">Example: File System Simulation</h3>
+<ul>
+<li><p><strong>URI Structure</strong>: Bucket name is the first term in the URI, followed by the object name.</p>
+<ul>
+<li>Object names can contain forward slash characters, simulating a file system path.</li>
+</ul></li>
+<li><p><strong>Performance Considerations</strong>: Moving files within a simulated file system involves searching and renaming objects, which can affect performance.</p></li>
+</ul>
+<hr>
+</section>
+<section id="best-practices-and-access-methods" class="level3">
+<h3 class="anchored" data-anchor-id="best-practices-and-access-methods">Best Practices and Access Methods</h3>
+<ul>
+<li><p><strong>Naming Conventions</strong>: Avoid sensitive information in bucket names due to the global namespace.</p></li>
+<li><p><strong>Access Methods</strong>: Use file access methods (e.g., copy command) and web access (HTTPS).</p></li>
+<li><p><strong>Object Management</strong>: Set retention policies, enable versioning, and configure lifecycle management.</p></li>
+</ul>
+<hr>
+<p>By leveraging these features and best practices, Google Cloud Storage can effectively serve as a robust and scalable data lake for your data engineering needs.</p>
+<hr>
+</section>
+</section>
+<section id="securing-your-data-lake-on-cloud-storage" class="level2">
+<h2 class="anchored" data-anchor-id="securing-your-data-lake-on-cloud-storage">Securing Your Data Lake on Cloud Storage</h2>
+<p>Securing your data lake running on Cloud Storage is of paramount importance. Let’s discuss the key security features you need to know as a data engineer to control access to your objects.</p>
+<hr>
+<section id="access-control-methods" class="level3">
+<h3 class="anchored" data-anchor-id="access-control-methods">Access Control Methods</h3>
+<ul>
+<li><p><strong>IAM Policy</strong>: Standard across Google Cloud.</p>
+<ul>
+<li>Set at the bucket level and applies uniform access rules to all objects within a bucket.</li>
+</ul></li>
+<li><p><strong>Access Control Lists (ACLs)</strong>: Can be applied at the bucket level or on individual objects.</p>
+<ul>
+<li>Provides more fine-grained access control.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="iam-controls" class="level3">
+<h3 class="anchored" data-anchor-id="iam-controls">IAM Controls</h3>
+<ul>
+<li><p><strong>Project Roles and Bucket Roles</strong>: Includes roles like bucket Reader, bucket Writer, and bucket Owner.</p>
+<ul>
+<li><p>Creating or changing ACLs requires an IAM bucket role.</p></li>
+<li><p>Creating and deleting buckets and setting IAM Policy requires a project level role.</p></li>
+</ul></li>
+<li><p><strong>Custom Roles</strong>: Available for specific access needs.</p>
+<ul>
+<li>Project level viewer, editor, and owner roles grant access by making users members of special internal groups.</li>
+</ul></li>
+<li><p><strong>IAM and ACLs</strong>: Buckets can disable ACLs and only use IAM.</p>
+<ul>
+<li>Default option enables ACLs, but this can be changed later.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="example-of-access-control" class="level3">
+<h3 class="anchored" data-anchor-id="example-of-access-control">Example of Access Control</h3>
+<ul>
+<li><p><strong>Combined Permissions</strong>: Example: Give <code>bob@example.com</code> reader access to a bucket via IAM and write access to a specific file via ACLs.</p>
+<ul>
+<li>Permissions can also be granted to service accounts for applications.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="encryption-methods" class="level3">
+<h3 class="anchored" data-anchor-id="encryption-methods">Encryption Methods</h3>
+<ul>
+<li><p><strong>Default Encryption</strong>: All data in Google Cloud is encrypted at rest and in transit.</p>
+<ul>
+<li>Managed by Google using Google Managed Encryption Keys (GMEK).</li>
+</ul></li>
+<li><p><strong>Customer Managed Encryption Keys (CMEK)</strong>: Allows control over the creation and management of the key encryption key (KEK).</p></li>
+<li><p><strong>Customer Supplied Encryption Keys (CSEK)</strong>: Users supply their own encryption and rotation mechanism.</p></li>
+<li><p><strong>Client-Side Encryption</strong>: Data is encrypted before upload and decrypted by the user.</p>
+<ul>
+<li>Cloud Storage still performs GMEK, CMEK, or CSEK encryption on the object.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="logging-and-data-locks" class="level3">
+<h3 class="anchored" data-anchor-id="logging-and-data-locks">Logging and Data Locks</h3>
+<ul>
+<li><p><strong>Logging</strong>: Cloud Audit Logs and Cloud Storage Access logs are immutable.</p></li>
+<li><p><strong>Holds and Locks</strong>: <strong>Object Hold</strong>: Suspends operations that could change or delete the object until the hold is released.</p>
+<ul>
+<li><p><strong>Bucket Lock</strong>: Prevents changes or deletions until the lock is released.</p></li>
+<li><p><strong>Retention Policy Lock</strong>: Prevents deletion whether a bucket lock or object hold is enforced or not.</p></li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="additional-features" class="level3">
+<h3 class="anchored" data-anchor-id="additional-features">Additional Features</h3>
+<ul>
+<li><p><strong>Decompressive Coding</strong>: Tag objects to be decompressed as they are served.</p>
+<ul>
+<li>Benefits: Faster upload and lower storage costs.</li>
+</ul></li>
+<li><p><strong>Requester Pays</strong>: Configures buckets so that requesters pay for data access charges.</p></li>
+<li><p><strong>Signed URLs</strong>: Share objects anonymously with URLs that can expire after a set time.</p></li>
+<li><p><strong>Composite Objects</strong>: Upload objects in pieces and create a composite object without concatenation.</p></li>
+</ul>
+<hr>
+<p>Cloud Storage offers a variety of security and management features to ensure your data lake is secure and efficient. By understanding and utilizing these features, you can maintain a robust and scalable data environment.</p>
+<hr>
+</section>
+</section>
+<section id="storage-options-on-google-cloud" class="level2">
+<h2 class="anchored" data-anchor-id="storage-options-on-google-cloud">Storage Options on Google Cloud</h2>
+<p>Cloud Storage isn’t your only choice when it comes to storing data on Google Cloud. You don’t want to use Cloud Storage for transactional workloads. Even though the latency of Cloud Storage is low, it is not low enough to support high-frequency writes.</p>
+<hr>
+<section id="transactional-vs.-analytical-workloads" class="level3">
+<h3 class="anchored" data-anchor-id="transactional-vs.-analytical-workloads">Transactional vs.&nbsp;Analytical Workloads</h3>
+<ul>
+<li><p><strong>Transactional Workloads (OLTP)</strong>: Require fast inserts and updates.</p>
+<ul>
+<li><p>Maintain a snapshot, a current state of the system.</p></li>
+<li><p>Queries tend to be relatively simple and affect only a few records.</p></li>
+<li><p>Example: Banking system transactions (e.g., depositing salary).</p></li>
+</ul></li>
+<li><p><strong>Analytical Workloads (OLAP)</strong>: Read the entire dataset for planning or decision support.</p>
+<ul>
+<li><p>Data often consolidated from many OLTP systems.</p></li>
+<li><p>Example: Bank regulator report on large overseas transfers.</p></li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="transactional-workloads" class="level3">
+<h3 class="anchored" data-anchor-id="transactional-workloads">Transactional Workloads</h3>
+<ul>
+<li><p><strong>Characteristics</strong>: Write-heavy and operational systems.</p>
+<ul>
+<li><p>Require up-to-the-moment snapshots of business data.</p></li>
+<li><p>Example: Retailer’s catalog and inventory systems.</p></li>
+</ul></li>
+<li><p><strong>Options for Relational Databases</strong>: <strong>Cloud SQL</strong>: Default choice for transactional workloads.</p>
+<ul>
+<li><p><strong>Spanner</strong>: For globally distributed databases or very large databases.</p></li>
+<li><p><strong>True Time</strong>: Spanner’s capability for global distribution use cases.</p></li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="analytical-workloads" class="level3">
+<h3 class="anchored" data-anchor-id="analytical-workloads">Analytical Workloads</h3>
+<ul>
+<li><p><strong>Characteristics</strong>: Read-focused and often used for generating reports.</p>
+<ul>
+<li><p>Periodically populated from operational systems.</p></li>
+<li><p>Example: Report of items with increasing sales but low inventory.</p></li>
+</ul></li>
+<li><p><strong>Options for Analytical Databases</strong>: <strong>BigQuery</strong>: Default choice for analytics workloads.</p>
+<ul>
+<li><strong>Bigtable</strong>: For high-throughput inserts and low latency requirements.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="data-loading-patterns" class="level3">
+<h3 class="anchored" data-anchor-id="data-loading-patterns">Data Loading Patterns</h3>
+<ul>
+<li><p><strong>Extract and Load (E-L)</strong>: Export database as a file and load into the data warehouse.</p></li>
+<li><p><strong>Loading to BigQuery</strong>: Direct loading has size limitations due to network bottlenecks.</p>
+<ul>
+<li><p>Load to Cloud Storage first, then load from Cloud Storage to BigQuery.</p></li>
+<li><p>Benefits: High throughput and faster loading.</p></li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="choosing-the-right-storage-option" class="level3">
+<h3 class="anchored" data-anchor-id="choosing-the-right-storage-option">Choosing the Right Storage Option</h3>
+<ul>
+<li><p><strong>For Transactional Workloads</strong>: <strong>Cloud SQL</strong>: More cost-effective for typical transactional needs.</p>
+<ul>
+<li><strong>Spanner</strong>: For global distribution or very large databases.</li>
+</ul></li>
+<li><p><strong>For Analytical Workloads</strong>: <strong>BigQuery</strong>: Cost-effective for most analytics needs.</p>
+<ul>
+<li><strong>Bigtable</strong>: For high-throughput inserts and low latency needs.</li>
+</ul></li>
+</ul>
+<hr>
+<p>By understanding these distinctions and options, you can choose the right storage solutions on Google Cloud to meet your specific use case requirements.</p>
+<hr>
+</section>
+</section>
+<section id="cloud-sql-default-choice-for-oltp-workloads" class="level2">
+<h2 class="anchored" data-anchor-id="cloud-sql-default-choice-for-oltp-workloads">Cloud SQL: Default Choice for OLTP Workloads</h2>
+<p>Cloud SQL is the default choice for OLTP (online transaction processing) workloads on Google Cloud. Let’s take a quick look at its features and benefits.</p>
+<hr>
+<section id="overview-of-cloud-sql" class="level3">
+<h3 class="anchored" data-anchor-id="overview-of-cloud-sql">Overview of Cloud SQL</h3>
+<ul>
+<li><p><strong>Easy-to-Use Service</strong>: Delivers fully managed relational databases.</p>
+<ul>
+<li>Handles tasks like applying patches, managing backups, and configuring replications.</li>
+</ul></li>
+<li><p><strong>Supported RDBMSs</strong>: Supports MySQL, PostgreSQL, and Microsoft SQL Server.</p>
+<ul>
+<li>Additional RDBMSs will be added over time.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="managed-service-features" class="level3">
+<h3 class="anchored" data-anchor-id="managed-service-features">Managed Service Features</h3>
+<ul>
+<li><p><strong>Instance Management</strong>: Google manages the instance, including backups, security updates, and minor software version updates.</p>
+<ul>
+<li>Treat it as a service with DBA-like management, including adding failover replicas.</li>
+</ul></li>
+<li><p><strong>Accessibility</strong>: Accessible by other Google Cloud services and external services.</p>
+<ul>
+<li>Compatible with App Engine, Compute Engine, SQL Workbench, Toad, and other external applications using standard drivers.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="security" class="level3">
+<h3 class="anchored" data-anchor-id="security">Security</h3>
+<ul>
+<li><p><strong>Encryption</strong>: Customer data is encrypted at rest and in transit.</p>
+<ul>
+<li>Every Cloud SQL instance includes a network firewall for access control.</li>
+</ul></li>
+<li><p><strong>Backups</strong>: Managed by Google, including secure storage and easy restoration.</p>
+<ul>
+<li>Supports point-in-time recovery and retains up to 7 backups per instance.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="scalability" class="level3">
+<h3 class="anchored" data-anchor-id="scalability">Scalability</h3>
+<ul>
+<li><p><strong>Vertical Scaling</strong>: Increase machine size up to 64 processor cores and more than 100 GB of RAM.</p></li>
+<li><p><strong>Horizontal Scaling</strong>: Scale out with read replicas in various configurations.</p>
+<ul>
+<li>Scenarios include Cloud SQL instances replicating from Cloud SQL primary instances, external primary instances, and vice versa.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="failover-support" class="level3">
+<h3 class="anchored" data-anchor-id="failover-support">Failover Support</h3>
+<ul>
+<li><p><strong>Failover Configuration</strong>: Configure Cloud SQL instances with a failover replica in a different zone within the same region.</p>
+<ul>
+<li>Data is replicated across zones for durability.</li>
+</ul></li>
+<li><p><strong>Automatic Failover</strong>: In case of a zonal outage, Cloud SQL automatically fails over to the replica.</p>
+<ul>
+<li>The replica becomes the primary, and a new failover replica is created.</li>
+</ul></li>
+<li><p><strong>Manual Failover</strong>: Can be initiated manually if needed.</p>
+<ul>
+<li>Existing connections are closed, but applications can reconnect using the same connection string or IP address.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="managed-vs.-serverless" class="level3">
+<h3 class="anchored" data-anchor-id="managed-vs.-serverless">Managed vs.&nbsp;Serverless</h3>
+<ul>
+<li><p><strong>Fully Managed</strong>: Cloud SQL provides access similar to on-premises installations.</p>
+<ul>
+<li>Google manages backups, failover instances, etc.</li>
+</ul></li>
+<li><p><strong>Serverless</strong>: Products like BigQuery, Pub/Sub, and Dataflow are serverless.</p>
+<ul>
+<li><p>Treated as APIs, without the need to manage any servers.</p></li>
+<li><p>Example: Cloud Storage is serverless, interacting only through an API without hardware concerns.</p></li>
+</ul></li>
+<li><p><strong>Choosing Between Fully Managed and Serverless</strong>: For new projects, choose serverless products for ease of use and reduced management overhead.</p>
+<ul>
+<li>Example: Prefer BigQuery or Dataflow over Dataproc for new data processing pipelines</li>
+</ul></li>
+</ul>
+<p>.</p>
+<hr>
+<p>Cloud SQL provides a robust and secure platform for managing relational databases, making it an ideal choice for OLTP workloads. Its integration with other Google Cloud services and ease of management further enhances its utility for modern applications.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="module-3" class="level1">
+<h1>Module 3</h1>
+<section id="building-a-data-warehouse-module" class="level2">
+<h2 class="anchored" data-anchor-id="building-a-data-warehouse-module">Building a Data Warehouse Module</h2>
+<p>Hello and welcome to the Building a Data Warehouse module. This is the third module in the course, Modernizing Data Lakes and Data Warehouses with Google Cloud.</p>
+<hr>
+<section id="module-overview" class="level3">
+<h3 class="anchored" data-anchor-id="module-overview">Module Overview</h3>
+<ul>
+<li><p><strong>Modern Data Warehouse</strong>: Description of what makes a modern data warehouse.</p>
+<ul>
+<li>Differences between a data lake and an enterprise data warehouse.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="introduction-to-bigquery-1" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-to-bigquery-1">Introduction to BigQuery</h3>
+<ul>
+<li><p><strong>BigQuery Overview</strong>: Introduction to BigQuery, a data warehouse solution on Google Cloud.</p>
+<ul>
+<li>Basics of BigQuery and its functionalities.</li>
+</ul></li>
+<li><p><strong>Data Organization</strong>: How BigQuery organizes your data.</p>
+<ul>
+<li>Methods for loading new data into BigQuery.</li>
+</ul></li>
+<li><p><strong>Hands-On Lab</strong>: Opportunity to load data into BigQuery through practical exercises.</p></li>
+</ul>
+<hr>
+</section>
+<section id="data-warehouse-schemas" class="level3">
+<h3 class="anchored" data-anchor-id="data-warehouse-schemas">Data Warehouse Schemas</h3>
+<ul>
+<li><p><strong>Efficient Schema Design</strong>: Discussion on efficient data warehouse schema design.</p>
+<ul>
+<li>BigQuery support for nested and repeated fields.</li>
+</ul></li>
+<li><p><strong>Popular Schema Design</strong>: Explanation of why nested and repeated fields are popular in enterprise schema design.</p></li>
+<li><p><strong>Hands-On Lab</strong>: Experience working with JSON and Array data in BigQuery through practical exercises.</p></li>
+</ul>
+<hr>
+</section>
+<section id="table-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="table-optimization">Table Optimization</h3>
+<ul>
+<li><p><strong>Partitioning and Clustering</strong>: Methods to optimize tables in your data warehouse.</p>
+<ul>
+<li>Benefits of partitioning and clustering for data management.</li>
+</ul></li>
+</ul>
+<hr>
+<p>By the end of this module, you will have a comprehensive understanding of building and optimizing a data warehouse with BigQuery on Google Cloud.</p>
+<hr>
+</section>
+</section>
+<section id="what-makes-a-modern-data-warehouse" class="level2">
+<h2 class="anchored" data-anchor-id="what-makes-a-modern-data-warehouse">What Makes a Modern Data Warehouse?</h2>
+<p>An enterprise data warehouse should consolidate data from many sources. If you recall from the previous module, a data lake does something very similar. The key difference between the two is the word “consolidate.” A data warehouse imposes a schema, whereas a data lake stores raw data. An enterprise data warehouse brings the data together and makes it available for querying and data processing.</p>
+<hr>
+<section id="key-characteristics-of-a-data-warehouse" class="level3">
+<h3 class="anchored" data-anchor-id="key-characteristics-of-a-data-warehouse">Key Characteristics of a Data Warehouse</h3>
+<ul>
+<li><p><strong>Schema Imposition</strong>: Analysts need to know the schema of the data.</p>
+<ul>
+<li>Unlike a data lake, no need to write code to read and parse the data.</li>
+</ul></li>
+<li><p><strong>Data Consolidation</strong>: Standardizes the format and makes it available for querying.</p>
+<ul>
+<li>Ensures data is clean, accurate, and consistent.</li>
+</ul></li>
+<li><p><strong>Purpose</strong>: Not to store data, but to make it available for querying.</p>
+<ul>
+<li>Ensure queries are quick to avoid long waiting times for results.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="characteristics-of-a-modern-data-warehouse" class="level3">
+<h3 class="anchored" data-anchor-id="characteristics-of-a-modern-data-warehouse">Characteristics of a Modern Data Warehouse</h3>
+<ul>
+<li><p><strong>Scalability</strong>: Handle data sets that don’t fit into memory, from gigabytes to petabytes.</p>
+<ul>
+<li>Single warehouse that scales seamlessly.</li>
+</ul></li>
+<li><p><strong>Serverless and No-Ops</strong>: No need to maintain clusters or fine-tune indexes.</p>
+<ul>
+<li>Allows for faster ad-hoc queries and speeds up business decision-making.</li>
+</ul></li>
+<li><p><strong>Integration with Visualization and Reporting Tools</strong>: Seamless plug-in with familiar visualization or reporting tools.</p>
+<ul>
+<li>Enhances productivity with rich visualization and reporting support.</li>
+</ul></li>
+<li><p><strong>Support for ETL Pipelines</strong>: Integrates with an ecosystem of processing tools for building ETL pipelines.</p>
+<ul>
+<li>Capable of constantly refreshing data in the warehouse to keep it up-to-date.</li>
+</ul></li>
+<li><p><strong>Streaming Data Support</strong>: Ability to stream data into the warehouse, not relying solely on batch updates.</p></li>
+<li><p><strong>Support for Machine Learning</strong>: Facilitates predictive analytics without moving data out of the warehouse.</p></li>
+<li><p><strong>Enterprise-Grade Security</strong>: Imposes data exfiltration constraints and shares data and queries with collaborators securely.</p></li>
+</ul>
+<hr>
+<p>By understanding these characteristics, you can appreciate what makes a modern data warehouse and how it differs from a data lake. A modern data warehouse consolidates, cleans, and makes data readily available for fast and efficient querying and analysis.</p>
+<hr>
+</section>
+</section>
+<section id="introduction-to-bigquery-2" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-to-bigquery-2">Introduction to BigQuery</h2>
+<p>In this lesson, we’re going to introduce BigQuery, a data warehouse solution on Google Cloud. BigQuery has many capabilities that make it an ideal data warehouse.</p>
+<hr>
+<section id="key-features-of-bigquery" class="level3">
+<h3 class="anchored" data-anchor-id="key-features-of-bigquery">Key Features of BigQuery</h3>
+<ul>
+<li><p><strong>Scalability</strong>: Seamlessly handles datasets from gigabytes to petabytes.</p>
+<ul>
+<li>Cost-effectively stores large datasets, similar in cost to Cloud Storage.</li>
+</ul></li>
+<li><p><strong>Ad Hoc Queries and No-Ops</strong>: Allows for efficient ad hoc queries.</p>
+<ul>
+<li>Fully-managed, serverless service.</li>
+</ul></li>
+<li><p><strong>Built-In Features</strong>: Includes GIS and machine learning capabilities.</p>
+<ul>
+<li>Supports data streaming for near real-time analysis.</li>
+</ul></li>
+<li><p><strong>Security and Sharing</strong>: Provides Google Cloud’s security benefits.</p>
+<ul>
+<li>Allows sharing of datasets and queries.</li>
+</ul></li>
+<li><p><strong>Standard SQL Support</strong>: Compatible with ANSI SQL 2011.</p></li>
+</ul>
+<hr>
+</section>
+<section id="bigquery-management-and-maintenance" class="level3">
+<h3 class="anchored" data-anchor-id="bigquery-management-and-maintenance">BigQuery Management and Maintenance</h3>
+<ul>
+<li><p><strong>Serverless and Fully Managed</strong>: Google handles updates and maintenance.</p>
+<ul>
+<li>No downtime required for upgrades.</li>
+</ul></li>
+<li><p><strong>Automated Table Management</strong>: Table expiration can be set at creation.</p>
+<ul>
+<li>Storage engine optimizes data storage and replication continuously.</li>
+</ul></li>
+<li><p><strong>No Index Rebuilding</strong>: No need to rebuild indexes, freeing up work hours.</p></li>
+</ul>
+<hr>
+</section>
+<section id="bigquery-architecture" class="level3">
+<h3 class="anchored" data-anchor-id="bigquery-architecture">BigQuery Architecture</h3>
+<ul>
+<li><p><strong>Storage and Compute Separation</strong>: Storage engine and analytic engine are separated.</p>
+<ul>
+<li>Uses Google’s Jupiter network for fast communication between compute and storage.</li>
+</ul></li>
+<li><p><strong>Storage on Colossus</strong>: Data is stored on Google’s distributed file system, Colossus.</p>
+<ul>
+<li>Ensures durability with erasure encoding and multiple data center replication.</li>
+</ul></li>
+<li><p><strong>Dynamic Resource Allocation</strong>: Storage and query resources are allocated based on usage patterns.</p>
+<ul>
+<li>No need for pre-provisioning resources.</li>
+</ul></li>
+<li><p><strong>Column-Oriented Tables</strong>: Optimized for reading and appending data.</p>
+<ul>
+<li>Efficiently reads only the columns required for queries.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="bigquery-slots-and-query-execution" class="level3">
+<h3 class="anchored" data-anchor-id="bigquery-slots-and-query-execution">BigQuery Slots and Query Execution</h3>
+<ul>
+<li><p><strong>Microservice Architecture</strong>: Implemented using a microservice architecture with no VMs to manage.</p></li>
+<li><p><strong>BigQuery Slots</strong>: Unit of computational capacity for executing SQL queries.</p>
+<ul>
+<li><p>Combination of CPU, memory, and networking resources.</p></li>
+<li><p>Different slots may have varying specifications during execution.</p></li>
+</ul></li>
+<li><p><strong>Distributed Processing</strong>: Queries split into multiple stages with tasks assigned to workers.</p>
+<ul>
+<li>Parallel processing by workers for efficient query execution.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="example-of-query-execution" class="level3">
+<h3 class="anchored" data-anchor-id="example-of-query-execution">Example of Query Execution</h3>
+<ul>
+<li><p><strong>Stages of Query Execution</strong>: Workers in stage 1 retrieve and filter data, perform partial counts.</p>
+<ul>
+<li>Workers in stage 2 aggregate intermediate results to produce final result set.</li>
+</ul></li>
+</ul>
+<hr>
+<p>BigQuery provides a robust, scalable, and fully-managed data warehouse solution, ideal for handling large datasets and performing complex queries with ease. Its architecture and features make it a powerful tool for modern data analytics.</p>
+<hr>
+</section>
+</section>
+<section id="big-data-demo-using-bigquery-on-google-cloud-platform" class="level2">
+<h2 class="anchored" data-anchor-id="big-data-demo-using-bigquery-on-google-cloud-platform">Big Data Demo Using BigQuery on Google Cloud Platform</h2>
+<p>Welcome to the Big Data demo using BigQuery on Google Cloud Platform. Here, we’re going to demonstrate the serverless scaling features of BigQuery and how it automatically scales to query large datasets without your intervention. We’ll work with a dataset containing 10 billion rows of Wikipedia data.</p>
+<hr>
+<section id="demo-overview" class="level3">
+<h3 class="anchored" data-anchor-id="demo-overview">Demo Overview</h3>
+<ul>
+<li><p><strong>Goal</strong>: Showcase BigQuery’s ability to handle large datasets.</p>
+<ul>
+<li>Demonstrate serverless scaling and query efficiency.</li>
+</ul></li>
+<li><p><strong>Dataset</strong>: Wikipedia data with 10 billion rows.</p>
+<ul>
+<li>Contains fields like year, month, day, project, language, title, and views.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="steps-to-run-the-demo" class="level3">
+<h3 class="anchored" data-anchor-id="steps-to-run-the-demo">Steps to Run the Demo</h3>
+<ol type="1">
+<li><strong>Navigate to BigQuery</strong>: Open Google Cloud Platform and navigate to BigQuery under Big Data.</li>
+</ol>
+<ul>
+<li>Pin BigQuery for easy access if frequently used.</li>
+</ul>
+<ol start="2" type="1">
+<li><p><strong>Paste the Query</strong>: Copy the provided query and paste it into the query editor window in BigQuery.</p></li>
+<li><p><strong>Understand the Query</strong>: The query retrieves pages with “Google” in the title, grouped by language, and sorted by view count.</p></li>
+</ol>
+<ul>
+<li><p>Uses a wildcard character (%) to find “Google” in any part of the title.</p></li>
+<li><p>Aggregates total views for matching pages.</p></li>
+</ul>
+<ol start="4" type="1">
+<li><strong>Run the Query</strong>: Execute the query to process 10 billion rows (~415 GB of data).</li>
+</ol>
+<ul>
+<li>Observe the processing time and results.</li>
+</ul>
+<hr>
+</section>
+<section id="key-features-highlighted" class="level3">
+<h3 class="anchored" data-anchor-id="key-features-highlighted">Key Features Highlighted</h3>
+<ul>
+<li><p><strong>Serverless and Fully Managed</strong>: No need to manage indexes or servers.</p>
+<ul>
+<li>Uses a public dataset, eliminating the need for data setup.</li>
+</ul></li>
+<li><p><strong>Execution Speed</strong>: Query processes 415 GB of data in about 10 seconds.</p>
+<ul>
+<li>Efficiently handles expensive operations like string matching and aggregation.</li>
+</ul></li>
+<li><p><strong>Distributed Parallel Processing</strong>: Uses multiple slots to execute queries in parallel.</p>
+<ul>
+<li><p>Total processing time if done serially: 2 hours and 38 minutes.</p></li>
+<li><p>Actual time: 10 seconds due to parallelism.</p></li>
+</ul></li>
+<li><p><strong>Scalability</strong>: Demonstrates scalability by querying 100 billion rows (~4.1 TB of data).</p>
+<ul>
+<li>Processes the larger dataset in just over 30 seconds.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="additional-tips" class="level3">
+<h3 class="anchored" data-anchor-id="additional-tips">Additional Tips</h3>
+<ul>
+<li><p><strong>Case Sensitivity</strong>: SQL is case-sensitive; use functions like <code>UPPER()</code> to perform case-insensitive searches.</p></li>
+<li><p><strong>Query Execution Details</strong>: View execution details to understand how BigQuery distributes and processes queries.</p>
+<ul>
+<li>Observe how tasks are assigned to different workers for parallel processing.</li>
+</ul></li>
+<li><p><strong>Slot Time</strong>: Slot time metric shows the total computation time across all virtual machines used.</p></li>
+</ul>
+<hr>
+</section>
+<section id="conclusion-2" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion-2">Conclusion</h3>
+<p>This demo illustrates the power of BigQuery’s serverless architecture and its ability to handle massive datasets efficiently. By leveraging distributed parallel processing, BigQuery ensures quick query execution without the need for manual resource management.</p>
+<hr>
+</section>
+</section>
+<section id="organizing-data-in-bigquery" class="level2">
+<h2 class="anchored" data-anchor-id="organizing-data-in-bigquery">Organizing Data in BigQuery</h2>
+<p>Now that you’re familiar with the basics of BigQuery, it’s time to talk about how BigQuery organizes your data. BigQuery organizes data tables into units called datasets. These datasets are scoped to your Google Cloud project.</p>
+<hr>
+<section id="structuring-data" class="level3">
+<h3 class="anchored" data-anchor-id="structuring-data">Structuring Data</h3>
+<ul>
+<li><p><strong>Reference Format</strong>: Use the construct <code>project.dataset.table</code> to reference a table in SQL queries or code.</p></li>
+<li><p><strong>Logical Structure</strong>: Projects, datasets, and tables help structure information logically.</p>
+<ul>
+<li>Multiple datasets can separate tables for different analytical</li>
+</ul></li>
+</ul>
+<p>domains.</p>
+<ul>
+<li><p>Project-level scoping isolates datasets according to business needs.</p></li>
+<li><p>Align projects to billing and use datasets for access control.</p></li>
+</ul>
+<hr>
+</section>
+<section id="querying-data" class="level3">
+<h3 class="anchored" data-anchor-id="querying-data">Querying Data</h3>
+<ul>
+<li><p><strong>QueryJob</strong>: Submitting a query in BigQuery creates a QueryJob.</p>
+<ul>
+<li><p>The query service and storage service work together for efficiency.</p></li>
+<li><p>Native tables in BigQuery are most performant.</p></li>
+</ul></li>
+<li><p><strong>Federated Queries</strong>: Query data in external tables or sources (e.g., CSV files in Cloud Storage) without loading it into BigQuery.</p></li>
+<li><p><strong>Temporary Tables</strong>: Results are stored in temporary tables for 24 hours.</p>
+<ul>
+<li>Cached results are returned if the same query is rerun without changes, avoiding additional charges.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="managing-costs" class="level3">
+<h3 class="anchored" data-anchor-id="managing-costs">Managing Costs</h3>
+<ul>
+<li><p><strong>Query Validator</strong>: Provides an estimate of the size of data processed during a query.</p>
+<ul>
+<li>Use the pricing calculator for cost estimates.</li>
+</ul></li>
+<li><p><strong>Billing</strong>: Costs are assigned to the active project from where the query is executed.</p>
+<ul>
+<li>IAM permissions control who can submit jobs and access data.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="access-control" class="level3">
+<h3 class="anchored" data-anchor-id="access-control">Access Control</h3>
+<ul>
+<li><p><strong>IAM Permissions</strong>: Control access at dataset, table/view, or column level.</p>
+<ul>
+<li>Permissions needed for querying: read access on table/view and permission to submit query jobs.</li>
+</ul></li>
+<li><p><strong>Public Datasets</strong>: Public datasets can be accessed by all authenticated users.</p>
+<ul>
+<li>Billing for queries using public datasets goes to the user’s project.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="security-and-compliance" class="level3">
+<h3 class="anchored" data-anchor-id="security-and-compliance">Security and Compliance</h3>
+<ul>
+<li><p><strong>Data Encryption</strong>: Data is encrypted at rest and in transit using Google-managed or customer-managed encryption keys.</p></li>
+<li><p><strong>Authentication and Access Control</strong>: Use IAM roles for authentication.</p>
+<ul>
+<li>Access control through IAM roles at the dataset, table, view, or column level.</li>
+</ul></li>
+<li><p><strong>Logging</strong>: Immutable logs for admin activities and system events.</p>
+<ul>
+<li>Logs can be exported to Cloud Operations for monitoring.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="shared-access-and-control" class="level3">
+<h3 class="anchored" data-anchor-id="shared-access-and-control">Shared Access and Control</h3>
+<ul>
+<li><p><strong>Authorized Views</strong>: Create views to share specific query results without giving access to underlying data.</p>
+<ul>
+<li><p>Use views for fine-grained access control.</p></li>
+<li><p>Materialized views cache query results for improved performance.</p></li>
+</ul></li>
+<li><p><strong>Column-Level Security</strong>: Define Policy Tags for users/groups to control access to specific columns.</p>
+<ul>
+<li>Use data masking rules for obfuscation.</li>
+</ul></li>
+<li><p><strong>Row-Level Security</strong>: Create row-level access policies to filter data visibility based on user/group permissions.</p></li>
+</ul>
+<hr>
+</section>
+<section id="onboarding-and-productivity" class="level3">
+<h3 class="anchored" data-anchor-id="onboarding-and-productivity">Onboarding and Productivity</h3>
+<ul>
+<li><p><strong>Onboarding New Analysts</strong>: Grant access to relevant projects and introduce them to the Cloud Console and BigQuery web UI.</p>
+<ul>
+<li>Share queries to help them get acquainted with the data.</li>
+</ul></li>
+<li><p><strong>BigQuery Web UI</strong>: Provides a centralized view of datasets and allows analysts to view metadata, preview data, execute queries, and save/share queries.</p></li>
+</ul>
+<hr>
+</section>
+<section id="summary" class="level3">
+<h3 class="anchored" data-anchor-id="summary">Summary</h3>
+<p>BigQuery provides a robust framework for organizing, querying, and securing your data. Its serverless architecture, dynamic resource allocation, and comprehensive access control mechanisms make it an ideal choice for modern data warehousing needs. By leveraging BigQuery’s features, you can efficiently manage and analyze large datasets while ensuring data security and compliance.</p>
+<hr>
+</section>
+</section>
+<section id="loading-data-into-bigquery" class="level2">
+<h2 class="anchored" data-anchor-id="loading-data-into-bigquery">Loading Data into BigQuery</h2>
+<p>Next, we’ll talk about how to load new data into BigQuery. Recall from an earlier module that the method you use to load data depends on how much transformation is needed.</p>
+<hr>
+<section id="data-loading-methods" class="level3">
+<h3 class="anchored" data-anchor-id="data-loading-methods">Data Loading Methods</h3>
+<ul>
+<li><p><strong>E-L (Extract and Load)</strong>: Used when data is imported as-is, with the source and target having the same schema.</p></li>
+<li><p><strong>E-L-T (Extract, Load, Transform)</strong>: Raw data is loaded directly into the target and transformed there.</p></li>
+<li><p><strong>E-T-L (Extract, Transform, Load)</strong>: Transformation occurs in an intermediate service before loading into the target.</p></li>
+</ul>
+<hr>
+</section>
+<section id="batch-loading-data" class="level3">
+<h3 class="anchored" data-anchor-id="batch-loading-data">Batch Loading Data</h3>
+<ul>
+<li><p><strong>Supported File Formats</strong>: CSV, JSON (newline delimited), Avro, Parquet, ORC.</p>
+<ul>
+<li>BigQuery supports loading gzip compressed files, but loading compressed files is slower.</li>
+</ul></li>
+<li><p><strong>Asynchronous Load Jobs</strong>: Load jobs are asynchronous, so no need to maintain a client connection.</p>
+<ul>
+<li><p>Load jobs do not affect other BigQuery resources.</p></li>
+<li><p>Load jobs create a destination table if one doesn’t already exist.</p></li>
+</ul></li>
+<li><p><strong>Schema Detection</strong>: Avro format: BigQuery determines the schema directly.</p>
+<ul>
+<li><p>JSON/CSV format: BigQuery can auto-detect the schema, but manual verification is recommended.</p></li>
+<li><p>Explicit schema specification: Pass the schema as an argument to the load job.</p></li>
+</ul></li>
+<li><p><strong>Appending to Existing Tables</strong>: Ongoing load jobs can append data to the same table without passing the schema each time.</p>
+<ul>
+<li>Use the <code>skip_leading_rows</code> flag to ignore header rows in CSV files.</li>
+</ul></li>
+<li><p><strong>Daily Limits and Restrictions</strong>: BigQuery sets daily limits on the number and size of load jobs per project and per table.</p>
+<ul>
+<li>Limits on the sizes of individual load files and records.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="automating-data-loads" class="level3">
+<h3 class="anchored" data-anchor-id="automating-data-loads">Automating Data Loads</h3>
+<ul>
+<li><p><strong>Using Cloud Functions</strong>: Set up Cloud Functions to listen to Cloud Storage events for new files and launch a BigQuery load job.</p></li>
+<li><p><strong>API Integration</strong>: Use the BigQuery API from various environments (e.g., Compute Engine, Kubernetes, App Engine, Cloud Functions).</p></li>
+<li><p><strong>Data Transfer Service</strong>: Provides connectors and pre-built BigQuery load jobs for transformations and loading report data from various services.</p>
+<ul>
+<li>Handles scheduled and automatic transfers of data into BigQuery.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="data-transformation-and-quality" class="level3">
+<h3 class="anchored" data-anchor-id="data-transformation-and-quality">Data Transformation and Quality</h3>
+<ul>
+<li><p><strong>Backfilling Data</strong>: Detect and request missing data to fill in gaps.</p>
+<ul>
+<li>Automated processes provided by BigQuery Data Transfer Service.</li>
+</ul></li>
+<li><p><strong>Data Quality and Processing</strong>: Stage data for cleaning and transforming (E-L-T).</p>
+<ul>
+<li>Ensure data is in its final, stable form.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="managing-queries-and-scheduling" class="level3">
+<h3 class="anchored" data-anchor-id="managing-queries-and-scheduling">Managing Queries and Scheduling</h3>
+<ul>
+<li><p><strong>Scheduled Queries</strong>: Automate query execution based on a schedule or event.</p>
+<ul>
+<li>Queries must be written in standard SQL and can include DDL and DML statements.</li>
+</ul></li>
+<li><p><strong>Query History and Reversion</strong>: Maintain a complete 7-day history of changes against tables.</p>
+<ul>
+<li>Query point-in-time snapshots for data recovery or correction.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="data-definition-language-ddl-and-data-manipulation-language-dml" class="level3">
+<h3 class="anchored" data-anchor-id="data-definition-language-ddl-and-data-manipulation-language-dml">Data Definition Language (DDL) and Data Manipulation Language (DML)</h3>
+<ul>
+<li><p><strong>DML Statements</strong>: Support for insert, update, delete, and merge.</p>
+<ul>
+<li>Not suitable for OLTP workloads.</li>
+</ul></li>
+<li><p><strong>DDL Statements</strong>: Create or replace tables, transform data into the ideal schema.</p></li>
+</ul>
+<hr>
+</section>
+<section id="user-defined-functions-udf" class="level3">
+<h3 class="anchored" data-anchor-id="user-defined-functions-udf">User-Defined Functions (UDF)</h3>
+<ul>
+<li><p><strong>Extending SQL Functions</strong>: Create functions using SQL expressions or external programming languages (JavaScript supported).</p>
+<ul>
+<li><p>UDFs can take and return ARRAYs or STRUCTs.</p></li>
+<li><p>Previously temporary, now UDFs can be persisted and shared.</p></li>
+</ul></li>
+<li><p><strong>Public UDFs Repository</strong>: Access common User Defined Functions from the public GitHub repository.</p></li>
+</ul>
+<hr>
+<p>By understanding these methods and tools, you can efficiently load, transform, and manage data in BigQuery, ensuring that your data warehouse is always up-to-date and optimized for analysis.</p>
+<hr>
+</section>
+</section>
+<section id="exploring-bigquery-metadata" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-bigquery-metadata">Exploring BigQuery Metadata</h2>
+<section id="introduction" class="level3">
+<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
+<p>In this demo, we will explore BigQuery metadata to gain insights about datasets, tables, and columns. This approach is particularly useful for data engineers who need to quickly understand the structure and details of datasets without manually checking the UI.</p>
+</section>
+<section id="why-use-sql-for-metadata" class="level3">
+<h3 class="anchored" data-anchor-id="why-use-sql-for-metadata">Why Use SQL for Metadata?</h3>
+<ul>
+<li><p>As a data engineer, you often need to quickly gather key information about datasets and tables.</p></li>
+<li><p>SQL queries allow you to automate the retrieval of metadata, making the process faster and more efficient.</p></li>
+</ul>
+</section>
+<section id="key-questions-answered" class="level3">
+<h3 class="anchored" data-anchor-id="key-questions-answered">Key Questions Answered</h3>
+<ul>
+<li><p>How many tables are in the dataset?</p></li>
+<li><p>How many columns are there?</p></li>
+<li><p>Are any columns partitioned or clustered?</p></li>
+<li><p>When were the tables last updated?</p></li>
+<li><p>What is the size of the tables?</p></li>
+</ul>
+</section>
+<section id="setting-up-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="setting-up-the-data">Setting Up the Data</h3>
+<p>First, we need a dataset. We’ll use BigQuery public datasets for this demo. Let’s start by querying metadata from a dataset, specifically the baseball dataset.</p>
+</section>
+<section id="querying-table-metadata" class="level3">
+<h3 class="anchored" data-anchor-id="querying-table-metadata">Querying Table Metadata</h3>
+<p>To get metadata about the tables, you can explore details such as:</p>
+<ul>
+<li><p>Project ID</p></li>
+<li><p>Dataset ID</p></li>
+<li><p>Table ID</p></li>
+<li><p>Creation time</p></li>
+<li><p>Last modified time</p></li>
+<li><p>Row count</p></li>
+<li><p>Size in bytes</p></li>
+<li><p>Table type (e.g., table or view)</p></li>
+</ul>
+</section>
+<section id="example-output" class="level3">
+<h3 class="anchored" data-anchor-id="example-output">Example Output</h3>
+<p>This approach provides useful information about each table, such as:</p>
+<ul>
+<li><p>Project ID</p></li>
+<li><p>Dataset ID</p></li>
+<li><p>Table ID</p></li>
+<li><p>Creation time</p></li>
+<li><p>Last modified time</p></li>
+<li><p>Row count</p></li>
+<li><p>Size in bytes</p></li>
+<li><p>Table type (1 for table, 2 for view)</p></li>
+</ul>
+</section>
+<section id="converting-timestamps-and-sizes" class="level3">
+<h3 class="anchored" data-anchor-id="converting-timestamps-and-sizes">Converting Timestamps and Sizes</h3>
+<p>To make the data more readable, you can convert the timestamps and sizes to more understandable formats. For example, converting milliseconds to readable timestamps and bytes to gigabytes helps in better understanding the data.</p>
+</section>
+<section id="drilling-down-to-columns" class="level3">
+<h3 class="anchored" data-anchor-id="drilling-down-to-columns">Drilling Down to Columns</h3>
+<p>To find out how many columns are present in a table, you can use metadata to get:</p>
+<ul>
+<li><p>Table name</p></li>
+<li><p>Number of columns</p></li>
+<li><p>Column details such as data type, position, and whether they are partitioned or clustered</p></li>
+</ul>
+</section>
+<section id="filtering-and-sorting" class="level3">
+<h3 class="anchored" data-anchor-id="filtering-and-sorting">Filtering and Sorting</h3>
+<p>You can filter and sort the metadata to get specific insights. For instance, you can filter to see only tables that are partitioned or clustered, or sort tables by the number of rows to identify the largest tables.</p>
+</section>
+<section id="combining-metadata-across-datasets" class="level3">
+<h3 class="anchored" data-anchor-id="combining-metadata-across-datasets">Combining Metadata Across Datasets</h3>
+<p>You can combine metadata from different datasets to compare and analyze them collectively. This helps in identifying patterns and making informed decisions across multiple datasets.</p>
+</section>
+<section id="practical-use-cases" class="level3">
+<h3 class="anchored" data-anchor-id="practical-use-cases">Practical Use Cases</h3>
+<ul>
+<li><p>Quickly understanding the structure of new datasets</p></li>
+<li><p>Identifying tables with the most rows or largest size</p></li>
+<li><p>Checking for partitioned or clustered columns to optimize performance</p></li>
+<li><p>Automating the documentation and analysis of datasets</p></li>
+</ul>
+</section>
+<section id="advanced-insights" class="level3">
+<h3 class="anchored" data-anchor-id="advanced-insights">Advanced Insights</h3>
+<p>For more advanced use cases, such as tracking schema changes over time or recreating table structures in a new environment, you can use metadata to generate detailed insights and scripts.</p>
+<p>By leveraging SQL to query BigQuery metadata, you can streamline your workflow, save time, and gain valuable insights into your datasets and tables.</p>
+<hr>
+</section>
+</section>
+<section id="efficient-data-warehouse-schema-design" class="level2">
+<h2 class="anchored" data-anchor-id="efficient-data-warehouse-schema-design">Efficient Data Warehouse Schema Design</h2>
+<section id="introduction-1" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-1">Introduction</h3>
+<p>In data warehouse schema design, organizing data efficiently is crucial for both storage and query performance. This</p>
+<p>section discusses the concepts of normalizing and denormalizing data, as well as the benefits of using nested and repeated fields in BigQuery.</p>
+</section>
+<section id="original-vs.-normalized-data-tables" class="level3">
+<h3 class="anchored" data-anchor-id="original-vs.-normalized-data-tables">Original vs.&nbsp;Normalized Data Tables</h3>
+<ul>
+<li><p><strong>Original Data Table</strong>: Data may be visually organized with merged cells or columns, similar to a spreadsheet. This format can be challenging to process programmatically.</p></li>
+<li><p><strong>Normalized Data Tables</strong>: Data is turned into a relational system, which organizes it into tables with relationships between them. This improves orderliness and saves space, making query processing more efficient.</p></li>
+</ul>
+</section>
+<section id="normalization" class="level3">
+<h3 class="anchored" data-anchor-id="normalization">Normalization</h3>
+<ul>
+<li><p><strong>Purpose</strong>: To store data efficiently by eliminating redundancy and ensuring data integrity.</p></li>
+<li><p><strong>Benefits</strong>:</p>
+<ul>
+<li><p>Saves space</p></li>
+<li><p>Makes queries clear and direct</p></li>
+<li><p>Enhances data integrity and consistency</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="denormalization" class="level3">
+<h3 class="anchored" data-anchor-id="denormalization">Denormalization</h3>
+<ul>
+<li><p><strong>Purpose</strong>: To improve query performance by allowing duplicate field values.</p></li>
+<li><p><strong>Benefits</strong>:</p>
+<ul>
+<li><p>Increases processing performance</p></li>
+<li><p>Enables parallel processing</p></li>
+</ul></li>
+<li><p><strong>Drawbacks</strong>:</p>
+<ul>
+<li><p>Increases storage requirements</p></li>
+<li><p>Can lead to performance issues with one-to-many relationships</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="approaches-to-data-processing" class="level3">
+<h3 class="anchored" data-anchor-id="approaches-to-data-processing">Approaches to Data Processing</h3>
+<ul>
+<li><p><strong>By Rows</strong>: Accessing data row by row.</p></li>
+<li><p><strong>By Columns</strong>: Accessing data column by column.</p></li>
+<li><p><strong>By Rows then Columns</strong>: A hybrid approach accessing data in both dimensions.</p></li>
+<li><p><strong>Performance Considerations</strong>: Each approach has different performance implications based on the query and whether the method supports parallel processing.</p></li>
+</ul>
+</section>
+<section id="denormalizing-for-bigquery" class="level3">
+<h3 class="anchored" data-anchor-id="denormalizing-for-bigquery">Denormalizing for BigQuery</h3>
+<ul>
+<li><p><strong>Advantages</strong>:</p>
+<ul>
+<li><p>Distributes processing across slots for parallel processing</p></li>
+<li><p>Improves query performance</p></li>
+</ul></li>
+<li><p><strong>When to Denormalize</strong>: Before loading data into BigQuery, except in cases where grouping by a column with a one-to-many relationship is required.</p></li>
+</ul>
+</section>
+<section id="handling-one-to-many-relationships" class="level3">
+<h3 class="anchored" data-anchor-id="handling-one-to-many-relationships">Handling One-to-Many Relationships</h3>
+<ul>
+<li><p><strong>Shuffling</strong>: Grouping data by a column with a one-to-many relationship often requires shuffling data across servers, which can be slow.</p></li>
+<li><p><strong>Improving Performance</strong>:</p>
+<ul>
+<li><p>Use nested and repeated fields to co-locate related data</p></li>
+<li><p>Avoid shuffling by keeping related data together</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="nested-and-repeated-fields-in-bigquery" class="level3">
+<h3 class="anchored" data-anchor-id="nested-and-repeated-fields-in-bigquery">Nested and Repeated Fields in BigQuery</h3>
+<ul>
+<li><p><strong>Nested Fields</strong>: Allow for repeated data within a column, preserving relational qualities while enabling efficient columnar processing.</p></li>
+<li><p><strong>Benefits</strong>:</p>
+<ul>
+<li><p>Enhances performance by co-locating related data</p></li>
+<li><p>Supports hybrid solutions with relational databases</p></li>
+<li><p>Improves retrieval efficiency for related data</p></li>
+</ul></li>
+<li><p><strong>Best Use Cases</strong>:</p>
+<ul>
+<li><p>Data originating from relational databases</p></li>
+<li><p>Scenarios requiring efficient processing of hierarchical data</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="practical-example" class="level3">
+<h3 class="anchored" data-anchor-id="practical-example">Practical Example</h3>
+<ul>
+<li><p><strong>Flattened Table</strong>: Denormalized table with repeated data, useful for parallel processing.</p></li>
+<li><p><strong>Nested and Repeated Table</strong>: Table with nested fields, maintaining relational structure and improving performance by keeping related data together.</p></li>
+</ul>
+</section>
+<section id="conclusion-3" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion-3">Conclusion</h3>
+<p>Efficient data warehouse schema design involves carefully choosing between normalization and denormalization based on the specific use case. Leveraging nested and repeated fields in BigQuery can significantly enhance performance, especially when dealing with data that has a relational structure. By understanding and applying these principles, data engineers can optimize both storage and query performance in their data warehouses.</p>
+<hr>
+</section>
+</section>
+<section id="bigquerys-support-for-nested-and-repeated-fields" class="level2">
+<h2 class="anchored" data-anchor-id="bigquerys-support-for-nested-and-repeated-fields">BigQuery’s Support for Nested and Repeated Fields</h2>
+<section id="introduction-2" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-2">Introduction</h3>
+<p>BigQuery’s support for nested and repeated fields is a popular schema design choice for enterprises. This section uses a real business example from GO-JEK, a ride-booking service in Indonesia, to illustrate the benefits and implementation of nested and repeated fields.</p>
+</section>
+<section id="go-jeks-use-case" class="level3">
+<h3 class="anchored" data-anchor-id="go-jeks-use-case">GO-JEK’s Use Case</h3>
+<p>GO-JEK processes over 13 petabytes of data on BigQuery per month to support business decisions. For example, they track new customer orders, such as ride bookings made through their mobile app. Each order, which has a pickup location and drop-off destination, can have multiple events like ride ordered, ride confirmed, driver en route, and drop-off complete.</p>
+</section>
+<section id="data-storage-challenges" class="level3">
+<h3 class="anchored" data-anchor-id="data-storage-challenges">Data Storage Challenges</h3>
+<p>As a data engineer, you need to store these different pieces of data efficiently to support a large user base querying petabytes of data monthly. There are two primary approaches:</p>
+<ol type="1">
+<li><p><strong>Normalization</strong>: Store each fact in one place, typical for relational systems.</p></li>
+<li><p><strong>Denormalization</strong>: Store all levels of granularity in a single table.</p></li>
+</ol>
+</section>
+<section id="drawbacks-of-each-approach" class="level3">
+<h3 class="anchored" data-anchor-id="drawbacks-of-each-approach">Drawbacks of Each Approach</h3>
+<ul>
+<li><p><strong>Normalized Schemas</strong>:</p>
+<ul>
+<li><p>Joins across large tables can be computationally intensive.</p></li>
+<li><p>Requires knowing all tables that need to be joined.</p></li>
+<li><p>Can involve numerous table joins for different pieces of information.</p></li>
+</ul></li>
+<li><p><strong>Denormalized Schemas</strong>:</p>
+<ul>
+<li><p>Faster querying but higher storage requirements.</p></li>
+<li><p>Requires careful handling of different levels of granularity to avoid double or triple counting in aggregations.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="solution-nested-and-repeated-fields" class="level3">
+<h3 class="anchored" data-anchor-id="solution-nested-and-repeated-fields">Solution: Nested and Repeated Fields</h3>
+<p>Nested and repeated fields allow for efficient storage and querying by combining the benefits of both normalization and denormalization.</p>
+<ul>
+<li><p><strong>Nested Fields (STRUCTs)</strong>:</p>
+<ul>
+<li><p>Allow multiple fields of the same or different data types within them.</p></li>
+<li><p>Conceptually pre-joined, making queries faster.</p></li>
+<li><p>Ideal for organizing data logically within a single table.</p></li>
+</ul></li>
+<li><p><strong>Repeated Fields (ARRAYs)</strong>:</p>
+<ul>
+<li><p>Handle repeated values within a single row.</p></li>
+<li><p>Allow a given field to be more granular than the rest.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="practical-example-1" class="level3">
+<h3 class="anchored" data-anchor-id="practical-example-1">Practical Example</h3>
+<ul>
+<li><p><strong>Flattened Table</strong>: Denormalized table with repeated data, useful for parallel processing.</p></li>
+<li><p><strong>Nested and Repeated Table</strong>: Table with nested fields, maintaining relational structure and improving performance by keeping related data together.</p></li>
+</ul>
+</section>
+<section id="example-from-go-jek" class="level3">
+<h3 class="anchored" data-anchor-id="example-from-go-jek">Example from GO-JEK</h3>
+<p>GO-JEK’s orders table can include nested and repeated fields for events. Each order row includes arrays of events, each with its own status and time. This setup allows efficient querying without duplicating order IDs for each event.</p>
+</section>
+<section id="benefits-of-nested-and-repeated-fields" class="level3">
+<h3 class="anchored" data-anchor-id="benefits-of-nested-and-repeated-fields">Benefits of Nested and Repeated Fields</h3>
+<ul>
+<li><p><strong>Performance</strong>: Faster querying due to pre-joined data and efficient handling of granularity.</p></li>
+<li><p><strong>Storage</strong>: Optimized storage by avoiding unnecessary duplication of data.</p></li>
+<li><p><strong>Flexibility</strong>: Ability to add more dimensions to the dataset with additional STRUCTs and ARRAYS.</p></li>
+</ul>
+</section>
+<section id="identifying-nested-and-repeated-fields" class="level3">
+<h3 class="anchored" data-anchor-id="identifying-nested-and-repeated-fields">Identifying Nested and Repeated Fields</h3>
+<ul>
+<li><p><strong>STRUCTS</strong>: Look for field names with a dot or fields of the type record.</p></li>
+<li><p><strong>ARRAYS</strong>: Look for repeated values in the schema.</p></li>
+</ul>
+</section>
+<section id="conclusion-4" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion-4">Conclusion</h3>
+<p>BigQuery’s nested and repeated fields provide an optimal solution for managing large-scale data with varying levels of granularity. They allow enterprises like GO-JEK to efficiently process and query massive datasets, supporting critical business decisions. By leveraging these features, data engineers can achieve the best of both normalized and denormalized schemas, ensuring high performance and efficient data storage.</p>
+<hr>
+</section>
+</section>
+<section id="recap-designing-efficient-schemas-in-bigquery" class="level2">
+<h2 class="anchored" data-anchor-id="recap-designing-efficient-schemas-in-bigquery">Recap: Designing Efficient Schemas in BigQuery</h2>
+<section id="introduction-3" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-3">Introduction</h3>
+<p>Designing the schema of tables efficiently can significantly improve query performance and lower query costs in BigQuery. This section provides a recap of best practices for schema design, focusing on the use of nested repeated fields and considerations for normalization versus denormalization.</p>
+</section>
+<section id="nested-repeated-fields" class="level3">
+<h3 class="anchored" data-anchor-id="nested-repeated-fields">Nested Repeated Fields</h3>
+<ul>
+<li><p><strong>Efficiency</strong>: Using nested repeated fields is much more efficient than performing joins, especially for large datasets.</p></li>
+<li><p><strong>Example</strong>: Suppose you have orders and purchase items for each order. In a traditional relational database, you’d use two tables: one for orders and another for purchase items, with a foreign key connecting them.</p></li>
+<li><p><strong>BigQuery Approach</strong>: Instead of using two tables, store each order in a row with a nested, repeated column called <code>Purchase_Item</code>. Arrays are a native type in BigQuery, making this approach efficient.</p></li>
+</ul>
+</section>
+<section id="thinking-in-arrays" class="level3">
+<h3 class="anchored" data-anchor-id="thinking-in-arrays">Thinking in Arrays</h3>
+<ul>
+<li><p><strong>Arrays in BigQuery</strong>: Arrays are a powerful native type in BigQuery that allow you to store multiple values within a single row.</p></li>
+<li><p><strong>Schema Design</strong>: Design your schema to take advantage of arrays. For example, use arrays for purchase items within an order.</p></li>
+</ul>
+</section>
+<section id="dimension-tables" class="level3">
+<h3 class="anchored" data-anchor-id="dimension-tables">Dimension Tables</h3>
+<ul>
+<li><p><strong>Size Considerations</strong>: Keep dimension tables normalized if they are smaller than 10 gigabytes.</p></li>
+<li><p><strong>Update and Delete Operations</strong>: The exception to keeping tables normalized is if the table rarely undergoes UPDATE and DELETE operations.</p></li>
+</ul>
+</section>
+<section id="normalization-vs.-denormalization" class="level3">
+<h3 class="anchored" data-anchor-id="normalization-vs.-denormalization">Normalization vs.&nbsp;Denormalization</h3>
+<ul>
+<li><p><strong>Schema Design Decision</strong>: If you cannot define your schema using nested repeated fields, decide whether to keep the data in two tables or to denormalize it into one flattened table.</p></li>
+<li><p><strong>Performance Impact</strong>: As dataset sizes increase, the performance impact of joins also increases.</p></li>
+<li><p><strong>Crossover Point</strong>: For tables less than 10 gigabytes, it’s typically better to keep them separate and use joins. For larger tables, consider denormalizing to improve performance.</p></li>
+</ul>
+</section>
+<section id="conclusion-5" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion-5">Conclusion</h3>
+<p>Efficient schema design in BigQuery involves leveraging nested repeated fields and arrays to reduce the need for joins, thus improving performance and reducing query costs.</p>
+<p>For smaller tables, keeping them normalized is generally effective, but for larger datasets, denormalizing may offer better performance.</p>
+<p>Understanding and applying these principles will help you optimize your BigQuery data warehouse for both performance and cost.</p>
+<hr>
+</section>
+</section>
+<section id="optimizing-with-partitioning-and-clustering" class="level2">
+<h2 class="anchored" data-anchor-id="optimizing-with-partitioning-and-clustering">Optimizing with Partitioning and Clustering</h2>
+<section id="introduction-4" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-4">Introduction</h3>
+<p>Partitioning and clustering are powerful techniques in BigQuery that can significantly improve query performance and reduce query costs. This section explores how to use these features effectively.</p>
+</section>
+<section id="partitioning" class="level3">
+<h3 class="anchored" data-anchor-id="partitioning">Partitioning</h3>
+<p>Partitioning divides your table into smaller, more manageable pieces, each containing a specific subset of the data. Common partitioning strategies include:</p>
+<ul>
+<li><strong>Date or Timestamp Partitioning</strong>: Each partition contains data for a single day. When data is stored, BigQuery ensures all the data in a block belongs to a single partition.</li>
+</ul>
+</section>
+<section id="benefits-of-partitioning" class="level3">
+<h3 class="anchored" data-anchor-id="benefits-of-partitioning">Benefits of Partitioning</h3>
+<ul>
+<li><p><strong>Cost Reduction</strong>: By partitioning tables, you can reduce the amount of data read during queries. For example, if you partition a table by the event date column, BigQuery will store dates in separate shards. A query filtering for specific dates will only read relevant partitions, reducing cost and time.</p></li>
+<li><p><strong>Performance Improvement</strong>: Partitioning improves query performance by reading only necessary data. For example, querying dates between 01/03 and 01/04 will</p></li>
+</ul>
+<p>read only those two partitions instead of the entire dataset.</p>
+</section>
+<section id="implementing-partitioning" class="level3">
+<h3 class="anchored" data-anchor-id="implementing-partitioning">Implementing Partitioning</h3>
+<ul>
+<li><p><strong>During Table Creation</strong>: Enable partitioning when creating the table.</p></li>
+<li><p><strong>Migrating Existing Tables</strong>: Migrate to an ingestion-time partitioned table using a destination table, which incurs a single table scan.</p></li>
+<li><p><strong>Automatic Partitioning</strong>: BigQuery creates new date-based partitions automatically as new records are added.</p></li>
+</ul>
+</section>
+<section id="partitioning-options" class="level3">
+<h3 class="anchored" data-anchor-id="partitioning-options">Partitioning Options</h3>
+<ul>
+<li><p><strong>Ingestion Time</strong>: Based on when the data is ingested.</p></li>
+<li><p><strong>Timestamp, Date, or DateTime Column</strong>: Based on a specific date-related column.</p></li>
+<li><p><strong>Integer Range</strong>: Based on a range of integer values, such as partitioning customer IDs in increments.</p></li>
+</ul>
+</section>
+<section id="best-practices-for-partitioning" class="level3">
+<h3 class="anchored" data-anchor-id="best-practices-for-partitioning">Best Practices for Partitioning</h3>
+<ul>
+<li><strong>Use Partition Filters</strong>: Always include partition filters in queries to discard unnecessary partitions quickly. Ensure the partition field is on the left side of the filter clause.</li>
+</ul>
+</section>
+<section id="clustering" class="level3">
+<h3 class="anchored" data-anchor-id="clustering">Clustering</h3>
+<p>Clustering organizes data based on the values in specified columns, improving performance for certain query types.</p>
+<ul>
+<li><strong>Data Organization</strong>: When data is written to a clustered table, BigQuery sorts it using clustering column values. This organizes the data into multiple blocks, optimizing storage and retrieval.</li>
+</ul>
+</section>
+<section id="benefits-of-clustering" class="level3">
+<h3 class="anchored" data-anchor-id="benefits-of-clustering">Benefits of Clustering</h3>
+<ul>
+<li><p><strong>Improved Query Performance</strong>: Queries with filter clauses or aggregations based on clustering columns benefit from reduced scan times. BigQuery can skip unnecessary data blocks and co-locate similar values, speeding up queries.</p></li>
+<li><p><strong>Enhanced with Partitioning</strong>: Clustering provides additional cost and performance benefits when used alongside partitioning. Data can be partitioned by a date, datetime, or timestamp column and then clustered on different columns.</p></li>
+</ul>
+</section>
+<section id="implementing-clustering" class="level3">
+<h3 class="anchored" data-anchor-id="implementing-clustering">Implementing Clustering</h3>
+<ul>
+<li><p><strong>During Table Creation</strong>: Set up clustering when creating the table.</p></li>
+<li><p><strong>Automatic Re-Clustering</strong>: BigQuery periodically performs automatic re-clustering to ensure data remains optimized without additional maintenance.</p></li>
+</ul>
+</section>
+<section id="clustering-strategies" class="level3">
+<h3 class="anchored" data-anchor-id="clustering-strategies">Clustering Strategies</h3>
+<ul>
+<li><p><strong>Order of Columns</strong>: The order of clustering columns determines the sort order of the data. This is important for optimizing query performance.</p></li>
+<li><p><strong>Re-Clustering</strong>: Over time, operations can weaken the sort order of data. While manual re-clustering was previously required, BigQuery now handles this automatically in the background.</p></li>
+</ul>
+</section>
+<section id="conclusion-6" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion-6">Conclusion</h3>
+<p>Partitioning and clustering are essential techniques for optimizing query performance and reducing costs in BigQuery.</p>
+<ul>
+<li><p><strong>Partitioning</strong>: Provides accurate cost estimates and improves performance by limiting data scans to relevant partitions.</p></li>
+<li><p><strong>Clustering</strong>: Enhances performance further by organizing data within partitions, reducing scan times for filter and aggregation queries.</p></li>
+</ul>
+<p>Together, these features help manage large datasets efficiently, ensuring faster query execution and cost savings.</p>
+</section>
+</section>
+</section>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

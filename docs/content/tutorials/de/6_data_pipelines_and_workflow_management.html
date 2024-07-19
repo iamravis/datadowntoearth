@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>data_pipelines_and_workflow_management – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="chapter-6-data-pipelines-and-workflow-management" class="level1 text-content">
+<h1>Chapter 6: Data Pipelines and Workflow Management</h1>
+<section id="pipeline-design-principles" class="level2">
+<h2 class="anchored" data-anchor-id="pipeline-design-principles">Pipeline Design Principles</h2>
+<section id="modularity" class="level3">
+<h3 class="anchored" data-anchor-id="modularity">Modularity</h3>
+<p><strong>Definition</strong>: Modularity in pipeline design involves decomposing a data pipeline into smaller, reusable, and independent components or modules. Each module performs a distinct task, such as data extraction, transformation, or loading (ETL), allowing for better organization, maintenance, and testing. This principle enhances flexibility, as modules can be independently updated or replaced without affecting the entire pipeline. Moreover, modular design facilitates code reuse across different pipelines, reducing development effort and improving consistency.</p>
+<p><strong>Example</strong>: Consider a data pipeline for a retail company that includes modules for data extraction from various sources (e.g., sales databases, customer feedback systems), data transformation (e.g., cleansing, normalization), and data loading into a central data warehouse. Each module is responsible for a specific step and can be reused in other pipelines, such as for generating reports or feeding machine learning models.</p>
+</section>
+<section id="scalability" class="level3">
+<h3 class="anchored" data-anchor-id="scalability">Scalability</h3>
+<p><strong>Definition</strong>: Scalability refers to the capability of a data pipeline to handle increasing volumes of data and growing computational demands efficiently. A scalable pipeline can accommodate more data or higher loads by leveraging additional resources, such as more powerful hardware or distributed computing frameworks. Scalability ensures that performance remains consistent as data grows, preventing bottlenecks and maintaining data processing speeds.</p>
+<p><strong>Example</strong>: Using distributed computing frameworks like Apache Spark allows a pipeline to process large datasets across a cluster of machines. This enables parallel processing and can handle petabytes of data, making the pipeline scalable. For instance, a streaming data pipeline that ingests and processes real-time data from IoT devices can use Spark Streaming to scale out the workload across multiple nodes.</p>
+</section>
+<section id="reliability" class="level3">
+<h3 class="anchored" data-anchor-id="reliability">Reliability</h3>
+<p><strong>Definition</strong>: Reliability in pipeline design ensures that the pipeline operates consistently and accurately over time, even in the presence of failures. A reliable pipeline can detect, handle, and recover from errors gracefully, ensuring data integrity and availability. This involves incorporating robust error handling, retry mechanisms, and redundancy to mitigate the impact of failures.</p>
+<p><strong>Example</strong>: Implementing checkpointing and state management in Apache Flink allows a stream processing pipeline to recover from failures without data loss. If a node fails, the pipeline can resume from the last checkpoint, ensuring continuous and reliable data processing. Additionally, using redundant storage systems like HDFS or S3 ensures that data is not lost even if a storage node fails.</p>
+</section>
+<section id="maintainability" class="level3">
+<h3 class="anchored" data-anchor-id="maintainability">Maintainability</h3>
+<p><strong>Definition</strong>: Maintainability refers to the ease with which a data pipeline can be understood, modified, and debugged. A maintainable pipeline is well-documented, follows coding best practices, and uses clear and consistent naming conventions. This reduces the effort required to troubleshoot issues, implement changes, and onboard new team members, ultimately leading to more efficient development and operation.</p>
+<p><strong>Example</strong>: Using version control systems like Git, along with comprehensive documentation, enhances maintainability. For instance, documenting the data flow, transformation logic, and configuration settings in a wiki or readme files allows developers to quickly understand the pipeline. Additionally, adhering to coding standards and using meaningful variable names improves code readability and maintainability.</p>
+</section>
+<section id="security" class="level3">
+<h3 class="anchored" data-anchor-id="security">Security</h3>
+<p><strong>Definition</strong>: Security in pipeline design involves protecting data at rest and in transit from unauthorized access, breaches, and other threats. This includes implementing encryption, access controls, and secure data transfer protocols to ensure the confidentiality, integrity, and availability of data throughout the pipeline.</p>
+<p><strong>Example</strong>: Encrypting data using protocols like TLS (Transport Layer Security) during transmission between pipeline components prevents interception and unauthorized access. Additionally, using access control mechanisms such as IAM (Identity and Access Management) in cloud environments ensures that only authorized users and services can access sensitive data. For instance, securing a pipeline that processes personal health information (PHI) in compliance with HIPAA regulations involves encryption, access controls, and regular security audits.</p>
+<hr>
+</section>
+</section>
+<section id="workflow-orchestration-tools" class="level2">
+<h2 class="anchored" data-anchor-id="workflow-orchestration-tools">Workflow Orchestration Tools</h2>
+<section id="apache-airflow" class="level3">
+<h3 class="anchored" data-anchor-id="apache-airflow">Apache Airflow</h3>
+<p><strong>Overview</strong>: Apache Airflow is an open-source platform used to programmatically author, schedule, and monitor workflows. It allows users to define workflows as Directed Acyclic Graphs (DAGs) of tasks, providing a high level of control and customization. Airflow supports various integrations, making it a versatile tool for managing complex data pipelines.</p>
+<p><strong>Features</strong>: - <strong>Directed Acyclic Graphs (DAGs)</strong>: DAGs represent workflows where nodes are tasks and edges define dependencies. This ensures there are no cycles, meaning tasks cannot depend on themselves, directly or indirectly, ensuring a clear execution order. - <strong>Task Dependencies</strong>: Airflow allows explicit definition of dependencies between tasks, enabling complex workflows with conditional logic. Tasks can be set to run only after their dependencies are successfully completed. - <strong>Extensible</strong>: Airflow’s extensibility allows integration with a wide range of services, including cloud platforms, databases, and message queues. Users can create custom operators and sensors to interact with different systems.</p>
+<p><strong>Example Use Case</strong>: Managing ETL processes in a data warehouse where data is extracted from various sources, transformed through a series of tasks, and loaded into a central repository. Airflow can schedule and monitor these tasks, retry on failure, and send alerts if something goes wrong.</p>
+</section>
+<section id="luigi" class="level3">
+<h3 class="anchored" data-anchor-id="luigi">Luigi</h3>
+<p><strong>Overview</strong>: Luigi is a Python package for building complex pipelines of batch jobs. It handles dependency resolution, workflow management, and visualization, making it suitable for tasks that require orchestration of multiple batch jobs.</p>
+<p><strong>Features</strong>: - <strong>Dependency Resolution</strong>: Luigi automatically resolves dependencies between tasks, ensuring that each task runs only after its dependencies are completed. This simplifies the management of complex workflows with interdependent tasks. - <strong>Centralized Scheduler</strong>: Luigi’s centralized scheduler manages the execution of tasks across the pipeline, ensuring that resources are efficiently utilized and tasks are executed in the correct order. - <strong>Visualization</strong>: Luigi provides a web interface for visualizing the workflow, making it easier to understand the pipeline structure and monitor the execution status of tasks.</p>
+<p><strong>Example Use Case</strong>: Processing large-scale data for machine learning pipelines, where data preprocessing, feature extraction, model training, and evaluation are handled by different tasks. Luigi can schedule these tasks, handle dependencies, and provide a visual representation of the workflow.</p>
+</section>
+<section id="prefect" class="level3">
+<h3 class="anchored" data-anchor-id="prefect">Prefect</h3>
+<p><strong>Overview</strong>: Prefect is a modern workflow orchestration tool designed for simplicity and flexibility. It enables the creation of dynamic, event-driven workflows and supports both local and cloud deployment, making it a versatile choice for various data engineering tasks.</p>
+<p><strong>Features</strong>: - <strong>Dynamic Workflows</strong>: Prefect allows the creation of dynamic workflows that can respond to events and conditions in real time. This flexibility is crucial for modern data pipelines that need to adapt to changing data and requirements. - <strong>Easy Deployment</strong>: Prefect supports seamless deployment on local machines, Kubernetes clusters, and cloud environments, providing flexibility in scaling and managing workflows. - <strong>Error Handling</strong>: Prefect includes built-in mechanisms for error handling and retries, ensuring that workflows can recover from transient errors and continue processing data without manual intervention.</p>
+<p><strong>Example Use Case</strong>: Automating data extraction and transformation tasks in cloud environments, where data is ingested from various sources, processed, and loaded into a data lake or data warehouse. Prefect can manage these tasks, handle errors, and scale across different environments.</p>
+</section>
+<section id="dagster" class="level3">
+<h3 class="anchored" data-anchor-id="dagster">Dagster</h3>
+<p><strong>Overview</strong>: Dagster is an orchestrator designed for machine learning, analytics, and ETL workflows. It emphasizes modularity, type safety, and observability, making it a powerful tool for managing complex data pipelines with a focus on data integrity and debugging.</p>
+<p><strong>Features</strong>: - <strong>Type System</strong>: Dagster’s type system ensures data integrity by enforcing type checks at various stages of the pipeline. This reduces the risk of data-related errors and improves the reliability of the pipeline. - <strong>Modular Design</strong>: Dagster encourages a modular design approach, allowing the creation of reusable components that can be easily combined and managed. This enhances maintainability and flexibility. - <strong>Observability</strong>: Dagster provides comprehensive tools for monitoring and debugging workflows, including detailed logs, metrics, and visualizations. This improves the ability to track and diagnose issues in the pipeline.</p>
+<p><strong>Example Use Case</strong>: Managing and monitoring machine learning model training workflows, where data is ingested, preprocessed, used to train models, and evaluated. Dagster ensures that each step is correctly typed, modular, and observable, facilitating debugging and maintenance.</p>
+<hr>
+</section>
+</section>
+<section id="monitoring-and-alerting-for-data-pipelines" class="level2">
+<h2 class="anchored" data-anchor-id="monitoring-and-alerting-for-data-pipelines">Monitoring and Alerting for Data Pipelines</h2>
+<p><strong>Definition</strong>: Monitoring and alerting involve continuously checking the health, performance, and correctness of data pipelines. This ensures that data processing tasks are running as expected and that any issues are promptly detected and addressed.</p>
+<p><strong>Techniques</strong>: - <strong>Logging</strong>: Logging involves recording detailed information about pipeline activities, including task execution details, errors, and performance metrics. Logs provide a historical record that can be used for debugging and performance analysis. - <strong>Metrics</strong>: Metrics are quantitative measures of pipeline performance, such as throughput (amount of data processed per unit time), latency (time taken to process data), and error rates. Tracking these metrics helps identify performance bottlenecks and potential issues. - <strong>Alerting</strong>: Alerting involves setting up notifications to inform stakeholders of pipeline issues, such as task failures or performance degradation. Alerts can be sent via various channels, including email, SMS, and messaging platforms like Slack.</p>
+<p><strong>Tools</strong>: - <strong>Prometheus and Grafana</strong>: Prometheus is an open-source monitoring and alerting toolkit that collects and stores metrics, while Grafana is an open-source platform for monitoring and observability that provides dashboards for visualizing these metrics. Together, they enable comprehensive monitoring and alerting for data pipelines. - <strong>PagerDuty</strong>: PagerDuty is an incident management platform that integrates with monitoring tools to manage and resolve incidents. It provides alerts, on-call scheduling, and escalation policies to ensure that issues are addressed promptly.</p>
+<hr>
+</section>
+<section id="error-handling-and-retry-mechanisms" class="level2">
+<h2 class="anchored" data-anchor-id="error-handling-and-retry-mechanisms">Error Handling and Retry Mechanisms</h2>
+<section id="error-handling" class="level3">
+<h3 class="anchored" data-anchor-id="error-handling">Error Handling</h3>
+<p><strong>Definition</strong>: Error handling is the process of anticipating, detecting, and resolving errors in a data pipeline. Effective error handling ensures that the pipeline can recover from failures and continue processing data without manual intervention.</p>
+<p><strong>Strategies</strong>: - <strong>Try-Catch Blocks</strong>: Using try-catch blocks in code to handle exceptions allows the pipeline to catch and respond to errors without crashing. This is a common practice in programming to manage runtime errors gracefully. - <strong>Graceful Degradation</strong>: Ensuring that the system continues to function with reduced performance instead of failing completely. For example, if a data source is temporarily unavailable, the pipeline can skip the current run and retry later, maintaining overall functionality.</p>
+</section>
+<section id="retry-mechanisms" class="level3">
+<h3 class="anchored" data-anchor-id="retry-mechanisms">Retry Mechanisms</h3>
+<p><strong>Definition</strong>: Retry mechanisms involve automatically re-attempting failed tasks to recover from transient errors, such as network timeouts or temporary unavailability of resources. This improves the reliability and robustness of data pipelines.</p>
+<p><strong>Strategies</strong>: - <strong>Exponential Backoff</strong>: Increasing the wait time between retries exponentially reduces the load on the system and increases the chances of recovery. For instance, after the first failure, the system waits 1 second, then 2 seconds, 4 seconds, and so on before retrying. - <strong>Fixed Interval Retries</strong>: Retrying at fixed intervals until a maximum retry count is reached. This approach is simpler and suitable for scenarios where transient errors are expected to resolve within a predictable timeframe.</p>
+<p><strong>Example</strong>: In Apache Airflow, configuring retries with parameters like <code>retry_delay</code> (time between retries) and <code>max_retries</code> (maximum number of retries) allows tasks to automatically retry on failure. This ensures transient issues are handled without manual intervention.</p>
+<hr>
+</section>
+</section>
+<section id="data-pipeline-testing-and-validation" class="level2">
+<h2 class="anchored" data-anchor-id="data-pipeline-testing-and-validation">Data Pipeline Testing and Validation</h2>
+<section id="testing-approaches" class="level3">
+<h3 class="anchored" data-anchor-id="testing-approaches">Testing Approaches</h3>
+<p><strong>Unit Testing</strong>: Unit testing involves testing individual components or functions of a data pipeline in isolation. This ensures that each part of the pipeline works correctly and independently. Unit tests are typically automated and run frequently to catch issues early in the development process.</p>
+<p><strong>Integration Testing</strong>: Integration testing involves testing the entire pipeline end-to-end to ensure that all components work together as expected. This approach validates the interactions between different parts of the pipeline and ensures data flows correctly from source to destination.</p>
+</section>
+<section id="validation-techniques" class="level3">
+<h3 class="anchored" data-anchor-id="validation-techniques">Validation Techniques</h3>
+<p><strong>Schema Validation</strong>: Schema validation ensures that the data conforms to expected schemas, including data types, formats, and constraints. This helps detect and prevent data quality issues early in the pipeline.</p>
+<p><strong>Data Quality Checks</strong>: Data quality checks validate the completeness, consistency, and accuracy of data. This includes checking for missing values, duplicate records, and outliers that may indicate data issues.</p>
+<p><strong>Example</strong>: Using tools like Great Expectations for automated data validation allows the definition of data expectations, such as schemas and quality checks, which are automatically tested against the data. This ensures data quality and integrity throughout the pipeline. ```</p>
+</section>
+</section>
+</section>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

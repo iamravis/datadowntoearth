@@ -1,0 +1,2213 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>chapter14_natural_language_processing_basics – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:description" content="">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="chapter-14.-natural-language-processing-nlp-basics" class="level1 text-content">
+<h1>Chapter 14. Natural Language Processing (NLP) Basics</h1>
+<p>Natural Language Processing (NLP) involves the interaction between computers and human language. It encompasses a range of tasks including text preprocessing, parsing, and understanding textual data. This chapter covers fundamental text preprocessing techniques that are essential for preparing textual data for further analysis and modeling.</p>
+<section id="text-preprocessing-techniques" class="level2">
+<h2 class="anchored" data-anchor-id="text-preprocessing-techniques">14.1. Text Preprocessing Techniques</h2>
+<p>Text preprocessing is the first step in NLP, involving various techniques to clean and prepare text data for analysis. This process helps in reducing noise and improving the performance of NLP models.</p>
+<section id="lowercasing" class="level3">
+<h3 class="anchored" data-anchor-id="lowercasing">14.1.1. Lowercasing</h3>
+<p>Lowercasing is the process of converting all characters in a text to lowercase. This helps in reducing the complexity of the text by treating words like “Apple” and “apple” as the same.</p>
+<ul>
+<li><strong>Example:</strong>
+<ul>
+<li><strong>Original Text:</strong> “This is an Example Text.”</li>
+<li><strong>Lowercased Text:</strong> “this is an example text.”</li>
+</ul></li>
+</ul>
+<section id="benefits" class="level4">
+<h4 class="anchored" data-anchor-id="benefits">Benefits</h4>
+<ul>
+<li><strong>Uniformity:</strong> Helps in maintaining uniformity by treating the same words with different cases as one.</li>
+<li><strong>Improved Matching:</strong> Improves word matching and tokenization processes.</li>
+<li><strong>Simplicity:</strong> Simplifies text for further processing steps.</li>
+</ul>
+</section>
+</section>
+<section id="punctuation-removal" class="level3">
+<h3 class="anchored" data-anchor-id="punctuation-removal">14.1.2. Punctuation Removal</h3>
+<p>Punctuation removal involves eliminating punctuation marks from the text. This step helps in focusing on the words and their meanings rather than the punctuations.</p>
+<ul>
+<li><strong>Example:</strong>
+<ul>
+<li><strong>Original Text:</strong> “Hello, world! This is NLP.”</li>
+<li><strong>Processed Text:</strong> “Hello world This is NLP”</li>
+</ul></li>
+</ul>
+<section id="benefits-1" class="level4">
+<h4 class="anchored" data-anchor-id="benefits-1">Benefits</h4>
+<ul>
+<li><strong>Clarity:</strong> Removes extraneous symbols that do not contribute to the semantic meaning.</li>
+<li><strong>Tokenization:</strong> Simplifies tokenization by reducing the number of tokens.</li>
+<li><strong>Noise Reduction:</strong> Reduces noise in the text, making it easier to analyze.</li>
+</ul>
+</section>
+</section>
+<section id="stop-word-removal" class="level3">
+<h3 class="anchored" data-anchor-id="stop-word-removal">14.1.3. Stop Word Removal</h3>
+<p>Stop words are common words that usually do not carry significant meaning and can be removed to reduce the text’s dimensionality. Examples include words like “and,” “is,” “in,” etc.</p>
+<ul>
+<li><strong>Example:</strong>
+<ul>
+<li><strong>Original Text:</strong> “This is a sample sentence.”</li>
+<li><strong>Processed Text:</strong> “sample sentence”</li>
+</ul></li>
+</ul>
+<section id="benefits-2" class="level4">
+<h4 class="anchored" data-anchor-id="benefits-2">Benefits</h4>
+<ul>
+<li><strong>Dimensionality Reduction:</strong> Reduces the number of tokens in the text, making the data more manageable.</li>
+<li><strong>Focus on Meaningful Words:</strong> Enhances the focus on words that contribute more to the meaning of the text.</li>
+<li><strong>Efficiency:</strong> Improves the efficiency of subsequent NLP processes.</li>
+</ul>
+</section>
+</section>
+<section id="spelling-correction" class="level3">
+<h3 class="anchored" data-anchor-id="spelling-correction">14.1.4. Spelling Correction</h3>
+<p>Spelling correction is the process of identifying and correcting misspelled words in the text. This step helps in improving the quality of the text data.</p>
+<ul>
+<li><strong>Example:</strong>
+<ul>
+<li><strong>Original Text:</strong> “This is a smaple sentence.”</li>
+<li><strong>Corrected Text:</strong> “This is a sample sentence.”</li>
+</ul></li>
+</ul>
+<section id="benefits-3" class="level4">
+<h4 class="anchored" data-anchor-id="benefits-3">Benefits</h4>
+<ul>
+<li><strong>Accuracy:</strong> Improves the accuracy of text analysis by correcting misspellings.</li>
+<li><strong>Consistency:</strong> Ensures consistency in the text data.</li>
+<li><strong>Improved Matching:</strong> Enhances the performance of models that rely on word matching.</li>
+</ul>
+</section>
+</section>
+<section id="handling-contractions" class="level3">
+<h3 class="anchored" data-anchor-id="handling-contractions">14.1.5. Handling Contractions</h3>
+<p>Handling contractions involves expanding shortened forms of words (contractions) into their full forms. This helps in maintaining consistency and clarity in the text data.</p>
+<ul>
+<li><strong>Example:</strong>
+<ul>
+<li><strong>Original Text:</strong> “Don’t worry, it’s fine.”</li>
+<li><strong>Processed Text:</strong> “Do not worry, it is fine.”</li>
+</ul></li>
+</ul>
+<section id="benefits-4" class="level4">
+<h4 class="anchored" data-anchor-id="benefits-4">Benefits</h4>
+<ul>
+<li><strong>Clarity:</strong> Increases the clarity of the text by expanding contractions.</li>
+<li><strong>Consistency:</strong> Ensures consistent representation of words.</li>
+<li><strong>Improved Tokenization:</strong> Helps in better tokenization by treating contractions as separate words.</li>
+</ul>
+</section>
+</section>
+<section id="combining-text-preprocessing-techniques" class="level3">
+<h3 class="anchored" data-anchor-id="combining-text-preprocessing-techniques">Combining Text Preprocessing Techniques</h3>
+<p>In practice, text preprocessing often involves combining multiple techniques to clean and prepare the text data. Here is an example that demonstrates the combined effect of these preprocessing steps:</p>
+<ul>
+<li><strong>Original Text:</strong> “Hello, world! This isn’t a sample text. Don’t worry about it.”</li>
+<li><strong>Lowercasing:</strong> “hello, world! this isn’t a sample text. don’t worry about it.”</li>
+<li><strong>Punctuation Removal:</strong> “hello world this isn’t a sample text don’t worry about it”</li>
+<li><strong>Stop Word Removal:</strong> “hello world isn’t sample text worry”</li>
+<li><strong>Spelling Correction:</strong> Assuming no spelling mistakes in this example.</li>
+<li><strong>Handling Contractions:</strong> “hello world is not sample text do not worry”</li>
+</ul>
+</section>
+<section id="example-text-preprocessing-pipeline" class="level3">
+<h3 class="anchored" data-anchor-id="example-text-preprocessing-pipeline">Example: Text Preprocessing Pipeline</h3>
+<p>Suppose we have a dataset of customer reviews, and we want to preprocess the text data before using it for sentiment analysis.</p>
+<ul>
+<li><strong>Dataset:</strong>
+<ul>
+<li>Review 1: “The product is great! I’ve been using it for a week, and it’s amazing.”</li>
+<li>Review 2: “Didn’t like the quality at all. It’s terrible.”</li>
+</ul></li>
+<li><strong>Preprocessing Steps:</strong>
+<ol type="1">
+<li><strong>Lowercasing:</strong>
+<ul>
+<li>Review 1: “the product is great! i’ve been using it for a week, and it’s amazing.”</li>
+<li>Review 2: “didn’t like the quality at all. it’s terrible.”</li>
+</ul></li>
+<li><strong>Punctuation Removal:</strong>
+<ul>
+<li>Review 1: “the product is great ive been using it for a week and its amazing”</li>
+<li>Review 2: “didnt like the quality at all its terrible”</li>
+</ul></li>
+<li><strong>Stop Word Removal:</strong>
+<ul>
+<li>Review 1: “product great ive using week amazing”</li>
+<li>Review 2: “didnt like quality terrible”</li>
+</ul></li>
+<li><strong>Spelling Correction:</strong>
+<ul>
+<li>Assuming no spelling mistakes in this example.</li>
+</ul></li>
+<li><strong>Handling Contractions:</strong>
+<ul>
+<li>Review 1: “product great i have using week amazing”</li>
+<li>Review 2: “did not like quality terrible”</li>
+</ul></li>
+</ol></li>
+</ul>
+<p>By systematically applying these preprocessing techniques, we can transform raw text data into a cleaner, more consistent format that is suitable for further NLP tasks such as sentiment analysis, topic modeling, or machine learning applications.</p>
+</section>
+</section>
+<section id="tokenization-and-stemming" class="level2">
+<h2 class="anchored" data-anchor-id="tokenization-and-stemming">14.2. Tokenization and Stemming</h2>
+<p>Tokenization and stemming are critical steps in the NLP preprocessing pipeline. Tokenization breaks down text into smaller units called tokens, while stemming reduces words to their root forms. These steps prepare text data for further analysis and processing.</p>
+<section id="word-tokenization" class="level3">
+<h3 class="anchored" data-anchor-id="word-tokenization">14.2.1. Word Tokenization</h3>
+<p>Word tokenization is the process of splitting a text into individual words or terms. This is a fundamental step in NLP tasks such as text classification, sentiment analysis, and machine translation.</p>
+<ul>
+<li><strong>Example:</strong>
+<ul>
+<li><strong>Original Text:</strong> “Tokenization is essential for NLP.”</li>
+<li><strong>Word Tokens:</strong> [“Tokenization”, “is”, “essential”, “for”, “NLP”]</li>
+</ul></li>
+</ul>
+<section id="techniques" class="level4">
+<h4 class="anchored" data-anchor-id="techniques">Techniques</h4>
+<ul>
+<li><strong>Whitespace Tokenization:</strong> Splits text based on whitespace.</li>
+<li><strong>Punctuation-Aware Tokenization:</strong> Splits text while considering punctuation as separate tokens.</li>
+<li><strong>Regex Tokenization:</strong> Uses regular expressions to define custom tokenization rules.</li>
+</ul>
+</section>
+</section>
+<section id="sentence-tokenization" class="level3">
+<h3 class="anchored" data-anchor-id="sentence-tokenization">14.2.2. Sentence Tokenization</h3>
+<p>Sentence tokenization divides a text into individual sentences. This step is essential for tasks that require sentence-level analysis, such as summarization and machine translation.</p>
+<ul>
+<li><strong>Example:</strong>
+<ul>
+<li><strong>Original Text:</strong> “NLP is fascinating. It has many applications.”</li>
+<li><strong>Sentence Tokens:</strong> [“NLP is fascinating.”, “It has many applications.”]</li>
+</ul></li>
+</ul>
+<section id="techniques-1" class="level4">
+<h4 class="anchored" data-anchor-id="techniques-1">Techniques</h4>
+<ul>
+<li><strong>Punctuation-Based Tokenization:</strong> Uses punctuation marks (e.g., period, exclamation mark) to identify sentence boundaries.</li>
+<li><strong>Pre-trained Models:</strong> Utilizes models trained on large corpora to accurately identify sentence boundaries, especially for complex cases.</li>
+</ul>
+</section>
+</section>
+<section id="subword-tokenization-bpe-wordpiece" class="level3">
+<h3 class="anchored" data-anchor-id="subword-tokenization-bpe-wordpiece">14.2.3. Subword Tokenization (BPE, WordPiece)</h3>
+<p>Subword tokenization breaks words into smaller units called subwords. This technique is particularly useful for handling out-of-vocabulary words and morphologically rich languages.</p>
+<section id="byte-pair-encoding-bpe" class="level4">
+<h4 class="anchored" data-anchor-id="byte-pair-encoding-bpe">Byte Pair Encoding (BPE)</h4>
+<ul>
+<li><strong>Process:</strong>
+<ol type="1">
+<li><strong>Initialize Vocabulary:</strong> Start with a basic vocabulary of characters.</li>
+<li><strong>Pair Frequencies:</strong> Find the most frequent pair of symbols in the training data.</li>
+<li><strong>Merge Pairs:</strong> Merge the frequent pairs and add the new symbol to the vocabulary.</li>
+<li><strong>Repeat:</strong> Continue merging until the desired vocabulary size is reached.</li>
+</ol></li>
+<li><strong>Example:</strong>
+<ul>
+<li><strong>Word:</strong> “unhappiness”</li>
+<li><strong>Subwords:</strong> [“un”, “happ”, “iness”]</li>
+</ul></li>
+</ul>
+</section>
+<section id="wordpiece" class="level4">
+<h4 class="anchored" data-anchor-id="wordpiece">WordPiece</h4>
+<ul>
+<li><strong>Process:</strong>
+<ol type="1">
+<li><strong>Initialize Vocabulary:</strong> Start with a basic vocabulary of characters.</li>
+<li><strong>Greedy Search:</strong> Iteratively add the most frequent substrings to the vocabulary.</li>
+<li><strong>Merge Substrings:</strong> Merge substrings to form the final vocabulary.</li>
+</ol></li>
+<li><strong>Example:</strong>
+<ul>
+<li><strong>Word:</strong> “unhappiness”</li>
+<li><strong>Subwords:</strong> [“un”, “##happiness”]</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="stemming-algorithms-porter-snowball" class="level3">
+<h3 class="anchored" data-anchor-id="stemming-algorithms-porter-snowball">14.2.4. Stemming Algorithms (Porter, Snowball)</h3>
+<p>Stemming reduces words to their base or root form by stripping suffixes and prefixes. This process is less context-sensitive than lemmatization.</p>
+<section id="porter-stemmer" class="level4">
+<h4 class="anchored" data-anchor-id="porter-stemmer">Porter Stemmer</h4>
+<ul>
+<li><strong>Process:</strong> Uses a series of rules to iteratively strip suffixes.</li>
+<li><strong>Example:</strong>
+<ul>
+<li><strong>Word:</strong> “running”</li>
+<li><strong>Stemmed:</strong> “run”</li>
+</ul></li>
+</ul>
+</section>
+<section id="snowball-stemmer" class="level4">
+<h4 class="anchored" data-anchor-id="snowball-stemmer">Snowball Stemmer</h4>
+<ul>
+<li><strong>Process:</strong> An advanced version of the Porter stemmer with more extensive rule sets.</li>
+<li><strong>Example:</strong>
+<ul>
+<li><strong>Word:</strong> “running”</li>
+<li><strong>Stemmed:</strong> “run”</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="lemmatization" class="level3">
+<h3 class="anchored" data-anchor-id="lemmatization">14.2.5. Lemmatization</h3>
+<p>Lemmatization reduces words to their base or root form, considering the context and morphological analysis. It is more accurate than stemming.</p>
+<ul>
+<li><strong>Example:</strong>
+<ul>
+<li><strong>Word:</strong> “better”</li>
+<li><strong>Lemmatized:</strong> “good”</li>
+</ul></li>
+</ul>
+<section id="techniques-2" class="level4">
+<h4 class="anchored" data-anchor-id="techniques-2">Techniques</h4>
+<ul>
+<li><strong>Dictionary-Based:</strong> Uses a pre-defined dictionary to map words to their base forms.</li>
+<li><strong>Rule-Based:</strong> Applies morphological rules to convert words to their root forms.</li>
+</ul>
+</section>
+</section>
+<section id="example-comprehensive-tokenization-and-stemming-pipeline" class="level3">
+<h3 class="anchored" data-anchor-id="example-comprehensive-tokenization-and-stemming-pipeline">Example: Comprehensive Tokenization and Stemming Pipeline</h3>
+<p>Suppose we have a dataset of product reviews, and we want to preprocess the text data for sentiment analysis.</p>
+<ul>
+<li><strong>Dataset:</strong>
+<ul>
+<li>Review 1: “This product is amazingly good! I love it.”</li>
+<li>Review 2: “Terrible quality. It broke after one use.”</li>
+</ul></li>
+<li><strong>Preprocessing Steps:</strong></li>
+</ul>
+<ol type="1">
+<li><strong>Word Tokenization:</strong>
+<ul>
+<li>Review 1: [“This”, “product”, “is”, “amazingly”, “good”, “!”, “I”, “love”, “it”, “.”]</li>
+<li>Review 2: [“Terrible”, “quality”, “.”, “It”, “broke”, “after”, “one”, “use”, “.”]</li>
+</ul></li>
+<li><strong>Sentence Tokenization:</strong>
+<ul>
+<li>Review 1: [“This product is amazingly good!”, “I love it.”]</li>
+<li>Review 2: [“Terrible quality.”, “It broke after one use.”]</li>
+</ul></li>
+<li><strong>Subword Tokenization (BPE):</strong>
+<ul>
+<li>Review 1: [“This”, “product”, “is”, “amazing”, “ly”, “good”, “!”, “I”, “love”, “it”, “.”]</li>
+<li>Review 2: [“Terrible”, “quality”, “.”, “It”, “broke”, “after”, “one”, “use”, “.”]</li>
+</ul></li>
+<li><strong>Stemming (Porter):</strong>
+<ul>
+<li>Review 1: [“thi”, “product”, “is”, “amaz”, “good”, “!”, “I”, “love”, “it”, “.”]</li>
+<li>Review 2: [“terribl”, “qualiti”, “.”, “it”, “broke”, “after”, “one”, “use”, “.”]</li>
+</ul></li>
+<li><strong>Lemmatization:</strong>
+<ul>
+<li>Review 1: [“This”, “product”, “be”, “amazing”, “good”, “!”, “I”, “love”, “it”, “.”]</li>
+<li>Review 2: [“Terrible”, “quality”, “.”, “It”, “break”, “after”, “one”, “use”, “.”]</li>
+</ul></li>
+</ol>
+<p>By systematically applying tokenization and stemming techniques, we can transform raw text data into a structured format that is suitable for advanced NLP tasks, such as sentiment analysis, topic modeling, and machine learning applications.</p>
+</section>
+</section>
+<section id="part-of-speech-tagging" class="level2">
+<h2 class="anchored" data-anchor-id="part-of-speech-tagging">14.3. Part-of-Speech Tagging</h2>
+<p>Part-of-Speech (POS) tagging is the process of assigning grammatical categories or parts of speech to each word in a text. Common POS tags include nouns, verbs, adjectives, adverbs, etc. POS tagging is fundamental for many NLP tasks, such as syntactic parsing, named entity recognition, and machine translation.</p>
+<section id="rule-based-pos-tagging" class="level3">
+<h3 class="anchored" data-anchor-id="rule-based-pos-tagging">14.3.1. Rule-based POS Tagging</h3>
+<p>Rule-based POS tagging relies on a set of handcrafted rules to assign POS tags to words. These rules are often based on linguistic knowledge and the context in which words appear.</p>
+<section id="methodology" class="level4">
+<h4 class="anchored" data-anchor-id="methodology">Methodology</h4>
+<ul>
+<li><strong>Lexicon:</strong> A dictionary that lists words and their possible POS tags.</li>
+<li><strong>Rules:</strong> A set of rules that consider the context of a word to determine its POS tag. Rules can include regular expressions, context-based rules, and morphological rules.</li>
+</ul>
+</section>
+<section id="example" class="level4">
+<h4 class="anchored" data-anchor-id="example">Example</h4>
+<ul>
+<li><p><strong>Sentence:</strong> “The quick brown fox jumps over the lazy dog.”</p></li>
+<li><p><strong>Lexicon:</strong></p>
+<ul>
+<li>“The” -&gt; determiner (DT)</li>
+<li>“quick” -&gt; adjective (JJ)</li>
+<li>“brown” -&gt; adjective (JJ)</li>
+<li>“fox” -&gt; noun (NN)</li>
+<li>“jumps” -&gt; verb (VBZ)</li>
+<li>“over” -&gt; preposition (IN)</li>
+<li>“the” -&gt; determiner (DT)</li>
+<li>“lazy” -&gt; adjective (JJ)</li>
+<li>“dog” -&gt; noun (NN)</li>
+</ul></li>
+<li><p><strong>Rule:</strong> If a word is preceded by a determiner and followed by a verb, tag it as a noun.</p></li>
+<li><p><strong>Tagged Sentence:</strong> “The/DT quick/JJ brown/JJ fox/NN jumps/VBZ over/IN the/DT lazy/JJ dog/NN”</p></li>
+</ul>
+</section>
+</section>
+<section id="statistical-pos-tagging" class="level3">
+<h3 class="anchored" data-anchor-id="statistical-pos-tagging">14.3.2. Statistical POS Tagging</h3>
+<p>Statistical POS tagging uses probabilistic models to determine the most likely POS tag for each word based on a labeled training corpus. The most common statistical models are Hidden Markov Models (HMMs) and Conditional Random Fields (CRFs).</p>
+<section id="hidden-markov-model-hmm" class="level4">
+<h4 class="anchored" data-anchor-id="hidden-markov-model-hmm">Hidden Markov Model (HMM)</h4>
+<ul>
+<li><strong>Model:</strong> Represents the POS tags as hidden states and the words as observed states.</li>
+<li><strong>Training:</strong> Use a labeled corpus to estimate transition probabilities (between POS tags) and emission probabilities (between POS tags and words).</li>
+</ul>
+</section>
+<section id="example-1" class="level4">
+<h4 class="anchored" data-anchor-id="example-1">Example</h4>
+<ul>
+<li><p><strong>Transition Probabilities:</strong></p>
+<ul>
+<li>P(NN|DT) = 0.5</li>
+<li>P(JJ|DT) = 0.3</li>
+<li>P(VBZ|NN) = 0.4</li>
+</ul></li>
+<li><p><strong>Emission Probabilities:</strong></p>
+<ul>
+<li>P(dog|NN) = 0.2</li>
+<li>P(quick|JJ) = 0.1</li>
+</ul></li>
+<li><p><strong>Viterbi Algorithm:</strong> Used to find the most probable sequence of POS tags.</p></li>
+<li><p><strong>Sentence:</strong> “The quick brown fox jumps over the lazy dog.”</p></li>
+<li><p><strong>Tagged Sentence:</strong> “The/DT quick/JJ brown/JJ fox/NN jumps/VBZ over/IN the/DT lazy/JJ dog/NN”</p></li>
+</ul>
+</section>
+<section id="conditional-random-field-crf" class="level4">
+<h4 class="anchored" data-anchor-id="conditional-random-field-crf">Conditional Random Field (CRF)</h4>
+<ul>
+<li><strong>Model:</strong> A discriminative probabilistic model used to predict sequences of labels.</li>
+<li><strong>Features:</strong> Uses a set of features, such as word forms, prefixes, suffixes, and neighboring tags.</li>
+</ul>
+</section>
+<section id="example-2" class="level4">
+<h4 class="anchored" data-anchor-id="example-2">Example</h4>
+<ul>
+<li><strong>Sentence:</strong> “The quick brown fox jumps over the lazy dog.”</li>
+<li><strong>Features:</strong>
+<ul>
+<li>Word: “fox”</li>
+<li>Prefix: “fo”</li>
+<li>Suffix: “ox”</li>
+<li>Previous Tag: JJ</li>
+</ul></li>
+<li><strong>Tagged Sentence:</strong> “The/DT quick/JJ brown/JJ fox/NN jumps/VBZ over/IN the/DT lazy/JJ dog/NN”</li>
+</ul>
+</section>
+</section>
+<section id="neural-pos-tagging" class="level3">
+<h3 class="anchored" data-anchor-id="neural-pos-tagging">14.3.3. Neural POS Tagging</h3>
+<p>Neural POS tagging uses neural networks to predict POS tags. These models can capture complex patterns in the data and often achieve higher accuracy than rule-based and statistical methods.</p>
+<section id="recurrent-neural-networks-rnns" class="level4">
+<h4 class="anchored" data-anchor-id="recurrent-neural-networks-rnns">Recurrent Neural Networks (RNNs)</h4>
+<ul>
+<li><strong>Model:</strong> Uses RNNs to process the sequence of words and predict POS tags.</li>
+<li><strong>Architecture:</strong> Often includes Long Short-Term Memory (LSTM) or Gated Recurrent Unit (GRU) layers to handle long-range dependencies.</li>
+</ul>
+</section>
+<section id="example-3" class="level4">
+<h4 class="anchored" data-anchor-id="example-3">Example</h4>
+<ul>
+<li><strong>Sentence:</strong> “The quick brown fox jumps over the lazy dog.”</li>
+<li><strong>Neural Network:</strong> An RNN processes the sequence and outputs POS tags.</li>
+<li><strong>Tagged Sentence:</strong> “The/DT quick/JJ brown/JJ fox/NN jumps/VBZ over/IN the/DT lazy/JJ dog/NN”</li>
+</ul>
+</section>
+<section id="transformers" class="level4">
+<h4 class="anchored" data-anchor-id="transformers">Transformers</h4>
+<ul>
+<li><strong>Model:</strong> Uses transformer architectures, such as BERT, to perform POS tagging.</li>
+<li><strong>Pre-training:</strong> Pre-trained on large corpora and fine-tuned on specific POS tagging tasks.</li>
+</ul>
+</section>
+<section id="example-4" class="level4">
+<h4 class="anchored" data-anchor-id="example-4">Example</h4>
+<ul>
+<li><strong>Sentence:</strong> “The quick brown fox jumps over the lazy dog.”</li>
+<li><strong>Transformer Model:</strong> A pre-trained BERT model fine-tuned for POS tagging processes the sentence.</li>
+<li><strong>Tagged Sentence:</strong> “The/DT quick/JJ brown/JJ fox/NN jumps/VBZ over/IN the/DT lazy/JJ dog/NN”</li>
+</ul>
+</section>
+</section>
+<section id="example-comprehensive-pos-tagging-pipeline" class="level3">
+<h3 class="anchored" data-anchor-id="example-comprehensive-pos-tagging-pipeline">Example: Comprehensive POS Tagging Pipeline</h3>
+<p>Suppose we have a dataset of sentences, and we want to preprocess the text data and perform POS tagging.</p>
+<ul>
+<li><strong>Dataset:</strong>
+<ul>
+<li>Sentence 1: “She sells sea shells by the seashore.”</li>
+<li>Sentence 2: “How much wood would a woodchuck chuck if a woodchuck could chuck wood?”</li>
+</ul></li>
+<li><strong>Preprocessing Steps:</strong>
+<ol type="1">
+<li><strong>Tokenization:</strong>
+<ul>
+<li>Sentence 1: [“She”, “sells”, “sea”, “shells”, “by”, “the”, “seashore”, “.”]</li>
+<li>Sentence 2: [“How”, “much”, “wood”, “would”, “a”, “woodchuck”, “chuck”, “if”, “a”, “woodchuck”, “could”, “chuck”, “wood”, “?”]</li>
+</ul></li>
+<li><strong>POS Tagging:</strong>
+<ul>
+<li>Rule-Based:
+<ul>
+<li>Sentence 1: “She/PRP sells/VBZ sea/NN shells/NNS by/IN the/DT seashore/NN ./.”</li>
+<li>Sentence 2: “How/WRB much/JJ wood/NN would/MD a/DT woodchuck/NN chuck/VB if/IN a/DT woodchuck/NN could/MD chuck/VB wood/NN ?/.”</li>
+</ul></li>
+<li>Statistical (HMM or CRF):
+<ul>
+<li>Sentence 1: “She/PRP sells/VBZ sea/NN shells/NNS by/IN the/DT seashore/NN ./.”</li>
+<li>Sentence 2: “How/WRB much/JJ wood/NN would/MD a/DT woodchuck/NN chuck/VB if/IN a/DT woodchuck/NN could/MD chuck/VB wood/NN ?/.”</li>
+</ul></li>
+<li>Neural (RNN or Transformer):
+<ul>
+<li>Sentence 1: “She/PRP sells/VBZ sea/NN shells/NNS by/IN the/DT seashore/NN ./.”</li>
+<li>Sentence 2: “How/WRB much/JJ wood/NN would/MD a/DT woodchuck/NN chuck/VB if/IN a/DT woodchuck/NN could/MD chuck/VB wood/NN ?/.”</li>
+</ul></li>
+</ul></li>
+</ol></li>
+</ul>
+<p>By applying different POS tagging techniques, we can accurately annotate text data with grammatical categories, facilitating further NLP tasks such as syntactic parsing, named entity recognition, and information extraction.</p>
+</section>
+</section>
+<section id="named-entity-recognition-ner" class="level2">
+<h2 class="anchored" data-anchor-id="named-entity-recognition-ner">14.4. Named Entity Recognition (NER)</h2>
+<p>Named Entity Recognition (NER) is the task of identifying and classifying named entities in text into predefined categories such as person names, organizations, locations, dates, etc. NER is crucial for various NLP applications, including information extraction, question answering, and text summarization.</p>
+<section id="rule-based-ner" class="level3">
+<h3 class="anchored" data-anchor-id="rule-based-ner">14.4.1. Rule-based NER</h3>
+<p>Rule-based NER systems rely on handcrafted rules and patterns to identify named entities in text. These rules are often based on linguistic knowledge, regular expressions, and domain-specific heuristics.</p>
+<section id="methodology-1" class="level4">
+<h4 class="anchored" data-anchor-id="methodology-1">Methodology</h4>
+<ul>
+<li><strong>Lexicons:</strong> Predefined lists of named entities (e.g., names of countries, companies).</li>
+<li><strong>Regular Expressions:</strong> Patterns to match common named entities (e.g., capitalized words for person names).</li>
+<li><strong>Contextual Rules:</strong> Rules that consider the context in which a word appears (e.g., “President [Name]”).</li>
+</ul>
+</section>
+<section id="example-5" class="level4">
+<h4 class="anchored" data-anchor-id="example-5">Example</h4>
+<ul>
+<li><strong>Sentence:</strong> “Barack Obama was born in Hawaii.”</li>
+<li><strong>Lexicon:</strong>
+<ul>
+<li>“Barack Obama” -&gt; PERSON</li>
+<li>“Hawaii” -&gt; LOCATION</li>
+</ul></li>
+<li><strong>Regular Expression Rule:</strong> Capitalized words are potential named entities.</li>
+<li><strong>Tagged Sentence:</strong> “Barack Obama/PERSON was born in Hawaii/LOCATION.”</li>
+</ul>
+</section>
+<section id="advantages-and-disadvantages" class="level4">
+<h4 class="anchored" data-anchor-id="advantages-and-disadvantages">Advantages and Disadvantages</h4>
+<ul>
+<li><strong>Advantages:</strong>
+<ul>
+<li><strong>Precision:</strong> High precision in well-defined domains.</li>
+<li><strong>Control:</strong> Full control over the rules and patterns.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li><strong>Coverage:</strong> Limited coverage due to reliance on handcrafted rules.</li>
+<li><strong>Scalability:</strong> Difficult to scale and adapt to new domains.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="statistical-ner" class="level3">
+<h3 class="anchored" data-anchor-id="statistical-ner">14.4.2. Statistical NER</h3>
+<p>Statistical NER systems use probabilistic models to identify and classify named entities based on labeled training data. Common models include Hidden Markov Models (HMMs) and Conditional Random Fields (CRFs).</p>
+<section id="hidden-markov-model-hmm-1" class="level4">
+<h4 class="anchored" data-anchor-id="hidden-markov-model-hmm-1">Hidden Markov Model (HMM)</h4>
+<ul>
+<li><strong>Model:</strong> Represents the sequence of words and their corresponding named entity tags as hidden states.</li>
+<li><strong>Training:</strong> Uses a labeled corpus to estimate transition probabilities (between tags) and emission probabilities (between tags and words).</li>
+</ul>
+</section>
+<section id="example-6" class="level4">
+<h4 class="anchored" data-anchor-id="example-6">Example</h4>
+<ul>
+<li><strong>Sentence:</strong> “Google was founded by Larry Page and Sergey Brin.”</li>
+<li><strong>Training Data:</strong>
+<ul>
+<li>“Google/ORG was/O founded/O by/O Larry/PERSON Page/PERSON and/O Sergey/PERSON Brin/PERSON.”</li>
+</ul></li>
+<li><strong>Tagged Sentence:</strong> “Google/ORG was/O founded/O by/O Larry/PERSON Page/PERSON and/O Sergey/PERSON Brin/PERSON.”</li>
+</ul>
+</section>
+<section id="conditional-random-field-crf-1" class="level4">
+<h4 class="anchored" data-anchor-id="conditional-random-field-crf-1">Conditional Random Field (CRF)</h4>
+<ul>
+<li><strong>Model:</strong> A discriminative probabilistic model that predicts sequences of labels.</li>
+<li><strong>Features:</strong> Uses a set of features, such as word forms, prefixes, suffixes, and neighboring tags.</li>
+</ul>
+</section>
+<section id="example-7" class="level4">
+<h4 class="anchored" data-anchor-id="example-7">Example</h4>
+<ul>
+<li><strong>Sentence:</strong> “Apple Inc.&nbsp;is headquartered in Cupertino.”</li>
+<li><strong>Features:</strong>
+<ul>
+<li>Word: “Apple”</li>
+<li>Suffix: “le”</li>
+<li>Previous Tag: O</li>
+</ul></li>
+<li><strong>Tagged Sentence:</strong> “Apple/ORG Inc./ORG is/O headquartered/O in/O Cupertino/LOCATION.”</li>
+</ul>
+</section>
+<section id="advantages-and-disadvantages-1" class="level4">
+<h4 class="anchored" data-anchor-id="advantages-and-disadvantages-1">Advantages and Disadvantages</h4>
+<ul>
+<li><strong>Advantages:</strong>
+<ul>
+<li><strong>Adaptability:</strong> Can be trained on different domains.</li>
+<li><strong>Performance:</strong> Generally better performance than rule-based methods.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li><strong>Data Dependency:</strong> Requires a large amount of labeled training data.</li>
+<li><strong>Complexity:</strong> More complex to implement and tune compared to rule-based methods.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="neural-ner" class="level3">
+<h3 class="anchored" data-anchor-id="neural-ner">14.4.3. Neural NER</h3>
+<p>Neural NER systems use neural networks to identify and classify named entities. These models can capture complex patterns and dependencies in the data, often achieving state-of-the-art performance.</p>
+<section id="recurrent-neural-networks-rnns-1" class="level4">
+<h4 class="anchored" data-anchor-id="recurrent-neural-networks-rnns-1">Recurrent Neural Networks (RNNs)</h4>
+<ul>
+<li><strong>Model:</strong> Uses RNNs to process sequences of words and predict named entity tags.</li>
+<li><strong>Architecture:</strong> Often includes Long Short-Term Memory (LSTM) or Gated Recurrent Unit (GRU) layers.</li>
+</ul>
+</section>
+<section id="example-8" class="level4">
+<h4 class="anchored" data-anchor-id="example-8">Example</h4>
+<ul>
+<li><strong>Sentence:</strong> “Facebook was created by Mark Zuckerberg.”</li>
+<li><strong>Neural Network:</strong> An RNN processes the sequence and outputs named entity tags.</li>
+<li><strong>Tagged Sentence:</strong> “Facebook/ORG was/O created/O by/O Mark/PERSON Zuckerberg/PERSON.”</li>
+</ul>
+</section>
+<section id="transformers-1" class="level4">
+<h4 class="anchored" data-anchor-id="transformers-1">Transformers</h4>
+<ul>
+<li><strong>Model:</strong> Uses transformer architectures, such as BERT, to perform NER.</li>
+<li><strong>Pre-training:</strong> Pre-trained on large corpora and fine-tuned on specific NER tasks.</li>
+</ul>
+</section>
+<section id="example-9" class="level4">
+<h4 class="anchored" data-anchor-id="example-9">Example</h4>
+<ul>
+<li><strong>Sentence:</strong> “Tesla, founded by Elon Musk, is a leader in electric vehicles.”</li>
+<li><strong>Transformer Model:</strong> A pre-trained BERT model fine-tuned for NER processes the sentence.</li>
+<li><strong>Tagged Sentence:</strong> “Tesla/ORG, founded/O by/O Elon/PERSON Musk/PERSON, is/O a/O leader/O in/O electric/O vehicles/O.”</li>
+</ul>
+</section>
+<section id="advantages-and-disadvantages-2" class="level4">
+<h4 class="anchored" data-anchor-id="advantages-and-disadvantages-2">Advantages and Disadvantages</h4>
+<ul>
+<li><strong>Advantages:</strong>
+<ul>
+<li><strong>Accuracy:</strong> Often achieves the highest accuracy among NER methods.</li>
+<li><strong>Generalization:</strong> Can generalize well to new data and domains.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li><strong>Resource Intensive:</strong> Requires significant computational resources and large datasets for training.</li>
+<li><strong>Complexity:</strong> Complex to implement and fine-tune.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="example-comprehensive-ner-pipeline" class="level3">
+<h3 class="anchored" data-anchor-id="example-comprehensive-ner-pipeline">Example: Comprehensive NER Pipeline</h3>
+<p>Suppose we have a dataset of news articles, and we want to extract named entities from the text data.</p>
+<ul>
+<li><strong>Dataset:</strong>
+<ul>
+<li>Article 1: “Microsoft acquired LinkedIn for $26 billion.”</li>
+<li>Article 2: “The Eiffel Tower is one of the most famous landmarks in Paris.”</li>
+</ul></li>
+<li><strong>Preprocessing Steps:</strong></li>
+</ul>
+<ol type="1">
+<li><strong>Tokenization:</strong>
+<ul>
+<li>Article 1: [“Microsoft”, “acquired”, “LinkedIn”, “for”, “$”, “26”, “billion”, “.”]</li>
+<li>Article 2: [“The”, “Eiffel”, “Tower”, “is”, “one”, “of”, “the”, “most”, “famous”, “landmarks”, “in”, “Paris”, “.”]</li>
+</ul></li>
+<li><strong>NER Tagging:</strong>
+<ul>
+<li>Rule-Based:
+<ul>
+<li>Article 1: “Microsoft/ORG acquired/O LinkedIn/ORG for/O $/O 26/O billion/O ./O”</li>
+<li>Article 2: “The/O Eiffel/LOCATION Tower/LOCATION is/O one/O of/O the/O most/O famous/O landmarks/O in/O Paris/LOCATION ./O”</li>
+</ul></li>
+<li>Statistical (HMM or CRF):
+<ul>
+<li>Article 1: “Microsoft/ORG acquired/O LinkedIn/ORG for/O $/O 26/O billion/O ./O”</li>
+<li>Article 2: “The/O Eiffel/LOCATION Tower/LOCATION is/O one/O of/O the/O most/O famous/O landmarks/O in/O Paris/LOCATION ./O”</li>
+</ul></li>
+<li>Neural (RNN or Transformer):
+<ul>
+<li>Article 1: “Microsoft/ORG acquired/O LinkedIn/ORG for/O $/O 26/O billion/O ./O”</li>
+<li>Article 2: “The/O Eiffel/LOCATION Tower/LOCATION is/O one/O of/O the/O most/O famous/O landmarks/O in/O Paris/LOCATION ./O”</li>
+</ul></li>
+</ul></li>
+</ol>
+<p>By applying different NER techniques, we can accurately extract named entities from text data, facilitating further NLP tasks such as information extraction, question answering, and text summarization.</p>
+</section>
+</section>
+<section id="sentiment-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="sentiment-analysis">14.5. Sentiment Analysis</h2>
+<p>Sentiment analysis, also known as opinion mining, is the process of determining the sentiment or emotion expressed in a piece of text. It is widely used in various applications, such as social media monitoring, customer feedback analysis, and market research.</p>
+<section id="rule-based-approaches" class="level3">
+<h3 class="anchored" data-anchor-id="rule-based-approaches">14.5.1. Rule-based Approaches</h3>
+<p>Rule-based sentiment analysis relies on a set of manually created rules to classify text as positive, negative, or neutral. These rules are often based on the presence of specific words, phrases, or patterns that indicate sentiment.</p>
+<section id="methodology-2" class="level4">
+<h4 class="anchored" data-anchor-id="methodology-2">Methodology</h4>
+<ul>
+<li><strong>Lexicon:</strong> A predefined list of sentiment-laden words with associated sentiment scores (e.g., positive, negative).</li>
+<li><strong>Rules:</strong> Set of rules to analyze the text and compute an overall sentiment score.</li>
+</ul>
+</section>
+<section id="example-10" class="level4">
+<h4 class="anchored" data-anchor-id="example-10">Example</h4>
+<ul>
+<li><strong>Sentence:</strong> “I love this product, but the shipping was slow.”</li>
+<li><strong>Lexicon:</strong>
+<ul>
+<li>“love” -&gt; positive</li>
+<li>“slow” -&gt; negative</li>
+</ul></li>
+<li><strong>Rules:</strong>
+<ul>
+<li>If positive words &gt; negative words, classify as positive.</li>
+<li>If negative words &gt; positive words, classify as negative.</li>
+<li>If equal, classify as neutral.</li>
+</ul></li>
+<li><strong>Analysis:</strong>
+<ul>
+<li>Positive Words: “love”</li>
+<li>Negative Words: “slow”</li>
+<li><strong>Sentiment:</strong> Mixed/Neutral</li>
+</ul></li>
+</ul>
+</section>
+<section id="advantages-and-disadvantages-3" class="level4">
+<h4 class="anchored" data-anchor-id="advantages-and-disadvantages-3">Advantages and Disadvantages</h4>
+<ul>
+<li><strong>Advantages:</strong>
+<ul>
+<li><strong>Simplicity:</strong> Easy to implement and understand.</li>
+<li><strong>Control:</strong> Full control over the rules and lexicon.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li><strong>Coverage:</strong> Limited coverage and adaptability to new domains.</li>
+<li><strong>Nuance Handling:</strong> Poor at handling nuanced sentiment expressions, such as sarcasm or context.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="machine-learning-approaches" class="level3">
+<h3 class="anchored" data-anchor-id="machine-learning-approaches">14.5.2. Machine Learning Approaches</h3>
+<p>Machine learning approaches use statistical models to classify text based on sentiment. These models are trained on labeled datasets where each text example is annotated with its corresponding sentiment.</p>
+<section id="methodology-3" class="level4">
+<h4 class="anchored" data-anchor-id="methodology-3">Methodology</h4>
+<ul>
+<li><strong>Data Preparation:</strong> Collect and preprocess a labeled dataset.</li>
+<li><strong>Feature Extraction:</strong> Extract features from the text (e.g., bag of words, TF-IDF, word embeddings).</li>
+<li><strong>Model Training:</strong> Train a machine learning model (e.g., SVM, Naive Bayes, logistic regression) on the labeled data.</li>
+<li><strong>Prediction:</strong> Use the trained model to predict sentiment on new text data.</li>
+</ul>
+</section>
+<section id="example-11" class="level4">
+<h4 class="anchored" data-anchor-id="example-11">Example</h4>
+<ul>
+<li><strong>Sentence:</strong> “I love this product, but the shipping was slow.”</li>
+<li><strong>Features:</strong>
+<ul>
+<li>Bag of Words: {“love”: 1, “product”: 1, “shipping”: 1, “slow”: 1}</li>
+<li>TF-IDF: {“love”: 0.5, “product”: 0.3, “shipping”: 0.4, “slow”: 0.6}</li>
+</ul></li>
+<li><strong>Model:</strong> Train a logistic regression model on the features.</li>
+<li><strong>Prediction:</strong> The model predicts the overall sentiment as mixed/neutral.</li>
+</ul>
+</section>
+<section id="advantages-and-disadvantages-4" class="level4">
+<h4 class="anchored" data-anchor-id="advantages-and-disadvantages-4">Advantages and Disadvantages</h4>
+<ul>
+<li><strong>Advantages:</strong>
+<ul>
+<li><strong>Accuracy:</strong> Often achieves higher accuracy than rule-based methods.</li>
+<li><strong>Adaptability:</strong> Can be trained on different domains and datasets.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li><strong>Data Dependency:</strong> Requires a large amount of labeled data for training.</li>
+<li><strong>Complexity:</strong> More complex to implement and tune compared to rule-based methods.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="lexicon-based-methods" class="level3">
+<h3 class="anchored" data-anchor-id="lexicon-based-methods">14.5.3. Lexicon-based Methods</h3>
+<p>Lexicon-based methods rely on predefined lexicons of sentiment-laden words and their associated sentiment scores. These methods calculate the overall sentiment of a text by aggregating the sentiment scores of individual words.</p>
+<section id="methodology-4" class="level4">
+<h4 class="anchored" data-anchor-id="methodology-4">Methodology</h4>
+<ul>
+<li><strong>Lexicon:</strong> A sentiment lexicon with words and their associated sentiment scores.</li>
+<li><strong>Scoring:</strong> Calculate the overall sentiment score by summing the sentiment scores of the words in the text.</li>
+</ul>
+</section>
+<section id="example-12" class="level4">
+<h4 class="anchored" data-anchor-id="example-12">Example</h4>
+<ul>
+<li><strong>Sentence:</strong> “I love this product, but the shipping was slow.”</li>
+<li><strong>Lexicon:</strong>
+<ul>
+<li>“love” -&gt; +3</li>
+<li>“slow” -&gt; -2</li>
+</ul></li>
+<li><strong>Scoring:</strong> Sum the scores of the words in the text.
+<ul>
+<li><strong>Sentiment Score:</strong> +3 + (-2) = +1</li>
+<li><strong>Sentiment:</strong> Positive (since the score is greater than 0)</li>
+</ul></li>
+</ul>
+</section>
+<section id="advantages-and-disadvantages-5" class="level4">
+<h4 class="anchored" data-anchor-id="advantages-and-disadvantages-5">Advantages and Disadvantages</h4>
+<ul>
+<li><strong>Advantages:</strong>
+<ul>
+<li><strong>Simplicity:</strong> Easy to implement and use with a predefined lexicon.</li>
+<li><strong>Domain-specific:</strong> Can be tailored to specific domains by creating custom lexicons.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li><strong>Coverage:</strong> Limited to the words in the lexicon, may miss context or nuance.</li>
+<li><strong>Context Handling:</strong> Does not account for the context in which words appear.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="aspect-based-sentiment-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="aspect-based-sentiment-analysis">14.5.4. Aspect-based Sentiment Analysis</h3>
+<p>Aspect-based sentiment analysis identifies and analyzes sentiment towards specific aspects or features within a text. This approach provides more granular insights into what people like or dislike about specific aspects of a product or service.</p>
+<section id="methodology-5" class="level4">
+<h4 class="anchored" data-anchor-id="methodology-5">Methodology</h4>
+<ul>
+<li><strong>Aspect Identification:</strong> Identify aspects or features mentioned in the text (e.g., product quality, shipping).</li>
+<li><strong>Sentiment Classification:</strong> Determine the sentiment expressed towards each identified aspect.</li>
+</ul>
+</section>
+<section id="example-13" class="level4">
+<h4 class="anchored" data-anchor-id="example-13">Example</h4>
+<ul>
+<li><strong>Sentence:</strong> “I love the product quality, but the shipping was slow.”</li>
+<li><strong>Aspects:</strong>
+<ul>
+<li>“product quality”</li>
+<li>“shipping”</li>
+</ul></li>
+<li><strong>Sentiment Classification:</strong>
+<ul>
+<li>“product quality” -&gt; Positive</li>
+<li>“shipping” -&gt; Negative</li>
+</ul></li>
+</ul>
+</section>
+<section id="advantages-and-disadvantages-6" class="level4">
+<h4 class="anchored" data-anchor-id="advantages-and-disadvantages-6">Advantages and Disadvantages</h4>
+<ul>
+<li><strong>Advantages:</strong>
+<ul>
+<li><strong>Granularity:</strong> Provides detailed insights into specific aspects.</li>
+<li><strong>Usefulness:</strong> More actionable insights compared to overall sentiment analysis.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li><strong>Complexity:</strong> More complex to implement compared to general sentiment analysis.</li>
+<li><strong>Data Requirements:</strong> Requires labeled data with aspect-specific sentiment annotations.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="example-comprehensive-sentiment-analysis-pipeline" class="level3">
+<h3 class="anchored" data-anchor-id="example-comprehensive-sentiment-analysis-pipeline">Example: Comprehensive Sentiment Analysis Pipeline</h3>
+<p>Suppose we have a dataset of product reviews, and we want to perform sentiment analysis to understand customer opinions.</p>
+<ul>
+<li><strong>Dataset:</strong>
+<ul>
+<li>Review 1: “I love the product quality, but the shipping was slow.”</li>
+<li>Review 2: “The customer service was excellent, but the price is too high.”</li>
+</ul></li>
+<li><strong>Preprocessing Steps:</strong></li>
+</ul>
+<ol type="1">
+<li><strong>Tokenization:</strong>
+<ul>
+<li>Review 1: [“I”, “love”, “the”, “product”, “quality”, “,”, “but”, “the”, “shipping”, “was”, “slow”, “.”]</li>
+<li>Review 2: [“The”, “customer”, “service”, “was”, “excellent”, “,”, “but”, “the”, “price”, “is”, “too”, “high”, “.”]</li>
+</ul></li>
+<li><strong>Sentiment Analysis:</strong>
+<ul>
+<li>Rule-Based:
+<ul>
+<li>Review 1: “Positive: love; Negative: slow; Overall: Mixed/Neutral”</li>
+<li>Review 2: “Positive: excellent; Negative: high; Overall: Mixed/Neutral”</li>
+</ul></li>
+<li>Machine Learning:
+<ul>
+<li>Review 1: “Features: {‘love’: 1, ‘product’: 1, ‘quality’: 1, ‘shipping’: 1, ‘slow’: 1}; Sentiment: Mixed/Neutral”</li>
+<li>Review 2: “Features: {‘customer’: 1, ‘service’: 1, ‘excellent’: 1, ‘price’: 1, ‘high’: 1}; Sentiment: Mixed/Neutral”</li>
+</ul></li>
+<li>Lexicon-Based:
+<ul>
+<li>Review 1: “love: +3, slow: -2; Sentiment Score: +1; Overall: Positive”</li>
+<li>Review 2: “excellent: +2, high: -1; Sentiment Score: +1; Overall: Positive”</li>
+</ul></li>
+<li>Aspect-Based:
+<ul>
+<li>Review 1: “Aspect: product quality -&gt; Positive; Aspect: shipping -&gt; Negative”</li>
+<li>Review 2: “Aspect: customer service -&gt; Positive; Aspect: price -&gt; Negative”</li>
+</ul></li>
+</ul></li>
+</ol>
+<p>By applying different sentiment analysis techniques, we can accurately assess customer opinions and gain valuable insights into specific aspects of products or services, enabling more informed decision-making and strategy development.</p>
+</section>
+</section>
+<section id="topic-modeling" class="level2">
+<h2 class="anchored" data-anchor-id="topic-modeling">14.6. Topic Modeling</h2>
+<p>Topic modeling is a technique used to uncover the hidden thematic structure in a large corpus of text. It helps in discovering abstract topics that occur in a collection of documents, enabling better organization and understanding of the data.</p>
+<section id="latent-dirichlet-allocation-lda" class="level3">
+<h3 class="anchored" data-anchor-id="latent-dirichlet-allocation-lda">14.6.1. Latent Dirichlet Allocation (LDA)</h3>
+<p>Latent Dirichlet Allocation (LDA) is a generative probabilistic model that assumes each document is a mixture of a fixed number of topics and each word in the document is attributable to one of the document’s topics.</p>
+<section id="methodology-6" class="level4">
+<h4 class="anchored" data-anchor-id="methodology-6">Methodology</h4>
+<ol type="1">
+<li><strong>Assumptions:</strong>
+<ul>
+<li>Each document is represented as a mixture of topics.</li>
+<li>Each topic is a distribution over words.</li>
+</ul></li>
+<li><strong>Generative Process:</strong>
+<ul>
+<li><strong>Choose the number of topics</strong> <span class="math inline">\(K\)</span>.</li>
+<li>For each document <span class="math inline">\(d\)</span>:
+<ul>
+<li>Draw topic proportions <span class="math inline">\(\theta_d \sim \text{Dirichlet}(\alpha)\)</span>.</li>
+<li>For each word <span class="math inline">\(w\)</span> in document <span class="math inline">\(d\)</span>:
+<ul>
+<li>Choose a topic <span class="math inline">\(z_{dn} \sim \text{Multinomial}(\theta_d)\)</span>.</li>
+<li>Choose a word <span class="math inline">\(w_{dn}\)</span> from <span class="math inline">\(p(w_{dn} | z_{dn}, \beta)\)</span>, a multinomial probability conditioned on the topic <span class="math inline">\(z_{dn}\)</span>.</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><strong>Parameter Estimation:</strong>
+<ul>
+<li><strong>Dirichlet Parameters:</strong> <span class="math inline">\(\alpha\)</span> (document-topic distribution) and <span class="math inline">\(\beta\)</span> (topic-word distribution).</li>
+<li><strong>Inference Methods:</strong> Variational inference, Gibbs sampling, or Expectation-Maximization (EM).</li>
+</ul></li>
+</ol>
+</section>
+<section id="mathematical-formulation" class="level4">
+<h4 class="anchored" data-anchor-id="mathematical-formulation">Mathematical Formulation</h4>
+<ul>
+<li><p><strong>Dirichlet Distribution:</strong></p>
+<ul>
+<li>For topic distribution over documents: <span class="math inline">\(\theta_d \sim \text{Dir}(\alpha)\)</span></li>
+<li>For word distribution over topics: <span class="math inline">\(\phi_k \sim \text{Dir}(\beta)\)</span></li>
+</ul></li>
+<li><p><strong>Model:</strong> <span class="math display">\[
+p(\theta, \phi, z, w) = p(\theta) \prod_{k=1}^{K} p(\phi_k) \prod_{n=1}^{N} p(z_{dn} | \theta_d) p(w_{dn} | \phi_{z_{dn}})
+\]</span></p></li>
+<li><p><strong>Parameter Estimation:</strong> <span class="math display">\[
+\text{Maximize } \prod_{d=1}^{D} \int p(\theta_d | \alpha) \left( \prod_{n=1}^{N_d} \sum_{z_{dn}} p(z_{dn} | \theta_d) p(w_{dn} | z_{dn}, \beta) \right) d\theta_d
+\]</span></p></li>
+</ul>
+</section>
+<section id="example-14" class="level4">
+<h4 class="anchored" data-anchor-id="example-14">Example</h4>
+<ul>
+<li><strong>Corpus:</strong> Collection of news articles.</li>
+<li><strong>Topics Discovered:</strong> Politics, Sports, Technology, etc.</li>
+<li><strong>Document 1:</strong> “The government passed a new law on data privacy.”
+<ul>
+<li>Topics: [Politics: 70%, Technology: 30%]</li>
+</ul></li>
+<li><strong>Document 2:</strong> “The football match was exciting with a last-minute goal.”
+<ul>
+<li>Topics: [Sports: 90%, General News: 10%]</li>
+</ul></li>
+</ul>
+</section>
+<section id="advantages-and-disadvantages-7" class="level4">
+<h4 class="anchored" data-anchor-id="advantages-and-disadvantages-7">Advantages and Disadvantages</h4>
+<ul>
+<li><strong>Advantages:</strong>
+<ul>
+<li><strong>Interpretable Topics:</strong> Provides interpretable topics by associating words with topics.</li>
+<li><strong>Scalable:</strong> Can handle large datasets efficiently.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li><strong>Fixed Number of Topics:</strong> Requires the number of topics to be specified a priori.</li>
+<li><strong>Assumes Bag-of-Words:</strong> Loses word order information and context.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="non-negative-matrix-factorization-nmf" class="level3">
+<h3 class="anchored" data-anchor-id="non-negative-matrix-factorization-nmf">14.6.2. Non-negative Matrix Factorization (NMF)</h3>
+<p>Non-negative Matrix Factorization (NMF) is an algorithm that factorizes a non-negative matrix into two lower-rank non-negative matrices. In topic modeling, it is used to decompose a document-term matrix into a topic-term matrix and a document-topic matrix.</p>
+<section id="methodology-7" class="level4">
+<h4 class="anchored" data-anchor-id="methodology-7">Methodology</h4>
+<ol type="1">
+<li><strong>Matrix Factorization:</strong>
+<ul>
+<li>Given a document-term matrix <span class="math inline">\(V\)</span>, find non-negative matrices <span class="math inline">\(W\)</span> (topics) and <span class="math inline">\(H\)</span> (document-topic) such that <span class="math inline">\(V \approx WH\)</span>.</li>
+</ul></li>
+<li><strong>Optimization:</strong>
+<ul>
+<li>Minimize the reconstruction error: <span class="math inline">\(\|V - WH\|_F^2\)</span></li>
+</ul></li>
+</ol>
+</section>
+<section id="mathematical-formulation-1" class="level4">
+<h4 class="anchored" data-anchor-id="mathematical-formulation-1">Mathematical Formulation</h4>
+<ul>
+<li><strong>Objective Function:</strong> <span class="math display">\[
+\min_{W, H} \|V - WH\|_F^2
+\]</span>
+<ul>
+<li>Subject to: <span class="math inline">\(W \geq 0, H \geq 0\)</span></li>
+</ul></li>
+<li><strong>Update Rules:</strong>
+<ul>
+<li>Multiplicative update rules are used to iteratively update <span class="math inline">\(W\)</span> and <span class="math inline">\(H\)</span> to minimize the objective function. <span class="math display">\[
+W_{ik} \leftarrow W_{ik} \frac{(VH^T)_{ik}}{(WHH^T)_{ik}}
+\]</span> <span class="math display">\[
+H_{kj} \leftarrow H_{kj} \frac{(W^TV)_{kj}}{(W^TWH)_{kj}}
+\]</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="example-15" class="level4">
+<h4 class="anchored" data-anchor-id="example-15">Example</h4>
+<ul>
+<li><strong>Corpus:</strong> Collection of research papers.</li>
+<li><strong>Topics Discovered:</strong> Machine Learning, Data Mining, Artificial Intelligence, etc.</li>
+<li><strong>Document 1:</strong> “A new approach to machine learning using neural networks.”
+<ul>
+<li>Topics: [Machine Learning: 80%, Artificial Intelligence: 20%]</li>
+</ul></li>
+<li><strong>Document 2:</strong> “Data mining techniques for big data analysis.”
+<ul>
+<li>Topics: [Data Mining: 90%, Machine Learning: 10%]</li>
+</ul></li>
+</ul>
+</section>
+<section id="advantages-and-disadvantages-8" class="level4">
+<h4 class="anchored" data-anchor-id="advantages-and-disadvantages-8">Advantages and Disadvantages</h4>
+<ul>
+<li><strong>Advantages:</strong>
+<ul>
+<li><strong>Non-negativity:</strong> Produces non-negative matrices, making the results easier to interpret.</li>
+<li><strong>Sparse Representations:</strong> Can produce sparse representations, highlighting important features.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li><strong>Local Minima:</strong> May converge to local minima, leading to suboptimal solutions.</li>
+<li><strong>Scalability:</strong> May be less scalable than LDA for very large datasets.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="probabilistic-latent-semantic-analysis-plsa" class="level3">
+<h3 class="anchored" data-anchor-id="probabilistic-latent-semantic-analysis-plsa">14.6.3. Probabilistic Latent Semantic Analysis (pLSA)</h3>
+<p>Probabilistic Latent Semantic Analysis (pLSA) is a statistical technique that models the presence of topics in documents as a latent variable. It extends Latent Semantic Analysis (LSA) by using a probabilistic model.</p>
+<section id="methodology-8" class="level4">
+<h4 class="anchored" data-anchor-id="methodology-8">Methodology</h4>
+<ol type="1">
+<li><strong>Assumptions:</strong>
+<ul>
+<li>Each word in a document is generated from a latent topic.</li>
+<li>Each document is represented as a mixture of topics.</li>
+</ul></li>
+<li><strong>Process:</strong>
+<ul>
+<li><strong>E-Step:</strong> Estimate the probability distribution of topics for each word in each document.</li>
+<li><strong>M-Step:</strong> Maximize the likelihood of the model parameters given the estimated topic distributions.</li>
+</ul></li>
+</ol>
+</section>
+<section id="mathematical-formulation-2" class="level4">
+<h4 class="anchored" data-anchor-id="mathematical-formulation-2">Mathematical Formulation</h4>
+<ul>
+<li><strong>Joint Probability:</strong> <span class="math display">\[
+p(d, w) = \sum_{z} p(z) p(d|z) p(w|z)
+\]</span>
+<ul>
+<li>Here, <span class="math inline">\(p(z)\)</span> is the topic distribution, <span class="math inline">\(p(d|z)\)</span> is the document distribution for a topic, and <span class="math inline">\(p(w|z)\)</span> is the word distribution for a topic.</li>
+</ul></li>
+<li><strong>EM Algorithm:</strong>
+<ul>
+<li><strong>E-Step:</strong> Calculate the posterior probabilities. <span class="math display">\[
+p(z|d, w) = \frac{p(z)p(w|z)p(d|z)}{\sum_{z'} p(z')p(w|z')p(d|z')}
+\]</span></li>
+<li><strong>M-Step:</strong> Maximize the expected complete data log-likelihood. <span class="math display">\[
+\text{Maximize} \sum_{d,w} n(d,w) \sum_{z} p(z|d,w) \log [p(z)p(d|z)p(w|z)]
+\]</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="example-16" class="level4">
+<h4 class="anchored" data-anchor-id="example-16">Example</h4>
+<ul>
+<li><strong>Corpus:</strong> Collection of blog posts.</li>
+<li><strong>Topics Discovered:</strong> Travel, Food, Technology, etc.</li>
+<li><strong>Document 1:</strong> “Exploring the beautiful landscapes of Switzerland.”
+<ul>
+<li>Topics: [Travel: 85%, General: 15%]</li>
+</ul></li>
+<li><strong>Document 2:</strong> “Delicious recipes for homemade pasta.”
+<ul>
+<li>Topics: [Food: 95%, General: 5%]</li>
+</ul></li>
+</ul>
+</section>
+<section id="advantages-and-disadvantages-9" class="level4">
+<h4 class="anchored" data-anchor-id="advantages-and-disadvantages-9">Advantages and Disadvantages</h4>
+<ul>
+<li><strong>Advantages:</strong>
+<ul>
+<li><strong>Probabilistic Framework:</strong> Provides a probabilistic framework, allowing for uncertainty estimation.</li>
+<li><strong>Flexibility:</strong> Can model complex distributions of topics.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li><strong>Overfitting:</strong> More prone to overfitting due to the large number of parameters.</li>
+<li><strong>Complexity:</strong> Requires more computational resources compared to simpler methods.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="example-comprehensive-topic-modeling-pipeline" class="level3">
+<h3 class="anchored" data-anchor-id="example-comprehensive-topic-modeling-pipeline">Example: Comprehensive Topic Modeling Pipeline</h3>
+<p>Suppose we have a dataset of movie reviews, and we want to identify the main topics discussed in the reviews.</p>
+<ul>
+<li><strong>Dataset:</strong>
+<ul>
+<li>Review 1: “The acting in this movie was fantastic, but the plot was predictable.”</li>
+<li>Review 2: “Great visual effects and stunning cinematography.”</li>
+</ul></li>
+<li><strong>Preprocessing Steps:</strong></li>
+</ul>
+<ol type="1">
+<li><p><strong>Tokenization:</strong></p>
+<ul>
+<li>Review 1: [“The”, “acting”, “in”, “this”, “movie”, “was”, “fantastic”, “but”, “the”, “plot”, “was”, “predictable”]</li>
+<li>Review 2: [“Great”, “visual”, “effects”, “and”, “stunning”, “cinematography”]</li>
+</ul></li>
+<li><p><strong>Stop Word Removal and Lemmatization:</strong></p>
+<ul>
+<li>Review 1: [“acting”, “movie”, “fantastic”, “plot”, “predictable”]</li>
+<li>Review 2: [“great”, “visual”, “effects”, “stunning”, “cinematography”]</li>
+</ul></li>
+<li><p><strong>Topic Modeling:</strong></p>
+<ul>
+<li><strong>LDA:</strong>
+<ul>
+<li><strong>Topic 1 (Acting):</strong> acting, performance, actor, role</li>
+<li><strong>Topic 2 (Plot):</strong> plot, story, predictable, twist</li>
+<li><strong>Topic 3 (Visual Effects):</strong> visual, effects, cinematography, stunning</li>
+<li><strong>Document 1 Topics:</strong> [Acting: 50%, Plot: 50%]</li>
+<li><strong>Document 2 Topics:</strong> [Visual Effects: 100%]</li>
+</ul></li>
+<li><strong>NMF:</strong>
+<ul>
+<li><strong>Topic 1 (Acting):</strong> acting, performance, actor, role</li>
+<li><strong>Topic 2 (Plot):</strong> plot, story, predictable, twist</li>
+<li><strong>Topic 3 (Visual Effects):</strong> visual, effects, cinematography, stunning</li>
+<li><strong>Document 1 Topics:</strong> [Acting: 0.5, Plot: 0.5]</li>
+<li><strong>Document 2 Topics:</strong> [Visual Effects: 1.0]</li>
+</ul></li>
+<li><strong>pLSA:</strong>
+<ul>
+<li><strong>Topic 1 (Acting):</strong> acting, performance, actor, role</li>
+<li><strong>Topic 2 (Plot):</strong> plot, story, predictable, twist</li>
+<li><strong>Topic 3 (Visual Effects):</strong> visual, effects, cinematography, stunning</li>
+<li><strong>Document 1 Topics:</strong> [Acting: 45%, Plot: 35%, Visual Effects: 20%]</li>
+<li><strong>Document 2 Topics:</strong> [Visual Effects: 100%]</li>
+</ul></li>
+</ul></li>
+</ol>
+<p>By applying different topic modeling techniques, we can uncover the main themes and topics present in a collection of text documents, facilitating better organization, summarization, and understanding of the data.</p>
+</section>
+</section>
+<section id="word-embeddings" class="level2">
+<h2 class="anchored" data-anchor-id="word-embeddings">14.7. Word Embeddings</h2>
+<p>Word embeddings are dense vector representations of words that capture their meanings, semantic relationships, and syntactic properties. Unlike one-hot encoding, which represents words as sparse vectors, word embeddings represent words in continuous vector space, allowing words with similar meanings to be closer together. This section explores several popular word embedding techniques: Word2Vec, GloVe, FastText, and ELMo.</p>
+<section id="word2vec" class="level3">
+<h3 class="anchored" data-anchor-id="word2vec">14.7.1. Word2Vec</h3>
+<p>Word2Vec is a widely used word embedding technique developed by Mikolov et al.&nbsp;at Google. It uses neural networks to learn vector representations of words from large corpora. Word2Vec has two main architectures: Continuous Bag of Words (CBOW) and Skip-gram.</p>
+<section id="cbow-architecture" class="level4">
+<h4 class="anchored" data-anchor-id="cbow-architecture">14.7.1.1. CBOW Architecture</h4>
+<p>The Continuous Bag of Words (CBOW) model predicts a target word based on its context (surrounding words). It aims to maximize the probability of the target word given the context.</p>
+<ul>
+<li><p><strong>Objective Function:</strong> <span class="math display">\[
+\text{maximize} \ \frac{1}{T} \sum_{t=1}^{T} \log p(w_t | w_{t-m}, \ldots, w_{t-1}, w_{t+1}, \ldots, w_{t+m})
+\]</span></p>
+<p>where <span class="math inline">\(w_t\)</span> is the target word, and <span class="math inline">\(w_{t-m}, \ldots, w_{t-1}, w_{t+1}, \ldots, w_{t+m}\)</span> are the context words within a window size of <span class="math inline">\(m\)</span>.</p></li>
+<li><p><strong>Architecture:</strong></p>
+<ul>
+<li><strong>Input Layer:</strong> Context words</li>
+<li><strong>Projection Layer:</strong> Maps input words to their embeddings</li>
+<li><strong>Output Layer:</strong> Softmax layer to predict the target word</li>
+</ul></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li><strong>Efficiency:</strong> Faster to train than the Skip-gram model.</li>
+<li><strong>Performance:</strong> Works well with large datasets.</li>
+</ul></li>
+</ul>
+</section>
+<section id="skip-gram-architecture" class="level4">
+<h4 class="anchored" data-anchor-id="skip-gram-architecture">14.7.1.2. Skip-gram Architecture</h4>
+<p>The Skip-gram model predicts the context words given a target word. It aims to maximize the probability of the context words given the target word.</p>
+<ul>
+<li><p><strong>Objective Function:</strong> <span class="math display">\[
+\text{maximize} \ \frac{1}{T} \sum_{t=1}^{T} \sum_{-m \leq j \leq m, j \neq 0} \log p(w_{t+j} | w_t)
+\]</span></p>
+<p>where <span class="math inline">\(w_t\)</span> is the target word, and <span class="math inline">\(w_{t+j}\)</span> are the context words within a window size of <span class="math inline">\(m\)</span>.</p></li>
+<li><p><strong>Architecture:</strong></p>
+<ul>
+<li><strong>Input Layer:</strong> Target word</li>
+<li><strong>Projection Layer:</strong> Maps the target word to its embedding</li>
+<li><strong>Output Layer:</strong> Softmax layer to predict the context words</li>
+</ul></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li><strong>Flexibility:</strong> Performs well on smaller datasets.</li>
+<li><strong>Captures Rare Words:</strong> More effective at capturing rare words compared to CBOW.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="glove" class="level3">
+<h3 class="anchored" data-anchor-id="glove">14.7.2. GloVe</h3>
+<p>GloVe (Global Vectors for Word Representation) is a word embedding technique developed by researchers at Stanford. It combines the benefits of global matrix factorization and local context window methods.</p>
+<ul>
+<li><p><strong>Objective:</strong> GloVe aims to capture the statistical information of a corpus by constructing a co-occurrence matrix <span class="math inline">\(X\)</span> where <span class="math inline">\(X_{ij}\)</span> indicates how often word <span class="math inline">\(i\)</span> appears in the context of word <span class="math inline">\(j\)</span>.</p></li>
+<li><p><strong>Objective Function:</strong> <span class="math display">\[
+J = \sum_{i,j=1}^{V} f(X_{ij}) \left( w_i^T \tilde{w}_j + b_i + \tilde{b}_j - \log X_{ij} \right)^2
+\]</span></p>
+<p>where <span class="math inline">\(w_i\)</span> and <span class="math inline">\(\tilde{w}_j\)</span> are the word vectors, <span class="math inline">\(b_i\)</span> and <span class="math inline">\(\tilde{b}_j\)</span> are the biases, and <span class="math inline">\(f(X_{ij})\)</span> is a weighting function.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li><strong>Global Context:</strong> Utilizes global co-occurrence statistics of the corpus.</li>
+<li><strong>Performance:</strong> Produces high-quality word vectors.</li>
+</ul></li>
+</ul>
+</section>
+<section id="fasttext" class="level3">
+<h3 class="anchored" data-anchor-id="fasttext">14.7.3. FastText</h3>
+<p>FastText, developed by Facebook’s AI Research (FAIR) lab, extends Word2Vec by representing each word as a bag of character n-grams. This allows it to generate embeddings for out-of-vocabulary words and capture subword information.</p>
+<ul>
+<li><p><strong>Methodology:</strong></p>
+<ul>
+<li><strong>Subword Representation:</strong> Each word is represented as a collection of character n-grams.</li>
+<li><strong>Training:</strong> Similar to Word2Vec, but embeddings are learned for n-grams instead of whole words.</li>
+</ul></li>
+<li><p><strong>Objective Function (Skip-gram with Negative Sampling):</strong> <span class="math display">\[
+\log \sigma(w_c \cdot v_w) + \sum_{i=1}^{k} \mathbb{E}_{w_i \sim P_n(w)} [\log \sigma(-w_i \cdot v_w)]
+\]</span></p>
+<p>where <span class="math inline">\(w_c\)</span> is the context word vector, <span class="math inline">\(v_w\)</span> is the target word vector, <span class="math inline">\(\sigma\)</span> is the sigmoid function, and <span class="math inline">\(P_n(w)\)</span> is the noise distribution.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li><strong>Handles Rare Words:</strong> Effective for morphologically rich languages.</li>
+<li><strong>Efficient:</strong> Fast training and inference.</li>
+</ul></li>
+</ul>
+</section>
+<section id="elmo-embeddings-from-language-models" class="level3">
+<h3 class="anchored" data-anchor-id="elmo-embeddings-from-language-models">14.7.4. ELMo (Embeddings from Language Models)</h3>
+<p>ELMo is a deep contextualized word representation that models both the syntactic and semantic aspects of words in their context. Developed by the Allen Institute for AI, ELMo generates word embeddings using a bidirectional LSTM trained on a large text corpus.</p>
+<ul>
+<li><p><strong>Methodology:</strong></p>
+<ul>
+<li><strong>Bidirectional Language Model (BiLM):</strong> Uses two LSTMs, one processing the text from left to right and the other from right to left.</li>
+<li><strong>Contextualized Embeddings:</strong> Combines the hidden states from both LSTMs to create word embeddings.</li>
+</ul></li>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\text{ELMo}_k = \gamma \sum_{j=0}^{L} s_j h_{j,k}
+\]</span></p>
+<p>where <span class="math inline">\(h_{j,k}\)</span> is the hidden state of the <span class="math inline">\(j^{th}\)</span> layer for the <span class="math inline">\(k^{th}\)</span> word, <span class="math inline">\(s_j\)</span> are the softmax-normalized weights, and <span class="math inline">\(\gamma\)</span> is a scaling parameter.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li><strong>Contextualized Representations:</strong> Generates different embeddings for the same word based on its context.</li>
+<li><strong>Performance:</strong> Achieves state-of-the-art results on various NLP tasks.</li>
+</ul></li>
+</ul>
+</section>
+<section id="example-using-word-embeddings-in-nlp" class="level3">
+<h3 class="anchored" data-anchor-id="example-using-word-embeddings-in-nlp">Example: Using Word Embeddings in NLP</h3>
+<p>Suppose we have a dataset of sentences, and we want to generate word embeddings for further NLP tasks.</p>
+<ul>
+<li><strong>Dataset:</strong>
+<ul>
+<li>Sentence 1: “The cat sat on the mat.”</li>
+<li>Sentence 2: “The dog chased the cat.”</li>
+</ul></li>
+<li><strong>Preprocessing Steps:</strong>
+<ol type="1">
+<li><strong>Tokenization:</strong>
+<ul>
+<li>Sentence 1: [“The”, “cat”, “sat”, “on”, “the”, “mat”]</li>
+<li>Sentence 2: [“The”, “dog”, “chased”, “the”, “cat”]</li>
+</ul></li>
+</ol></li>
+</ul>
+<ol start="2" type="1">
+<li><strong>Word Embedding Generation:</strong>
+<ul>
+<li><strong>Word2Vec (Skip-gram):</strong>
+<ul>
+<li>“The”: [0.21, -0.34, 0.19, …]</li>
+<li>“cat”: [-0.47, 0.56, -0.12, …]</li>
+</ul></li>
+<li><strong>GloVe:</strong>
+<ul>
+<li>“The”: [0.18, -0.29, 0.17, …]</li>
+<li>“cat”: [-0.39, 0.47, -0.14, …]</li>
+</ul></li>
+<li><strong>FastText:</strong>
+<ul>
+<li>“The”: [0.22, -0.36, 0.21, …]</li>
+<li>“cat”: [-0.44, 0.54, -0.13, …]</li>
+</ul></li>
+<li><strong>ELMo:</strong>
+<ul>
+<li>“The”: [0.35, -0.28, 0.25, …]</li>
+<li>“cat”: [-0.32, 0.58, -0.17, …]</li>
+</ul></li>
+</ul></li>
+</ol>
+<p>By applying different word embedding techniques, we can generate high-quality vector representations of words that capture their meanings, enabling more effective and accurate NLP models.</p>
+</section>
+</section>
+<section id="text-classification" class="level2">
+<h2 class="anchored" data-anchor-id="text-classification">14.8. Text Classification</h2>
+<p>Text classification is the process of assigning predefined categories to text documents. It is a fundamental task in NLP with applications in spam detection, sentiment analysis, topic labeling, and more. Various machine learning algorithms can be used for text classification, including Naive Bayes, Support Vector Machines (SVM), and deep learning approaches.</p>
+<section id="naive-bayes-for-text-classification" class="level3">
+<h3 class="anchored" data-anchor-id="naive-bayes-for-text-classification">14.8.1. Naive Bayes for Text Classification</h3>
+<p>Naive Bayes is a probabilistic classifier based on Bayes’ theorem. It assumes that the features (words) are conditionally independent given the class label. Despite this strong independence assumption, Naive Bayes often performs well for text classification tasks.</p>
+<section id="methodology-9" class="level4">
+<h4 class="anchored" data-anchor-id="methodology-9">Methodology</h4>
+<ol type="1">
+<li><p><strong>Bayes’ Theorem:</strong> <span class="math display">\[
+P(C_k | \mathbf{x}) = \frac{P(C_k) P(\mathbf{x} | C_k)}{P(\mathbf{x})}
+\]</span> where <span class="math inline">\(P(C_k | \mathbf{x})\)</span> is the posterior probability of class <span class="math inline">\(C_k\)</span> given the feature vector <span class="math inline">\(\mathbf{x}\)</span>, <span class="math inline">\(P(C_k)\)</span> is the prior probability of class <span class="math inline">\(C_k\)</span>, and <span class="math inline">\(P(\mathbf{x} | C_k)\)</span> is the likelihood of the features given the class.</p></li>
+<li><p><strong>Multinomial Naive Bayes:</strong></p>
+<ul>
+<li>Suitable for text classification with word counts as features. <span class="math display">\[
+P(\mathbf{x} | C_k) = \prod_{i=1}^{n} P(x_i | C_k)^{x_i}
+\]</span></li>
+</ul></li>
+<li><p><strong>Training:</strong></p>
+<ul>
+<li>Estimate <span class="math inline">\(P(C_k)\)</span> as the proportion of documents in class <span class="math inline">\(C_k\)</span>.</li>
+<li>Estimate <span class="math inline">\(P(x_i | C_k)\)</span> as the relative frequency of word <span class="math inline">\(x_i\)</span> in class <span class="math inline">\(C_k\)</span>.</li>
+</ul></li>
+</ol>
+</section>
+<section id="example-17" class="level4">
+<h4 class="anchored" data-anchor-id="example-17">Example</h4>
+<ul>
+<li><strong>Dataset:</strong> Movie reviews labeled as positive or negative.</li>
+<li><strong>Training:</strong>
+<ul>
+<li>Positive reviews: “Great movie with fantastic performances.”</li>
+<li>Negative reviews: “Terrible plot and poor acting.”</li>
+</ul></li>
+<li><strong>Model:</strong>
+<ul>
+<li><span class="math inline">\(P(\text{positive}) = 0.5\)</span>, <span class="math inline">\(P(\text{negative}) = 0.5\)</span></li>
+<li><span class="math inline">\(P(\text{great} | \text{positive}) = 0.1\)</span>, <span class="math inline">\(P(\text{great} | \text{negative}) = 0.01\)</span></li>
+</ul></li>
+<li><strong>Prediction:</strong>
+<ul>
+<li>Review: “Great performances.”</li>
+<li><span class="math inline">\(P(\text{positive} | \text{Great performances}) \propto P(\text{positive}) \times P(\text{Great} | \text{positive}) \times P(\text{performances} | \text{positive})\)</span></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="svm-for-text-classification" class="level3">
+<h3 class="anchored" data-anchor-id="svm-for-text-classification">14.8.2. SVM for Text Classification</h3>
+<p>Support Vector Machines (SVM) are powerful classifiers that work well for high-dimensional text data. SVMs find the hyperplane that maximizes the margin between classes in the feature space.</p>
+<section id="methodology-10" class="level4">
+<h4 class="anchored" data-anchor-id="methodology-10">Methodology</h4>
+<ol type="1">
+<li><strong>Objective:</strong>
+<ul>
+<li>Maximize the margin between the support vectors of the classes. <span class="math display">\[
+\min_{\mathbf{w}, b} \frac{1}{2} \|\mathbf{w}\|^2 \quad \text{subject to} \quad y_i (\mathbf{w} \cdot \mathbf{x}_i + b) \geq 1
+\]</span></li>
+</ul></li>
+<li><strong>Kernel Trick:</strong>
+<ul>
+<li>Allows SVM to operate in a high-dimensional space using kernel functions (e.g., linear, polynomial, RBF).</li>
+</ul></li>
+<li><strong>Training:</strong>
+<ul>
+<li>Use labeled text data to train the SVM model by finding the optimal hyperplane.</li>
+</ul></li>
+</ol>
+</section>
+<section id="example-18" class="level4">
+<h4 class="anchored" data-anchor-id="example-18">Example</h4>
+<ul>
+<li><strong>Dataset:</strong> Emails labeled as spam or not spam.</li>
+<li><strong>Features:</strong> TF-IDF vectors of the emails.</li>
+<li><strong>Model:</strong>
+<ul>
+<li>Train a linear SVM on the feature vectors.</li>
+</ul></li>
+<li><strong>Prediction:</strong>
+<ul>
+<li>Email: “Congratulations, you have won a prize!”</li>
+<li>Feature vector: [0.1, 0.2, 0.0, 0.05, …]</li>
+<li>Predict the label using the trained SVM.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="deep-learning-approaches" class="level3">
+<h3 class="anchored" data-anchor-id="deep-learning-approaches">14.8.3. Deep Learning Approaches</h3>
+<p>Deep learning approaches, particularly neural networks, have shown significant success in text classification tasks. These models can capture complex patterns and relationships in text data.</p>
+<section id="convolutional-neural-networks-cnns" class="level4">
+<h4 class="anchored" data-anchor-id="convolutional-neural-networks-cnns">Convolutional Neural Networks (CNNs)</h4>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li>Embedding layer to convert words into dense vectors.</li>
+<li>Convolutional layers to capture local features.</li>
+<li>Pooling layers to reduce dimensionality.</li>
+<li>Fully connected layers for classification.</li>
+</ul></li>
+<li><strong>Example:</strong>
+<ul>
+<li>Sentence: “This movie was fantastic with great acting.”</li>
+<li>Embedding layer: Converts words to vectors.</li>
+<li>Convolutional layers: Extract n-gram features.</li>
+<li>Fully connected layers: Classify the sentence as positive.</li>
+</ul></li>
+</ul>
+</section>
+<section id="recurrent-neural-networks-rnns-2" class="level4">
+<h4 class="anchored" data-anchor-id="recurrent-neural-networks-rnns-2">Recurrent Neural Networks (RNNs)</h4>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li>Embedding layer to convert words into dense vectors.</li>
+<li>Recurrent layers (e.g., LSTM, GRU) to capture sequential dependencies.</li>
+<li>Fully connected layers for classification.</li>
+</ul></li>
+<li><strong>Example:</strong>
+<ul>
+<li>Sentence: “The plot was intriguing but the ending was disappointing.”</li>
+<li>Embedding layer: Converts words to vectors.</li>
+<li>LSTM layers: Capture context and dependencies.</li>
+<li>Fully connected layers: Classify the sentence as mixed/neutral.</li>
+</ul></li>
+</ul>
+</section>
+<section id="transformer-models" class="level4">
+<h4 class="anchored" data-anchor-id="transformer-models">Transformer Models</h4>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li>Embedding layer to convert words into dense vectors.</li>
+<li>Transformer layers with self-attention mechanisms to capture relationships between words.</li>
+<li>Fully connected layers for classification.</li>
+</ul></li>
+<li><strong>Example:</strong>
+<ul>
+<li>Sentence: “The product quality is excellent and delivery was quick.”</li>
+<li>Embedding layer: Converts words to vectors.</li>
+<li>Transformer layers: Capture word dependencies and context.</li>
+<li>Fully connected layers: Classify the sentence as positive.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="language-models" class="level3">
+<h3 class="anchored" data-anchor-id="language-models">14.9. Language Models</h3>
+<p>Language models are used to predict the probability of a sequence of words. They are fundamental for various NLP tasks, such as text generation, machine translation, and speech recognition.</p>
+</section>
+<section id="n-gram-models" class="level3">
+<h3 class="anchored" data-anchor-id="n-gram-models">14.9.1. N-gram Models</h3>
+<p>N-gram models are statistical language models that predict the next word in a sequence based on the previous <span class="math inline">\(n-1\)</span> words.</p>
+<section id="methodology-11" class="level4">
+<h4 class="anchored" data-anchor-id="methodology-11">Methodology</h4>
+<ol type="1">
+<li><strong>N-gram Definition:</strong>
+<ul>
+<li>An n-gram is a contiguous sequence of <span class="math inline">\(n\)</span> items from a given text.</li>
+<li>Examples: Unigram (1-gram), Bigram (2-gram), Trigram (3-gram).</li>
+</ul></li>
+<li><strong>Probability Estimation:</strong>
+<ul>
+<li>Calculate the probability of a word given the previous <span class="math inline">\(n-1\)</span> words. <span class="math display">\[
+P(w_i | w_{i-1}, w_{i-2}, ..., w_{i-n+1}) = \frac{\text{Count}(w_{i-n+1}, ..., w_{i-1}, w_i)}{\text{Count}(w_{i-n+1}, ..., w_{i-1})}
+\]</span></li>
+</ul></li>
+<li><strong>Smoothing Techniques:</strong>
+<ul>
+<li>Add-One (Laplace) Smoothing</li>
+<li>Good-Turing Smoothing</li>
+<li>Kneser-Ney Smoothing</li>
+</ul></li>
+</ol>
+</section>
+<section id="example-19" class="level4">
+<h4 class="anchored" data-anchor-id="example-19">Example</h4>
+<ul>
+<li><strong>Corpus:</strong> “I love natural language processing.”</li>
+<li><strong>Bigrams:</strong>
+<ul>
+<li>“I love”, “love natural”, “natural language”, “language processing”</li>
+</ul></li>
+<li><strong>Probability Calculation:</strong>
+<ul>
+<li><span class="math inline">\(P(\text{processing} | \text{language}) = \frac{\text{Count}(\text{language processing})}{\text{Count}(\text{language})}\)</span></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="neural-language-models" class="level3">
+<h3 class="anchored" data-anchor-id="neural-language-models">14.9.2. Neural Language Models</h3>
+<p>Neural language models use neural networks to predict the probability of the next word in a sequence. They can capture complex patterns and dependencies in text data.</p>
+<section id="recurrent-neural-networks-rnns-3" class="level4">
+<h4 class="anchored" data-anchor-id="recurrent-neural-networks-rnns-3">Recurrent Neural Networks (RNNs)</h4>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li>Embedding layer to convert words into dense vectors.</li>
+<li>Recurrent layers (e.g., LSTM, GRU) to process the sequence.</li>
+<li>Softmax layer to output the probability distribution of the next word.</li>
+</ul></li>
+<li><strong>Example:</strong>
+<ul>
+<li>Sentence: “I love natural language processing because it is”</li>
+<li>Predict the next word: “interesting”</li>
+</ul></li>
+</ul>
+</section>
+<section id="transformer-models-1" class="level4">
+<h4 class="anchored" data-anchor-id="transformer-models-1">Transformer Models</h4>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li>Embedding layer to convert words into dense vectors.</li>
+<li>Transformer layers with self-attention mechanisms to capture relationships between words.</li>
+<li>Softmax layer to output the probability distribution of the next word.</li>
+</ul></li>
+<li><strong>Example:</strong>
+<ul>
+<li>Sentence: “Transformers have revolutionized the field of”</li>
+<li>Predict the next word: “NLP”</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="example-using-language-models-in-nlp" class="level3">
+<h3 class="anchored" data-anchor-id="example-using-language-models-in-nlp">Example: Using Language Models in NLP</h3>
+<p>Suppose we have a text corpus, and we want to build a language model to generate text.</p>
+<ul>
+<li><strong>Corpus:</strong>
+<ul>
+<li>“Deep learning has transformed natural language processing.”</li>
+</ul></li>
+<li><strong>N-gram Model:</strong>
+<ul>
+<li>Trigrams: “Deep learning has”, “learning has transformed”, “has transformed natural”, “transformed natural language”, “natural language processing”</li>
+<li>Probability: <span class="math inline">\(P(\text{processing} | \text{natural language}) = \frac{\text{Count}(\text{natural language processing})}{\text{Count}(\text{natural language})}\)</span></li>
+</ul></li>
+<li><strong>Neural Language Model:</strong>
+<ul>
+<li>Sentence: “Deep learning has”</li>
+<li>Embedding layer: Converts words to vectors.</li>
+<li>LSTM layers: Process the sequence.</li>
+<li>Softmax layer: Predict the next word: “transformed”</li>
+</ul></li>
+</ul>
+<p>By applying various text classification and language modeling techniques, we can enhance the understanding, generation, and manipulation of text data, leading to more effective and accurate NLP applications.</p>
+</section>
+</section>
+</section>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

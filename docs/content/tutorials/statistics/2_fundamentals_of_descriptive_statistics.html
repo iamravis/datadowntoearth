@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>fundamentals_of_descriptive_statistics – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="chapter-2-fundamentals-of-descriptive-statistics" class="level1 text-content">
+<h1>Chapter 2: Fundamentals Of Descriptive Statistics</h1>
+<section id="measures-of-central-tendency" class="level2">
+<h2 class="anchored" data-anchor-id="measures-of-central-tendency">Measures of Central Tendency</h2>
+<section id="mean" class="level3">
+<h3 class="anchored" data-anchor-id="mean">Mean</h3>
+<section id="arithmetic-mean" class="level4">
+<h4 class="anchored" data-anchor-id="arithmetic-mean">Arithmetic Mean</h4>
+<p><strong>Definition</strong>: The arithmetic mean is the sum of values divided by the number of values.</p>
+<p><strong>Formula</strong>: <span class="math display">\[
+\bar{x} = \frac{\sum x_i}{n}
+\]</span></p>
+<p><strong>Properties</strong>: 1. Sensitive to extreme values (outliers). 2. Represents the central location of a data set.</p>
+<p><strong>Example</strong>: For a data set {2, 3, 5, 7}, Arithmetic Mean = (2+3+5+7)/4 = 4.25</p>
+</section>
+<section id="geometric-mean" class="level4">
+<h4 class="anchored" data-anchor-id="geometric-mean">Geometric Mean</h4>
+<p><strong>Definition</strong>: The geometric mean is the nth root of the product of n values.</p>
+<p><strong>Formula</strong>: <span class="math display">\[
+G = \left( \prod x_i \right)^{1/n}
+\]</span></p>
+<p><strong>Properties</strong>: 1. Less affected by extreme values. 2. Useful for data sets with values of different ranges.</p>
+<p><strong>Example</strong>: For a data set {1, 3, 9, 27}, Geometric Mean = (1<em>3</em>9*27)^(1/4) = 3</p>
+</section>
+<section id="harmonic-mean" class="level4">
+<h4 class="anchored" data-anchor-id="harmonic-mean">Harmonic Mean</h4>
+<p><strong>Definition</strong>: The harmonic mean is the reciprocal of the average of the reciprocals of the values.</p>
+<p><strong>Formula</strong>: <span class="math display">\[
+H = \frac{n}{\sum \frac{1}{x_i}}
+\]</span></p>
+<p><strong>Properties</strong>: 1. Strongly affected by the smallest values. 2. Appropriate for rates and ratios.</p>
+<p><strong>Example</strong>: For a data set {1, 2, 4}, Harmonic Mean = 3 / (1/1 + 1/2 + 1/4) = 1.714</p>
+</section>
+</section>
+<section id="median" class="level3">
+<h3 class="anchored" data-anchor-id="median">Median</h3>
+<p><strong>Definition</strong>: The median is the middle value when data is ordered.</p>
+<p><strong>Properties</strong>: 1. Not affected by extreme values. 2. Divides the data set into two equal parts.</p>
+<p><strong>Calculation for Even and Odd Number of Observations</strong>: 1. For odd (n): Median = value at position ((n+1)/2). 2. For even (n): Median = average of values at positions (n/2) and ((n/2)+1).</p>
+<p><strong>Example</strong>: For a data set {3, 1, 4, 2, 5}, Median = 3 (ordered: {1, 2, 3, 4, 5})</p>
+</section>
+<section id="mode" class="level3">
+<h3 class="anchored" data-anchor-id="mode">Mode</h3>
+<p><strong>Definition</strong>: The mode is the most frequently occurring value in the data set.</p>
+<p><strong>Properties</strong>: 1. Can be used with nominal data. 2. A data set can have more than one mode (bimodal, multimodal).</p>
+<p><strong>Example</strong>: For a data set {1, 2, 2, 3, 4}, Mode = 2</p>
+</section>
+</section>
+<section id="measures-of-dispersion" class="level2">
+<h2 class="anchored" data-anchor-id="measures-of-dispersion">Measures of Dispersion</h2>
+<section id="variance" class="level3">
+<h3 class="anchored" data-anchor-id="variance">Variance</h3>
+<p><strong>Definition</strong>: Variance is the average of the squared differences from the mean.</p>
+<p><strong>Formula</strong>: <span class="math display">\[
+\sigma^2 = \frac{\sum (x_i - \bar{x})^2}{n}
+\]</span></p>
+<p><strong>Properties</strong>: 1. Indicates how data points are spread around the mean. 2. Larger values indicate greater variability.</p>
+<p><strong>Population vs Sample Variance</strong>: 1. Population Variance ((^2)) uses (n) in the denominator. 2. Sample Variance ((s^2)) uses (n-1) in the denominator to correct bias.</p>
+<p><strong>Example</strong>: For a data set {2, 4, 4, 4, 5, 5, 7, 9}, Variance = 4</p>
+</section>
+<section id="standard-deviation" class="level3">
+<h3 class="anchored" data-anchor-id="standard-deviation">Standard Deviation</h3>
+<p><strong>Definition</strong>: The standard deviation is the square root of the variance.</p>
+<p><strong>Formula</strong>: <span class="math display">\[
+\sigma = \sqrt{\text{Variance}}
+\]</span></p>
+<p><strong>Properties</strong>: 1. Provides a measure of dispersion in the same units as the data. 2. Useful for comparing variability between different data sets.</p>
+<p><strong>Example</strong>: For a data set {2, 4, 4, 4, 5, 5, 7, 9}, Standard Deviation = 2</p>
+</section>
+<section id="range" class="level3">
+<h3 class="anchored" data-anchor-id="range">Range</h3>
+<p><strong>Definition</strong>: The range is the difference between the maximum and minimum values.</p>
+<p><strong>Formula</strong>: <span class="math display">\[
+\text{Range} = \text{Max} - \text{Min}
+\]</span></p>
+<p><strong>Properties</strong>: 1. Simple measure of dispersion. 2. Highly sensitive to outliers.</p>
+<p><strong>Example</strong>: For a data set {2, 3, 5, 7}, Range = 7 - 2 = 5</p>
+</section>
+<section id="interquartile-range-iqr" class="level3">
+<h3 class="anchored" data-anchor-id="interquartile-range-iqr">Interquartile Range (IQR)</h3>
+<p><strong>Definition</strong>: The interquartile range is the difference between the 75th and 25th percentiles.</p>
+<p><strong>Formula</strong>: <span class="math display">\[
+\text{IQR} = Q3 - Q1
+\]</span></p>
+<p><strong>Properties</strong>: 1. Measures the spread of the middle 50% of data. 2. Less affected by outliers.</p>
+<p><strong>Example</strong>: For a data set {1, 2, 3, 4, 5, 6, 7, 8, 9}, IQR = 7 - 3 = 4</p>
+</section>
+<section id="coefficient-of-variation-cv" class="level3">
+<h3 class="anchored" data-anchor-id="coefficient-of-variation-cv">Coefficient of Variation (CV)</h3>
+<p><strong>Definition</strong>: The coefficient of variation is the standard deviation divided by the mean.</p>
+<p><strong>Formula</strong>: <span class="math display">\[
+\text{CV} = \left(\frac{\sigma}{\bar{x}}\right) \times 100\%
+\]</span></p>
+<p><strong>Properties</strong>: 1. Dimensionless measure of relative variability. 2. Useful for comparing variability between data sets with different units.</p>
+<p><strong>Example</strong>: For a data set {2, 4, 4, 4, 5, 5, 7, 9}, CV = (2 / 5) * 100% = 40%</p>
+</section>
+<section id="skewness" class="level3">
+<h3 class="anchored" data-anchor-id="skewness">Skewness</h3>
+<p><strong>Definition</strong>: Skewness is a measure of the asymmetry of the data distribution.</p>
+<p><strong>Formula</strong>: <span class="math display">\[
+\text{Skewness} = \frac{n}{(n-1)(n-2)} \sum \left( \frac{x_i - \bar{x}}{\sigma} \right)^3
+\]</span></p>
+<p><strong>Properties</strong>: 1. Positive skewness indicates a right-skewed distribution. 2. Negative skewness indicates a left-skewed distribution.</p>
+<p><strong>Example</strong>: For a right-skewed data set, Skewness &gt; 0; for a left-skewed data set, Skewness &lt; 0.</p>
+</section>
+<section id="kurtosis" class="level3">
+<h3 class="anchored" data-anchor-id="kurtosis">Kurtosis</h3>
+<p><strong>Definition</strong>: Kurtosis is a measure of the “tailedness” of the data distribution.</p>
+<p><strong>Formula</strong>: <span class="math display">\[
+\text{Kurtosis} = \frac{n(n+1)}{(n-1)(n-2)(n-3)} \sum \left( \frac{x_i - \bar{x}}{\sigma} \right)^4 - \frac{3(n-1)^2}{(n-2)(n-3)}
+\]</span></p>
+<p><strong>Properties</strong>: 1. Positive kurtosis indicates heavy tails. 2. Negative kurtosis indicates light tails.</p>
+<p><strong>Example</strong>: For a normal distribution, Kurtosis ≈ 3; for a distribution with heavy tails, Kurtosis &gt; 3.</p>
+</section>
+<section id="percentiles-and-quartiles" class="level3">
+<h3 class="anchored" data-anchor-id="percentiles-and-quartiles">Percentiles and Quartiles</h3>
+<p><strong>Definition</strong>: Percentiles and quartiles are values below which a certain percentage of data falls.</p>
+<p><strong>Percentiles</strong>: 1. The nth percentile is the value below which (n%) of the data falls.</p>
+<p><strong>Example</strong>: For a data set, the 90th percentile is the value below which 90% of the data lies.</p>
+<p><strong>Quartiles</strong>: 1. Quartiles divide the data into four equal parts. 2. Q1 (25th percentile), Q2 (50th percentile or median), Q3 (75th percentile).</p>
+</section>
+<section id="box-plots-and-whisker-diagrams" class="level3">
+<h3 class="anchored" data-anchor-id="box-plots-and-whisker-diagrams">Box Plots and Whisker Diagrams</h3>
+<p><strong>Definition</strong>: Box plots and whisker diagrams are visual representations of data dispersion.</p>
+<p><strong>Components</strong>: 1. <strong>Box</strong>: Represents the interquartile range (IQR). 2. <strong>Whiskers</strong>: Extend from the box to the smallest and largest values within 1.5*IQR from Q1 and Q3. 3. <strong>Median</strong>: Line inside the box. 4. <strong>Outliers</strong>: Points outside the whiskers.</p>
+<p><strong>Example</strong>: A box plot for a data set {1, 2, 3, 4, 5, 6, 7, 8, 9, 10} would have Q1=3, Median=5.5, Q3=8, and potential outliers beyond 1.5*IQR from Q1 and Q3.</p>
+</section>
+</section>
+<section id="questions" class="level2">
+<h2 class="anchored" data-anchor-id="questions">Questions</h2>
+<section id="mean-arithmetic-geometric-harmonic" class="level4">
+<h4 class="anchored" data-anchor-id="mean-arithmetic-geometric-harmonic">1. Mean (Arithmetic, Geometric, Harmonic)</h4>
+<p><strong>Question:</strong> Explain how you would use the arithmetic, geometric, and harmonic means to analyze the average number of likes per post on Instagram.</p>
+<p><strong>Answer:</strong> - <strong>Arithmetic mean:</strong> The arithmetic mean is the sum of all likes divided by the number of posts. It is useful when all values are of similar magnitude. <span class="math display">\[
+  \text{Arithmetic mean} = \frac{1}{n} \sum_{i=1}^{n} x_i
+  \]</span> Example: For posts with likes [100, 150, 200], the arithmetic mean is <span class="math display">\[
+  \frac{100 + 150 + 200}{3} = 150
+  \]</span></p>
+<ul>
+<li><p><strong>Geometric mean:</strong> The geometric mean is the <span class="math inline">\(n\)</span>th root of the product of all likes. It is useful when dealing with rates of growth. <span class="math display">\[
+\text{Geometric mean} = \left( \prod_{i=1}^{n} x_i \right)^{\frac{1}{n}}
+\]</span> Example: For posts with likes [100, 150, 200], the geometric mean is <span class="math display">\[
+(100 \times 150 \times 200)^{\frac{1}{3}} \approx 147.84
+\]</span></p></li>
+<li><p><strong>Harmonic mean:</strong> The harmonic mean is the reciprocal of the arithmetic mean of the reciprocals. It is useful for rates or ratios. <span class="math display">\[
+\text{Harmonic mean} = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}
+\]</span> Example: For posts with likes [100, 150, 200], the harmonic mean is <span class="math display">\[
+\frac{3}{\frac{1}{100} + \frac{1}{150} + \frac{1}{200}} \approx 133.33
+\]</span></p></li>
+</ul>
+</section>
+<section id="median-1" class="level4">
+<h4 class="anchored" data-anchor-id="median-1">2. Median</h4>
+<p><strong>Question:</strong> How would you use the median to analyze the distribution of user engagement metrics on Facebook?</p>
+<p><strong>Answer:</strong> The median is the middle value in a sorted list of numbers. It is useful when the data is skewed, as it is not affected by outliers.</p>
+<p>Example: For engagement metrics [10, 20, 30, 40, 50], the median is 30. For an even number of values [10, 20, 30, 40], the median is <span class="math display">\[
+\frac{20 + 30}{2} = 25
+\]</span></p>
+</section>
+<section id="mode-1" class="level4">
+<h4 class="anchored" data-anchor-id="mode-1">3. Mode</h4>
+<p><strong>Question:</strong> How would you use the mode to understand the most common user interactions on a social media post?</p>
+<p><strong>Answer:</strong> The mode is the most frequently occurring value in a dataset. It is useful for categorical data or to find the most common value.</p>
+<p>Example: For interactions [like, comment, share, like, like], the mode is ‘like’ as it appears most frequently.</p>
+</section>
+<section id="trimmed-and-winsorized-means" class="level4">
+<h4 class="anchored" data-anchor-id="trimmed-and-winsorized-means">4. Trimmed and Winsorized Means</h4>
+<p><strong>Question:</strong> Explain the difference between trimmed and Winsorized means and their use in analyzing outlier-prone data like user engagement on Instagram.</p>
+<p><strong>Answer:</strong> - <strong>Trimmed mean:</strong> The trimmed mean is calculated by removing a certain percentage of the smallest and largest values before calculating the mean. Example: For engagement metrics [10, 20, 30, 40, 100], a 20% trimmed mean removes 10 and 100, resulting in <span class="math display">\[
+  \frac{20 + 30 + 40}{3} = 30
+  \]</span></p>
+<ul>
+<li><strong>Winsorized mean:</strong> The Winsorized mean replaces a certain percentage of the smallest and largest values with the nearest remaining values before calculating the mean. Example: For engagement metrics [10, 20, 30, 40, 100], a 20% Winsorized mean replaces 10 with 20 and 100 with 40, resulting in <span class="math display">\[
+\frac{20 + 20 + 30 + 40 + 40}{5} = 30
+\]</span></li>
+</ul>
+</section>
+<section id="variance-1" class="level4">
+<h4 class="anchored" data-anchor-id="variance-1">5. Variance</h4>
+<p><strong>Question:</strong> How would you use variance to understand the variability in user engagement metrics on Facebook?</p>
+<p><strong>Answer:</strong> Variance measures the average squared deviation from the mean, indicating how spread out the values are. <span class="math display">\[
+\text{Variance} = \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2
+\]</span> Example: For engagement metrics [10, 20, 30], the mean is 20, and the variance is <span class="math display">\[
+\frac{(10-20)^2 + (20-20)^2 + (30-20)^2}{3} = 66.67
+\]</span></p>
+</section>
+<section id="standard-deviation-1" class="level4">
+<h4 class="anchored" data-anchor-id="standard-deviation-1">6. Standard Deviation</h4>
+<p><strong>Question:</strong> Explain how you would use the standard deviation to interpret the dispersion of user activity data on Instagram.</p>
+<p><strong>Answer:</strong> Standard deviation is the square root of variance and provides a measure of dispersion in the same units as the data. <span class="math display">\[
+\text{Standard Deviation} = \sqrt{\text{Variance}}
+\]</span> Example: For engagement metrics [10, 20, 30] with variance 66.67, the standard deviation is <span class="math display">\[
+\sqrt{66.67} \approx 8.16
+\]</span></p>
+</section>
+<section id="range-1" class="level4">
+<h4 class="anchored" data-anchor-id="range-1">7. Range</h4>
+<p><strong>Question:</strong> How would you use the range to understand the spread of user interaction counts on a social media platform?</p>
+<p><strong>Answer:</strong> The range is the difference between the maximum and minimum values in the dataset. <span class="math display">\[
+\text{Range} = \max(x) - \min(x)
+\]</span> Example: For interaction counts [5, 10, 15, 20, 25], the range is <span class="math display">\[
+25 - 5 = 20
+\]</span></p>
+</section>
+<section id="interquartile-range" class="level4">
+<h4 class="anchored" data-anchor-id="interquartile-range">8. Interquartile Range</h4>
+<p><strong>Question:</strong> How would you use the interquartile range (IQR) to describe the spread of user session lengths on Facebook?</p>
+<p><strong>Answer:</strong> IQR is the difference between the 75th percentile (Q3) and 25th percentile (Q1), indicating the spread of the middle 50% of the data. <span class="math display">\[
+\text{IQR} = Q3 - Q1
+\]</span> Example: For session lengths [10, 20, 30, 40, 50], Q1 is 20, Q3 is 40, and IQR is <span class="math display">\[
+40 - 20 = 20
+\]</span></p>
+</section>
+<section id="mean-absolute-deviation" class="level4">
+<h4 class="anchored" data-anchor-id="mean-absolute-deviation">9. Mean Absolute Deviation</h4>
+<p><strong>Question:</strong> Explain how mean absolute deviation can be used to measure the average deviation from the mean in user engagement data on Instagram.</p>
+<p><strong>Answer:</strong> Mean absolute deviation (MAD) is the average of the absolute deviations from the mean. <span class="math display">\[
+\text{MAD} = \frac{1}{n} \sum_{i=1}^{n} |x_i - \bar{x}|
+\]</span> Example: For engagement metrics [10, 20, 30], the mean is 20, and MAD is <span class="math display">\[
+\frac{|10-20| + |20-20| + |30-20|}{3} = \frac{10 + 0 + 10}{3} = 6.67
+\]</span></p>
+</section>
+<section id="coefficient-of-variation" class="level4">
+<h4 class="anchored" data-anchor-id="coefficient-of-variation">10. Coefficient of Variation</h4>
+<p><strong>Question:</strong> How would you use the coefficient of variation (CV) to compare the variability of user engagement across different social media platforms?</p>
+<p><strong>Answer:</strong> CV is the ratio of the standard deviation to the mean, expressed as a percentage. <span class="math display">\[
+\text{CV} = \frac{\text{Standard Deviation}}{\text{Mean}} \times 100\%
+\]</span> Example: For engagement metrics with mean 20 and standard deviation 8, CV is <span class="math display">\[
+\frac{8}{20} \times 100\% = 40\%
+\]</span> Comparing CVs across platforms allows for understanding relative variability.</p>
+</section>
+<section id="percentiles-and-quartiles-1" class="level4">
+<h4 class="anchored" data-anchor-id="percentiles-and-quartiles-1">11. Percentiles and Quartiles</h4>
+<p><strong>Question:</strong> How would you use percentiles and quartiles to summarize user engagement data on Facebook?</p>
+<p><strong>Answer:</strong> Percentiles and quartiles divide the data into parts: - <strong>Percentiles:</strong> Values below which a certain percentage of data falls. Example: The 90th percentile is the value below which 90% of the data falls.</p>
+<ul>
+<li><strong>Quartiles:</strong> Divide data into four equal parts. Q1 (25th percentile), Q2 (median, 50th percentile), Q3 (75th percentile). Example: For engagement metrics [10, 20, 30, 40, 50], Q1 is 20, median is 30, Q3 is 40.</li>
+</ul>
+</section>
+<section id="skewness-1" class="level4">
+<h4 class="anchored" data-anchor-id="skewness-1">12. Skewness</h4>
+<p><strong>Question:</strong> How would you interpret the skewness of user engagement distributions on Instagram?</p>
+<p><strong>Answer:</strong> Skewness measures the asymmetry of the distribution: - <strong>Positive skew:</strong> Tail on the right, indicating more low values. Example: Engagement metrics [5, 10, 10, 10, 50] have positive skew.</p>
+<ul>
+<li><strong>Negative skew:</strong> Tail on the left, indicating more high values. Example: Engagement metrics [50, 40, 40, 40, 10] have negative skew.</li>
+</ul>
+</section>
+<section id="kurtosis-1" class="level4">
+<h4 class="anchored" data-anchor-id="kurtosis-1">13. Kurtosis</h4>
+<p><strong>Question:</strong> How would you use kurtosis to understand the peakedness of user activity distributions on Facebook?</p>
+<p><strong>Answer:</strong> Kurtosis measures the peakedness of the distribution: - <strong>Leptokurtic:</strong> High peak, heavy tails (kurtosis &gt; 3). Example: Engagement metrics with many values near the mean and extreme outliers.</p>
+<ul>
+<li><p><strong>Platykurtic:</strong> Low peak, light tails (kurtosis &lt; 3). Example: Engagement metrics more evenly spread out.</p></li>
+<li><p><strong>Mesokurtic:</strong> Normal distribution (kurtosis = 3).</p></li>
+</ul>
+</section>
+<section id="pearson-correlation" class="level4">
+<h4 class="anchored" data-anchor-id="pearson-correlation">14. Pearson Correlation</h4>
+<p><strong>Question:</strong> How would you use Pearson correlation to analyze the relationship between user engagement and time spent on Instagram?</p>
+<p><strong>Answer:</strong> Pearson correlation measures the linear relationship between two continuous variables. <span class="math display">\[
+r = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2 \sum (y_i - \bar{y})^2}}
+\]</span> Example: If user engagement and time spent have a Pearson correlation of 0.8, it indicates a strong positive linear relationship.</p>
+</section>
+<section id="spearmans-rank-correlation" class="level4">
+<h4 class="anchored" data-anchor-id="spearmans-rank-correlation">15. Spearman’s Rank Correlation</h4>
+<p><strong>Question:</strong> How would you use Spearman’s rank correlation to analyze the relationship between user rankings of content types and engagement on Facebook?</p>
+<p><strong>Answer:</strong> Spearman’s rank correlation measures the monotonic relationship between two ranked variables. <span class="math display">\[
+\rho = 1 - \frac{6 \sum d_i^2}{n(n^2 - 1)}
+\]</span> where <span class="math inline">\(d_i\)</span> is the difference between ranks.</p>
+<p>Example: If user rankings of content types and engagement have a Spearman’s <span class="math inline">\(\rho\)</span> of 0.7, it indicates a strong positive monotonic relationship.</p>
+</section>
+<section id="kendalls-tau" class="level4">
+<h4 class="anchored" data-anchor-id="kendalls-tau">16. Kendall’s Tau</h4>
+<p><strong>Question:</strong> Explain how Kendall’s Tau can be used to assess the association between user satisfaction ratings and interaction frequency on a social media platform.</p>
+<p><strong>Answer:</strong> Kendall’s Tau measures the strength of association between two ranked variables based on concordant and discordant pairs. <span class="math display">\[
+\tau = \frac{C - D}{\sqrt{(C + D + T) (C + D + U)}}
+\]</span> where <span class="math inline">\(C\)</span> is the number of concordant pairs, <span class="math inline">\(D\)</span> is the number of discordant pairs, <span class="math inline">\(T\)</span> is the number of ties in one ranking, and <span class="math inline">\(U\)</span> is the number of ties in the other ranking.</p>
+<p>Example: If Kendall’s Tau between satisfaction ratings and interaction frequency is 0.65, it indicates a strong positive association.</p>
+</section>
+<section id="point-biserial-correlation" class="level4">
+<h4 class="anchored" data-anchor-id="point-biserial-correlation">17. Point-Biserial Correlation</h4>
+<p><strong>Question:</strong> How would you use point-biserial correlation to assess the relationship between user engagement (continuous) and subscription status (binary) on a social media platform?</p>
+<p><strong>Answer:</strong> Point-biserial correlation measures the relationship between a continuous variable and a binary variable. <span class="math display">\[
+r_{pb} = \frac{\bar{X_1} - \bar{X_0}}{s} \sqrt{\frac{n_1 n_0}{n^2}}
+\]</span> where <span class="math inline">\(\bar{X_1}\)</span> and <span class="math inline">\(\bar{X_0}\)</span> are the means of the continuous variable for the two groups, <span class="math inline">\(s\)</span> is the standard deviation, <span class="math inline">\(n_1\)</span> and <span class="math inline">\(n_0\)</span> are the group sizes, and <span class="math inline">\(n\)</span> is the total sample size.</p>
+<p>Example: If user engagement is higher for subscribers than non-subscribers, point-biserial correlation quantifies this relationship.</p>
+</section>
+<section id="covariance" class="level4">
+<h4 class="anchored" data-anchor-id="covariance">18. Covariance</h4>
+<p><strong>Question:</strong> How would you use covariance to understand the relationship between user interactions and time spent on a social media platform?</p>
+<p><strong>Answer:</strong> Covariance measures the joint variability of two random variables. <span class="math display">\[
+\text{Cov}(X, Y) = \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})
+\]</span> Example: Positive covariance between user interactions and time spent indicates that as one increases, the other tends to increase. Negative covariance indicates an inverse relationship.</p>
+</section>
+<section id="moments" class="level4">
+<h4 class="anchored" data-anchor-id="moments">19. Moments</h4>
+<p><strong>Question:</strong> Explain the significance of moments (mean, variance, skewness, kurtosis) in summarizing the distribution of user engagement metrics on Instagram.</p>
+<p><strong>Answer:</strong> Moments provide a comprehensive summary of a distribution: - <strong>First moment (mean):</strong> Central location. - <strong>Second moment (variance):</strong> Dispersion. - <strong>Third moment (skewness):</strong> Asymmetry. - <strong>Fourth moment (kurtosis):</strong> Peakedness.</p>
+<p>Example: Moments of engagement metrics can describe the typical engagement level, variability, skewness (e.g., more low or high engagement posts), and kurtosis (e.g., presence of outliers).</p>
+</section>
+<section id="cumulants" class="level4">
+<h4 class="anchored" data-anchor-id="cumulants">20. Cumulants</h4>
+<p><strong>Question:</strong> How would you use cumulants to summarize the distribution of user interactions on Facebook?</p>
+<p><strong>Answer:</strong> Cumulants are related to moments and provide alternative summary statistics that can simplify the analysis of distributions. - <strong>First cumulant:</strong> Mean. - <strong>Second cumulant:</strong> Variance. - <strong>Third cumulant:</strong> Skewness. - <strong>Fourth cumulant:</strong> Kurtosis.</p>
+<p>Example: Cumulants help in understanding the central tendency, spread, and shape of user interaction distributions, similar to moments but often with simpler calculations for certain types of data analysis.</p>
+</section>
+</section>
+</section>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

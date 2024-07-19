@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>real_time_analytics_and_stream_processing – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="chapter-22-real-time-analytics-and-stream-processing" class="level1 text-content">
+<h1>Chapter 22: Real-time Analytics and Stream Processing</h1>
+<section id="stream-processing-design-patterns" class="level2">
+<h2 class="anchored" data-anchor-id="stream-processing-design-patterns">Stream Processing Design Patterns</h2>
+<section id="definition" class="level3">
+<h3 class="anchored" data-anchor-id="definition">Definition</h3>
+<p>Stream processing design patterns are architectural and programming constructs used to efficiently process continuous streams of data in real-time. These patterns provide reusable solutions to common problems encountered in stream processing systems.</p>
+</section>
+<section id="common-patterns" class="level3">
+<h3 class="anchored" data-anchor-id="common-patterns">Common Patterns</h3>
+<ul>
+<li><p><strong>Map</strong>: Applies a function to each element in the stream, transforming the data into a new form. It is a stateless operation that processes each element independently.</p>
+<ul>
+<li><strong>Example</strong>: A weather monitoring system uses the map pattern to convert raw temperature readings from Fahrenheit to Celsius as they are streamed from sensors.</li>
+</ul></li>
+<li><p><strong>Filter</strong>: Removes elements from the stream that do not meet a specified condition, reducing the volume of data that needs to be processed downstream.</p>
+<ul>
+<li><strong>Example</strong>: A social media platform uses the filter pattern to remove spam messages from the stream of user posts, ensuring only legitimate content is processed further.</li>
+</ul></li>
+<li><p><strong>Windowing</strong>: Aggregates data over fixed or sliding time intervals, allowing for computations on bounded subsets of the data stream.</p>
+<ul>
+<li><strong>Example</strong>: A financial trading system uses windowing to calculate moving averages of stock prices over 5-minute intervals, providing traders with real-time insights into market trends.</li>
+</ul></li>
+<li><p><strong>Join</strong>: Combines two or more streams based on a common key or temporal correlation, enabling the integration and analysis of related data sources.</p>
+<ul>
+<li><strong>Example</strong>: An e-commerce platform uses the join pattern to combine user clickstream data with purchase data, allowing for analysis of user behavior leading up to a purchase.</li>
+</ul></li>
+<li><p><strong>Aggregation</strong>: Calculates summary statistics, such as counts, averages, or sums, over a stream of data, often in conjunction with windowing techniques.</p>
+<ul>
+<li><strong>Example</strong>: A network monitoring system uses aggregation to calculate the total number of data packets transmitted over a network every minute, helping administrators detect anomalies.</li>
+</ul></li>
+<li><p><strong>Complex Event Processing (CEP)</strong>: Detects patterns and relationships between events in the stream, allowing for the identification of significant or anomalous events based on predefined rules or machine learning models.</p>
+<ul>
+<li><strong>Example</strong>: A cybersecurity system uses CEP to detect patterns of suspicious activity, such as repeated failed login attempts followed by a successful login, triggering an alert for potential security breaches.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="windowing-techniques-in-stream-processing" class="level2">
+<h2 class="anchored" data-anchor-id="windowing-techniques-in-stream-processing">Windowing Techniques in Stream Processing</h2>
+<section id="definition-1" class="level3">
+<h3 class="anchored" data-anchor-id="definition-1">Definition</h3>
+<p>Windowing techniques in stream processing allow for the grouping of data into finite chunks or windows based on time or event counts. This enables operations like aggregation, join, and computation on bounded subsets of an infinite data stream.</p>
+</section>
+<section id="types-of-windows" class="level3">
+<h3 class="anchored" data-anchor-id="types-of-windows">Types of Windows</h3>
+<ul>
+<li><p><strong>Tumbling Windows</strong>: Fixed-size, non-overlapping windows that partition the stream into distinct intervals. Each event belongs to exactly one window.</p>
+<ul>
+<li><strong>Example</strong>: A log analysis system uses tumbling windows to count the number of error messages in 1-hour intervals, providing hourly reports on system health.</li>
+</ul></li>
+<li><p><strong>Sliding Windows</strong>: Fixed-size, overlapping windows that slide over the stream based on a specified interval. Each event can belong to multiple overlapping windows.</p>
+<ul>
+<li><strong>Example</strong>: An online gaming platform uses sliding windows to calculate the average number of active players over the past 15 minutes, updated every minute, ensuring a real-time view of player engagement.</li>
+</ul></li>
+<li><p><strong>Session Windows</strong>: Variable-size windows that group events based on periods of activity followed by inactivity (gaps). Session windows capture bursts of related activity.</p>
+<ul>
+<li><strong>Example</strong>: A web analytics tool uses session windows to group user interactions on a website into sessions based on user inactivity, helping analysts understand user behavior during a browsing session.</li>
+</ul></li>
+<li><p><strong>Count-Based Windows</strong>: Windows that group a fixed number of events rather than time intervals. These windows are useful when the number of events, rather than time, is the driving factor for analysis.</p>
+<ul>
+<li><strong>Example</strong>: A sensor network monitoring system uses count-based windows to process batches of 100 sensor readings, regardless of when they arrive, ensuring consistent batch sizes for downstream processing.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="stateful-stream-processing" class="level2">
+<h2 class="anchored" data-anchor-id="stateful-stream-processing">Stateful Stream Processing</h2>
+<section id="definition-2" class="level3">
+<h3 class="anchored" data-anchor-id="definition-2">Definition</h3>
+<p>Stateful stream processing involves maintaining and updating state information across multiple events in a data stream. This enables more complex operations, such as aggregations, joins, and pattern detection, that rely on historical context or intermediate results.</p>
+</section>
+<section id="techniques" class="level3">
+<h3 class="anchored" data-anchor-id="techniques">Techniques</h3>
+<ul>
+<li><p><strong>Keyed State</strong>: Maintains state information for each key in the stream, allowing for operations like per-key aggregations and joins. The state is typically stored in-memory or on a distributed state backend for fault tolerance and scalability.</p>
+<ul>
+<li><strong>Example</strong>: An online ad platform uses keyed state to track the number of ad impressions and clicks for each user, enabling real-time calculation of click-through rates and personalized ad targeting.</li>
+</ul></li>
+<li><p><strong>Windowed State</strong>: Associates state information with specific windows, enabling operations that span multiple events within the same window. Windowed state is often used in conjunction with windowing techniques to perform aggregations or pattern detection within fixed time intervals.</p>
+<ul>
+<li><strong>Example</strong>: A streaming analytics system uses windowed state to compute hourly sales totals for each product, maintaining state information for each product’s sales within the current hour’s window.</li>
+</ul></li>
+<li><p><strong>Event-Time Processing</strong>: Processes events based on their timestamps rather than processing time, ensuring accurate and consistent state management even in the presence of out-of-order or late-arriving events.</p>
+<ul>
+<li><strong>Example</strong>: A fraud detection system processes financial transactions using event-time processing to ensure that transactions are evaluated in the correct chronological order, even if they arrive out of sequence.</li>
+</ul></li>
+<li><p><strong>State Backends</strong>: Use distributed storage systems, such as Apache Flink’s RocksDB backend or Apache Kafka’s state store, to persist state information for fault tolerance and recovery in case of node failures or restarts.</p>
+<ul>
+<li><strong>Example</strong>: A real-time recommendation engine uses Apache Flink with RocksDB to store user session data, ensuring that recommendations can be generated based on the most recent user interactions, even in the event of system failures.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="approximate-algorithms-for-streaming-data" class="level2">
+<h2 class="anchored" data-anchor-id="approximate-algorithms-for-streaming-data">Approximate Algorithms for Streaming Data</h2>
+<section id="definition-3" class="level3">
+<h3 class="anchored" data-anchor-id="definition-3">Definition</h3>
+<p>Approximate algorithms for streaming data provide fast, resource-efficient methods to analyze large data streams by sacrificing some degree of accuracy for significant gains in performance and scalability. These algorithms are particularly useful when exact results are not required, or when processing constraints make exact computation infeasible.</p>
+</section>
+<section id="common-algorithms" class="level3">
+<h3 class="anchored" data-anchor-id="common-algorithms">Common Algorithms</h3>
+<ul>
+<li><p><strong>Count-Min Sketch</strong>: A probabilistic data structure that provides approximate counts of distinct elements in a stream using a fixed amount of memory. It allows for quick estimation of frequencies and supports operations like point queries and inner product estimation.</p>
+<ul>
+<li><strong>Example</strong>: An online advertising platform uses Count-Min Sketch to estimate the number of times each ad has been displayed across multiple websites, helping to quickly identify popular ads without maintaining exact counts.</li>
+</ul></li>
+<li><p><strong>HyperLogLog</strong>: An algorithm for approximating the number of distinct elements in a data stream (cardinality estimation). It uses a hash-based approach to provide accurate estimates with low memory usage, even for large datasets.</p>
+<ul>
+<li><strong>Example</strong>: A network monitoring system uses HyperLogLog to estimate the number of unique IP addresses accessing a server, enabling efficient detection of unusual traffic patterns indicative of potential attacks.</li>
+</ul></li>
+<li><p><strong>Reservoir Sampling</strong>: A technique for maintaining a random sample of a fixed size from a potentially unbounded data stream. It ensures that each element in the stream has an equal probability of being included in the sample, regardless of the stream’s length.</p>
+<ul>
+<li><strong>Example</strong>: A data analysis tool uses reservoir sampling to maintain a representative sample of user activity logs, allowing for efficient exploratory analysis and testing of new algorithms on a manageable subset of the data.</li>
+</ul></li>
+<li><p><strong>Approximate Quantiles</strong>: Algorithms like the t-Digest or GK-Array that provide approximate percentiles or quantiles of a data stream. These algorithms maintain summary statistics that allow for efficient estimation of distribution metrics with bounded memory usage.</p>
+<ul>
+<li><strong>Example</strong>: An e-commerce platform uses approximate quantiles to estimate the median and 90th percentile of order values in real-time, providing insights into purchasing behavior without the need for full data scans.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="real-time-data-warehousing" class="level2">
+<h2 class="anchored" data-anchor-id="real-time-data-warehousing">Real-Time Data Warehousing</h2>
+<section id="definition-4" class="level3">
+<h3 class="anchored" data-anchor-id="definition-4">Definition</h3>
+<p>Real-time data warehousing involves integrating, storing, and querying data in near real-time to provide immediate insights and support rapid decision-making. Unlike traditional data warehouses, which often rely on batch processing, real-time data warehouses continuously ingest and process streaming data.</p>
+</section>
+<section id="apache-druid" class="level3">
+<h3 class="anchored" data-anchor-id="apache-druid">Apache Druid</h3>
+<section id="overview" class="level4">
+<h4 class="anchored" data-anchor-id="overview">Overview</h4>
+<p>Apache Druid is an open-source, real-time analytics database designed for high-performance, interactive querying on large datasets. It is optimized for low-latency data ingestion, flexible data exploration, and ad-hoc analytics.</p>
+</section>
+<section id="features" class="level4">
+<h4 class="anchored" data-anchor-id="features">Features</h4>
+<ul>
+<li><p><strong>Real-Time Ingestion</strong>: Supports real-time data ingestion from various sources, including Kafka, Kinesis, and HTTP, enabling immediate query access to new data.</p></li>
+<li><p><strong>Columnar Storage</strong>: Uses a columnar storage format for efficient compression and fast scanning, allowing for rapid querying and aggregation of large datasets.</p></li>
+<li><p><strong>Segment Management</strong>: Organizes data into segments based on time intervals, facilitating efficient indexing, partitioning, and querying. Segments are replicated and distributed across the cluster for fault tolerance and scalability.</p></li>
+<li><p><strong>Query Engine</strong>: Supports a variety of query types, including SQL-like queries, timeseries queries, group-by queries, and top-N queries, providing flexibility for different analytical needs.</p></li>
+</ul>
+</section>
+<section id="example" class="level4">
+<h4 class="anchored" data-anchor-id="example">Example</h4>
+<p>A digital advertising platform uses Apache Druid to ingest and analyze real-time ad impression data. Advertisers can query and visualize campaign performance metrics, such as impressions, clicks, and conversions, within seconds of the data being generated.</p>
+</section>
+<section id="additional-use-cases" class="level4">
+<h4 class="anchored" data-anchor-id="additional-use-cases">Additional Use Cases</h4>
+<ul>
+<li><p><strong>Network Traffic Analysis</strong>: A telecommunications company uses Apache Druid to monitor and analyze network traffic patterns in real-time, enabling rapid detection of network anomalies and optimization of network performance.</p></li>
+<li><p><strong>Customer Behavior Analytics</strong>: A retail company uses Apache Druid to analyze real-time customer behavior data, such as website interactions and purchase transactions, providing immediate insights into customer preferences and enabling personalized marketing strategies.</p></li>
+</ul>
+</section>
+</section>
+<section id="clickhouse" class="level3">
+<h3 class="anchored" data-anchor-id="clickhouse">ClickHouse</h3>
+<section id="overview-1" class="level4">
+<h4 class="anchored" data-anchor-id="overview-1">Overview</h4>
+<p>ClickHouse is an open-source columnar database management system designed for online analytical processing (OLAP). It offers high performance, scalability, and efficient data compression, making it suitable for real-time analytics on large datasets.</p>
+</section>
+<section id="features-1" class="level4">
+<h4 class="anchored" data-anchor-id="features-1">Features</h4>
+<ul>
+<li><p><strong>Columnar Storage</strong>: Stores data in a columnar format, enabling efficient data compression and fast query performance, particularly for analytical workloads involving large-scale aggregations and scans.</p></li>
+<li><p><strong>Distributed Processing</strong>: Supports horizontal scaling and distributed query execution, allowing for the parallel processing of large datasets across multiple nodes in a cluster.</p></li>
+<li><p><strong>Materialized Views</strong>: Provides materialized views for pre-aggregating and indexing data, improving query performance by reducing the need for repeated calculations on frequently queried data.</p></li>
+<li><p><strong>Advanced SQL Support</strong>: Offers a rich SQL dialect with support for complex queries, including joins, window functions, subqueries, and user-defined functions, providing flexibility for diverse analytical needs.</p></li>
+</ul>
+</section>
+<section id="example-1" class="level4">
+<h4 class="anchored" data-anchor-id="example-1">Example</h4>
+<p>A telecommunications company uses ClickHouse to analyze call detail records (CDRs) in real-time. The system processes millions of records per second, enabling the company to monitor network performance, detect anomalies, and generate detailed usage reports for customers.</p>
+</section>
+<section id="additional-use-cases-1" class="level4">
+<h4 class="anchored" data-anchor-id="additional-use-cases-1">Additional Use Cases</h4>
+<ul>
+<li><p><strong>Web Analytics</strong>: A large e-commerce platform uses ClickHouse to analyze web traffic data, providing real-time insights into user behavior, conversion rates, and campaign effectiveness.</p></li>
+<li><p><strong>Financial Market Analysis</strong>: A trading firm uses ClickHouse to analyze market data, including stock prices, trading volumes, and financial news, enabling real-time decision-making and strategy adjustments.</p></li>
+</ul>
+</section>
+</section>
+<section id="pinot" class="level3">
+<h3 class="anchored" data-anchor-id="pinot">Pinot</h3>
+<section id="overview-2" class="level4">
+<h4 class="anchored" data-anchor-id="overview-2">Overview</h4>
+<p>Apache Pinot is an open-source, real-time distributed OLAP datastore designed for low-latency analytics on large datasets. It is optimized for ingesting and querying data with high throughput, supporting both batch and real-time data ingestion.</p>
+</section>
+<section id="features-2" class="level4">
+<h4 class="anchored" data-anchor-id="features-2">Features</h4>
+<ul>
+<li><p><strong>Real-Time Ingestion</strong>: Supports real-time data ingestion from sources like Kafka and Kinesis, enabling immediate querying and analysis of new data as it arrives.</p></li>
+<li><p><strong>Columnar Storage</strong>: Uses a columnar storage format for efficient data compression and fast query performance, particularly for analytical queries involving large-scale aggregations and scans.</p></li>
+<li><p><strong>Segment Management</strong>: Organizes data into segments based on time intervals or other criteria, facilitating efficient indexing, partitioning, and querying. Segments are replicated and distributed across the cluster for fault tolerance and scalability.</p></li>
+<li><p><strong>Query Engine</strong>: Supports a variety of query types, including SQL, timeseries queries, group-by queries, and top-N queries, providing flexibility for different analytical needs.</p></li>
+</ul>
+</section>
+<section id="example-2" class="level4">
+<h4 class="anchored" data-anchor-id="example-2">Example</h4>
+<p>A streaming media service uses Apache Pinot to analyze user engagement metrics in real-time. The system ingests data from Kafka, processes it, and provides near-instantaneous insights into viewer behavior, content popularity, and ad performance.</p>
+</section>
+<section id="additional-use-cases-2" class="level4">
+<h4 class="anchored" data-anchor-id="additional-use-cases-2">Additional Use Cases</h4>
+<ul>
+<li><p><strong>E-commerce Analytics</strong>: An online retailer uses Apache Pinot to analyze real-time sales data, inventory levels, and customer interactions, enabling dynamic pricing, personalized recommendations, and optimized inventory management.</p></li>
+<li><p><strong>IoT Data Analysis</strong>: A smart city project uses Apache Pinot to analyze data from various IoT sensors, such as traffic cameras and environmental monitors, providing real-time insights for city management and decision-making.</p></li>
+</ul>
+<hr>
+</section>
+</section>
+</section>
+<section id="real-time-dashboarding-technologies" class="level2">
+<h2 class="anchored" data-anchor-id="real-time-dashboarding-technologies">Real-Time Dashboarding Technologies</h2>
+<section id="definition-5" class="level3">
+<h3 class="anchored" data-anchor-id="definition-5">Definition</h3>
+<p>Real-time dashboarding technologies enable the creation of interactive, live dashboards that display up-to-the-minute data visualizations and metrics. These tools provide users with immediate insights into key performance indicators (KPIs) and other critical data points, facilitating rapid decision-making and situational awareness.</p>
+</section>
+<section id="common-technologies" class="level3">
+<h3 class="anchored" data-anchor-id="common-technologies">Common Technologies</h3>
+<ul>
+<li><p><strong>Grafana</strong>: An open-source platform for monitoring and observability, Grafana integrates with a wide range of data sources to create interactive, real-time dashboards. It supports dynamic queries, alerting, and various visualization options, including graphs, tables, and heatmaps.</p>
+<ul>
+<li><strong>Example</strong>: A DevOps team uses Grafana to monitor server health, application performance, and infrastructure metrics in real-time, allowing them to quickly identify and resolve issues before they impact users.</li>
+</ul></li>
+<li><p><strong>Tableau</strong>: A powerful data visualization tool that allows users to create interactive dashboards and reports. Tableau can connect to real-time data sources and provides rich visual analytics capabilities, enabling users to explore and analyze data with ease.</p>
+<ul>
+<li><strong>Example</strong>: A marketing team uses Tableau to create real-time dashboards that track campaign performance, website traffic, and lead generation metrics, providing immediate insights into the effectiveness of their marketing efforts.</li>
+</ul></li>
+<li><p><strong>Kibana</strong>: Part of the Elastic Stack, Kibana is an open-source data visualization and exploration tool designed for working with Elasticsearch data. It provides real-time dashboards and supports a variety of visualizations, including charts, maps, and logs.</p>
+<ul>
+<li><strong>Example</strong>: A security operations center uses Kibana to visualize and analyze log data from various systems, enabling real-time threat detection and response through customizable dashboards and alerting mechanisms.</li>
+</ul></li>
+<li><p><strong>Power BI</strong>: A business analytics service by Microsoft that provides interactive visualizations and business intelligence capabilities. Power BI integrates with various real-time data sources and allows users to create and share dashboards and reports across the organization.</p>
+<ul>
+<li><strong>Example</strong>: A financial services firm uses Power BI to create real-time dashboards that monitor key financial metrics, such as revenue, expenses, and profitability, allowing executives to make data-driven decisions promptly.</li>
+</ul></li>
+<li><p><strong>Superset</strong>: An open-source data exploration and visualization platform developed by Airbnb. Superset supports real-time data sources and provides a wide range of visualizations, SQL-based data exploration, and dashboarding capabilities.</p>
+<ul>
+<li><strong>Example</strong>: A data analytics team uses Superset to create real-time dashboards that track customer behavior, sales performance, and operational metrics, enabling data-driven insights and decision-making across the organization.</li>
+</ul></li>
+</ul>
+</section>
+<section id="additional-use-cases-3" class="level3">
+<h3 class="anchored" data-anchor-id="additional-use-cases-3">Additional Use Cases</h3>
+<ul>
+<li><p><strong>Healthcare Monitoring</strong>: A hospital uses Grafana to monitor real-time patient vital signs, medical device status, and operational metrics, ensuring that healthcare providers have immediate access to critical information.</p></li>
+<li><p><strong>Supply Chain Management</strong>: A logistics company uses Power BI to create dashboards that track real-time shipment status, inventory levels, and delivery performance, enabling efficient supply chain management and timely decision-making.</p></li>
+<li><p><strong>Manufacturing Operations</strong>: A manufacturing plant uses Kibana to monitor equipment performance, production metrics, and quality control data in real-time, ensuring optimal production efficiency and rapid identification of issues.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

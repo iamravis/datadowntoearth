@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>genai – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../logo.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="projects---generative-ai" class="level1 text-content">
+<h1>Projects - Generative AI</h1>
+<section id="personalized-content-generation-system" class="level2">
+<h2 class="anchored" data-anchor-id="personalized-content-generation-system">Personalized Content Generation System</h2>
+<section id="project-goal" class="level3">
+<h3 class="anchored" data-anchor-id="project-goal">Project Goal:</h3>
+<p>Develop a system that generates personalized content (e.g., product descriptions, marketing copy) for an e-commerce platform.</p>
+</section>
+<section id="steps" class="level3">
+<h3 class="anchored" data-anchor-id="steps">Steps</h3>
+<section id="data-collection" class="level4">
+<h4 class="anchored" data-anchor-id="data-collection">Data Collection</h4>
+<ul>
+<li>Gather existing product descriptions, user reviews, and engagement data</li>
+<li>Collect user behavior data and preferences</li>
+<li>Obtain brand guidelines and tone of voice documentation</li>
+</ul>
+</section>
+<section id="data-preprocessing" class="level4">
+<h4 class="anchored" data-anchor-id="data-preprocessing">Data Preprocessing</h4>
+<ul>
+<li>Clean and normalize text data</li>
+<li>Perform named entity recognition to identify product attributes</li>
+<li>Create user embeddings based on behavior and preferences</li>
+</ul>
+</section>
+<section id="model-development" class="level4">
+<h4 class="anchored" data-anchor-id="model-development">Model Development</h4>
+<ul>
+<li>Fine-tune a large language model (e.g., GPT-3, BERT) on company-specific data</li>
+<li>Implement a content quality classifier to filter generated text</li>
+<li>Develop a personalization layer using collaborative filtering techniques</li>
+</ul>
+</section>
+<section id="prompt-engineering" class="level4">
+<h4 class="anchored" data-anchor-id="prompt-engineering">Prompt Engineering</h4>
+<ul>
+<li>Design dynamic prompts that incorporate product attributes and user preferences</li>
+<li>Implement prompt optimization techniques to improve output quality</li>
+</ul>
+</section>
+<section id="content-generation-pipeline" class="level4">
+<h4 class="anchored" data-anchor-id="content-generation-pipeline">Content Generation Pipeline</h4>
+<ul>
+<li>Develop a system to generate multiple content variants</li>
+<li>Implement a ranking mechanism to select the best-generated content</li>
+<li>Create a feedback loop for continuous improvement based on user engagement</li>
+</ul>
+</section>
+<section id="evaluation" class="level4">
+<h4 class="anchored" data-anchor-id="evaluation">Evaluation</h4>
+<ul>
+<li>Implement automated metrics (perplexity, BLEU score) for content quality</li>
+<li>Conduct human evaluation for subjective quality assessment</li>
+<li>Perform A/B testing to measure impact on user engagement and conversions</li>
+</ul>
+</section>
+<section id="deployment" class="level4">
+<h4 class="anchored" data-anchor-id="deployment">Deployment</h4>
+<ul>
+<li>Containerize the model using Docker</li>
+<li>Set up API endpoints for real-time content generation</li>
+<li>Implement caching strategies for frequently requested content</li>
+</ul>
+</section>
+<section id="monitoring-and-maintenance" class="level4">
+<h4 class="anchored" data-anchor-id="monitoring-and-maintenance">Monitoring and Maintenance</h4>
+<ul>
+<li>Set up logging and monitoring for model performance and latency</li>
+<li>Implement automated retraining pipeline based on new data</li>
+<li>Develop a system for handling edge cases and fallback options</li>
+</ul>
+</section>
+</section>
+<section id="dataset" class="level3">
+<h3 class="anchored" data-anchor-id="dataset">Dataset:</h3>
+<p>Amazon product data (https://jmcauley.ucsd.edu/data/amazon/) combined with synthetic user behavior data</p>
+</section>
+<section id="production-considerations" class="level3">
+<h3 class="anchored" data-anchor-id="production-considerations">Production Considerations</h3>
+<ul>
+<li>Use cloud services (e.g., AWS SageMaker) for scalable deployment</li>
+<li>Implement rate limiting and request queuing for high-traffic scenarios</li>
+<li>Ensure GDPR compliance for user data handling</li>
+<li>Set up A/B testing framework for continuous optimization</li>
+</ul>
+</section>
+</section>
+<section id="multimodal-generative-ai-for-product-design" class="level2">
+<h2 class="anchored" data-anchor-id="multimodal-generative-ai-for-product-design">Multimodal Generative AI for Product Design</h2>
+<section id="project-goal-1" class="level3">
+<h3 class="anchored" data-anchor-id="project-goal-1">Project Goal:</h3>
+<p>Develop a system that generates novel product designs based on textual descriptions and existing product images.</p>
+</section>
+<section id="steps-1" class="level3">
+<h3 class="anchored" data-anchor-id="steps-1">Steps</h3>
+<section id="data-collection-1" class="level4">
+<h4 class="anchored" data-anchor-id="data-collection-1">Data Collection</h4>
+<ul>
+<li>Gather product images and corresponding descriptions</li>
+<li>Collect user feedback and ratings on existing products</li>
+<li>Obtain design guidelines and brand identity information</li>
+</ul>
+</section>
+<section id="data-preprocessing-1" class="level4">
+<h4 class="anchored" data-anchor-id="data-preprocessing-1">Data Preprocessing</h4>
+<ul>
+<li>Clean and normalize text data</li>
+<li>Perform image preprocessing (resizing, normalization)</li>
+<li>Extract image features using pre-trained CNN models</li>
+</ul>
+</section>
+<section id="model-development-1" class="level4">
+<h4 class="anchored" data-anchor-id="model-development-1">Model Development</h4>
+<ul>
+<li>Implement a text-to-image generation model (e.g., DALL-E 2, Stable Diffusion)</li>
+<li>Develop a style transfer model for brand consistency</li>
+<li>Create a GAN for generating high-resolution product images</li>
+</ul>
+</section>
+<section id="text-understanding" class="level4">
+<h4 class="anchored" data-anchor-id="text-understanding">Text Understanding</h4>
+<ul>
+<li>Implement a natural language understanding module to extract design attributes</li>
+<li>Develop a system to convert textual descriptions into model-compatible prompts</li>
+</ul>
+</section>
+<section id="design-iteration" class="level4">
+<h4 class="anchored" data-anchor-id="design-iteration">Design Iteration</h4>
+<ul>
+<li>Create an iterative refinement process using user feedback</li>
+<li>Implement design constraints based on manufacturing requirements</li>
+<li>Develop a system for design variation generation</li>
+</ul>
+</section>
+<section id="evaluation-1" class="level4">
+<h4 class="anchored" data-anchor-id="evaluation-1">Evaluation</h4>
+<ul>
+<li>Implement automated metrics for image quality and diversity</li>
+<li>Conduct user studies for subjective evaluation of designs</li>
+<li>Perform feasibility analysis with product engineers</li>
+</ul>
+</section>
+<section id="deployment-1" class="level4">
+<h4 class="anchored" data-anchor-id="deployment-1">Deployment</h4>
+<ul>
+<li>Set up a web-based interface for design generation and iteration</li>
+<li>Implement API endpoints for integration with existing design tools</li>
+<li>Develop a queuing system for handling multiple design requests</li>
+</ul>
+</section>
+<section id="monitoring-and-improvement" class="level4">
+<h4 class="anchored" data-anchor-id="monitoring-and-improvement">Monitoring and Improvement</h4>
+<ul>
+<li>Set up tracking for user interactions and feedback</li>
+<li>Implement continuous learning from successful designs</li>
+<li>Develop a system for detecting and mitigating biases in generated designs</li>
+</ul>
+</section>
+</section>
+<section id="dataset-1" class="level3">
+<h3 class="anchored" data-anchor-id="dataset-1">Dataset:</h3>
+<p>A combination of product images from e-commerce platforms and the Behance Artistic Media Dataset (https://bam-dataset.org/)</p>
+</section>
+<section id="production-considerations-1" class="level3">
+<h3 class="anchored" data-anchor-id="production-considerations-1">Production Considerations</h3>
+<ul>
+<li>Use distributed computing for handling multiple design generation requests</li>
+<li>Implement version control for design iterations</li>
+<li>Ensure proper licensing and attribution for generated designs</li>
+<li>Set up a human-in-the-loop system for final design approval</li>
+</ul>
+</section>
+</section>
+<section id="generative-ai-for-synthetic-data-in-finance" class="level2">
+<h2 class="anchored" data-anchor-id="generative-ai-for-synthetic-data-in-finance">Generative AI for Synthetic Data in Finance</h2>
+<section id="project-goal-2" class="level3">
+<h3 class="anchored" data-anchor-id="project-goal-2">Project Goal:</h3>
+<p>Develop a system that generates synthetic financial data for testing and development of financial models, ensuring privacy and regulatory compliance.</p>
+</section>
+<section id="steps-2" class="level3">
+<h3 class="anchored" data-anchor-id="steps-2">Steps</h3>
+<section id="data-collection-2" class="level4">
+<h4 class="anchored" data-anchor-id="data-collection-2">Data Collection</h4>
+<ul>
+<li>Gather historical financial data (e.g., transaction records, market data)</li>
+<li>Collect metadata on data distributions and relationships</li>
+<li>Obtain regulatory guidelines on data privacy and synthetic data use</li>
+</ul>
+</section>
+<section id="data-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="data-analysis">Data Analysis</h4>
+<ul>
+<li>Perform statistical analysis of real data distributions</li>
+<li>Identify key features and relationships to preserve</li>
+<li>Conduct privacy risk assessment on original data</li>
+</ul>
+</section>
+<section id="model-development-2" class="level4">
+<h4 class="anchored" data-anchor-id="model-development-2">Model Development</h4>
+<ul>
+<li>Implement a Variational Autoencoder (VAE) for generating tabular data</li>
+<li>Develop a time series generation model (e.g., TimeGAN)</li>
+<li>Create a differential privacy layer to ensure privacy guarantees</li>
+</ul>
+</section>
+<section id="synthetic-data-generation" class="level4">
+<h4 class="anchored" data-anchor-id="synthetic-data-generation">Synthetic Data Generation</h4>
+<ul>
+<li>Develop a pipeline for generating diverse datasets</li>
+<li>Implement constraints to ensure data validity and consistency</li>
+<li>Create mechanisms for controlling data characteristics (e.g., rare event frequency)</li>
+</ul>
+</section>
+<section id="validation" class="level4">
+<h4 class="anchored" data-anchor-id="validation">Validation</h4>
+<ul>
+<li>Implement statistical tests to compare synthetic vs.&nbsp;real data distributions</li>
+<li>Develop metrics for measuring utility of synthetic data in downstream tasks</li>
+<li>Conduct privacy audits to ensure non-identifiability of individuals</li>
+</ul>
+</section>
+<section id="model-training-comparison" class="level4">
+<h4 class="anchored" data-anchor-id="model-training-comparison">Model Training Comparison</h4>
+<ul>
+<li>Train financial models on both real and synthetic data</li>
+<li>Compare performance metrics and generalization ability</li>
+<li>Analyze model behavior on edge cases and rare events</li>
+</ul>
+</section>
+<section id="deployment-2" class="level4">
+<h4 class="anchored" data-anchor-id="deployment-2">Deployment</h4>
+<ul>
+<li>Set up a secure environment for synthetic data generation</li>
+<li>Implement API endpoints for requesting custom datasets</li>
+<li>Develop a user interface for specifying data generation parameters</li>
+</ul>
+</section>
+<section id="monitoring-and-governance" class="level4">
+<h4 class="anchored" data-anchor-id="monitoring-and-governance">Monitoring and Governance</h4>
+<ul>
+<li>Implement logging and auditing for all data generation requests</li>
+<li>Set up continuous monitoring for data quality and privacy metrics</li>
+<li>Develop a governance framework for synthetic data use within the organization</li>
+</ul>
+</section>
+</section>
+<section id="dataset-2" class="level3">
+<h3 class="anchored" data-anchor-id="dataset-2">Dataset:</h3>
+<p>Historical financial data (e.g., transaction records, market data) and synthetic data generated by the system</p>
+</section>
+<section id="production-considerations-2" class="level3">
+<h3 class="anchored" data-anchor-id="production-considerations-2">Production Considerations</h3>
+<ul>
+<li>Use stream processing frameworks for real-time data handling</li>
+<li>Implement secure data storage and processing environments</li>
+<li>Ensure compliance with financial regulations (e.g., GDPR, AML)</li>
+<li>Set up a system for regular privacy and security audits</li>
+</ul>
+</section>
+</section>
+<section id="ai-powered-virtual-try-on-system" class="level2">
+<h2 class="anchored" data-anchor-id="ai-powered-virtual-try-on-system">AI-Powered Virtual Try-On System</h2>
+<section id="project-goal-3" class="level3">
+<h3 class="anchored" data-anchor-id="project-goal-3">Project Goal:</h3>
+<p>Develop a generative AI system that allows users to virtually try on clothing and accessories in real-time.</p>
+</section>
+<section id="steps-3" class="level3">
+<h3 class="anchored" data-anchor-id="steps-3">Steps</h3>
+<section id="data-collection-3" class="level4">
+<h4 class="anchored" data-anchor-id="data-collection-3">Data Collection</h4>
+<ul>
+<li>Gather a diverse dataset of clothing items and accessories</li>
+<li>Collect human body pose data and 3D scans</li>
+<li>Obtain user images in various poses and lighting conditions</li>
+</ul>
+</section>
+<section id="data-preprocessing-2" class="level4">
+<h4 class="anchored" data-anchor-id="data-preprocessing-2">Data Preprocessing</h4>
+<ul>
+<li>Clean and normalize image data</li>
+<li>Perform semantic segmentation on clothing items</li>
+<li>Extract body keypoints and create 3D mesh models</li>
+</ul>
+</section>
+<section id="model-development-3" class="level4">
+<h4 class="anchored" data-anchor-id="model-development-3">Model Development</h4>
+<ul>
+<li>Implement a Generative Adversarial Network (GAN) for clothing transfer</li>
+<li>Develop a 3D body mesh estimation model</li>
+<li>Create a texture synthesis model for realistic rendering</li>
+</ul>
+</section>
+<section id="pose-estimation-and-alignment" class="level4">
+<h4 class="anchored" data-anchor-id="pose-estimation-and-alignment">Pose Estimation and Alignment</h4>
+<ul>
+<li>Implement a real-time pose estimation algorithm</li>
+<li>Develop a method for aligning clothing items with body pose</li>
+</ul>
+</section>
+<section id="virtual-try-on-pipeline" class="level4">
+<h4 class="anchored" data-anchor-id="virtual-try-on-pipeline">Virtual Try-On Pipeline</h4>
+<ul>
+<li>Create a system for selecting and positioning clothing items</li>
+<li>Implement real-time rendering of virtual try-on results</li>
+<li>Develop a method for handling occlusions and layering</li>
+</ul>
+</section>
+<section id="user-interface" class="level4">
+<h4 class="anchored" data-anchor-id="user-interface">User Interface</h4>
+<ul>
+<li>Design an intuitive UI for clothing selection and customization</li>
+<li>Implement AR capabilities for mobile devices</li>
+<li>Create a virtual dressing room experience</li>
+</ul>
+</section>
+<section id="evaluation-2" class="level4">
+<h4 class="anchored" data-anchor-id="evaluation-2">Evaluation</h4>
+<ul>
+<li>Conduct user studies for realism and satisfaction</li>
+<li>Implement objective metrics for image quality and fit accuracy</li>
+<li>Perform A/B testing to measure impact on user engagement and conversions</li>
+</ul>
+</section>
+<section id="deployment-3" class="level4">
+<h4 class="anchored" data-anchor-id="deployment-3">Deployment</h4>
+<ul>
+<li>Develop a scalable backend using cloud services</li>
+<li>Implement efficient model serving for low-latency predictions</li>
+<li>Create APIs for integration with e-commerce platforms</li>
+</ul>
+</section>
+<section id="monitoring-and-improvement-1" class="level4">
+<h4 class="anchored" data-anchor-id="monitoring-and-improvement-1">Monitoring and Improvement</h4>
+<ul>
+<li>Set up tracking for user interactions and feedback</li>
+<li>Implement continuous learning to improve fit and realism</li>
+<li>Develop a system for handling edge cases (e.g., unusual body types)</li>
+</ul>
+</section>
+</section>
+<section id="dataset-3" class="level3">
+<h3 class="anchored" data-anchor-id="dataset-3">Dataset:</h3>
+<p>A combination of DeepFashion dataset and custom collected data</p>
+</section>
+<section id="production-considerations-3" class="level3">
+<h3 class="anchored" data-anchor-id="production-considerations-3">Production Considerations</h3>
+<ul>
+<li>Use edge computing for on-device processing to reduce latency</li>
+<li>Implement privacy-preserving techniques for user data</li>
+<li>Ensure scalability for handling multiple concurrent users</li>
+<li>Set up A/B testing framework for continuous optimization</li>
+</ul>
+</section>
+</section>
+<section id="generative-ai-for-drug-discovery" class="level2">
+<h2 class="anchored" data-anchor-id="generative-ai-for-drug-discovery">Generative AI for Drug Discovery</h2>
+<section id="project-goal-4" class="level3">
+<h3 class="anchored" data-anchor-id="project-goal-4">Project Goal:</h3>
+<p>Develop a generative AI system for designing novel drug candidates targeting specific proteins.</p>
+</section>
+<section id="steps-4" class="level3">
+<h3 class="anchored" data-anchor-id="steps-4">Steps</h3>
+<section id="data-collection-4" class="level4">
+<h4 class="anchored" data-anchor-id="data-collection-4">Data Collection</h4>
+<ul>
+<li>Gather datasets of known drug-protein interactions</li>
+<li>Collect structural data of target proteins</li>
+<li>Obtain pharmacological and toxicological data of existing drugs</li>
+</ul>
+</section>
+<section id="data-preprocessing-3" class="level4">
+<h4 class="anchored" data-anchor-id="data-preprocessing-3">Data Preprocessing</h4>
+<ul>
+<li>Clean and normalize molecular data</li>
+<li>Perform feature extraction on protein structures</li>
+<li>Create molecular fingerprints and descriptors</li>
+</ul>
+</section>
+<section id="model-development-4" class="level4">
+<h4 class="anchored" data-anchor-id="model-development-4">Model Development</h4>
+<ul>
+<li>Implement a Variational Autoencoder (VAE) for molecular generation</li>
+<li>Develop a Graph Neural Network (GNN) for protein-ligand interaction prediction</li>
+<li>Create a Reinforcement Learning (RL) agent for optimizing drug properties</li>
+</ul>
+</section>
+<section id="molecular-generation" class="level4">
+<h4 class="anchored" data-anchor-id="molecular-generation">Molecular Generation</h4>
+<ul>
+<li>Design a system for generating diverse molecular structures</li>
+<li>Implement constraints for drug-likeness and synthesizability</li>
+<li>Develop methods for targeted generation based on protein structure</li>
+</ul>
+</section>
+<section id="property-prediction" class="level4">
+<h4 class="anchored" data-anchor-id="property-prediction">Property Prediction</h4>
+<ul>
+<li>Create models for predicting ADMET properties (Absorption, Distribution, Metabolism, Excretion, Toxicity)</li>
+<li>Implement a binding affinity prediction model</li>
+<li>Develop a model for predicting potential side effects</li>
+</ul>
+</section>
+<section id="optimization-pipeline" class="level4">
+<h4 class="anchored" data-anchor-id="optimization-pipeline">Optimization Pipeline</h4>
+<ul>
+<li>Design a multi-objective optimization algorithm for drug candidates</li>
+<li>Implement a scoring function incorporating multiple drug properties</li>
+<li>Create a system for iterative refinement of generated molecules</li>
+</ul>
+</section>
+<section id="evaluation-3" class="level4">
+<h4 class="anchored" data-anchor-id="evaluation-3">Evaluation</h4>
+<ul>
+<li>Conduct in silico validation of generated drug candidates</li>
+<li>Implement metrics for novelty, diversity, and validity of generated molecules</li>
+<li>Perform comparative analysis with known drugs and random generation</li>
+</ul>
+</section>
+<section id="deployment-4" class="level4">
+<h4 class="anchored" data-anchor-id="deployment-4">Deployment</h4>
+<ul>
+<li>Develop a web-based interface for drug design exploration</li>
+<li>Implement secure APIs for integration with existing drug discovery pipelines</li>
+<li>Create a distributed computing system for large-scale molecular screening</li>
+</ul>
+</section>
+<section id="monitoring-and-improvement-2" class="level4">
+<h4 class="anchored" data-anchor-id="monitoring-and-improvement-2">Monitoring and Improvement</h4>
+<ul>
+<li>Set up tracking for successful candidates and experimental results</li>
+<li>Implement active learning to improve generation based on wet-lab feedback</li>
+<li>Develop a system for incorporating new scientific discoveries into the model</li>
+</ul>
+</section>
+</section>
+<section id="dataset-4" class="level3">
+<h3 class="anchored" data-anchor-id="dataset-4">Dataset:</h3>
+<p>ChEMBL database, PDBbind dataset, and proprietary pharmaceutical data</p>
+</section>
+<section id="production-considerations-4" class="level3">
+<h3 class="anchored" data-anchor-id="production-considerations-4">Production Considerations</h3>
+<ul>
+<li>Use high-performance computing clusters for large-scale simulations</li>
+<li>Implement strict version control and reproducibility measures</li>
+<li>Ensure compliance with pharmaceutical industry regulations</li>
+<li>Set up collaboration tools for interdisciplinary teams (chemists, biologists, data scientists)</li>
+</ul>
+</section>
+</section>
+<section id="ai-driven-personalized-learning-platform" class="level2">
+<h2 class="anchored" data-anchor-id="ai-driven-personalized-learning-platform">AI-Driven Personalized Learning Platform</h2>
+<section id="project-goal-5" class="level3">
+<h3 class="anchored" data-anchor-id="project-goal-5">Project Goal:</h3>
+<p>Develop a generative AI system that creates personalized learning content and adaptive assessments for students.</p>
+</section>
+<section id="steps-5" class="level3">
+<h3 class="anchored" data-anchor-id="steps-5">Steps</h3>
+<section id="data-collection-5" class="level4">
+<h4 class="anchored" data-anchor-id="data-collection-5">Data Collection</h4>
+<ul>
+<li>Gather educational content across various subjects and difficulty levels</li>
+<li>Collect student performance data and learning patterns</li>
+<li>Obtain curriculum standards and learning objectives</li>
+</ul>
+</section>
+<section id="data-preprocessing-4" class="level4">
+<h4 class="anchored" data-anchor-id="data-preprocessing-4">Data Preprocessing</h4>
+<ul>
+<li>Clean and structure educational content</li>
+<li>Create knowledge graphs of learning concepts</li>
+<li>Develop student proficiency models based on historical data</li>
+</ul>
+</section>
+<section id="model-development-5" class="level4">
+<h4 class="anchored" data-anchor-id="model-development-5">Model Development</h4>
+<ul>
+<li>Implement a large language model for content generation</li>
+<li>Develop a recommendation system for personalized learning paths</li>
+<li>Create an adaptive testing model using Item Response Theory (IRT)</li>
+</ul>
+</section>
+<section id="content-generation" class="level4">
+<h4 class="anchored" data-anchor-id="content-generation">Content Generation</h4>
+<ul>
+<li>Design a system for generating explanations, examples, and practice questions</li>
+<li>Implement methods for controlling difficulty and complexity of generated content</li>
+<li>Develop techniques for ensuring factual accuracy and educational value</li>
+</ul>
+</section>
+<section id="personalization-engine" class="level4">
+<h4 class="anchored" data-anchor-id="personalization-engine">Personalization Engine</h4>
+<ul>
+<li>Create a system for real-time student proficiency estimation</li>
+<li>Implement adaptive learning algorithms for content sequencing</li>
+<li>Develop methods for identifying and addressing knowledge gaps</li>
+</ul>
+</section>
+<section id="assessment-generation" class="level4">
+<h4 class="anchored" data-anchor-id="assessment-generation">Assessment Generation</h4>
+<ul>
+<li>Design an adaptive question generation system</li>
+<li>Implement methods for estimating question difficulty and discrimination</li>
+<li>Develop techniques for generating distractors in multiple-choice questions</li>
+</ul>
+</section>
+<section id="user-interface-1" class="level4">
+<h4 class="anchored" data-anchor-id="user-interface-1">User Interface</h4>
+<ul>
+<li>Create an engaging and intuitive learning interface</li>
+<li>Implement interactive elements for enhanced learning experiences</li>
+<li>Develop dashboards for students, teachers, and administrators</li>
+</ul>
+</section>
+<section id="evaluation-4" class="level4">
+<h4 class="anchored" data-anchor-id="evaluation-4">Evaluation</h4>
+<ul>
+<li>Conduct user studies to measure learning outcomes and engagement</li>
+<li>Implement metrics for content quality, personalization effectiveness, and assessment accuracy</li>
+<li>Perform A/B testing to optimize various aspects of the platform</li>
+</ul>
+</section>
+<section id="deployment-5" class="level4">
+<h4 class="anchored" data-anchor-id="deployment-5">Deployment</h4>
+<ul>
+<li>Develop a scalable cloud-based infrastructure</li>
+<li>Implement efficient content delivery and caching mechanisms</li>
+<li>Create APIs for integration with existing Learning Management Systems (LMS)</li>
+</ul>
+</section>
+<section id="monitoring-and-improvement-3" class="level4">
+<h4 class="anchored" data-anchor-id="monitoring-and-improvement-3">Monitoring and Improvement</h4>
+<ul>
+<li>Set up tracking for student progress and engagement metrics</li>
+<li>Implement continuous learning to improve content generation and personalization</li>
+<li>Develop a feedback loop for incorporating teacher and student input</li>
+</ul>
+</section>
+</section>
+<section id="dataset-5" class="level3">
+<h3 class="anchored" data-anchor-id="dataset-5">Dataset:</h3>
+<p>Open educational resources, anonymized student performance data, and curriculum standards</p>
+</section>
+<section id="production-considerations-5" class="level3">
+<h3 class="anchored" data-anchor-id="production-considerations-5">Production Considerations</h3>
+<ul>
+<li>Ensure strict data privacy and compliance with educational regulations (e.g., FERPA)</li>
+<li>Implement robust security measures to protect student data</li>
+<li>Use microservices architecture for scalability and maintainability</li>
+<li>Set up a content moderation system to ensure appropriateness of generated content</li>
+</ul>
+</section>
+</section>
+</section>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="quarto-dev/quarto-web" data-repo-id="MDEwOlJlcG9zaXRvcnkzNDc2MzMzNTg=" data-category="General" data-category-id="DIC_kwDOFLh2zs4CBQCO" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+</div> <!-- /content -->
+
+
+
+
+</body></html>

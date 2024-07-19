@@ -1,0 +1,2038 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>chapter18_advanced_nlp – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="text-content">
+<section id="chapter-18.-advanced-nlp" class="level2">
+<h2 class="anchored" data-anchor-id="chapter-18.-advanced-nlp">Chapter 18. Advanced NLP</h2>
+<p>Natural Language Processing (NLP) has evolved significantly with the introduction of advanced techniques and models. This chapter delves into some of the most sophisticated methods in NLP, focusing on word embeddings, language models, and their applications.</p>
+<section id="word-embeddings-and-language-models" class="level3">
+<h3 class="anchored" data-anchor-id="word-embeddings-and-language-models">18.1. Word Embeddings and Language Models</h3>
+<p>Word embeddings and language models have transformed the field of NLP by enabling models to understand and generate human language with high accuracy. They capture the semantic and syntactic nuances of words and sentences, providing a robust foundation for various NLP tasks.</p>
+</section>
+<section id="contextual-embeddings-elmo-cove" class="level3">
+<h3 class="anchored" data-anchor-id="contextual-embeddings-elmo-cove">18.1.1. Contextual Embeddings (ELMo, CoVe)</h3>
+<p>Contextual embeddings represent words based on their context within a sentence, capturing different meanings of the same word depending on its usage. Two prominent models for contextual embeddings are ELMo and CoVe.</p>
+<ul>
+<li><strong>ELMo (Embeddings from Language Models):</strong>
+<ul>
+<li>Developed by AllenNLP, ELMo generates word representations using deep bidirectional LSTM (Long Short-Term Memory) networks.</li>
+<li><strong>Key Features:</strong>
+<ul>
+<li><strong>Context-Sensitive:</strong> Produces different embeddings for the same word in different contexts.</li>
+<li><strong>Deep Representations:</strong> Utilizes multiple layers to capture various levels of language information.</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\text{ELMo}_k = \text{LM}_{k}(\text{forward}) + \text{LM}_{k}(\text{backward})
+\]</span> where <span class="math inline">\(\text{LM}_{k}\)</span> represents the language model at layer <span class="math inline">\(k\)</span>.</li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Improves performance on tasks such as question answering, sentiment analysis, and named entity recognition.</li>
+</ul></li>
+</ul></li>
+<li><strong>CoVe (Context Vectors):</strong>
+<ul>
+<li>Developed by Salesforce, CoVe uses a sequence-to-sequence model trained on translation tasks to produce contextual embeddings.</li>
+<li><strong>Key Features:</strong>
+<ul>
+<li><strong>Transfer Learning:</strong> Leverages knowledge from translation tasks to improve contextual understanding.</li>
+<li><strong>Bidirectional LSTMs:</strong> Captures forward and backward dependencies in text.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Enhances downstream tasks like text classification and machine translation.</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="ulmfit-universal-language-model-fine-tuning" class="level3">
+<h3 class="anchored" data-anchor-id="ulmfit-universal-language-model-fine-tuning">18.1.2. ULMFiT (Universal Language Model Fine-tuning)</h3>
+<p>ULMFiT is a transfer learning method for NLP that fine-tunes a pre-trained language model on a target task, significantly improving performance even with limited data.</p>
+<ul>
+<li><strong>Key Components:</strong>
+<ul>
+<li><strong>Pre-trained Language Model:</strong> A language model pre-trained on a large corpus (e.g., Wikipedia) to capture general language features.</li>
+<li><strong>Fine-Tuning:</strong> The pre-trained model is fine-tuned on the target task dataset, adapting it to the specific nuances of the task.</li>
+<li><strong>Discriminative Fine-Tuning:</strong> Fine-tunes each layer of the model at different rates, allowing more flexible adaptation.</li>
+<li><strong>Slanted Triangular Learning Rates:</strong> Uses a learning rate schedule that first increases then decreases, facilitating better convergence.</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li><strong>Language Model Objective:</strong> <span class="math display">\[
+\mathcal{L}_{\text{LM}} = -\sum_{t} \log P(w_t | w_{1:t-1})
+\]</span> where <span class="math inline">\(P(w_t | w_{1:t-1})\)</span> is the probability of word <span class="math inline">\(w_t\)</span> given the previous words in the sequence.</li>
+<li><strong>Task-Specific Objective:</strong> <span class="math display">\[
+\mathcal{L}_{\text{task}} = \mathcal{L}_{\text{classification}} + \alpha \mathcal{L}_{\text{LM}}
+\]</span> where <span class="math inline">\(\alpha\)</span> is a weight controlling the influence of the language model loss.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li><strong>Few-shot Learning:</strong> Achieves high performance with limited labeled data.</li>
+<li><strong>Task Flexibility:</strong> Can be applied to various NLP tasks such as text classification, sentiment analysis, and question answering.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li><strong>Text Classification:</strong> Significantly improves accuracy and robustness.</li>
+<li><strong>Sentiment Analysis:</strong> Enhances the ability to understand nuanced sentiment expressions.</li>
+<li><strong>Question Answering:</strong> Boosts the performance of models in understanding and generating accurate answers.</li>
+</ul></li>
+</ul>
+<p>By understanding these advanced word embedding and language modeling techniques, researchers and practitioners can develop more sophisticated NLP applications, pushing the boundaries of what is achievable with language understanding and generation.</p>
+</section>
+<section id="transformer-based-models" class="level3">
+<h3 class="anchored" data-anchor-id="transformer-based-models">18.2. Transformer-based Models</h3>
+<p>Transformer-based models have revolutionized NLP by leveraging self-attention mechanisms to handle long-range dependencies and parallelize training. This section covers some of the most influential transformer-based models, including BERT, GPT, T5, and ELECTRA.</p>
+</section>
+<section id="bert-and-its-variants" class="level3">
+<h3 class="anchored" data-anchor-id="bert-and-its-variants">18.2.1. BERT and Its Variants</h3>
+<p>BERT (Bidirectional Encoder Representations from Transformers) introduced a new paradigm in NLP by pre-training a bidirectional transformer on large text corpora and fine-tuning it for specific downstream tasks.</p>
+<section id="pre-training-objectives-mlm-nsp" class="level4">
+<h4 class="anchored" data-anchor-id="pre-training-objectives-mlm-nsp">18.2.1.1. Pre-training Objectives (MLM, NSP)</h4>
+<p>BERT uses two primary pre-training objectives:</p>
+<ul>
+<li><strong>Masked Language Modeling (MLM):</strong>
+<ul>
+<li>Randomly masks some tokens in the input and trains the model to predict these masked tokens.</li>
+<li><strong>Objective:</strong> <span class="math display">\[
+\mathcal{L}_{\text{MLM}} = -\sum_{i \in \text{masked tokens}} \log P(x_i | x_{\setminus i})
+\]</span> where <span class="math inline">\(x_i\)</span> is the masked token and <span class="math inline">\(x_{\setminus i}\)</span> are the unmasked tokens.</li>
+</ul></li>
+<li><strong>Next Sentence Prediction (NSP):</strong>
+<ul>
+<li>Trains the model to understand the relationship between sentences by predicting whether a given sentence follows another sentence.</li>
+<li><strong>Objective:</strong> <span class="math display">\[
+\mathcal{L}_{\text{NSP}} = -\sum \left[ y \log P(y=1|s_1, s_2) + (1-y) \log P(y=0|s_1, s_2) \right]
+\]</span> where <span class="math inline">\(y\)</span> is a binary label indicating whether <span class="math inline">\(s_2\)</span> follows <span class="math inline">\(s_1\)</span>.</li>
+</ul></li>
+</ul>
+</section>
+<section id="fine-tuning-for-downstream-tasks" class="level4">
+<h4 class="anchored" data-anchor-id="fine-tuning-for-downstream-tasks">18.2.1.2. Fine-tuning for Downstream Tasks</h4>
+<p>BERT can be fine-tuned for various downstream tasks by adding task-specific layers and training the model on task-specific data.</p>
+<ul>
+<li><strong>Common Tasks:</strong>
+<ul>
+<li><strong>Text Classification:</strong> Adding a classification layer on top of BERT for tasks like sentiment analysis.</li>
+<li><strong>Named Entity Recognition (NER):</strong> Adding a sequence tagging layer for identifying entities in text.</li>
+<li><strong>Question Answering:</strong> Using BERT to extract answers from passages by predicting the start and end positions of the answer.</li>
+</ul></li>
+<li><strong>Fine-tuning Process:</strong>
+<ul>
+<li>Initialize the model with pre-trained BERT weights.</li>
+<li>Add task-specific layers (e.g., a fully connected layer for classification).</li>
+<li>Train on task-specific data with a suitable loss function.</li>
+</ul></li>
+</ul>
+</section>
+<section id="roberta-albert-distilbert" class="level4">
+<h4 class="anchored" data-anchor-id="roberta-albert-distilbert">18.2.1.3. RoBERTa, ALBERT, DistilBERT</h4>
+<p>Several variants of BERT have been developed to improve performance, efficiency, and scalability.</p>
+<ul>
+<li><strong>RoBERTa (Robustly optimized BERT approach):</strong>
+<ul>
+<li>Enhances BERT by training on more data, removing the NSP objective, and using longer sequences.</li>
+<li><strong>Improvements:</strong> Better performance on a range of NLP tasks.</li>
+</ul></li>
+<li><strong>ALBERT (A Lite BERT):</strong>
+<ul>
+<li>Reduces the number of parameters by sharing parameters across layers and factorizing the embedding matrix.</li>
+<li><strong>Advantages:</strong> More efficient training and inference with minimal performance loss.</li>
+</ul></li>
+<li><strong>DistilBERT:</strong>
+<ul>
+<li>Applies knowledge distillation to reduce the size of BERT by 40%, while retaining 97% of its language understanding capabilities.</li>
+<li><strong>Advantages:</strong> Faster inference and lower memory usage.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="gpt-models-gpt-gpt-2-gpt-3" class="level3">
+<h3 class="anchored" data-anchor-id="gpt-models-gpt-gpt-2-gpt-3">18.2.2. GPT Models (GPT, GPT-2, GPT-3)</h3>
+<p>The GPT (Generative Pre-trained Transformer) series, developed by OpenAI, focuses on autoregressive language modeling, enabling powerful text generation capabilities.</p>
+<section id="autoregressive-language-modeling" class="level4">
+<h4 class="anchored" data-anchor-id="autoregressive-language-modeling">18.2.2.1. Autoregressive Language Modeling</h4>
+<p>GPT models predict the next token in a sequence given the previous tokens, generating coherent and contextually relevant text.</p>
+<ul>
+<li><strong>Objective:</strong> <span class="math display">\[
+\mathcal{L}_{\text{LM}} = -\sum_{t=1}^T \log P(x_t | x_{1:t-1})
+\]</span> where <span class="math inline">\(x_t\)</span> is the token at position <span class="math inline">\(t\)</span> and <span class="math inline">\(x_{1:t-1}\)</span> are the preceding tokens.</li>
+</ul>
+</section>
+<section id="few-shot-and-zero-shot-capabilities" class="level4">
+<h4 class="anchored" data-anchor-id="few-shot-and-zero-shot-capabilities">18.2.2.2. Few-shot and Zero-shot Capabilities</h4>
+<p>GPT-2 and GPT-3 demonstrate few-shot and zero-shot learning capabilities, where the model can perform tasks with minimal or no task-specific training data.</p>
+<ul>
+<li><strong>Few-shot Learning:</strong> The model is given a few examples of a task during inference to guide its behavior.</li>
+<li><strong>Zero-shot Learning:</strong> The model performs tasks it has not been explicitly trained on by leveraging its general language understanding.</li>
+</ul>
+</section>
+</section>
+<section id="t5-text-to-text-transfer-transformer" class="level3">
+<h3 class="anchored" data-anchor-id="t5-text-to-text-transfer-transformer">18.2.3. T5 (Text-to-Text Transfer Transformer)</h3>
+<p>T5 treats all NLP tasks as text-to-text problems, unifying the architecture for a wide range of tasks.</p>
+<ul>
+<li><strong>Unified Framework:</strong>
+<ul>
+<li>Converts inputs into text format, processes them with the transformer model, and outputs the text format.</li>
+<li><strong>Examples:</strong>
+<ul>
+<li><strong>Translation:</strong> Input: “Translate English to French: The book is on the table.” Output: “Le livre est sur la table.”</li>
+<li><strong>Summarization:</strong> Input: “Summarize: The book is on the table. It is a bestseller.” Output: “The book is a bestseller.”</li>
+</ul></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Simplifies the architecture for multiple tasks.</li>
+<li>Demonstrates strong performance across various benchmarks.</li>
+</ul></li>
+</ul>
+</section>
+<section id="electra-efficiently-learning-an-encoder-that-classifies-token-replacements-accurately" class="level3">
+<h3 class="anchored" data-anchor-id="electra-efficiently-learning-an-encoder-that-classifies-token-replacements-accurately">18.2.4. ELECTRA (Efficiently Learning an Encoder that Classifies Token Replacements Accurately)</h3>
+<p>ELECTRA introduces a new pre-training task where a discriminator is trained to distinguish between real and replaced tokens, significantly improving sample efficiency.</p>
+<ul>
+<li><strong>Pre-training Task:</strong>
+<ul>
+<li>Replaces some tokens in the input with incorrect tokens generated by a generator.</li>
+<li>The discriminator predicts whether each token is real or replaced.</li>
+<li><strong>Objective:</strong> <span class="math display">\[
+\mathcal{L}_{\text{ELECTRA}} = -\sum_{t=1}^T \left[ y_t \log P(y_t=1|x_t) + (1-y_t) \log P(y_t=0|x_t) \right]
+\]</span> where <span class="math inline">\(y_t\)</span> is a binary label indicating if the token <span class="math inline">\(x_t\)</span> is real or replaced.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>More efficient pre-training than MLM, as the discriminator learns from every token instead of just the masked ones.</li>
+<li>Achieves competitive performance with fewer computational resources.</li>
+</ul></li>
+</ul>
+<p>By understanding these advanced transformer-based models and their variants, researchers and practitioners can leverage state-of-the-art techniques to tackle complex NLP tasks, advancing the field of natural language processing.</p>
+</section>
+<section id="sequence-to-sequence-models" class="level3">
+<h3 class="anchored" data-anchor-id="sequence-to-sequence-models">18.3. Sequence-to-Sequence Models</h3>
+<p>Sequence-to-sequence (seq2seq) models are a class of models designed to transform one sequence into another, such as translating sentences from one language to another or converting speech to text. They are fundamental in tasks like machine translation, text summarization, and conversational AI.</p>
+</section>
+<section id="encoder-decoder-architecture" class="level3">
+<h3 class="anchored" data-anchor-id="encoder-decoder-architecture">18.3.1. Encoder-Decoder Architecture</h3>
+<p>The encoder-decoder architecture forms the basis of seq2seq models. It consists of two main components:</p>
+<ul>
+<li><strong>Encoder:</strong>
+<ul>
+<li>Processes the input sequence and compresses it into a fixed-size context vector (also called a thought vector).</li>
+<li><strong>Structure:</strong> Typically an RNN (e.g., LSTM or GRU), Transformer, or other suitable architectures.</li>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+h_t = \text{EncoderRNN}(x_t, h_{t-1})
+\]</span> where <span class="math inline">\(x_t\)</span> is the input at time step <span class="math inline">\(t\)</span>, and <span class="math inline">\(h_t\)</span> is the hidden state at time step <span class="math inline">\(t\)</span>.</li>
+</ul></li>
+<li><strong>Decoder:</strong>
+<ul>
+<li>Takes the context vector and generates the output sequence step-by-step.</li>
+<li><strong>Structure:</strong> Similarly, an RNN, Transformer, or other suitable architectures.</li>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+s_t = \text{DecoderRNN}(y_{t-1}, s_{t-1}, c)
+\]</span> where <span class="math inline">\(y_{t-1}\)</span> is the previous output, <span class="math inline">\(s_t\)</span> is the current hidden state, and <span class="math inline">\(c\)</span> is the context vector.</li>
+</ul></li>
+</ul>
+</section>
+<section id="attention-mechanisms-in-seq2seq-models" class="level3">
+<h3 class="anchored" data-anchor-id="attention-mechanisms-in-seq2seq-models">18.3.2. Attention Mechanisms in Seq2Seq Models</h3>
+<p>Attention mechanisms address the limitation of compressing all input information into a single context vector by allowing the decoder to focus on different parts of the input sequence at each decoding step.</p>
+<ul>
+<li><strong>Mechanism:</strong>
+<ul>
+<li><p>Computes a set of attention weights that indicate the importance of each input token relative to the current output token being generated.</p></li>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\alpha_{ij} = \frac{\exp(e_{ij})}{\sum_{k=1}^n \exp(e_{ik})}
+\]</span> where <span class="math inline">\(e_{ij}\)</span> is the alignment score between the <span class="math inline">\(i\)</span>-th input and <span class="math inline">\(j\)</span>-th output.</p></li>
+<li><p><strong>Common Alignment Functions:</strong></p>
+<ul>
+<li><strong>Dot Product:</strong> <span class="math inline">\(e_{ij} = h_i^\top s_{j-1}\)</span></li>
+<li><strong>Scaled Dot Product:</strong> <span class="math inline">\(e_{ij} = \frac{h_i^\top s_{j-1}}{\sqrt{d}}\)</span></li>
+<li><strong>Additive (Bahdanau) Attention:</strong> <span class="math inline">\(e_{ij} = v^\top \tanh(W[h_i; s_{j-1}])\)</span></li>
+</ul></li>
+<li><p><strong>Context Vector:</strong> <span class="math display">\[
+c_j = \sum_{i=1}^n \alpha_{ij} h_i
+\]</span></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="beam-search-decoding" class="level3">
+<h3 class="anchored" data-anchor-id="beam-search-decoding">18.3.3. Beam Search Decoding</h3>
+<p>Beam search is a heuristic search algorithm that explores a graph by expanding the most promising nodes in a limited set. It is widely used in seq2seq models for generating sequences, particularly in tasks like machine translation and text generation.</p>
+<ul>
+<li><strong>Mechanism:</strong>
+<ul>
+<li>At each time step, keep track of the top <span class="math inline">\(k\)</span> sequences (beams) based on their cumulative probabilities.</li>
+<li>Expand each beam by all possible next tokens, and keep only the top <span class="math inline">\(k\)</span> resulting sequences.</li>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+P(Y) = \prod_{t=1}^T P(y_t | y_{1:t-1}, X)
+\]</span> where <span class="math inline">\(P(Y)\)</span> is the probability of the sequence <span class="math inline">\(Y\)</span> given the input <span class="math inline">\(X\)</span>, and <span class="math inline">\(y_t\)</span> is the token at time step <span class="math inline">\(t\)</span>.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Balances the exploration and exploitation of the search space, producing high-quality sequences.</li>
+</ul></li>
+</ul>
+</section>
+<section id="copy-mechanism" class="level3">
+<h3 class="anchored" data-anchor-id="copy-mechanism">18.3.4. Copy Mechanism</h3>
+<p>The copy mechanism enhances seq2seq models by allowing them to copy words directly from the input sequence to the output sequence. This is particularly useful in tasks where the output sequence shares many tokens with the input sequence, such as summarization and dialogue generation.</p>
+<ul>
+<li><strong>Mechanism:</strong>
+<ul>
+<li>Adds a copy probability to each token, combining generation and copying probabilities.</li>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+P(y_t | y_{1:t-1}, X) = p_{\text{gen}} P_{\text{gen}}(y_t | y_{1:t-1}, X) + p_{\text{copy}} P_{\text{copy}}(y_t | y_{1:t-1}, X)
+\]</span> where <span class="math inline">\(p_{\text{gen}}\)</span> is the generation probability and <span class="math inline">\(p_{\text{copy}}\)</span> is the copy probability.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li><strong>Text Summarization:</strong> Helps in accurately copying key phrases and named entities.</li>
+<li><strong>Dialogue Systems:</strong> Enables the model to repeat user inputs where necessary.</li>
+</ul></li>
+</ul>
+<p>By understanding these advanced seq2seq model components, researchers and practitioners can develop more effective and robust systems for a wide range of sequence transformation tasks, pushing the boundaries of what is achievable with modern NLP.</p>
+</section>
+<section id="transfer-learning-in-nlp" class="level3">
+<h3 class="anchored" data-anchor-id="transfer-learning-in-nlp">18.4. Transfer Learning in NLP</h3>
+<p>Transfer learning in NLP involves leveraging pre-trained models on large-scale datasets and fine-tuning them on specific downstream tasks. This approach significantly improves performance and reduces training time, especially when task-specific labeled data is limited.</p>
+</section>
+<section id="fine-tuning-pre-trained-models" class="level3">
+<h3 class="anchored" data-anchor-id="fine-tuning-pre-trained-models">18.4.1. Fine-Tuning Pre-Trained Models</h3>
+<p>Fine-tuning involves taking a pre-trained model, which has learned general language representations, and adapting it to a specific task by training it on a smaller, task-specific dataset.</p>
+<ul>
+<li><strong>Steps for Fine-Tuning:</strong>
+<ul>
+<li><strong>Initialize with Pre-trained Weights:</strong> Start with a model pre-trained on a large corpus (e.g., BERT, GPT).</li>
+<li><strong>Add Task-Specific Layers:</strong> Introduce additional layers required for the target task, such as a classification layer for sentiment analysis.</li>
+<li><strong>Train on Task Data:</strong> Fine-tune the entire model or specific layers using task-specific data.</li>
+</ul></li>
+<li><strong>Example Workflow:</strong>
+<ol type="1">
+<li><p><strong>Load Pre-trained Model:</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> BertModel, BertTokenizer</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> BertModel.from_pretrained(<span class="st">'bert-base-uncased'</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> BertTokenizer.from_pretrained(<span class="st">'bert-base-uncased'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Add Task-Specific Layer:</strong></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch <span class="im">import</span> nn</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> SentimentClassifier(nn.Module):</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, bert):</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>(SentimentClassifier, <span class="va">self</span>).<span class="fu">__init__</span>()</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.bert <span class="op">=</span> bert</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.drop <span class="op">=</span> nn.Dropout(p<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.out <span class="op">=</span> nn.Linear(bert.config.hidden_size, <span class="dv">1</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, input_ids, attention_mask):</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        outputs <span class="op">=</span> <span class="va">self</span>.bert(input_ids<span class="op">=</span>input_ids, attention_mask<span class="op">=</span>attention_mask)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        output <span class="op">=</span> <span class="va">self</span>.drop(outputs.pooler_output)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.out(output)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Fine-Tune Model:</strong></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AdamW</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> AdamW(model.parameters(), lr<span class="op">=</span><span class="fl">2e-5</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(epochs):</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> batch <span class="kw">in</span> data_loader:</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        inputs <span class="op">=</span> batch[<span class="st">'input_ids'</span>].to(device)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        labels <span class="op">=</span> batch[<span class="st">'labels'</span>].to(device)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        outputs <span class="op">=</span> model(inputs, attention_mask<span class="op">=</span>batch[<span class="st">'attention_mask'</span>].to(device))</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        loss <span class="op">=</span> loss_fn(outputs, labels)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        loss.backward()</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        optimizer.step()</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        optimizer.zero_grad()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ol></li>
+<li><strong>Benefits:</strong>
+<ul>
+<li><strong>Reduced Training Time:</strong> Pre-trained models have already learned useful representations, requiring less task-specific data and training time.</li>
+<li><strong>Improved Performance:</strong> Fine-tuning leverages extensive pre-training, often resulting in superior performance compared to training from scratch.</li>
+</ul></li>
+</ul>
+</section>
+<section id="domain-adaptation-techniques" class="level3">
+<h3 class="anchored" data-anchor-id="domain-adaptation-techniques">18.4.2. Domain Adaptation Techniques</h3>
+<p>Domain adaptation involves adjusting a model trained on a source domain to perform well on a target domain, which might have different characteristics or distributions.</p>
+<ul>
+<li><strong>Techniques for Domain Adaptation:</strong>
+<ul>
+<li><strong>Unsupervised Domain Adaptation:</strong> Adapt the model using unlabeled data from the target domain.
+<ul>
+<li><strong>Adversarial Training:</strong> Train the model to minimize the discrepancy between source and target domain representations.</li>
+<li><strong>Domain-Adversarial Neural Networks (DANN):</strong> Incorporate a domain classifier with a gradient reversal layer to align source and target domain feature distributions.</li>
+</ul></li>
+<li><strong>Supervised Domain Adaptation:</strong> Utilize a small amount of labeled data from the target domain to fine-tune the model.
+<ul>
+<li><strong>Fine-Tuning with Target Data:</strong> Start with a pre-trained model and fine-tune it on the labeled target domain data.</li>
+<li><strong>Multi-Task Learning:</strong> Simultaneously train on source and target tasks, sharing representations across tasks to improve generalization.</li>
+</ul></li>
+</ul></li>
+<li><strong>Example Techniques:</strong>
+<ul>
+<li><p><strong>Adversarial Training for Domain Adaptation:</strong></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> DomainAdversarialNN(nn.Module):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, feature_extractor, label_predictor, domain_classifier):</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>(DomainAdversarialNN, <span class="va">self</span>).<span class="fu">__init__</span>()</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.feature_extractor <span class="op">=</span> feature_extractor</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.label_predictor <span class="op">=</span> label_predictor</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.domain_classifier <span class="op">=</span> domain_classifier</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, input_data):</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        features <span class="op">=</span> <span class="va">self</span>.feature_extractor(input_data)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        class_output <span class="op">=</span> <span class="va">self</span>.label_predictor(features)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        domain_output <span class="op">=</span> <span class="va">self</span>.domain_classifier(features)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> class_output, domain_output</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li><strong>Sentiment Analysis:</strong> Adapting models trained on product reviews to analyze movie reviews.</li>
+<li><strong>Named Entity Recognition (NER):</strong> Transferring models from general text corpora to specialized domains like medical or legal documents.</li>
+</ul></li>
+<li><strong>Challenges:</strong>
+<ul>
+<li><strong>Domain Shift:</strong> Differences in data distributions between source and target domains can degrade performance.</li>
+<li><strong>Limited Target Data:</strong> Often, the target domain may have limited labeled data, necessitating effective adaptation techniques.</li>
+</ul></li>
+</ul>
+<p>By leveraging fine-tuning and domain adaptation techniques, researchers and practitioners can enhance the adaptability and performance of NLP models across diverse tasks and domains, pushing the boundaries of what is achievable with transfer learning in NLP.</p>
+</section>
+<section id="multi-task-learning-in-nlp" class="level3">
+<h3 class="anchored" data-anchor-id="multi-task-learning-in-nlp">18.5. Multi-task Learning in NLP</h3>
+<p>Multi-task learning (MTL) in NLP involves training a model on multiple related tasks simultaneously, leveraging shared representations to improve generalization and performance across tasks.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Shared Layers:</strong> Common layers shared across all tasks to capture general features.</li>
+<li><strong>Task-Specific Layers:</strong> Separate layers for each task to capture task-specific features and make predictions.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li><strong>Improved Generalization:</strong> Sharing representations helps the model generalize better to new tasks or unseen data.</li>
+<li><strong>Reduced Overfitting:</strong> Regularization effect from learning multiple tasks reduces the risk of overfitting to a single task.</li>
+<li><strong>Efficient Use of Data:</strong> Utilizes labeled data from multiple tasks, which can be especially beneficial when data is scarce.</li>
+</ul></li>
+<li><strong>Example Workflow:</strong>
+<ol type="1">
+<li><p><strong>Define Shared and Task-Specific Components:</strong></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MultiTaskModel(nn.Module):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, shared_layers, task_specific_layers):</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>(MultiTaskModel, <span class="va">self</span>).<span class="fu">__init__</span>()</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.shared_layers <span class="op">=</span> shared_layers</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.task_specific_layers <span class="op">=</span> task_specific_layers</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x, task_id):</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        shared_output <span class="op">=</span> <span class="va">self</span>.shared_layers(x)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        task_output <span class="op">=</span> <span class="va">self</span>.task_specific_layers[task_id](shared_output)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> task_output</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Training Process:</strong></p>
+<ul>
+<li><strong>Loss Calculation:</strong> Compute a combined loss from all tasks.</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>total_loss <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> task_id, (inputs, labels) <span class="kw">in</span> <span class="bu">enumerate</span>(task_data_loaders):</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    outputs <span class="op">=</span> model(inputs, task_id)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> loss_fn(outputs, labels)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    total_loss <span class="op">+=</span> loss</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ol></li>
+<li><strong>Applications:</strong>
+<ul>
+<li><strong>Text Classification and NER:</strong> Jointly training for sentiment analysis and named entity recognition.</li>
+<li><strong>Translation and Summarization:</strong> Simultaneously learning to translate and summarize texts.</li>
+</ul></li>
+</ul>
+</section>
+<section id="zero-shot-and-few-shot-learning-in-nlp" class="level3">
+<h3 class="anchored" data-anchor-id="zero-shot-and-few-shot-learning-in-nlp">18.6. Zero-shot and Few-shot Learning in NLP</h3>
+<p>Zero-shot and few-shot learning techniques enable models to perform tasks with little or no task-specific training data, leveraging prior knowledge and generalization capabilities.</p>
+<section id="meta-learning-approaches" class="level4">
+<h4 class="anchored" data-anchor-id="meta-learning-approaches">18.6.1. Meta-Learning Approaches</h4>
+<p>Meta-learning involves training models on a variety of tasks to learn task-agnostic knowledge, which can be quickly adapted to new tasks with minimal data.</p>
+<ul>
+<li><strong>Model-Agnostic Meta-Learning (MAML):</strong>
+<ul>
+<li><strong>Objective:</strong> Learn an initialization that can be fine-tuned to new tasks with few gradient steps.</li>
+<li><strong>Training Process:</strong>
+<ul>
+<li><strong>Inner Loop:</strong> Adapt the model to each task using a few training examples.</li>
+<li><strong>Outer Loop:</strong> Update the model parameters to perform well on all tasks after adaptation.</li>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\theta = \theta - \beta \nabla_{\theta} \sum_{T_i} \mathcal{L}_{T_i} (f_{\theta - \alpha \nabla_{\theta} \mathcal{L}_{T_i} (f_{\theta})})
+\]</span></li>
+</ul></li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li><strong>Text Classification:</strong> Adapting to new text classification tasks with minimal labeled data.</li>
+<li><strong>NER:</strong> Quickly learning to recognize new types of entities with few examples.</li>
+</ul></li>
+</ul>
+</section>
+<section id="prompt-based-learning" class="level4">
+<h4 class="anchored" data-anchor-id="prompt-based-learning">18.6.2. Prompt-Based Learning</h4>
+<p>Prompt-based learning involves using prompts to guide the model to perform tasks, leveraging the model’s pre-trained knowledge to generate relevant outputs.</p>
+<ul>
+<li><strong>Prompt Engineering:</strong>
+<ul>
+<li><strong>Design Prompts:</strong> Create prompts that frame the task in a way that the model can understand.</li>
+<li><strong>Examples:</strong>
+<ul>
+<li><strong>Sentiment Analysis:</strong> “Classify the sentiment of the following review: [REVIEW]”</li>
+<li><strong>NER:</strong> “Identify the entities in the following sentence: [SENTENCE]”</li>
+</ul></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li><strong>Zero-shot Capability:</strong> Allows models to perform tasks without explicit task-specific training.</li>
+<li><strong>Flexibility:</strong> Easily adapts to different tasks by changing the prompt.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li><strong>Text Generation:</strong> Generating responses in conversational AI.</li>
+<li><strong>Text Classification:</strong> Classifying texts based on prompts.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="multilingual-and-cross-lingual-models" class="level3">
+<h3 class="anchored" data-anchor-id="multilingual-and-cross-lingual-models">18.7. Multilingual and Cross-lingual Models</h3>
+<p>Multilingual and cross-lingual models aim to perform tasks across multiple languages, enabling transfer of knowledge between languages and improving performance in low-resource languages.</p>
+<section id="mbert-multilingual-bert" class="level4">
+<h4 class="anchored" data-anchor-id="mbert-multilingual-bert">18.7.1. mBERT (Multilingual BERT)</h4>
+<p>mBERT is a multilingual version of BERT, pre-trained on a large corpus of text in multiple languages, and fine-tuned for various NLP tasks.</p>
+<ul>
+<li><strong>Pre-training:</strong>
+<ul>
+<li><strong>Data:</strong> Uses Wikipedia text in multiple languages.</li>
+<li><strong>Architecture:</strong> Similar to BERT but trained with multilingual data.</li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Cross-lingual text classification.</li>
+<li>Multilingual question answering.</li>
+</ul></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li><strong>Cross-lingual Transfer:</strong> Ability to transfer knowledge between languages.</li>
+<li><strong>Multilingual Capability:</strong> Single model for multiple languages, reducing the need for separate models.</li>
+</ul></li>
+</ul>
+</section>
+<section id="xlm-cross-lingual-language-model" class="level4">
+<h4 class="anchored" data-anchor-id="xlm-cross-lingual-language-model">18.7.2. XLM (Cross-lingual Language Model)</h4>
+<p>XLM enhances cross-lingual pre-training by using both MLM and a translation language modeling (TLM) objective, enabling better alignment of multilingual embeddings.</p>
+<ul>
+<li><strong>Training Objectives:</strong>
+<ul>
+<li><strong>MLM:</strong> Masked Language Modeling.</li>
+<li><strong>TLM:</strong> Translation Language Modeling - pairs sentences in different languages for pre-training.</li>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\mathcal{L}_{\text{TLM}} = -\sum_{i \in \text{masked tokens}} \log P(x_i | x_{\setminus i}, x'_{\setminus i})
+\]</span> where <span class="math inline">\(x'\)</span> is the paired sentence in another language.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Cross-lingual text classification.</li>
+<li>Translation and multilingual tasks.</li>
+</ul></li>
+</ul>
+</section>
+<section id="xlm-r-xlm-roberta" class="level4">
+<h4 class="anchored" data-anchor-id="xlm-r-xlm-roberta">18.7.3. XLM-R (XLM-RoBERTa)</h4>
+<p>XLM-RoBERTa is an extension of XLM, pre-trained on a more diverse and larger multilingual corpus, improving performance across languages.</p>
+<ul>
+<li><strong>Training Data:</strong>
+<ul>
+<li>Uses CommonCrawl data in multiple languages, significantly larger than the Wikipedia corpus used in mBERT.</li>
+</ul></li>
+<li><strong>Performance:</strong>
+<ul>
+<li><strong>Improvements:</strong> Achieves state-of-the-art performance on many multilingual benchmarks.</li>
+<li><strong>Applications:</strong> Suitable for cross-lingual understanding and transfer tasks.</li>
+</ul></li>
+</ul>
+<p>By understanding these advanced techniques in transfer learning, multilingual models, and meta-learning, researchers and practitioners can develop robust NLP systems capable of handling a wide variety of tasks across different languages and domains, pushing the boundaries of what is achievable with modern NLP.</p>
+</section>
+</section>
+<section id="question-answering-systems" class="level3">
+<h3 class="anchored" data-anchor-id="question-answering-systems">18.8. Question Answering Systems</h3>
+<p>Question Answering (QA) systems aim to automatically answer questions posed by humans in natural language. They can be broadly categorized into extractive, generative, and multi-hop QA systems.</p>
+</section>
+<section id="extractive-qa" class="level3">
+<h3 class="anchored" data-anchor-id="extractive-qa">18.8.1. Extractive QA</h3>
+<p>Extractive QA systems find and extract the relevant span of text from a given context or document to answer a question.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Context Encoder:</strong> Encodes the context passage using models like BERT.</li>
+<li><strong>Question Encoder:</strong> Encodes the question using the same or a similar model.</li>
+<li><strong>Span Prediction:</strong> Uses a span predictor to identify the start and end positions of the answer in the context.</li>
+</ul></li>
+<li><strong>Example Models:</strong>
+<ul>
+<li><strong>BERT for QA:</strong> Fine-tuned BERT models to predict the start and end tokens of the answer span.</li>
+<li><strong>Objective:</strong> <span class="math display">\[
+\mathcal{L}_{\text{QA}} = \frac{1}{N} \sum_{i=1}^{N} \left( \log P_{\text{start}}(y_{\text{start}}^i | C, Q) + \log P_{\text{end}}(y_{\text{end}}^i | C, Q) \right)
+\]</span> where <span class="math inline">\(C\)</span> is the context, <span class="math inline">\(Q\)</span> is the question, and <span class="math inline">\(y_{\text{start}}^i\)</span>, <span class="math inline">\(y_{\text{end}}^i\)</span> are the true start and end positions.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li><strong>Reading Comprehension:</strong> Answering questions based on a given passage.</li>
+<li><strong>Open-domain QA:</strong> Extracting answers from a large corpus of documents.</li>
+</ul></li>
+</ul>
+</section>
+<section id="generative-qa" class="level3">
+<h3 class="anchored" data-anchor-id="generative-qa">18.8.2. Generative QA</h3>
+<p>Generative QA systems generate answers in natural language, rather than extracting them from the context.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><p><strong>Encoder-Decoder Models:</strong> Use seq2seq architectures like T5 or GPT to generate answers.</p></li>
+<li><p><strong>Training Objective:</strong> Trains the model to maximize the likelihood of the correct answer sequence given the input context and question.</p></li>
+<li><p><strong>Example:</strong></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> T5Tokenizer, T5ForConditionalGeneration</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> T5ForConditionalGeneration.from_pretrained(<span class="st">'t5-base'</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> T5Tokenizer.from_pretrained(<span class="st">'t5-base'</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>input_text <span class="op">=</span> <span class="st">"question: What is the capital of France? context: France is a country in Europe. Its capital is Paris."</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>input_ids <span class="op">=</span> tokenizer(input_text, return_tensors<span class="op">=</span><span class="st">'pt'</span>).input_ids</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>outputs <span class="op">=</span> model.generate(input_ids)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>answer <span class="op">=</span> tokenizer.decode(outputs[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Can generate more natural and contextually appropriate answers.</li>
+<li>Not limited to span extraction, making it suitable for more complex questions.</li>
+</ul></li>
+</ul>
+</section>
+<section id="multi-hop-qa" class="level3">
+<h3 class="anchored" data-anchor-id="multi-hop-qa">18.8.3. Multi-hop QA</h3>
+<p>Multi-hop QA requires reasoning over multiple pieces of information, often from different parts of the context or from multiple documents, to answer a question.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Graph-based Models:</strong> Use graph neural networks to model the relationships between different pieces of information.</li>
+<li><strong>Reasoning Chains:</strong> Construct reasoning chains by linking relevant pieces of evidence.</li>
+<li><strong>Example:</strong>
+<ul>
+<li><strong>HotpotQA:</strong> A dataset designed for multi-hop reasoning with questions requiring integration of information from multiple documents.</li>
+</ul></li>
+</ul></li>
+<li><strong>Challenges:</strong>
+<ul>
+<li>Requires sophisticated reasoning and the ability to link disparate pieces of information.</li>
+<li>More complex than single-hop QA due to the need for intermediate inference steps.</li>
+</ul></li>
+</ul>
+</section>
+<section id="summarization" class="level3">
+<h3 class="anchored" data-anchor-id="summarization">18.9. Summarization</h3>
+<p>Summarization aims to condense a piece of text while preserving its main ideas and information. It can be categorized into extractive, abstractive, and multi-document summarization.</p>
+</section>
+<section id="extractive-summarization" class="level3">
+<h3 class="anchored" data-anchor-id="extractive-summarization">18.9.1. Extractive Summarization</h3>
+<p>Extractive summarization selects and extracts key sentences or phrases from the original text to form a summary.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Sentence Scoring:</strong> Scores sentences based on their importance using methods like TextRank or supervised learning models.</li>
+<li><strong>Graph-based Methods:</strong> Represent the text as a graph and use algorithms like PageRank to identify key sentences.</li>
+<li><strong>Example:</strong>
+<ul>
+<li><strong>TextRank:</strong> A graph-based ranking algorithm for extracting important sentences.</li>
+</ul></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Ensures grammatical correctness since the extracted sentences are directly from the text.</li>
+<li>Simpler to implement and often faster than abstractive methods.</li>
+</ul></li>
+</ul>
+</section>
+<section id="abstractive-summarization" class="level3">
+<h3 class="anchored" data-anchor-id="abstractive-summarization">18.9.2. Abstractive Summarization</h3>
+<p>Abstractive summarization generates new sentences that capture the main ideas of the original text, often rephrasing or combining information from multiple sentences.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Seq2Seq Models:</strong> Use encoder-decoder architectures like BERTSUM or T5.</li>
+<li><strong>Attention Mechanisms:</strong> Use attention to focus on relevant parts of the input text while generating the summary.</li>
+<li><strong>Example:</strong>
+<ul>
+<li><strong>BERTSUM:</strong> An encoder-decoder model using BERT as the encoder and a transformer decoder for summarization.</li>
+</ul></li>
+<li><strong>Training Objective:</strong> <span class="math display">\[
+\mathcal{L}_{\text{summ}} = -\sum_{t=1}^{T} \log P(y_t | y_{1:t-1}, X)
+\]</span> where <span class="math inline">\(X\)</span> is the input text, and <span class="math inline">\(y_t\)</span> is the token at position <span class="math inline">\(t\)</span> in the summary.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Produces more coherent and concise summaries.</li>
+<li>Can generate novel sentences not present in the original text.</li>
+</ul></li>
+</ul>
+</section>
+<section id="multi-document-summarization" class="level3">
+<h3 class="anchored" data-anchor-id="multi-document-summarization">18.9.3. Multi-Document Summarization</h3>
+<p>Multi-document summarization creates a summary from multiple documents, combining information from various sources.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Clustering:</strong> Groups similar sentences from different documents before summarization.</li>
+<li><strong>Graph-based Methods:</strong> Constructs a graph from sentences across documents and uses algorithms like PageRank for summarization.</li>
+<li><strong>Neural Models:</strong> Extend seq2seq models to handle multiple input documents, often using attention mechanisms to integrate information.</li>
+</ul></li>
+<li><strong>Challenges:</strong>
+<ul>
+<li>Requires integration of information from diverse sources.</li>
+<li>Ensures coherence and avoids redundancy in the summary.</li>
+</ul></li>
+</ul>
+<p>By understanding these advanced techniques in question answering and summarization, researchers and practitioners can develop sophisticated systems capable of handling a wide range of NLP tasks, pushing the boundaries of what is achievable with modern NLP.</p>
+</section>
+<section id="machine-translation" class="level3">
+<h3 class="anchored" data-anchor-id="machine-translation">18.10. Machine Translation</h3>
+<p>Machine translation involves converting text from one language to another. Neural machine translation (NMT) has significantly advanced this field, enabling more accurate and fluent translations.</p>
+</section>
+<section id="neural-machine-translation-nmt" class="level3">
+<h3 class="anchored" data-anchor-id="neural-machine-translation-nmt">18.10.1. Neural Machine Translation (NMT)</h3>
+<p>NMT uses deep learning techniques, particularly sequence-to-sequence (seq2seq) models with attention mechanisms, to translate text.</p>
+<ul>
+<li><strong>Encoder-Decoder Architecture:</strong>
+<ul>
+<li><strong>Encoder:</strong> Converts the source sentence into a fixed-length context vector.</li>
+<li><strong>Decoder:</strong> Generates the target sentence from the context vector.</li>
+<li><strong>Attention Mechanism:</strong> Allows the decoder to focus on different parts of the source sentence at each step.</li>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+h_t = \text{Encoder}(x_t, h_{t-1})
+\]</span> <span class="math display">\[
+s_t = \text{Decoder}(y_{t-1}, s_{t-1}, c)
+\]</span> <span class="math display">\[
+c_t = \sum_{i=1}^T \alpha_{t,i} h_i
+\]</span></li>
+</ul></li>
+<li><strong>Training Objective:</strong> <span class="math display">\[
+\mathcal{L}_{\text{NMT}} = -\sum_{t=1}^T \log P(y_t | y_{1:t-1}, x)
+\]</span></li>
+</ul>
+</section>
+<section id="unsupervised-machine-translation" class="level3">
+<h3 class="anchored" data-anchor-id="unsupervised-machine-translation">18.10.2. Unsupervised Machine Translation</h3>
+<p>Unsupervised machine translation enables translation without parallel corpora by using monolingual data and leveraging techniques like back-translation.</p>
+<ul>
+<li><strong>Back-Translation:</strong>
+<ul>
+<li>Translates monolingual target sentences back into the source language to create synthetic parallel data.</li>
+<li><strong>Steps:</strong>
+<ol type="1">
+<li>Train initial models in both directions with monolingual data.</li>
+<li>Translate monolingual sentences to the other language.</li>
+<li>Use the generated translations to improve the models iteratively.</li>
+</ol></li>
+</ul></li>
+<li><strong>Cycle-Consistency Loss:</strong>
+<ul>
+<li>Ensures that translating a sentence back and forth results in the original sentence.</li>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\mathcal{L}_{\text{cycle}} = ||x - G(F(x))||^2 + ||y - F(G(y))||^2
+\]</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="multilingual-nmt" class="level3">
+<h3 class="anchored" data-anchor-id="multilingual-nmt">18.10.3. Multilingual NMT</h3>
+<p>Multilingual NMT trains a single model to translate between multiple languages by sharing parameters across languages.</p>
+<ul>
+<li><strong>Shared Encoder-Decoder:</strong>
+<ul>
+<li>Uses a shared encoder and decoder for all languages, with language-specific tokens or embeddings to indicate the target language.</li>
+<li><strong>Benefits:</strong> Improved translation quality for low-resource languages by leveraging data from high-resource languages.</li>
+</ul></li>
+<li><strong>Zero-Shot Translation:</strong>
+<ul>
+<li>Enables translation between language pairs not seen during training by leveraging the shared representations.</li>
+</ul></li>
+</ul>
+</section>
+<section id="dialogue-systems-and-chatbots" class="level3">
+<h3 class="anchored" data-anchor-id="dialogue-systems-and-chatbots">18.11. Dialogue Systems and Chatbots</h3>
+<p>Dialogue systems and chatbots are designed to interact with users in natural language, performing tasks or engaging in open-ended conversations.</p>
+</section>
+<section id="task-oriented-dialogue-systems" class="level3">
+<h3 class="anchored" data-anchor-id="task-oriented-dialogue-systems">18.11.1. Task-Oriented Dialogue Systems</h3>
+<p>Task-oriented dialogue systems assist users in completing specific tasks such as booking a flight or ordering food.</p>
+<ul>
+<li><strong>Components:</strong>
+<ul>
+<li><strong>Natural Language Understanding (NLU):</strong> Interprets the user’s input to extract intents and entities.</li>
+<li><strong>Dialogue Manager:</strong> Manages the state and flow of the conversation.</li>
+<li><strong>Natural Language Generation (NLG)::</strong> Generates appropriate responses.</li>
+<li><strong>Action Executor:</strong> Performs the necessary actions to fulfill the user’s request.</li>
+</ul></li>
+<li><strong>Example:</strong>
+<ul>
+<li><strong>Slot-Filling Model:</strong> Extracts key information (slots) required to complete the task.</li>
+</ul></li>
+</ul>
+</section>
+<section id="open-domain-chatbots" class="level3">
+<h3 class="anchored" data-anchor-id="open-domain-chatbots">18.11.2. Open-Domain Chatbots</h3>
+<p>Open-domain chatbots engage in general conversation on a wide range of topics, providing coherent and contextually appropriate responses.</p>
+<ul>
+<li><strong>Models:</strong>
+<ul>
+<li><strong>Retrieval-Based Models:</strong> Select the best response from a pre-defined set of responses.</li>
+<li><strong>Generative Models:</strong> Generate responses from scratch using seq2seq models or transformers.</li>
+</ul></li>
+<li><strong>Training:</strong>
+<ul>
+<li>Often trained on large conversational datasets to capture diverse language patterns and contexts.</li>
+</ul></li>
+</ul>
+</section>
+<section id="retrieval-based-vs.-generative-models" class="level3">
+<h3 class="anchored" data-anchor-id="retrieval-based-vs.-generative-models">18.11.3. Retrieval-Based vs.&nbsp;Generative Models</h3>
+<ul>
+<li><strong>Retrieval-Based Models:</strong>
+<ul>
+<li><strong>Advantages:</strong> Produce grammatically correct and contextually relevant responses by selecting from a fixed set of responses.</li>
+<li><strong>Disadvantages:</strong> Limited by the predefined set of responses, may lack creativity.</li>
+</ul></li>
+<li><strong>Generative Models:</strong>
+<ul>
+<li><strong>Advantages:</strong> Can generate novel responses and handle a wide range of inputs.</li>
+<li><strong>Disadvantages:</strong> May produce less coherent or relevant responses without sufficient training.</li>
+</ul></li>
+</ul>
+</section>
+<section id="named-entity-recognition-ner" class="level3">
+<h3 class="anchored" data-anchor-id="named-entity-recognition-ner">18.12. Named Entity Recognition (NER)</h3>
+<p>NER involves identifying and classifying entities in text into predefined categories such as names, dates, and locations.</p>
+</section>
+<section id="bilstm-crf-for-ner" class="level3">
+<h3 class="anchored" data-anchor-id="bilstm-crf-for-ner">18.12.1. BiLSTM-CRF for NER</h3>
+<p>BiLSTM-CRF models combine bidirectional LSTM networks with Conditional Random Fields to capture context and dependencies between entities.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>BiLSTM Layer:</strong> Processes the input text bidirectionally to capture context from both directions.</li>
+<li><strong>CRF Layer:</strong> Models the dependencies between entity labels to produce the most likely sequence of labels.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Captures long-range dependencies and contextual information effectively.</li>
+</ul></li>
+</ul>
+</section>
+<section id="bert-based-ner" class="level3">
+<h3 class="anchored" data-anchor-id="bert-based-ner">18.12.2. BERT-based NER</h3>
+<p>BERT-based models leverage the pre-trained BERT model for NER, fine-tuning it on labeled NER datasets.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>BERT Encoder:</strong> Encodes the input text into contextual embeddings.</li>
+<li><strong>Classification Layer:</strong> Adds a classification layer on top of BERT to predict entity labels for each token.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>State-of-the-art performance by leveraging BERT’s deep contextual understanding.</li>
+</ul></li>
+</ul>
+</section>
+<section id="sentiment-analysis-and-emotion-detection" class="level3">
+<h3 class="anchored" data-anchor-id="sentiment-analysis-and-emotion-detection">18.13. Sentiment Analysis and Emotion Detection</h3>
+<p>Sentiment analysis and emotion detection involve determining the sentiment or emotional tone of a piece of text.</p>
+</section>
+<section id="aspect-based-sentiment-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="aspect-based-sentiment-analysis">18.13.1. Aspect-Based Sentiment Analysis</h3>
+<p>Aspect-based sentiment analysis identifies the sentiment towards specific aspects or features mentioned in the text.</p>
+<ul>
+<li><strong>Components:</strong>
+<ul>
+<li><strong>Aspect Extraction:</strong> Identifies the aspects or features being discussed.</li>
+<li><strong>Sentiment Classification:</strong> Determines the sentiment expressed towards each aspect.</li>
+</ul></li>
+<li><strong>Example:</strong>
+<ul>
+<li><strong>Review Analysis:</strong> Identifying sentiments towards different features of a product (e.g., battery life, screen quality).</li>
+</ul></li>
+</ul>
+</section>
+<section id="multimodal-sentiment-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="multimodal-sentiment-analysis">18.13.2. Multimodal Sentiment Analysis</h3>
+<p>Multimodal sentiment analysis combines textual data with other modalities such as audio and visual data to analyze sentiment.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Fusion Models:</strong> Combine features from different modalities to make predictions.</li>
+<li><strong>Attention Mechanisms:</strong> Focus on the most relevant parts of each modality.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li><strong>Video Reviews:</strong> Analyzing sentiment in video reviews by combining text, audio, and facial expressions.</li>
+</ul></li>
+</ul>
+<p>By understanding these advanced NLP techniques and models, researchers and practitioners can develop sophisticated systems capable of handling a wide range of natural language processing tasks, pushing the boundaries of what is achievable with modern NLP.</p>
+</section>
+<section id="text-style-transfer" class="level3">
+<h3 class="anchored" data-anchor-id="text-style-transfer">18.14. Text Style Transfer</h3>
+<p>Text style transfer involves altering the style of a given text while retaining its original content. This task is challenging due to the need to disentangle content from style and ensure the transformed text remains coherent and contextually appropriate.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Supervised Learning:</strong> Requires parallel corpora of texts in different styles, which are often scarce.</li>
+<li><strong>Unsupervised Learning:</strong> Leverages unpaired data by using techniques such as cycle consistency and adversarial training.</li>
+<li><strong>Latent Space Manipulation:</strong> Uses models like autoencoders to separate content and style into different latent representations.</li>
+</ul></li>
+<li><strong>Example Methods:</strong>
+<ul>
+<li><strong>CycleGAN for Text:</strong> Adapts the CycleGAN model, originally used for image-to-image translation, for text style transfer.</li>
+<li><strong>Variational Autoencoders (VAEs):</strong> Encodes text into a latent space and manipulates style attributes before decoding.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li><strong>Formality Transfer:</strong> Converting informal text to a formal style or vice versa.</li>
+<li><strong>Sentiment Transfer:</strong> Changing the sentiment of a text while preserving its overall meaning.</li>
+</ul></li>
+</ul>
+</section>
+<section id="natural-language-inference-nli" class="level3">
+<h3 class="anchored" data-anchor-id="natural-language-inference-nli">18.15. Natural Language Inference (NLI)</h3>
+<p>Natural Language Inference (NLI) involves determining the logical relationship between a pair of sentences, typically labeled as entailment, contradiction, or neutral.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Sentence Encoders:</strong> Use models like BERT, RoBERTa, or LSTM-based architectures to encode the premise and hypothesis sentences into fixed-length vectors.</li>
+<li><strong>Attention Mechanisms:</strong> Focus on relevant parts of the sentences to capture the relationship between them.</li>
+<li><strong>Pairwise Classification:</strong> Classifies the relationship based on the concatenation, difference, and element-wise product of the sentence vectors.</li>
+</ul></li>
+<li><strong>Example Models:</strong>
+<ul>
+<li><strong>ESIM (Enhanced Sequential Inference Model):</strong> Uses LSTM-based encoders with attention mechanisms to capture interactions between the premise and hypothesis.</li>
+<li><strong>BERT for NLI:</strong> Fine-tunes BERT on NLI datasets to leverage its deep contextual representations.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li><strong>Question Answering:</strong> Verifying the correctness of answers by determining entailment from provided context.</li>
+<li><strong>Summarization:</strong> Ensuring the coherence and consistency of generated summaries.</li>
+</ul></li>
+</ul>
+</section>
+<section id="coreference-resolution" class="level3">
+<h3 class="anchored" data-anchor-id="coreference-resolution">18.16. Coreference Resolution</h3>
+<p>Coreference resolution involves identifying when different expressions in a text refer to the same entity. This task is crucial for understanding the coherence and structure of text.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Rule-based Methods:</strong> Use linguistic rules and patterns to identify coreferent mentions.</li>
+<li><strong>Machine Learning Models:</strong> Train models on annotated corpora to learn patterns of coreference.</li>
+<li><strong>Neural Network Approaches:</strong> Use models like LSTMs or Transformers to capture context and dependencies for resolving coreference.</li>
+</ul></li>
+<li><strong>Example Models:</strong>
+<ul>
+<li><strong>End-to-End Neural Coreference Resolution:</strong> Uses a neural architecture to jointly model mention detection and coreference resolution.</li>
+<li><strong>BERT for Coreference:</strong> Leverages BERT’s contextual embeddings to improve the identification of coreferent mentions.</li>
+</ul></li>
+<li><strong>Challenges:</strong>
+<ul>
+<li><strong>Ambiguity:</strong> Coreference resolution can be difficult when multiple potential antecedents exist.</li>
+<li><strong>Pronoun Resolution:</strong> Resolving pronouns accurately often requires understanding context and world knowledge.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li><strong>Text Summarization:</strong> Ensuring that summaries correctly reference entities.</li>
+<li><strong>Dialogue Systems:</strong> Maintaining coherence and context over multiple turns in conversation.</li>
+</ul></li>
+</ul>
+<p>By understanding and applying these advanced NLP techniques, researchers and practitioners can build sophisticated systems capable of addressing complex language understanding tasks, enhancing the capabilities of natural language processing applications.</p>
+</section>
+<section id="information-extraction" class="level3">
+<h3 class="anchored" data-anchor-id="information-extraction">18.17. Information Extraction</h3>
+<p>Information Extraction (IE) involves automatically extracting structured information from unstructured text. This includes identifying and classifying entities, relationships, and events within the text.</p>
+</section>
+<section id="relation-extraction" class="level3">
+<h3 class="anchored" data-anchor-id="relation-extraction">18.17.1. Relation Extraction</h3>
+<p>Relation extraction identifies and classifies semantic relationships between entities in a text.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Supervised Learning:</strong> Trains models on annotated datasets where entity pairs and their relationships are labeled.</li>
+<li><strong>Distant Supervision:</strong> Uses knowledge bases to automatically generate training data, assuming that if two entities have a known relationship, any sentence containing both entities expresses that relationship.</li>
+<li><strong>Neural Networks:</strong> Utilize models like CNNs, RNNs, and Transformers to learn complex patterns and dependencies for relation extraction.</li>
+</ul></li>
+<li><strong>Example Models:</strong>
+<ul>
+<li><strong>CNN for Relation Extraction:</strong> Uses convolutional layers to capture local dependencies and patterns in the text.</li>
+<li><strong>BERT-based Models:</strong> Fine-tunes pre-trained BERT on relation extraction tasks, leveraging its contextual embeddings for improved performance.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li><strong>Knowledge Graph Construction:</strong> Extracting relationships to build and expand knowledge graphs.</li>
+<li><strong>Question Answering:</strong> Understanding relationships between entities to provide accurate answers.</li>
+</ul></li>
+</ul>
+</section>
+<section id="event-extraction" class="level3">
+<h3 class="anchored" data-anchor-id="event-extraction">18.17.2. Event Extraction</h3>
+<p>Event extraction involves identifying events mentioned in the text and their associated arguments (e.g., participants, time, location).</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Trigger Detection:</strong> Identifies words or phrases that signify the occurrence of an event.</li>
+<li><strong>Argument Role Labeling:</strong> Assigns roles to entities related to the event, such as who did what to whom, when, and where.</li>
+<li><strong>Joint Learning Models:</strong> Simultaneously learns to identify triggers and arguments, improving coherence and accuracy.</li>
+</ul></li>
+<li><strong>Example Models:</strong>
+<ul>
+<li><strong>BiLSTM-CRF:</strong> Uses bidirectional LSTMs to capture context and CRFs for structured prediction of events and arguments.</li>
+<li><strong>Transformer-based Models:</strong> Leverages models like BERT to identify and classify events and their arguments with high accuracy.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li><strong>News Analysis:</strong> Extracting significant events from news articles for trend analysis.</li>
+<li><strong>Security and Surveillance:</strong> Identifying and analyzing events from text data in intelligence reports.</li>
+</ul></li>
+</ul>
+</section>
+<section id="text-generation" class="level3">
+<h3 class="anchored" data-anchor-id="text-generation">18.18. Text Generation</h3>
+<p>Text generation involves creating coherent and contextually relevant text, which can be applied in various fields such as creative writing, dialogue systems, and automated content creation.</p>
+</section>
+<section id="language-model-based-generation" class="level3">
+<h3 class="anchored" data-anchor-id="language-model-based-generation">18.18.1. Language Model-based Generation</h3>
+<p>Language model-based generation uses probabilistic models to predict the next word in a sequence, generating text that follows the given context.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Autoregressive Models:</strong> Generate text by predicting the next word based on the previous words (e.g., GPT-3).</li>
+<li><strong>Masked Language Models:</strong> Predict missing words in a sentence, used in bidirectional contexts (e.g., BERT, though typically not for generation).</li>
+<li><strong>Seq2Seq Models:</strong> Use encoder-decoder architectures for tasks like translation and summarization.</li>
+</ul></li>
+<li><strong>Example Models:</strong>
+<ul>
+<li><strong>GPT-3:</strong> Generates high-quality text by predicting the next token in a sequence, fine-tuned for various applications.</li>
+<li><strong>T5:</strong> Treats text generation as a text-to-text task, leveraging transfer learning for diverse text generation tasks.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li><strong>Creative Writing:</strong> Generating stories, poetry, or other creative content.</li>
+<li><strong>Dialogue Systems:</strong> Creating responses for chatbots and virtual assistants.</li>
+</ul></li>
+</ul>
+</section>
+<section id="controlled-text-generation" class="level3">
+<h3 class="anchored" data-anchor-id="controlled-text-generation">18.18.2. Controlled Text Generation</h3>
+<p>Controlled text generation involves guiding the output of text generation models based on specific constraints or attributes, such as style, tone, or content.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Conditional Generation:</strong> Models are conditioned on additional input that specifies the desired attributes (e.g., style, sentiment).</li>
+<li><strong>Prompt Engineering:</strong> Crafting prompts to influence the model’s output towards the desired characteristics.</li>
+<li><strong>Latent Variable Models:</strong> Manipulate latent representations to control aspects of the generated text.</li>
+</ul></li>
+<li><strong>Example Methods:</strong>
+<ul>
+<li><strong>CTRL (Conditional Transformer Language Model):</strong> Conditions text generation on control codes that specify the style or content.</li>
+<li><strong>Prompt-based Techniques:</strong> Using specially designed prompts to guide models like GPT-3 in generating text that meets specific requirements.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li><strong>Marketing Content:</strong> Generating advertisements or product descriptions with specific tones or styles.</li>
+<li><strong>Personalized Content:</strong> Creating user-specific content based on preferences and past behavior.</li>
+</ul></li>
+</ul>
+<p>By mastering these advanced techniques in information extraction and text generation, researchers and practitioners can build sophisticated NLP systems capable of extracting valuable insights from text and generating high-quality, controlled content for a wide range of applications.</p>
+</section>
+<section id="evaluation-metrics-for-nlp-tasks" class="level3">
+<h3 class="anchored" data-anchor-id="evaluation-metrics-for-nlp-tasks">18.19. Evaluation Metrics for NLP Tasks</h3>
+<p>Evaluation metrics are crucial for assessing the performance and effectiveness of NLP models. Different tasks require different metrics to accurately measure the quality of the output.</p>
+</section>
+<section id="bleu-rouge-meteor-for-translation-and-summarization" class="level3">
+<h3 class="anchored" data-anchor-id="bleu-rouge-meteor-for-translation-and-summarization">18.19.1. BLEU, ROUGE, METEOR for Translation and Summarization</h3>
+<p>These metrics are commonly used to evaluate the quality of machine translation and text summarization by comparing the model’s output to reference texts.</p>
+<section id="bleu-bilingual-evaluation-understudy" class="level4">
+<h4 class="anchored" data-anchor-id="bleu-bilingual-evaluation-understudy">BLEU (Bilingual Evaluation Understudy)</h4>
+<p>BLEU measures the precision of n-grams in the generated text compared to reference texts, which indicates how many words overlap.</p>
+<ul>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\text{BLEU} = \text{BP} \cdot \exp \left( \sum_{n=1}^N w_n \log p_n \right)
+\]</span> where <span class="math inline">\(\text{BP}\)</span> is the brevity penalty to handle shorter translations, <span class="math inline">\(w_n\)</span> are the weights for different n-grams, and <span class="math inline">\(p_n\)</span> is the precision of n-grams.</p></li>
+<li><p><strong>Brevity Penalty (BP):</strong></p>
+<ul>
+<li>Ensures that short candidate translations are penalized.</li>
+<li><strong>Formulation:</strong> <span class="math display">\[
+\text{BP} = \begin{cases}
+1 &amp; \text{if } c &gt; r \\
+e^{(1-r/c)} &amp; \text{if } c \leq r
+\end{cases}
+\]</span> where <span class="math inline">\(c\)</span> is the length of the candidate translation and <span class="math inline">\(r\)</span> is the length of the reference translation.</li>
+</ul></li>
+<li><p><strong>Strengths:</strong></p>
+<ul>
+<li>Widely used and easy to compute.</li>
+<li>Effective for capturing lexical similarity and commonly used in machine translation.</li>
+</ul></li>
+<li><p><strong>Limitations:</strong></p>
+<ul>
+<li>Does not account for semantic meaning or fluency.</li>
+<li>Sensitive to exact matches, which can penalize valid paraphrases and rephrasings.</li>
+</ul></li>
+</ul>
+</section>
+<section id="rouge-recall-oriented-understudy-for-gisting-evaluation" class="level4">
+<h4 class="anchored" data-anchor-id="rouge-recall-oriented-understudy-for-gisting-evaluation">ROUGE (Recall-Oriented Understudy for Gisting Evaluation)</h4>
+<p>ROUGE measures the recall of n-grams, word sequences, and word pairs between the generated text and reference texts. It is commonly used for evaluating summarization tasks.</p>
+<ul>
+<li><strong>Variants:</strong>
+<ul>
+<li><strong>ROUGE-N:</strong> Measures n-gram overlap.</li>
+<li><strong>ROUGE-L:</strong> Measures the longest common subsequence.</li>
+<li><strong>ROUGE-W:</strong> Measures weighted longest common subsequence based on continuous matches.</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li><strong>ROUGE-N:</strong> <span class="math display">\[
+\text{ROUGE-N} = \frac{\sum_{\text{n-gram} \in \text{Reference}} \min(\text{Count}_{\text{n-gram}}^{\text{Reference}}, \text{Count}_{\text{n-gram}}^{\text{Candidate}})}{\sum_{\text{n-gram} \in \text{Reference}} \text{Count}_{\text{n-gram}}^{\text{Reference}}}
+\]</span></li>
+</ul></li>
+<li><strong>Strengths:</strong>
+<ul>
+<li>Captures both precision and recall, providing a more balanced evaluation than BLEU.</li>
+<li>More flexible in handling different types of text overlaps, suitable for summarization tasks.</li>
+</ul></li>
+<li><strong>Limitations:</strong>
+<ul>
+<li>Still primarily based on surface-level text matching, which may not fully capture the semantic content of the summaries.</li>
+</ul></li>
+</ul>
+</section>
+<section id="meteor-metric-for-evaluation-of-translation-with-explicit-ordering" class="level4">
+<h4 class="anchored" data-anchor-id="meteor-metric-for-evaluation-of-translation-with-explicit-ordering">METEOR (Metric for Evaluation of Translation with Explicit ORdering)</h4>
+<p>METEOR aims to improve evaluation by combining precision, recall, and a penalty for incorrect word order, along with semantic matching through synonymy and stemming.</p>
+<ul>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\text{METEOR} = 10 \cdot \frac{P \cdot R}{P + R} \cdot (1 - \text{Penalty})
+\]</span> where <span class="math inline">\(P\)</span> is precision, <span class="math inline">\(R\)</span> is recall, and the penalty accounts for word order differences.</p></li>
+<li><p><strong>Strengths:</strong></p>
+<ul>
+<li>Incorporates semantic matching, making it more robust to paraphrases.</li>
+<li>Penalizes disordered translations, which is important for maintaining fluency and coherence.</li>
+</ul></li>
+<li><p><strong>Limitations:</strong></p>
+<ul>
+<li>More computationally intensive than BLEU and ROUGE.</li>
+<li>Can be sensitive to the exact formulation of the penalty function.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="perplexity-for-language-models" class="level3">
+<h3 class="anchored" data-anchor-id="perplexity-for-language-models">18.19.2. Perplexity for Language Models</h3>
+<p>Perplexity measures the uncertainty of a language model in predicting the next word in a sequence. It is a common evaluation metric for language models.</p>
+<ul>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\text{Perplexity}(P) = \exp \left( -\frac{1}{N} \sum_{i=1}^N \log P(w_i | w_{1:i-1}) \right)
+\]</span> where <span class="math inline">\(P(w_i | w_{1:i-1})\)</span> is the probability assigned by the model to the <span class="math inline">\(i\)</span>-th word given the previous words, and <span class="math inline">\(N\)</span> is the total number of words.</p></li>
+<li><p><strong>Interpretation:</strong></p>
+<ul>
+<li>Lower perplexity indicates better performance, as the model is less “perplexed” by the data and more confident in its predictions.</li>
+</ul></li>
+<li><p><strong>Strengths:</strong></p>
+<ul>
+<li>Provides a clear, interpretable measure of model performance.</li>
+<li>Effective for comparing different language models and tuning hyperparameters.</li>
+</ul></li>
+<li><p><strong>Limitations:</strong></p>
+<ul>
+<li>Does not directly measure the quality of generated text.</li>
+<li>Sensitive to the distribution of the test set and may not correlate well with human judgment of text quality.</li>
+</ul></li>
+</ul>
+</section>
+<section id="glue-and-superglue-benchmarks" class="level3">
+<h3 class="anchored" data-anchor-id="glue-and-superglue-benchmarks">18.19.3. GLUE and SuperGLUE Benchmarks</h3>
+<p>GLUE (General Language Understanding Evaluation) and SuperGLUE are comprehensive benchmark suites for evaluating NLP models across a range of tasks, providing a unified metric for model performance.</p>
+<section id="glue-benchmark" class="level4">
+<h4 class="anchored" data-anchor-id="glue-benchmark">GLUE Benchmark</h4>
+<p>GLUE consists of nine tasks, including text classification, entailment, semantic similarity, and more.</p>
+<ul>
+<li><strong>Tasks:</strong>
+<ul>
+<li><strong>CoLA (Corpus of Linguistic Acceptability):</strong> Sentence acceptability classification.</li>
+<li><strong>SST-2 (Stanford Sentiment Treebank):</strong> Sentiment analysis.</li>
+<li><strong>MRPC (Microsoft Research Paraphrase Corpus):</strong> Paraphrase detection.</li>
+<li><strong>STS-B (Semantic Textual Similarity Benchmark):</strong> Semantic similarity scoring.</li>
+<li><strong>QQP (Quora Question Pairs):</strong> Duplicate question detection.</li>
+<li><strong>MNLI (Multi-Genre Natural Language Inference):</strong> Entailment classification across genres.</li>
+<li><strong>QNLI (Question Natural Language Inference):</strong> QA sentence entailment.</li>
+<li><strong>RTE (Recognizing Textual Entailment):</strong> Binary entailment classification.</li>
+<li><strong>WNLI (Winograd NLI):</strong> Coreference resolution.</li>
+</ul></li>
+<li><strong>Evaluation:</strong>
+<ul>
+<li>Provides a unified metric for overall model performance across diverse tasks.</li>
+<li>Encourages the development of models with broad language understanding capabilities.</li>
+</ul></li>
+</ul>
+</section>
+<section id="superglue-benchmark" class="level4">
+<h4 class="anchored" data-anchor-id="superglue-benchmark">SuperGLUE Benchmark</h4>
+<p>SuperGLUE extends GLUE, addressing its limitations and introducing more challenging tasks.</p>
+<ul>
+<li><strong>Tasks:</strong>
+<ul>
+<li><strong>BoolQ:</strong> Question answering with boolean answers.</li>
+<li><strong>CB (CommitmentBank):</strong> Textual entailment with natural language premises.</li>
+<li><strong>COPA (Choice of Plausible Alternatives):</strong> Causal reasoning.</li>
+<li><strong>MultiRC (Multiple Sentence Reading Comprehension):</strong> Multi-sentence QA.</li>
+<li><strong>ReCoRD (Reading Comprehension with Commonsense Reasoning Dataset):</strong> Commonsense reasoning.</li>
+<li><strong>WiC (Word-in-Context):</strong> Word sense disambiguation.</li>
+<li><strong>WSC (Winograd Schema Challenge):</strong> Coreference resolution.</li>
+<li><strong>AX-b and AX-g:</strong> Diagnostic datasets for bias and generalization.</li>
+</ul></li>
+<li><strong>Evaluation:</strong>
+<ul>
+<li>Uses a similar unified metric to evaluate overall model performance.</li>
+<li>Aims to push the state-of-the-art in general language understanding.</li>
+</ul></li>
+<li><strong>Strengths:</strong>
+<ul>
+<li>Comprehensive and diverse, covering a wide range of NLP tasks.</li>
+<li>Encourages development of models with broad applicability and robustness.</li>
+<li>More challenging tasks encourage advancement in the field.</li>
+</ul></li>
+<li><strong>Limitations:</strong>
+<ul>
+<li>May require significant computational resources to achieve competitive performance.</li>
+<li>Some tasks may have overlapping challenges, making it hard to diagnose specific model weaknesses.</li>
+</ul></li>
+</ul>
+<p>By using these evaluation metrics, researchers and practitioners can effectively measure the performance of their NLP models, ensuring that they meet the required standards for various applications. These metrics provide a standardized way to compare models and push the boundaries of what is achievable in natural language processing.</p>
+</section>
+</section>
+</section>
+<section id="papers" class="level1">
+<h1>Papers:</h1>
+</section>
+<section id="word-embeddings-and-language-models-1" class="level1">
+<h1>18.1. Word Embeddings and Language Models</h1>
+<ul>
+<li><p>Deep contextualized word representations <a href="https://arxiv.org/abs/1802.05365">https://arxiv.org/abs/1802.05365</a></p></li>
+<li><p>A Survey on Contextual Embeddings <a href="https://arxiv.org/abs/2003.07278">https://arxiv.org/abs/2003.07278</a></p></li>
+<li><p>Cross-Lingual Alignment of Contextual Word Embeddings, with Applications to Zero-shot Dependency Parsing <a href="https://people.csail.mit.edu/tals/publication/crosslingual_elmo/">https://people.csail.mit.edu/tals/publication/crosslingual_elmo/</a></p></li>
+</ul>
+</section>
+<section id="transformer-based-models-1" class="level1">
+<h1>18.2. Transformer-based Models</h1>
+<ul>
+<li><p>BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding <a href="https://arxiv.org/abs/1810.04805">https://arxiv.org/abs/1810.04805</a></p></li>
+<li><p>RoBERTa: A Robustly Optimized BERT Pretraining Approach <a href="https://arxiv.org/abs/1907.11692">https://arxiv.org/abs/1907.11692</a></p></li>
+<li><p>ALBERT: A Lite BERT for Self-supervised Learning of Language Representations <a href="https://arxiv.org/abs/1909.11942">https://arxiv.org/abs/1909.11942</a></p></li>
+<li><p>DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter <a href="https://arxiv.org/abs/1910.01108">https://arxiv.org/abs/1910.01108</a></p></li>
+<li><p>Language Models are Few-Shot Learners <a href="https://arxiv.org/abs/2005.14165">https://arxiv.org/abs/2005.14165</a></p></li>
+<li><p>T5: Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer <a href="https://arxiv.org/abs/1910.10683">https://arxiv.org/abs/1910.10683</a></p></li>
+<li><p>ELECTRA: Pre-training Text Encoders as Discriminators Rather Than Generators <a href="https://arxiv.org/abs/2003.10555">https://arxiv.org/abs/2003.10555</a></p></li>
+</ul>
+</section>
+<section id="sequence-to-sequence-models-1" class="level1">
+<h1>18.3. Sequence-to-sequence Models</h1>
+<ul>
+<li><p>Sequence to Sequence Learning with Neural Networks <a href="https://arxiv.org/abs/1409.3215">https://arxiv.org/abs/1409.3215</a></p></li>
+<li><p>Neural Machine Translation by Jointly Learning to Align and Translate <a href="https://arxiv.org/abs/1409.0473">https://arxiv.org/abs/1409.0473</a></p></li>
+</ul>
+</section>
+<section id="transfer-learning-in-nlp-1" class="level1">
+<h1>18.4. Transfer Learning in NLP</h1>
+<ul>
+<li><p>Universal Language Model Fine-tuning for Text Classification <a href="https://arxiv.org/abs/1801.06146">https://arxiv.org/abs/1801.06146</a></p></li>
+<li><p>Domain-Adaptive Pretraining for Low-Resource Text Classification <a href="https://arxiv.org/abs/2004.02288">https://arxiv.org/abs/2004.02288</a></p></li>
+</ul>
+</section>
+<section id="multi-task-learning-in-nlp-1" class="level1">
+<h1>18.5. Multi-task Learning in NLP</h1>
+<ul>
+<li>Multi-Task Learning Using Uncertainty to Weigh Losses for Scene Geometry and Semantics <a href="https://arxiv.org/abs/1705.07115">https://arxiv.org/abs/1705.07115</a></li>
+</ul>
+</section>
+<section id="zero-shot-and-few-shot-learning-in-nlp-1" class="level1">
+<h1>18.6. Zero-shot and Few-shot Learning in NLP</h1>
+<ul>
+<li><p>Improving Language Understanding by Generative Pre-Training <a href="https://www.cs.ubc.ca/~amuham01/LING530/papers/radford2018improving.pdf">https://www.cs.ubc.ca/~amuham01/LING530/papers/radford2018improving.pdf</a></p></li>
+<li><p>GPT-3: Language Models are Few-Shot Learners <a href="https://arxiv.org/abs/2005.14165">https://arxiv.org/abs/2005.14165</a></p></li>
+</ul>
+</section>
+<section id="multilingual-and-cross-lingual-models-1" class="level1">
+<h1>18.7. Multilingual and Cross-lingual Models</h1>
+<ul>
+<li><p>BERT, ELMo, &amp; GPT-2: How Contextual are Contextualized Word Representations? <a href="https://ai.stanford.edu/blog/bert-elmo-gpt2/">https://ai.stanford.edu/blog/bert-elmo-gpt2/</a></p></li>
+<li><p>Cross-lingual Language Model Pretraining <a href="https://arxiv.org/abs/1901.07291">https://arxiv.org/abs/1901.07291</a></p></li>
+</ul>
+</section>
+<section id="question-answering-systems-1" class="level1">
+<h1>18.8. Question Answering Systems</h1>
+<ul>
+<li><p>BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding <a href="https://arxiv.org/abs/1810.04805">https://arxiv.org/abs/1810.04805</a></p></li>
+<li><p>XLNet: Generalized Autoregressive Pretraining for Language Understanding <a href="https://arxiv.org/abs/1906.08237">https://arxiv.org/abs/1906.08237</a></p></li>
+</ul>
+</section>
+<section id="summarization-1" class="level1">
+<h1>18.9. Summarization</h1>
+<ul>
+<li><p>BERTSum: Pre-training for Abstractive Summarization <a href="https://arxiv.org/abs/1903.10318">https://arxiv.org/abs/1903.10318</a></p></li>
+<li><p>Text Summarization with Pretrained Encoders <a href="https://arxiv.org/abs/1908.08345">https://arxiv.org/abs/1908.08345</a></p></li>
+</ul>
+</section>
+<section id="machine-translation-1" class="level1">
+<h1>18.10. Machine Translation</h1>
+<ul>
+<li><p>Attention is All You Need <a href="https://arxiv.org/abs/1706.03762">https://arxiv.org/abs/1706.03762</a></p></li>
+<li><p>Unsupervised Machine Translation Using Monolingual Corpora Only <a href="https://arxiv.org/abs/1711.00043">https://arxiv.org/abs/1711.00043</a></p></li>
+</ul>
+</section>
+<section id="dialogue-systems-and-chatbots-1" class="level1">
+<h1>18.11. Dialogue Systems and Chatbots</h1>
+<ul>
+<li><p>Towards End-to-End Reinforcement Learning of Dialogue Agents for Information Access <a href="https://arxiv.org/abs/1609.00777">https://arxiv.org/abs/1609.00777</a></p></li>
+<li><p>A Persona-Based Neural Conversation Model <a href="https://arxiv.org/abs/1603.06155">https://arxiv.org/abs/1603.06155</a></p></li>
+</ul>
+</section>
+<section id="named-entity-recognition-ner-1" class="level1">
+<h1>18.12. Named Entity Recognition (NER)</h1>
+<ul>
+<li><p>Bidirectional LSTM-CRF Models for Sequence Tagging <a href="https://arxiv.org/abs/1508.01991">https://arxiv.org/abs/1508.01991</a></p></li>
+<li><p>Fine-tune BERT for Named Entity Recognition <a href="https://arxiv.org/abs/1910.11470">https://arxiv.org/abs/1910.11470</a></p></li>
+</ul>
+</section>
+<section id="sentiment-analysis-and-emotion-detection-1" class="level1">
+<h1>18.13. Sentiment Analysis and Emotion Detection</h1>
+<ul>
+<li><p>Aspect-Based Sentiment Analysis with Aspect Extraction <a href="https://arxiv.org/abs/1906.02043">https://arxiv.org/abs/1906.02043</a></p></li>
+<li><p>Multimodal Sentiment Analysis with Word-Level Fusion <a href="https://arxiv.org/abs/1810.11559">https://arxiv.org/abs/1810.11559</a></p></li>
+</ul>
+</section>
+<section id="text-style-transfer-1" class="level1">
+<h1>18.14. Text Style Transfer</h1>
+<ul>
+<li>Unsupervised Text Style Transfer Using Language Models as Discriminators <a href="https://arxiv.org/abs/1805.11749">https://arxiv.org/abs/1805.11749</a></li>
+</ul>
+</section>
+<section id="natural-language-inference-nli-1" class="level1">
+<h1>18.15. Natural Language Inference (NLI)</h1>
+<ul>
+<li>A Decomposable Attention Model for Natural Language Inference <a href="https://arxiv.org/abs/1606.01933">https://arxiv.org/abs/1606.01933</a></li>
+</ul>
+</section>
+<section id="coreference-resolution-1" class="level1">
+<h1>18.16. Coreference Resolution</h1>
+<ul>
+<li>End-to-end Neural Coreference Resolution <a href="https://arxiv.org/abs/1707.07045">https://arxiv.org/abs/1707.07045</a></li>
+</ul>
+</section>
+<section id="information-extraction-1" class="level1">
+<h1>18.17. Information Extraction</h1>
+<ul>
+<li><p>Neural Relation Extraction with Selective Attention over Instances <a href="https://arxiv.org/abs/1606.05125">https://arxiv.org/abs/1606.05125</a></p></li>
+<li><p>Event Detection with Neural Networks <a href="https://arxiv.org/abs/1909.01327">https://arxiv.org/abs/1909.01327</a></p></li>
+</ul>
+</section>
+<section id="text-generation-1" class="level1">
+<h1>18.18. Text Generation</h1>
+<ul>
+<li><p>Better Language Models and Their Implications <a href="https://openai.com/research/better-language-models">https://openai.com/research/better-language-models</a></p></li>
+<li><p>Controlling Text Generation with Plug and Play Language Models <a href="https://arxiv.org/abs/1912.02164">https://arxiv.org/abs/1912.02164</a></p></li>
+</ul>
+</section>
+<section id="evaluation-metrics-for-nlp-tasks-1" class="level1">
+<h1>18.19. Evaluation Metrics for NLP Tasks</h1>
+<ul>
+<li><p>BLEU: a Method for Automatic Evaluation of Machine Translation <a href="https://www.aclweb.org/anthology/P02-1040.pdf">https://www.aclweb.org/anthology/P02-1040.pdf</a></p></li>
+<li><p>ROUGE: A Package for Automatic Evaluation of Summaries <a href="https://www.aclweb.org/anthology/W04-1013.pdf">https://www.aclweb.org/anthology/W04-1013.pdf</a></p></li>
+<li><p>The METEOR Metric for Automatic Evaluation of Machine Translation <a href="https://aclanthology.org/W05-0909.pdf">https://aclanthology.org/W05-0909.pdf</a></p></li>
+<li><p>GLUE: A Multi-Task Benchmark and Analysis Platform for Natural Language Understanding <a href="https://arxiv.org/abs/1804.07461">https://arxiv.org/abs/1804.07461</a></p></li>
+<li><p>SuperGLUE: A Stickier Benchmark for General-Purpose Language Understanding Systems <a href="https://arxiv.org/abs/1905.00537">https://arxiv.org/abs/1905.00537</a></p></li>
+</ul>
+</section>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

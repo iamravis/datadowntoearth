@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>chapter22_advanced_optimization_techniques – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:description" content="">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="chapter-22.-advanced-optimization-techniques" class="level2 text-content">
+<h2 class="anchored" data-anchor-id="chapter-22.-advanced-optimization-techniques">Chapter 22. Advanced Optimization Techniques</h2>
+<p>Advanced optimization techniques are crucial for efficiently training deep learning models. These techniques help in navigating the complex loss landscapes of neural networks, ensuring faster convergence and better performance.</p>
+<section id="first-order-optimization-methods" class="level3">
+<h3 class="anchored" data-anchor-id="first-order-optimization-methods">22.1. First-order Optimization Methods</h3>
+<p>First-order optimization methods rely on gradient information to update model parameters. These methods are foundational for training neural networks.</p>
+</section>
+<section id="gradient-descent-variants" class="level3">
+<h3 class="anchored" data-anchor-id="gradient-descent-variants">22.1.1. Gradient Descent Variants</h3>
+<section id="stochastic-gradient-descent-sgd" class="level4">
+<h4 class="anchored" data-anchor-id="stochastic-gradient-descent-sgd">22.1.1.1. Stochastic Gradient Descent (SGD)</h4>
+<p>SGD updates model parameters using a single training example at a time.</p>
+<ul>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\theta_{t+1} = \theta_t - \eta \nabla_\theta J(\theta; x^{(i)}; y^{(i)})
+\]</span> where <span class="math inline">\(\theta\)</span> represents the model parameters, <span class="math inline">\(\eta\)</span> is the learning rate, <span class="math inline">\(J\)</span> is the loss function, and <span class="math inline">\((x^{(i)}, y^{(i)})\)</span> is a training example.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Faster iteration speed due to using a single example.</li>
+<li>Introduces noise which can help escape local minima.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>High variance in updates, leading to potential instability.</li>
+</ul></li>
+</ul>
+</section>
+<section id="mini-batch-gradient-descent" class="level4">
+<h4 class="anchored" data-anchor-id="mini-batch-gradient-descent">22.1.1.2. Mini-batch Gradient Descent</h4>
+<p>Mini-batch gradient descent updates model parameters using a small batch of training examples.</p>
+<ul>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\theta_{t+1} = \theta_t - \eta \nabla_\theta J(\theta; \mathcal{B})
+\]</span> where <span class="math inline">\(\mathcal{B}\)</span> is a mini-batch of training examples.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Reduces variance in updates compared to SGD.</li>
+<li>More computationally efficient than batch gradient descent.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Requires choosing an appropriate batch size.</li>
+</ul></li>
+</ul>
+</section>
+<section id="momentum" class="level4">
+<h4 class="anchored" data-anchor-id="momentum">22.1.1.3. Momentum</h4>
+<p>Momentum helps accelerate SGD by adding a fraction of the update vector of the past time step to the current update vector.</p>
+<ul>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+v_t = \gamma v_{t-1} + \eta \nabla_\theta J(\theta_t)
+\]</span> <span class="math display">\[
+\theta_{t+1} = \theta_t - v_t
+\]</span> where <span class="math inline">\(v_t\)</span> is the velocity, <span class="math inline">\(\gamma\)</span> is the momentum coefficient, and <span class="math inline">\(\eta\)</span> is the learning rate.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Helps dampen oscillations and accelerates convergence in relevant directions.</li>
+<li>Useful for navigating ravines in the loss landscape.</li>
+</ul></li>
+</ul>
+</section>
+<section id="nesterov-accelerated-gradient" class="level4">
+<h4 class="anchored" data-anchor-id="nesterov-accelerated-gradient">22.1.1.4. Nesterov Accelerated Gradient</h4>
+<p>Nesterov Accelerated Gradient (NAG) is a variant of momentum that calculates the gradient at the anticipated next position of the parameters.</p>
+<ul>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+v_t = \gamma v_{t-1} + \eta \nabla_\theta J(\theta_t - \gamma v_{t-1})
+\]</span> <span class="math display">\[
+\theta_{t+1} = \theta_t - v_t
+\]</span></p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Provides a more accurate update direction by considering the momentum term.</li>
+<li>Can lead to faster convergence compared to standard momentum.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="adaptive-learning-rate-methods" class="level3">
+<h3 class="anchored" data-anchor-id="adaptive-learning-rate-methods">22.1.2. Adaptive Learning Rate Methods</h3>
+<p>Adaptive learning rate methods adjust the learning rate based on the history of gradients, enabling more efficient training.</p>
+<section id="adagrad" class="level4">
+<h4 class="anchored" data-anchor-id="adagrad">22.1.2.1. AdaGrad</h4>
+<p>AdaGrad adapts the learning rate for each parameter individually based on the past gradients.</p>
+<ul>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\theta_{t+1} = \theta_t - \frac{\eta}{\sqrt{G_{t,ii} + \epsilon}} \nabla_\theta J(\theta_t)
+\]</span> where <span class="math inline">\(G_t\)</span> is the sum of squares of past gradients and <span class="math inline">\(\epsilon\)</span> is a small constant to prevent division by zero.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Suitable for dealing with sparse data and parameters.</li>
+<li>Adapts the learning rate based on parameter-specific updates.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Learning rate can become too small over time, leading to slow convergence.</li>
+</ul></li>
+</ul>
+</section>
+<section id="rmsprop" class="level4">
+<h4 class="anchored" data-anchor-id="rmsprop">22.1.2.2. RMSprop</h4>
+<p>RMSprop modifies AdaGrad to include a decay factor to control the accumulation of past squared gradients.</p>
+<ul>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+G_t = \beta G_{t-1} + (1 - \beta) \nabla_\theta J(\theta_t)^2
+\]</span> <span class="math display">\[
+\theta_{t+1} = \theta_t - \frac{\eta}{\sqrt{G_t + \epsilon}} \nabla_\theta J(\theta_t)
+\]</span></p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Helps mitigate the diminishing learning rate problem of AdaGrad.</li>
+<li>Suitable for non-stationary objectives.</li>
+</ul></li>
+</ul>
+</section>
+<section id="adam" class="level4">
+<h4 class="anchored" data-anchor-id="adam">22.1.2.3. Adam</h4>
+<p>Adam combines the advantages of RMSprop and momentum by using moving averages of both the gradients and the squared gradients.</p>
+<ul>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+m_t = \beta_1 m_{t-1} + (1 - \beta_1) \nabla_\theta J(\theta_t)
+\]</span> <span class="math display">\[
+v_t = \beta_2 v_{t-1} + (1 - \beta_2) \nabla_\theta J(\theta_t)^2
+\]</span> <span class="math display">\[
+\hat{m}_t = \frac{m_t}{1 - \beta_1^t}
+\]</span> <span class="math display">\[
+\hat{v}_t = \frac{v_t}{1 - \beta_2^t}
+\]</span> <span class="math display">\[
+\theta_{t+1} = \theta_t - \frac{\eta \hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon}
+\]</span></p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Combines the benefits of AdaGrad and RMSprop.</li>
+<li>Effective for handling noisy gradients and sparse data.</li>
+</ul></li>
+</ul>
+</section>
+<section id="adamw" class="level4">
+<h4 class="anchored" data-anchor-id="adamw">22.1.2.4. AdamW</h4>
+<p>AdamW decouples the weight decay from the gradient updates, addressing issues with regularization in Adam.</p>
+<ul>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\theta_{t+1} = \theta_t - \eta \left( \frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon} + \lambda \theta_t \right)
+\]</span> where <span class="math inline">\(\lambda\)</span> is the weight decay coefficient.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Provides better generalization by properly implementing weight decay.</li>
+<li>Retains the adaptive learning rate benefits of Adam.</li>
+</ul></li>
+</ul>
+</section>
+<section id="nadam" class="level4">
+<h4 class="anchored" data-anchor-id="nadam">22.1.2.5. Nadam</h4>
+<p>Nadam incorporates Nesterov momentum into the Adam optimization algorithm.</p>
+<ul>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+m_t = \beta_1 m_{t-1} + (1 - \beta_1) \nabla_\theta J(\theta_t)
+\]</span> <span class="math display">\[
+v_t = \beta_2 v_{t-1} + (1 - \beta_2) \nabla_\theta J(\theta_t)^2
+\]</span> <span class="math display">\[
+\hat{m}_t = \frac{m_t}{1 - \beta_1^t}
+\]</span> <span class="math display">\[
+\hat{v}_t = \frac{v_t}{1 - \beta_2^t}
+\]</span> <span class="math display">\[
+\theta_{t+1} = \theta_t - \eta \left( \frac{\beta_1 \hat{m}_t + \frac{(1 - \beta_1) \nabla_\theta J(\theta_t)}{1 - \beta_1^t}}{\sqrt{\hat{v}_t} + \epsilon} \right)
+\]</span></p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Benefits from the look-ahead mechanism of Nesterov momentum.</li>
+<li>Can lead to faster convergence than Adam.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="learning-rate-schedules" class="level3">
+<h3 class="anchored" data-anchor-id="learning-rate-schedules">22.1.3. Learning Rate Schedules</h3>
+<p>Learning rate schedules adjust the learning rate during training, which can help improve convergence and avoid local minima.</p>
+<section id="step-decay" class="level4">
+<h4 class="anchored" data-anchor-id="step-decay">22.1.3.1. Step Decay</h4>
+<p>Reduces the learning rate by a factor at specific intervals.</p>
+<ul>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\eta_t = \eta_0 \cdot \text{factor}^{\lfloor \frac{t}{\text{step_size}} \rfloor}
+\]</span> where <span class="math inline">\(\eta_0\)</span> is the initial learning rate, and <code>factor</code> is the decay factor applied every <code>step_size</code> epochs.</li>
+</ul>
+</section>
+<section id="exponential-decay" class="level4">
+<h4 class="anchored" data-anchor-id="exponential-decay">22.1.3.2. Exponential Decay</h4>
+<p>Reduces the learning rate exponentially over time.</p>
+<ul>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\eta_t = \eta_0 \cdot \exp(-kt)
+\]</span> where <span class="math inline">\(k\)</span> is the decay rate.</li>
+</ul>
+</section>
+<section id="cosine-annealing" class="level4">
+<h4 class="anchored" data-anchor-id="cosine-annealing">22.1.3.3. Cosine Annealing</h4>
+<p>Reduces the learning rate following a cosine function, allowing for periodic restarts.</p>
+<ul>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\eta_t = \eta_{\text{min}} + \frac{1}{2} (\eta_{\text{max}} - \eta_{\text{min}}) \left(1 + \cos\left(\frac{T_{\text{cur}}}{T_{\text{max}}} \pi\right)\right)
+\]</span> where <span class="math inline">\(\eta_{\text{min}}\)</span> and <span class="math inline">\(\eta_{\text{max}}\)</span> are the minimum and maximum learning rates, <span class="math inline">\(T_{\text{cur}}\)</span> is the current epoch, and <span class="math inline">\(T_{\text{max}}\)</span> is the total number of epochs for one cycle.</li>
+</ul>
+<p>By employing these advanced optimization techniques, researchers and practitioners can enhance the training efficiency and performance of deep learning models, ensuring robust convergence and improved generalization.</p>
+</section>
+</section>
+<section id="second-order-optimization-methods" class="level3">
+<h3 class="anchored" data-anchor-id="second-order-optimization-methods">22.2. Second-order Optimization Methods</h3>
+<p>Second-order optimization methods leverage second-order derivatives (Hessians) to provide more accurate updates. These methods often achieve faster convergence compared to first-order methods but at the cost of higher computational complexity.</p>
+</section>
+<section id="newtons-method" class="level3">
+<h3 class="anchored" data-anchor-id="newtons-method">22.2.1. Newton’s Method</h3>
+<p>Newton’s method uses both first and second-order derivatives to find the parameter update.</p>
+<ul>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\theta_{t+1} = \theta_t - H^{-1} \nabla_\theta J(\theta_t)
+\]</span> where <span class="math inline">\(H\)</span> is the Hessian matrix of second-order partial derivatives of the loss function <span class="math inline">\(J\)</span> with respect to the parameters <span class="math inline">\(\theta\)</span>.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Provides faster convergence near the optimum.</li>
+<li>Takes into account the curvature of the loss function, leading to more accurate updates.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Computing the Hessian and its inverse is computationally expensive.</li>
+<li>May not be practical for high-dimensional problems.</li>
+</ul></li>
+</ul>
+</section>
+<section id="quasi-newton-methods" class="level3">
+<h3 class="anchored" data-anchor-id="quasi-newton-methods">22.2.2. Quasi-Newton Methods</h3>
+<p>Quasi-Newton methods approximate the Hessian matrix, reducing the computational burden while retaining some benefits of second-order methods.</p>
+<section id="bfgs-broyden-fletcher-goldfarb-shanno" class="level4">
+<h4 class="anchored" data-anchor-id="bfgs-broyden-fletcher-goldfarb-shanno">22.2.2.1. BFGS (Broyden-Fletcher-Goldfarb-Shanno)</h4>
+<p>BFGS is a popular quasi-Newton method that iteratively builds up an approximation to the inverse Hessian.</p>
+<ul>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+H_{t+1} = H_t + \frac{y_t y_t^T}{y_t^T s_t} - \frac{H_t s_t s_t^T H_t}{s_t^T H_t s_t}
+\]</span> where <span class="math inline">\(s_t = \theta_{t+1} - \theta_t\)</span> and <span class="math inline">\(y_t = \nabla_\theta J(\theta_{t+1}) - \nabla_\theta J(\theta_t)\)</span>.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>More efficient than Newton’s method due to the approximation of the Hessian.</li>
+<li>Does not require storing the full Hessian matrix.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Still computationally expensive for very large problems.</li>
+</ul></li>
+</ul>
+</section>
+<section id="l-bfgs-limited-memory-bfgs" class="level4">
+<h4 class="anchored" data-anchor-id="l-bfgs-limited-memory-bfgs">22.2.2.2. L-BFGS (Limited-memory BFGS)</h4>
+<p>L-BFGS is a variant of BFGS that uses a limited amount of memory, making it suitable for large-scale optimization problems.</p>
+<ul>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li>Uses a limited history of updates to approximate the Hessian matrix.</li>
+<li>Does not store the full Hessian, only a few vectors that represent the Hessian implicitly.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Requires significantly less memory than BFGS.</li>
+<li>Suitable for high-dimensional problems.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>May converge more slowly than full-memory BFGS.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="conjugate-gradient" class="level3">
+<h3 class="anchored" data-anchor-id="conjugate-gradient">22.2.3. Conjugate Gradient</h3>
+<p>Conjugate Gradient (CG) is an iterative method for solving large systems of linear equations, and it is often used for optimization without explicitly computing the Hessian.</p>
+<ul>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li>Iteratively updates the parameters using conjugate directions, which are mutually orthogonal with respect to the Hessian.</li>
+<li>Update rule: <span class="math display">\[
+\theta_{t+1} = \theta_t + \alpha_t p_t
+\]</span> where <span class="math inline">\(p_t\)</span> is the conjugate direction, and <span class="math inline">\(\alpha_t\)</span> is the step size.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>More efficient than Newton’s method for large-scale problems.</li>
+<li>Does not require storing or inverting the Hessian matrix.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Requires careful selection of conjugate directions.</li>
+<li>Can be sensitive to numerical precision issues.</li>
+</ul></li>
+</ul>
+</section>
+<section id="natural-gradient-descent" class="level3">
+<h3 class="anchored" data-anchor-id="natural-gradient-descent">22.2.4. Natural Gradient Descent</h3>
+<p>Natural Gradient Descent (NGD) modifies the standard gradient descent by considering the geometry of the parameter space, which can lead to more efficient optimization.</p>
+<ul>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\theta_{t+1} = \theta_t - \eta F^{-1} \nabla_\theta J(\theta_t)
+\]</span> where <span class="math inline">\(F\)</span> is the Fisher Information Matrix, which serves as a surrogate for the Hessian in probabilistic models.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Takes into account the information geometry of the parameter space.</li>
+<li>Often leads to faster convergence, especially in probabilistic models.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Computing and inverting the Fisher Information Matrix can be expensive.</li>
+<li>More complex to implement compared to standard gradient descent.</li>
+</ul></li>
+</ul>
+<p>By employing these advanced second-order optimization techniques, researchers and practitioners can achieve faster and more stable convergence in training complex models, enhancing the overall performance of their machine learning systems.</p>
+</section>
+<section id="constrained-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="constrained-optimization">22.3. Constrained Optimization</h3>
+<p>Constrained optimization deals with optimizing an objective function subject to constraints on the variables. These constraints can be equality constraints, inequality constraints, or both.</p>
+</section>
+<section id="lagrange-multipliers" class="level3">
+<h3 class="anchored" data-anchor-id="lagrange-multipliers">22.3.1. Lagrange Multipliers</h3>
+<p>Lagrange multipliers are a strategy for finding the local maxima and minima of a function subject to equality constraints.</p>
+<ul>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li>Consider the problem of maximizing (or minimizing) <span class="math inline">\(f(x)\)</span> subject to <span class="math inline">\(g(x) = 0\)</span>.</li>
+<li>Construct the Lagrangian: <span class="math display">\[
+\mathcal{L}(x, \lambda) = f(x) - \lambda g(x)
+\]</span></li>
+<li>The optimal points are found by solving: <span class="math display">\[
+\nabla_x \mathcal{L}(x, \lambda) = 0 \quad \text{and} \quad g(x) = 0
+\]</span></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Provides a systematic way to handle equality constraints.</li>
+<li>Can be extended to handle multiple constraints.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>May not be straightforward for complex or non-linear constraints.</li>
+<li>Solving the resulting system of equations can be computationally intensive.</li>
+</ul></li>
+</ul>
+</section>
+<section id="karush-kuhn-tucker-kkt-conditions" class="level3">
+<h3 class="anchored" data-anchor-id="karush-kuhn-tucker-kkt-conditions">22.3.2. Karush-Kuhn-Tucker (KKT) Conditions</h3>
+<p>The KKT conditions are necessary (and under certain conditions, sufficient) for a solution to be optimal in a non-linear programming problem with equality and inequality constraints.</p>
+<ul>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li>Consider the problem of minimizing <span class="math inline">\(f(x)\)</span> subject to <span class="math inline">\(g_i(x) \leq 0\)</span> and <span class="math inline">\(h_j(x) = 0\)</span>.</li>
+<li>The KKT conditions include:
+<ul>
+<li><strong>Stationarity:</strong> <span class="math display">\[
+\nabla f(x) + \sum_{i} \lambda_i \nabla g_i(x) + \sum_{j} \mu_j \nabla h_j(x) = 0
+\]</span></li>
+<li><strong>Primal Feasibility:</strong> <span class="math display">\[
+g_i(x) \leq 0, \quad h_j(x) = 0
+\]</span></li>
+<li><strong>Dual Feasibility:</strong> <span class="math display">\[
+\lambda_i \geq 0
+\]</span></li>
+<li><strong>Complementary Slackness:</strong> <span class="math display">\[
+\lambda_i g_i(x) = 0
+\]</span></li>
+</ul></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Provides a comprehensive framework for both equality and inequality constraints.</li>
+<li>Widely applicable in various optimization problems.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Can be challenging to solve the KKT system, especially for non-linear constraints.</li>
+<li>Requires second-order derivatives for certain conditions.</li>
+</ul></li>
+</ul>
+</section>
+<section id="projected-gradient-descent" class="level3">
+<h3 class="anchored" data-anchor-id="projected-gradient-descent">22.3.3. Projected Gradient Descent</h3>
+<p>Projected Gradient Descent (PGD) handles constraints by projecting the parameters back onto the feasible set after each gradient descent step.</p>
+<ul>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li>Update step: <span class="math display">\[
+\theta_{t+1} = \theta_t - \eta \nabla_\theta J(\theta_t)
+\]</span></li>
+<li>Projection step: <span class="math display">\[
+\theta_{t+1} = \text{Proj}_{\mathcal{C}}(\theta_{t+1})
+\]</span> where <span class="math inline">\(\mathcal{C}\)</span> is the feasible set and <span class="math inline">\(\text{Proj}_{\mathcal{C}}\)</span> denotes the projection onto this set.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Simple and easy to implement.</li>
+<li>Can handle both convex and non-convex constraints.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>The projection step can be computationally expensive, depending on the shape of the feasible set.</li>
+<li>May converge slowly if projections are complex.</li>
+</ul></li>
+</ul>
+</section>
+<section id="interior-point-methods" class="level3">
+<h3 class="anchored" data-anchor-id="interior-point-methods">22.3.4. Interior Point Methods</h3>
+<p>Interior Point Methods are a class of algorithms to solve linear and non-linear convex optimization problems by traversing the interior of the feasible region.</p>
+<ul>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li>Convert the constrained problem into an unconstrained one using barrier functions.</li>
+<li>Barrier function: <span class="math display">\[
+\phi(x) = -\sum_{i} \log(-g_i(x))
+\]</span></li>
+<li>Optimize the combined objective: <span class="math display">\[
+\min_x f(x) + \mu \phi(x)
+\]</span> where <span class="math inline">\(\mu\)</span> is a parameter that controls the influence of the barrier term.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Efficient for large-scale problems.</li>
+<li>Well-suited for convex optimization problems.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Requires good initialization within the feasible region.</li>
+<li>Can be complex to implement and tune.</li>
+</ul></li>
+</ul>
+<p>By understanding and applying these advanced constrained optimization techniques, researchers and practitioners can efficiently solve a wide range of optimization problems involving complex constraints, thereby enhancing the performance and feasibility of their machine learning models.</p>
+</section>
+<section id="global-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="global-optimization">22.4. Global Optimization</h3>
+<p>Global optimization aims to find the global minimum or maximum of a function, as opposed to local optimization methods which may only find local minima or maxima. These techniques are particularly useful for non-convex problems with multiple local minima or maxima.</p>
+</section>
+<section id="simulated-annealing" class="level3">
+<h3 class="anchored" data-anchor-id="simulated-annealing">22.4.1. Simulated Annealing</h3>
+<p>Simulated Annealing (SA) is inspired by the annealing process in metallurgy, where a material is heated and then slowly cooled to decrease defects, resulting in a more stable structure.</p>
+<ul>
+<li><strong>Algorithm Overview:</strong>
+<ul>
+<li>Initialize with a random solution.</li>
+<li>Iteratively make small random changes to the solution.</li>
+<li>Accept changes based on a probability that decreases over time.</li>
+<li>The acceptance probability allows the algorithm to escape local minima early on and focus on local optimization later.</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li>At iteration <span class="math inline">\(t\)</span>, the probability of accepting a new solution <span class="math inline">\(x'\)</span> with energy <span class="math inline">\(E(x')\)</span> given the current solution <span class="math inline">\(x\)</span> with energy <span class="math inline">\(E(x)\)</span> is: <span class="math display">\[
+P(\Delta E) = \exp\left(-\frac{\Delta E}{T(t)}\right)
+\]</span> where <span class="math inline">\(\Delta E = E(x') - E(x)\)</span> and <span class="math inline">\(T(t)\)</span> is the temperature at iteration <span class="math inline">\(t\)</span>.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Can escape local minima due to probabilistic acceptance of worse solutions.</li>
+<li>Simple and flexible, applicable to a wide range of problems.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>May require careful tuning of the cooling schedule.</li>
+<li>Can be slow, especially for large or complex problems.</li>
+</ul></li>
+</ul>
+</section>
+<section id="particle-swarm-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="particle-swarm-optimization">22.4.2. Particle Swarm Optimization</h3>
+<p>Particle Swarm Optimization (PSO) is inspired by the social behavior of birds flocking or fish schooling. It uses a population of candidate solutions called particles, which move around in the search space influenced by their own and their neighbors’ best positions.</p>
+<ul>
+<li><strong>Algorithm Overview:</strong>
+<ul>
+<li>Initialize a swarm of particles with random positions and velocities.</li>
+<li>Update each particle’s velocity and position based on its own best position and the global best position found by the swarm.</li>
+<li>Iteratively adjust the particles’ positions to find the optimal solution.</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li>Velocity update: <span class="math display">\[
+v_i(t+1) = \omega v_i(t) + c_1 r_1 (p_i - x_i(t)) + c_2 r_2 (g - x_i(t))
+\]</span></li>
+<li>Position update: <span class="math display">\[
+x_i(t+1) = x_i(t) + v_i(t+1)
+\]</span></li>
+<li>Here, <span class="math inline">\(v_i(t)\)</span> and <span class="math inline">\(x_i(t)\)</span> are the velocity and position of particle <span class="math inline">\(i\)</span> at time <span class="math inline">\(t\)</span>, <span class="math inline">\(p_i\)</span> is the personal best position of particle <span class="math inline">\(i\)</span>, <span class="math inline">\(g\)</span> is the global best position, <span class="math inline">\(\omega\)</span> is the inertia weight, and <span class="math inline">\(c_1\)</span>, <span class="math inline">\(c_2\)</span> are cognitive and social coefficients with random values <span class="math inline">\(r_1\)</span>, <span class="math inline">\(r2\)</span>.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Simple to implement and computationally efficient.</li>
+<li>Does not require gradient information.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>May converge prematurely to local minima.</li>
+<li>Requires tuning of several hyperparameters (e.g., inertia weight, cognitive and social coefficients).</li>
+</ul></li>
+</ul>
+</section>
+<section id="differential-evolution" class="level3">
+<h3 class="anchored" data-anchor-id="differential-evolution">22.4.3. Differential Evolution</h3>
+<p>Differential Evolution (DE) is a population-based optimization method that relies on the differences between randomly sampled pairs of solutions to explore the search space.</p>
+<ul>
+<li><strong>Algorithm Overview:</strong>
+<ul>
+<li>Initialize a population of candidate solutions.</li>
+<li>Create new candidate solutions by adding the weighted difference between two population vectors to a third vector.</li>
+<li>Use crossover and selection to determine if the new candidates should replace the old ones.</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li>Mutation: <span class="math display">\[
+v_i = x_r1 + F \cdot (x_r2 - x_r3)
+\]</span> where <span class="math inline">\(x_r1\)</span>, <span class="math inline">\(x_r2\)</span>, and <span class="math inline">\(x_r3\)</span> are randomly chosen distinct individuals from the population, and <span class="math inline">\(F\)</span> is the mutation factor.</li>
+<li>Crossover: <span class="math display">\[
+u_i = \begin{cases}
+v_{i,j} &amp; \text{if } r_j \leq CR \\
+x_{i,j} &amp; \text{otherwise}
+\end{cases}
+\]</span> where <span class="math inline">\(u_i\)</span> is the trial vector, <span class="math inline">\(CR\)</span> is the crossover rate, and <span class="math inline">\(r_j\)</span> is a random number.</li>
+<li>Selection: <span class="math display">\[
+x_i = \begin{cases}
+u_i &amp; \text{if } f(u_i) &lt; f(x_i) \\
+x_i &amp; \text{otherwise}
+\end{cases}
+\]</span></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Robust and efficient for a wide range of optimization problems.</li>
+<li>Simple to implement with only a few control parameters.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Performance can be sensitive to the choice of mutation factor and crossover rate.</li>
+<li>May require many function evaluations, which can be computationally expensive for large problems.</li>
+</ul></li>
+</ul>
+<p>By leveraging these global optimization techniques, researchers and practitioners can effectively tackle complex optimization problems with multiple local minima or maxima, ensuring that they find the global optimum and achieve the best possible performance for their models.</p>
+</section>
+<section id="multi-objective-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="multi-objective-optimization">22.5. Multi-objective Optimization</h3>
+<p>Multi-objective optimization involves optimizing two or more conflicting objectives simultaneously. Solutions to multi-objective problems are often evaluated based on the concept of Pareto optimality.</p>
+</section>
+<section id="pareto-optimality" class="level3">
+<h3 class="anchored" data-anchor-id="pareto-optimality">22.5.1. Pareto Optimality</h3>
+<p>Pareto optimality is a state where no objective can be improved without degrading another objective. Solutions that satisfy this condition are known as Pareto optimal or Pareto efficient.</p>
+<ul>
+<li><strong>Pareto Front:</strong>
+<ul>
+<li>The set of all Pareto optimal solutions forms the Pareto front. This front represents the trade-offs between the conflicting objectives.</li>
+<li><strong>Mathematical Definition:</strong> A solution <span class="math inline">\(\mathbf{x}^*\)</span> is Pareto optimal if there is no other solution <span class="math inline">\(\mathbf{x}\)</span> such that <span class="math inline">\(f_i(\mathbf{x}) \leq f_i(\mathbf{x}^*)\)</span> for all <span class="math inline">\(i\)</span> and <span class="math inline">\(f_j(\mathbf{x}) &lt; f_j(\mathbf{x}^*)\)</span> for at least one objective <span class="math inline">\(j\)</span>.</li>
+</ul></li>
+</ul>
+</section>
+<section id="nsga-ii-non-dominated-sorting-genetic-algorithm-ii" class="level3">
+<h3 class="anchored" data-anchor-id="nsga-ii-non-dominated-sorting-genetic-algorithm-ii">22.5.2. NSGA-II (Non-dominated Sorting Genetic Algorithm II)</h3>
+<p>NSGA-II is a popular evolutionary algorithm for solving multi-objective optimization problems. It uses a fast non-dominated sorting approach to classify solutions into different fronts based on Pareto dominance.</p>
+<ul>
+<li><strong>Algorithm Overview:</strong>
+<ul>
+<li><strong>Initialization:</strong> Generate an initial population.</li>
+<li><strong>Non-dominated Sorting:</strong> Sort the population into different fronts based on Pareto dominance.</li>
+<li><strong>Crowding Distance:</strong> Calculate crowding distances to maintain diversity within the fronts.</li>
+<li><strong>Selection, Crossover, Mutation:</strong> Use genetic operators to generate a new population.</li>
+<li><strong>Elitism:</strong> Combine parent and offspring populations and select the best individuals for the next generation.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Efficiently handles multiple objectives.</li>
+<li>Maintains a diverse set of solutions.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Computational complexity can be high for large populations.</li>
+</ul></li>
+</ul>
+</section>
+<section id="moead-multiobjective-evolutionary-algorithm-based-on-decomposition" class="level3">
+<h3 class="anchored" data-anchor-id="moead-multiobjective-evolutionary-algorithm-based-on-decomposition">22.5.3. MOEA/D (Multiobjective Evolutionary Algorithm Based on Decomposition)</h3>
+<p>MOEA/D decomposes a multi-objective optimization problem into a set of scalar optimization subproblems and optimizes them simultaneously.</p>
+<ul>
+<li><strong>Algorithm Overview:</strong>
+<ul>
+<li><strong>Decomposition:</strong> Decompose the original problem into multiple scalar subproblems using weight vectors.</li>
+<li><strong>Optimization:</strong> Optimize each subproblem using evolutionary operators.</li>
+<li><strong>Sharing Information:</strong> Share information among neighboring subproblems to improve convergence and diversity.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Effective in handling many-objective problems.</li>
+<li>Balances convergence and diversity through decomposition.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Performance depends on the choice of decomposition method and weight vectors.</li>
+</ul></li>
+</ul>
+</section>
+<section id="bayesian-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="bayesian-optimization">22.6. Bayesian Optimization</h3>
+<p>Bayesian optimization is a strategy for optimizing expensive black-box functions. It uses a probabilistic model to predict the function and guides the search for the optimum.</p>
+</section>
+<section id="gaussian-process-regression-for-surrogate-modeling" class="level3">
+<h3 class="anchored" data-anchor-id="gaussian-process-regression-for-surrogate-modeling">22.6.1. Gaussian Process Regression for Surrogate Modeling</h3>
+<p>Gaussian Process (GP) regression is commonly used in Bayesian optimization as a surrogate model to approximate the objective function.</p>
+<ul>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li>A GP is defined by a mean function <span class="math inline">\(m(\mathbf{x})\)</span> and a covariance function <span class="math inline">\(k(\mathbf{x}, \mathbf{x}')\)</span>.</li>
+<li>The prior distribution over functions is: <span class="math display">\[
+f(\mathbf{x}) \sim \mathcal{GP}(m(\mathbf{x}), k(\mathbf{x}, \mathbf{x}'))
+\]</span></li>
+<li>The posterior distribution is updated based on observed data, providing a probabilistic prediction of the function’s behavior.</li>
+</ul></li>
+</ul>
+</section>
+<section id="acquisition-functions" class="level3">
+<h3 class="anchored" data-anchor-id="acquisition-functions">22.6.2. Acquisition Functions</h3>
+<p>Acquisition functions guide the search for the optimum by balancing exploration and exploitation. Common acquisition functions include Expected Improvement, Upper Confidence Bound, and Thompson Sampling.</p>
+<section id="expected-improvement-ei" class="level4">
+<h4 class="anchored" data-anchor-id="expected-improvement-ei">22.6.2.1. Expected Improvement (EI)</h4>
+<p>EI quantifies the expected improvement over the current best observation.</p>
+<ul>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\alpha_{\text{EI}}(\mathbf{x}) = \mathbb{E}[\max(0, f(\mathbf{x}) - f(\mathbf{x}^+))]
+\]</span> where <span class="math inline">\(f(\mathbf{x}^+)\)</span> is the current best observation.</li>
+</ul>
+</section>
+<section id="upper-confidence-bound-ucb" class="level4">
+<h4 class="anchored" data-anchor-id="upper-confidence-bound-ucb">22.6.2.2. Upper Confidence Bound (UCB)</h4>
+<p>UCB selects points based on the upper confidence bound of the prediction, encouraging exploration of areas with high uncertainty.</p>
+<ul>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\alpha_{\text{UCB}}(\mathbf{x}) = \mu(\mathbf{x}) + \kappa \sigma(\mathbf{x})
+\]</span> where <span class="math inline">\(\mu(\mathbf{x})\)</span> is the predicted mean, <span class="math inline">\(\sigma(\mathbf{x})\)</span> is the predicted standard deviation, and <span class="math inline">\(\kappa\)</span> is a parameter balancing exploration and exploitation.</li>
+</ul>
+</section>
+<section id="thompson-sampling" class="level4">
+<h4 class="anchored" data-anchor-id="thompson-sampling">22.6.2.3. Thompson Sampling</h4>
+<p>Thompson Sampling selects points based on samples from the posterior distribution, promoting exploration in a probabilistically guided manner.</p>
+<ul>
+<li><strong>Algorithm Overview:</strong>
+<ul>
+<li>Sample a function from the posterior distribution.</li>
+<li>Select the point that maximizes the sampled function.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="multi-armed-bandits" class="level3">
+<h3 class="anchored" data-anchor-id="multi-armed-bandits">22.6.3. Multi-armed Bandits</h3>
+<p>Multi-armed bandits provide a framework for balancing exploration and exploitation in sequential decision-making problems.</p>
+<ul>
+<li><strong>Algorithm Overview:</strong>
+<ul>
+<li>Each arm represents a different decision or action.</li>
+<li>The goal is to maximize the cumulative reward by selecting the best arms over time.</li>
+<li>Common algorithms include <span class="math inline">\(\epsilon\)</span>-greedy, UCB, and Thompson Sampling.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Hyperparameter tuning in machine learning.</li>
+<li>Sequential experimental design.</li>
+</ul></li>
+</ul>
+<p>By leveraging these advanced optimization techniques, researchers and practitioners can efficiently solve complex optimization problems, balancing multiple objectives, handling constraints, and exploring high-dimensional spaces to achieve optimal performance.</p>
+</section>
+<section id="gradient-free-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="gradient-free-optimization">22.7. Gradient-free Optimization</h3>
+<p>Gradient-free optimization methods are useful for optimizing functions that are not differentiable, noisy, or have discontinuities. These methods do not require gradient information and are often used when gradient computation is impractical.</p>
+</section>
+<section id="nelder-mead-method" class="level3">
+<h3 class="anchored" data-anchor-id="nelder-mead-method">22.7.1. Nelder-Mead Method</h3>
+<p>The Nelder-Mead method, also known as the simplex method, is a heuristic search method that uses the concept of a simplex, which is a polytope of ( n + 1 ) vertices in ( n )-dimensional space.</p>
+<ul>
+<li><strong>Algorithm Overview:</strong>
+<ul>
+<li><strong>Initialization:</strong> Start with a simplex of ( n + 1 ) points.</li>
+<li><strong>Reflection:</strong> Reflect the worst point across the centroid of the remaining points.</li>
+<li><strong>Expansion:</strong> If the reflected point is better than the best point, expand further.</li>
+<li><strong>Contraction:</strong> If the reflected point is not better, contract towards the best point.</li>
+<li><strong>Reduction:</strong> If contraction fails, reduce the simplex towards the best point.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Does not require gradient information.</li>
+<li>Effective for low-dimensional optimization problems.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Can be slow for high-dimensional problems.</li>
+<li>May converge to local minima.</li>
+</ul></li>
+</ul>
+</section>
+<section id="powells-method" class="level3">
+<h3 class="anchored" data-anchor-id="powells-method">22.7.2. Powell’s Method</h3>
+<p>Powell’s method is a conjugate direction method that performs a series of one-dimensional searches along conjugate directions.</p>
+<ul>
+<li><strong>Algorithm Overview:</strong>
+<ul>
+<li><strong>Initialization:</strong> Start with an initial point and a set of search directions.</li>
+<li><strong>Line Search:</strong> Perform a line search along each direction to find the minimum.</li>
+<li><strong>Update Directions:</strong> Update the search directions using conjugate direction updates.</li>
+<li><strong>Iterate:</strong> Repeat the process until convergence.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Does not require gradient information.</li>
+<li>Efficient for smooth functions and lower-dimensional spaces.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>May require many function evaluations.</li>
+<li>Sensitive to the choice of initial directions.</li>
+</ul></li>
+</ul>
+</section>
+<section id="distributed-and-parallel-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="distributed-and-parallel-optimization">22.8. Distributed and Parallel Optimization</h3>
+<p>Distributed and parallel optimization techniques are essential for training large-scale models efficiently by leveraging multiple processors or machines.</p>
+</section>
+<section id="data-parallelism" class="level3">
+<h3 class="anchored" data-anchor-id="data-parallelism">22.8.1. Data Parallelism</h3>
+<p>Data parallelism involves distributing the data across multiple processors or machines, where each processor performs computations on its subset of data and aggregates the results.</p>
+<ul>
+<li><strong>Approach:</strong>
+<ul>
+<li><strong>Split Data:</strong> Divide the training data into smaller subsets.</li>
+<li><strong>Parallel Computation:</strong> Each processor computes gradients on its subset of data.</li>
+<li><strong>Aggregation:</strong> Aggregate the gradients and update the model parameters.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Efficient use of computational resources.</li>
+<li>Scales well with large datasets.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Communication overhead for gradient aggregation.</li>
+<li>May require synchronization barriers.</li>
+</ul></li>
+</ul>
+</section>
+<section id="model-parallelism" class="level3">
+<h3 class="anchored" data-anchor-id="model-parallelism">22.8.2. Model Parallelism</h3>
+<p>Model parallelism involves distributing the model across multiple processors or machines, where each processor computes a part of the model.</p>
+<ul>
+<li><strong>Approach:</strong>
+<ul>
+<li><strong>Split Model:</strong> Divide the model into smaller components.</li>
+<li><strong>Parallel Computation:</strong> Each processor computes forward and backward passes for its part of the model.</li>
+<li><strong>Communication:</strong> Exchange intermediate results between processors.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Suitable for very large models that do not fit into a single processor’s memory.</li>
+<li>Enables training of complex models.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Complex implementation and communication overhead.</li>
+<li>Requires careful partitioning of the model.</li>
+</ul></li>
+</ul>
+</section>
+<section id="optimization-for-deep-learning" class="level3">
+<h3 class="anchored" data-anchor-id="optimization-for-deep-learning">22.9. Optimization for Deep Learning</h3>
+<p>Optimizing deep learning models involves various techniques to ensure efficient training and improve convergence.</p>
+</section>
+<section id="batch-normalization" class="level3">
+<h3 class="anchored" data-anchor-id="batch-normalization">22.9.1. Batch Normalization</h3>
+<p>Batch normalization normalizes the inputs of each layer to have zero mean and unit variance, which helps in stabilizing and accelerating training.</p>
+<ul>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\hat{x} = \frac{x - \mu_{\text{batch}}}{\sqrt{\sigma_{\text{batch}}^2 + \epsilon}}
+\]</span> <span class="math display">\[
+y = \gamma \hat{x} + \beta
+\]</span> where <span class="math inline">\(\mu_{\text{batch}}\)</span> and <span class="math inline">\(\sigma_{\text{batch}}^2\)</span> are the batch mean and variance, <span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\beta\)</span> are learnable parameters.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Improves convergence speed.</li>
+<li>Reduces internal covariate shift.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Adds complexity to the model.</li>
+<li>May introduce dependencies between training examples within a batch.</li>
+</ul></li>
+</ul>
+</section>
+<section id="layer-normalization" class="level3">
+<h3 class="anchored" data-anchor-id="layer-normalization">22.9.2. Layer Normalization</h3>
+<p>Layer normalization normalizes the inputs across the features for each training example, rather than across the batch.</p>
+<ul>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\hat{x} = \frac{x - \mu_{\text{layer}}}{\sqrt{\sigma_{\text{layer}}^2 + \epsilon}}
+\]</span> <span class="math display">\[
+y = \gamma \hat{x} + \beta
+\]</span> where <span class="math inline">\(\mu_{\text{layer}}\)</span> and <span class="math inline">\(\sigma_{\text{layer}}^2\)</span> are the mean and variance across the features, <span class="math inline">\(\gamma\)</span> and <span class="math inline">\(\beta\)</span> are learnable parameters.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Works well for recurrent neural networks.</li>
+<li>Does not introduce dependencies between training examples.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>May be less effective for convolutional networks compared to batch normalization.</li>
+</ul></li>
+</ul>
+</section>
+<section id="weight-normalization" class="level3">
+<h3 class="anchored" data-anchor-id="weight-normalization">22.9.3. Weight Normalization</h3>
+<p>Weight normalization reparameterizes the weights of neural networks to decouple the magnitude and direction, simplifying the optimization process.</p>
+<ul>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\mathbf{w} = \frac{\mathbf{v}}{\|\mathbf{v}\|} \mathbf{g}
+\]</span> where <span class="math inline">\(\mathbf{v}\)</span> is a vector of parameters, <span class="math inline">\(\|\mathbf{v}\|\)</span> is the norm of <span class="math inline">\(\mathbf{v}\)</span>, and <span class="math inline">\(\mathbf{g}\)</span> is a scalar parameter.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Accelerates convergence.</li>
+<li>Simplifies the optimization landscape.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Adds an extra step in the forward pass.</li>
+<li>Requires careful initialization of parameters.</li>
+</ul></li>
+</ul>
+</section>
+<section id="gradient-clipping" class="level3">
+<h3 class="anchored" data-anchor-id="gradient-clipping">22.9.4. Gradient Clipping</h3>
+<p>Gradient clipping mitigates the problem of exploding gradients by clipping the gradients during backpropagation to a maximum value.</p>
+<ul>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li>If <span class="math inline">\(\|\nabla_\theta J(\theta)\| &gt; \tau\)</span>, then: <span class="math display">\[
+\nabla_\theta J(\theta) = \tau \frac{\nabla_\theta J(\theta)}{\|\nabla_\theta J(\theta)\|}
+\]</span> where <span class="math inline">\(\tau\)</span> is the threshold for clipping.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Prevents gradients from becoming too large.</li>
+<li>Stabilizes training for RNNs and other deep networks.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>May slow down convergence if clipping is too aggressive.</li>
+<li>Requires tuning of the clipping threshold.</li>
+</ul></li>
+</ul>
+<p>By understanding and applying these advanced optimization techniques, researchers and practitioners can effectively tackle complex optimization problems, enhancing the training efficiency and performance of their deep learning models.</p>
+</section>
+</section>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

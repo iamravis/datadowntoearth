@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>generative_ai – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../logo.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="generative-ai" class="level1 text-content">
+<h1>Generative AI</h1>
+<p><a href="../content/tutorials/genai/images/genai_banner.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../content/tutorials/genai/images/genai_banner.png" class="full-width-image img-fluid"></a></p>
+<section id="beginner-level" class="level3">
+<h3 class="anchored" data-anchor-id="beginner-level">Beginner Level</h3>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/1_introduction_to_generative_ai.qmd">1. Introduction to Generative AI</a>
+</h4>
+<ol type="1">
+<li>Definition and Basic Concepts</li>
+<li>Types of Generative AI Models:
+<ul>
+<li>GANs</li>
+<li>VAEs</li>
+<li>Autoregressive Models</li>
+</ul></li>
+<li>Applications and Examples in Various Domains:
+<ul>
+<li>Image Generation</li>
+<li>Text Generation</li>
+<li>Music Composition</li>
+</ul></li>
+</ol>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/2_fundamentals_of_machine_learning.qmd">2. Fundamentals of Machine Learning</a>
+</h4>
+<ol type="1">
+<li>Supervised, Unsupervised, and Reinforcement Learning</li>
+<li>Neural Networks and Deep Learning</li>
+<li>Activation Functions:
+<ul>
+<li>ReLU</li>
+<li>Sigmoid</li>
+<li>Tanh</li>
+</ul></li>
+<li>Network Architectures:
+<ul>
+<li>Fully Connected</li>
+<li>Convolutional</li>
+<li>Recurrent</li>
+</ul></li>
+<li>Backpropagation and Gradient Descent Algorithms</li>
+</ol>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/3_data_preprocessing_and_feature_engineering.qmd">3. Data Preprocessing and Feature Engineering</a>
+</h4>
+<ol type="1">
+<li>Handling Different Data Types:
+<ul>
+<li>Images</li>
+<li>Text</li>
+<li>Tabular Data</li>
+<li>Time Series</li>
+<li>3D Data</li>
+</ul></li>
+<li>Normalization and Standardization Techniques</li>
+<li>One-hot Encoding for Categorical Variables</li>
+<li>Handling Missing Values and Outliers</li>
+<li>Data Augmentation Techniques</li>
+</ol>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/4_generative_adversarial_networks.qmd">4. Generative Adversarial Networks (GANs)</a>
+</h4>
+<ol type="1">
+<li>Architecture and Training Process</li>
+<li>Vanilla GAN and Its Variants:
+<ul>
+<li>DCGAN</li>
+<li>WGAN</li>
+<li>LSGAN</li>
+<li>CGAN</li>
+</ul></li>
+<li>Discriminator and Generator Networks</li>
+<li>Training Stability and Convergence Issues</li>
+<li>Techniques for Improving GAN Performance:
+<ul>
+<li>Minibatch Discrimination</li>
+<li>Historical Averaging</li>
+<li>Gradient Penalty</li>
+</ul></li>
+</ol>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/5_variational_autoencoders.qmd">5. Variational Autoencoders (VAEs)</a>
+</h4>
+<ol type="1">
+<li>Encoder-Decoder Architecture</li>
+<li>Variational Inference and Reparameterization Trick</li>
+<li>Kullback-Leibler Divergence and Evidence Lower Bound (ELBO)</li>
+<li>Generating Samples from Learned Latent Space</li>
+<li>Techniques for Improving VAE Performance:
+<ul>
+<li>β-VAE</li>
+<li>FactorVAE</li>
+<li>InfoVAE</li>
+</ul></li>
+</ol>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/6_generative_modeling_for_text.qmd">6. Generative Modeling for Text</a>
+</h4>
+<ol type="1">
+<li>Language Models and Next-Word Prediction</li>
+<li>Sequence-to-Sequence Models:
+<ul>
+<li>RNNs</li>
+<li>LSTMs</li>
+<li>Transformers</li>
+</ul></li>
+<li>Beam Search and Sampling Techniques:
+<ul>
+<li>Greedy</li>
+<li>Top-k</li>
+<li>Nucleus Sampling</li>
+</ul></li>
+<li>Generating Coherent and Diverse Text</li>
+<li>Techniques for Improving Text Generation:
+<ul>
+<li>Attention Mechanisms</li>
+<li>Pointer-Generator Networks</li>
+<li>Reinforcement Learning</li>
+</ul></li>
+</ol>
+</section>
+<section id="intermediate-level" class="level3">
+<h3 class="anchored" data-anchor-id="intermediate-level">Intermediate Level</h3>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/7_conditional_generative_models.qmd">7. Conditional Generative Models</a>
+</h4>
+<ol type="1">
+<li>Controlling the Generation Process</li>
+<li>Conditional GANs and VAEs</li>
+<li>Image-to-Image Translation:
+<ul>
+<li>pix2pix</li>
+<li>CycleGAN</li>
+<li>UNIT</li>
+</ul></li>
+<li>Text-to-Image Generation:
+<ul>
+<li>AttnGAN</li>
+<li>StackGAN</li>
+</ul></li>
+<li>Video Generation:
+<ul>
+<li>MoCoGAN</li>
+<li>TGAN</li>
+</ul></li>
+</ol>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/8_generative_modeling_for_tabular_data.qmd">8. Generative Modeling for Tabular Data</a>
+</h4>
+<ol type="1">
+<li>Modeling Structured Data with Dependencies</li>
+<li>Generative Adversarial Networks for Tabular Data:
+<ul>
+<li>TableGAN</li>
+<li>CTGAN</li>
+</ul></li>
+<li>Variational Autoencoders for Tabular Data:
+<ul>
+<li>TVAE</li>
+</ul></li>
+<li>Synthetic Data Generation and Augmentation</li>
+<li>Evaluation Metrics for Tabular Data Generation</li>
+</ol>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/9_generative_modeling_for_time_series.qmd">9. Generative Modeling for Time Series</a>
+</h4>
+<ol type="1">
+<li>Modeling Temporal Dependencies</li>
+<li>Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTMs)</li>
+<li>Generative Adversarial Networks for Time Series:
+<ul>
+<li>TimeGAN</li>
+<li>TGAN</li>
+</ul></li>
+<li>Forecasting and Anomaly Detection</li>
+<li>Techniques for Handling Irregularly Sampled Time Series</li>
+</ol>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/10_generative_modeling_for_3d_data.qmd">10. Generative Modeling for 3D Data</a>
+</h4>
+<ol type="1">
+<li>Representing 3D Data:
+<ul>
+<li>Point Clouds</li>
+<li>Voxels</li>
+<li>Meshes</li>
+<li>Implicit Functions</li>
+</ul></li>
+<li>Generative Models for 3D Shapes:
+<ul>
+<li>3D-GAN</li>
+<li>MeshGAN</li>
+<li>PointFlow</li>
+</ul></li>
+<li>Variational Autoencoders for 3D Generation:
+<ul>
+<li>3D-VAE</li>
+</ul></li>
+<li>Generative Adversarial Networks for 3D Reconstruction:
+<ul>
+<li>3D-R2N2</li>
+</ul></li>
+<li>Techniques for Handling Partial Observations and Occlusions</li>
+</ol>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/11_evaluation_and_metrics.qmd">11. Evaluation and Metrics</a>
+</h4>
+<ol type="1">
+<li>Inception Score and Fréchet Inception Distance (FID)</li>
+<li>Perceptual Similarity Metrics:
+<ul>
+<li>LPIPS</li>
+<li>SSIM</li>
+</ul></li>
+<li>Downstream Task Performance and Human Evaluation</li>
+<li>Mode Collapse and Mode Dropping</li>
+<li>Precision and Recall for Generative Models</li>
+</ol>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/12_generative_modeling_for_audio_and_music.qmd">12. Generative Modeling for Audio and Music</a>
+</h4>
+<ol type="1">
+<li>Modeling Audio Signals and Waveforms</li>
+<li>Generative Adversarial Networks for Music Generation:
+<ul>
+<li>MidiNet</li>
+<li>MuseGAN</li>
+</ul></li>
+<li>Autoregressive Models for Audio Synthesis:
+<ul>
+<li>WaveNet</li>
+<li>Tacotron</li>
+</ul></li>
+<li>Text-to-Speech and Speech Enhancement</li>
+<li>Techniques for Handling Long-Range Dependencies and Structure in Music</li>
+</ol>
+</section>
+<section id="advanced-level" class="level3">
+<h3 class="anchored" data-anchor-id="advanced-level">Advanced Level</h3>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/13_diffusion_models.qmd">13. Diffusion Models</a>
+</h4>
+<ol type="1">
+<li>Denoising Diffusion Probabilistic Models</li>
+<li>Sampling from Diffusion Models:
+<ul>
+<li>DDPM</li>
+<li>DDIM</li>
+</ul></li>
+<li>Applications in Image Generation:
+<ul>
+<li>Latent Diffusion</li>
+<li>Imagen</li>
+</ul></li>
+<li>Diffusion Models for Audio and Text Generation</li>
+<li>Techniques for Improving Diffusion Models:
+<ul>
+<li>Progressive Growing</li>
+<li>Classifier Guidance</li>
+</ul></li>
+</ol>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/14_normalizing_flows.qmd">14. Normalizing Flows</a>
+</h4>
+<ol type="1">
+<li>Invertible Neural Networks and Bijective Functions</li>
+<li>Efficient Density Estimation and Sampling</li>
+<li>Coupling Layers and Invertible 1x1 Convolutions</li>
+<li>Planar and Radial Flows, NICE, RealNVP, Glow</li>
+<li>Techniques for Improving Flow-Based Models:
+<ul>
+<li>Multi-Scale Architectures</li>
+<li>Invertible 1x1 Convolutions</li>
+</ul></li>
+</ol>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/15_autoregressive_models.qmd">15. Autoregressive Models</a>
+</h4>
+<ol type="1">
+<li>Modeling Sequences with Dependencies</li>
+<li>Transformers and Self-Attention</li>
+<li>Generating Coherent and Long-Range Text:
+<ul>
+<li>GPT</li>
+<li>CTRL</li>
+<li>Megatron-LM</li>
+</ul></li>
+<li>Autoregressive Models for Image Generation:
+<ul>
+<li>PixelCNN</li>
+<li>PixelSNAIL</li>
+<li>SPN</li>
+</ul></li>
+<li>Techniques for Improving Autoregressive Models:
+<ul>
+<li>Sparse Attention</li>
+<li>Local Attention</li>
+<li>Hierarchical Generation</li>
+</ul></li>
+</ol>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/16_generative_modeling_for_reinforcement_learning.qmd">16. Generative Modeling for Reinforcement Learning</a>
+</h4>
+<ol type="1">
+<li>Generating Diverse and High-Quality Experiences</li>
+<li>Improving Sample Efficiency in RL</li>
+<li>Generative Adversarial Imitation Learning (GAIL)</li>
+<li>Variational Autoencoders for RL (DVRL)</li>
+<li>Techniques for Handling Partial Observability and Delayed Rewards</li>
+</ol>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/17_generative_modeling_for_molecular_design.qmd">17. Generative Modeling for Molecular Design</a>
+</h4>
+<ol type="1">
+<li>Representing Molecules and Chemical Compounds</li>
+<li>Generative Models for Drug Discovery:
+<ul>
+<li>MolGAN</li>
+<li>JT-VAE</li>
+<li>GraphAF</li>
+</ul></li>
+<li>Reinforcement Learning for Molecular Optimization</li>
+<li>Generative Models for Retrosynthesis Planning</li>
+<li>Techniques for Handling Chemical Constraints and Properties</li>
+</ol>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/18_generative_modeling_for_anomaly_detection.qmd">18. Generative Modeling for Anomaly Detection</a>
+</h4>
+<ol type="1">
+<li>Identifying Outliers and Anomalies</li>
+<li>Generative Adversarial Networks for Anomaly Detection:
+<ul>
+<li>AnoGAN</li>
+<li>ADGAN</li>
+</ul></li>
+<li>Variational Autoencoders for Anomaly Detection:
+<ul>
+<li>DAGMM</li>
+<li>CAVGA</li>
+</ul></li>
+<li>One-Class Classification and Isolation Forests</li>
+<li>Techniques for Handling High-Dimensional and Complex Data</li>
+</ol>
+</section>
+<section id="state-of-the-art" class="level3">
+<h3 class="anchored" data-anchor-id="state-of-the-art">State-of-the-Art</h3>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/19_multimodal_generative_models.qmd">19. Multimodal Generative Models</a>
+</h4>
+<ol type="1">
+<li>Combining Different Data Modalities:
+<ul>
+<li>Text</li>
+<li>Images</li>
+<li>Audio</li>
+<li>Video</li>
+</ul></li>
+<li>Generative Models for Vision-Language Tasks:
+<ul>
+<li>DALL-E</li>
+<li>Imagen</li>
+<li>GLIDE</li>
+</ul></li>
+<li>Contrastive Learning for Multimodal Representation:
+<ul>
+<li>CLIP</li>
+<li>ALIGN</li>
+</ul></li>
+<li>Zero-Shot and Few-Shot Generation</li>
+<li>Techniques for Handling Cross-Modal Alignment and Consistency</li>
+</ol>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/20_controllable_generation.qmd">20. Controllable Generation</a>
+</h4>
+<ol type="1">
+<li>Steering the Generation Process with Attributes and Constraints</li>
+<li>Latent Space Manipulation and Editing</li>
+<li>Generative Models with Explicit Control:
+<ul>
+<li>StyleGAN</li>
+<li>HiDDeN</li>
+<li>COCO-GAN</li>
+</ul></li>
+<li>Prompt Engineering for Text Generation</li>
+<li>Techniques for Handling Complex and Structured Constraints</li>
+</ol>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/21_generative_models_for_scientific_discovery.qmd">21. Generative Models for Scientific Discovery</a>
+</h4>
+<ol type="1">
+<li>Accelerating Scientific Research with Generative AI</li>
+<li>Generative Models for Materials Design and Drug Discovery</li>
+<li>Inverse Design and Optimization Using Generative Models</li>
+<li>Generative Models for Experimental Design and Planning</li>
+<li>Techniques for Handling Physical Constraints and Domain Knowledge</li>
+</ol>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/22_generative_models_for_creative_applications.qmd">22. Generative Models for Creative Applications</a>
+</h4>
+<ol type="1">
+<li>Generative Art and Music Composition</li>
+<li>Procedural Content Generation in Games</li>
+<li>Generative Models for Fashion and Product Design</li>
+<li>Computational Creativity and Human-AI Collaboration</li>
+<li>Techniques for Handling Subjective and Aesthetic Qualities</li>
+</ol>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/23_ethical_considerations_in_generative_ai.qmd">23. Ethical Considerations in Generative AI</a>
+</h4>
+<ol type="1">
+<li>Bias and Fairness in Generative Models</li>
+<li>Privacy and Security Concerns:
+<ul>
+<li>Deepfakes</li>
+<li>Data Leakage</li>
+</ul></li>
+<li>Responsible Development and Deployment</li>
+<li>Transparency and Interpretability of Generative Models</li>
+<li>Techniques for Mitigating Ethical Risks and Ensuring Responsible AI</li>
+</ol>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/24_emerging_trends_and_future_directions.qmd">24. Emerging Trends and Future Directions</a>
+</h4>
+<ol type="1">
+<li>Bridging the Gap Between Generative and Discriminative Models</li>
+<li>Generative Models for Causal Reasoning and Disentanglement</li>
+<li>Neuro-Symbolic Integration and Hybrid Generative Models</li>
+<li>Generative Models for Meta-Learning and Few-Shot Generation</li>
+<li>Techniques for Handling Uncertainty and Incorporating Prior Knowledge</li>
+</ol>
+<h4 class="topic anchored">
+<a href="../content/tutorials/genai/25_practical_considerations_and_case_studies.qmd">25. Practical Considerations and Case Studies</a>
+</h4>
+<ol type="1">
+<li>Scaling Generative Models to Large Datasets</li>
+<li>Distributed Training and Model Parallelism</li>
+<li>Deployment Strategies and Serving Architectures</li>
+<li>Real-World Applications and Case Studies</li>
+<li>Techniques for Optimizing Performance and Resource Utilization</li>
+</ol>
+</section>
+</section>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="quarto-dev/quarto-web" data-repo-id="MDEwOlJlcG9zaXRvcnkzNDc2MzMzNTg=" data-category="General" data-category-id="DIC_kwDOFLh2zs4CBQCO" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","loop":false,"closeEffect":"zoom","openEffect":"zoom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>

@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>nonparametric_statistics – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="chapter-12-nonparametric-statistics" class="level1 text-content">
+<h1>Chapter 12: Nonparametric Statistics</h1>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<section id="introduction" class="level3">
+<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
+<section id="definition-and-scope" class="level4">
+<h4 class="anchored" data-anchor-id="definition-and-scope">Definition and Scope</h4>
+<p>Nonparametric statistics refers to statistical methods that do not assume a specific distribution for the data. Unlike parametric methods, which rely on underlying assumptions about the data distribution (e.g., normal distribution), nonparametric methods are more flexible and can be applied to data without assuming a particular distribution. These methods are especially useful when dealing with small sample sizes or ordinal data.</p>
+</section>
+<section id="importance-and-applications" class="level4">
+<h4 class="anchored" data-anchor-id="importance-and-applications">Importance and Applications</h4>
+<p>Nonparametric methods are crucial in various fields such as biology, medicine, social sciences, and engineering. They are particularly valuable when the data do not meet the assumptions required for parametric tests. For example, in medical research, nonparametric tests are often used to compare treatment effects when the data are skewed or contain outliers.</p>
+</section>
+</section>
+</section>
+<section id="common-tests" class="level2">
+<h2 class="anchored" data-anchor-id="common-tests">Common Tests</h2>
+<section id="mann-whitney-u-test" class="level3">
+<h3 class="anchored" data-anchor-id="mann-whitney-u-test">Mann-Whitney U Test</h3>
+<section id="description" class="level4">
+<h4 class="anchored" data-anchor-id="description">Description</h4>
+<p>The Mann-Whitney U test, also known as the Wilcoxon rank-sum test, is used to compare differences between two independent groups. It is an alternative to the independent t-test when the data do not meet the assumptions of normality.</p>
+</section>
+<section id="procedure" class="level4">
+<h4 class="anchored" data-anchor-id="procedure">Procedure</h4>
+<section id="step-by-step-process" class="level5">
+<h5 class="anchored" data-anchor-id="step-by-step-process">Step-by-Step Process</h5>
+<ol type="1">
+<li>Rank all the observations from both groups together.</li>
+<li>Sum the ranks for the observations in each group.</li>
+<li>Calculate the U statistic for both groups.</li>
+<li>Determine the significance using the U statistic and compare it against a critical value from the U distribution table.</li>
+</ol>
+</section>
+</section>
+<section id="example" class="level4">
+<h4 class="anchored" data-anchor-id="example">Example</h4>
+<p>Suppose we want to compare the test scores of two different teaching methods. Group A (n=10) and Group B (n=12). By ranking the scores and calculating the U statistic, we can determine if there is a significant difference between the two methods without assuming normality.</p>
+</section>
+</section>
+<section id="wilcoxon-signed-rank-test" class="level3">
+<h3 class="anchored" data-anchor-id="wilcoxon-signed-rank-test">Wilcoxon Signed-Rank Test</h3>
+<section id="description-1" class="level4">
+<h4 class="anchored" data-anchor-id="description-1">Description</h4>
+<p>The Wilcoxon signed-rank test is a nonparametric test used to compare two related samples or repeated measurements on a single sample. It is an alternative to the paired t-test.</p>
+</section>
+<section id="procedure-1" class="level4">
+<h4 class="anchored" data-anchor-id="procedure-1">Procedure</h4>
+<section id="step-by-step-process-1" class="level5">
+<h5 class="anchored" data-anchor-id="step-by-step-process-1">Step-by-Step Process</h5>
+<ol type="1">
+<li>Calculate the differences between paired observations.</li>
+<li>Rank the absolute differences, ignoring signs.</li>
+<li>Assign signs to the ranks based on the direction of the differences.</li>
+<li>Sum the positive and negative ranks separately.</li>
+<li>Determine the test statistic and compare it to a critical value from the Wilcoxon distribution.</li>
+</ol>
+</section>
+</section>
+<section id="example-1" class="level4">
+<h4 class="anchored" data-anchor-id="example-1">Example</h4>
+<p>Consider a study measuring blood pressure before and after treatment for a group of patients. By applying the Wilcoxon signed-rank test to the paired measurements, we can test if the treatment has a significant effect on blood pressure.</p>
+</section>
+</section>
+<section id="kruskal-wallis-test" class="level3">
+<h3 class="anchored" data-anchor-id="kruskal-wallis-test">Kruskal-Wallis Test</h3>
+<section id="description-2" class="level4">
+<h4 class="anchored" data-anchor-id="description-2">Description</h4>
+<p>The Kruskal-Wallis test is a nonparametric alternative to one-way ANOVA. It is used to compare three or more independent groups.</p>
+</section>
+<section id="procedure-2" class="level4">
+<h4 class="anchored" data-anchor-id="procedure-2">Procedure</h4>
+<section id="step-by-step-process-2" class="level5">
+<h5 class="anchored" data-anchor-id="step-by-step-process-2">Step-by-Step Process</h5>
+<ol type="1">
+<li>Rank all the observations from all groups together.</li>
+<li>Calculate the sum of ranks for each group.</li>
+<li>Compute the Kruskal-Wallis statistic based on the ranks.</li>
+<li>Determine the significance using the Kruskal-Wallis distribution table.</li>
+</ol>
+</section>
+</section>
+<section id="example-2" class="level4">
+<h4 class="anchored" data-anchor-id="example-2">Example</h4>
+<p>If we have test scores from three different teaching methods (Group A, B, and C), the Kruskal-Wallis test can help us determine if there is a significant difference in the scores among the groups without assuming normality.</p>
+</section>
+</section>
+<section id="friedman-test" class="level3">
+<h3 class="anchored" data-anchor-id="friedman-test">Friedman Test</h3>
+<section id="description-3" class="level4">
+<h4 class="anchored" data-anchor-id="description-3">Description</h4>
+<p>The Friedman test is a nonparametric test for comparing three or more paired groups. It is an alternative to the repeated measures ANOVA.</p>
+</section>
+<section id="procedure-3" class="level4">
+<h4 class="anchored" data-anchor-id="procedure-3">Procedure</h4>
+<section id="step-by-step-process-3" class="level5">
+<h5 class="anchored" data-anchor-id="step-by-step-process-3">Step-by-Step Process</h5>
+<ol type="1">
+<li>Rank the values within each block or subject.</li>
+<li>Sum the ranks for each treatment or condition.</li>
+<li>Calculate the Friedman statistic based on the ranks.</li>
+<li>Compare the statistic to a critical value from the Friedman distribution table.</li>
+</ol>
+</section>
+</section>
+<section id="example-3" class="level4">
+<h4 class="anchored" data-anchor-id="example-3">Example</h4>
+<p>In a study measuring the effectiveness of three different diets on weight loss in the same group of participants, the Friedman test can determine if there is a significant difference in weight loss across the three diets.</p>
+</section>
+</section>
+</section>
+<section id="correlation-measures" class="level2">
+<h2 class="anchored" data-anchor-id="correlation-measures">Correlation Measures</h2>
+<section id="spearmans-rank-correlation" class="level3">
+<h3 class="anchored" data-anchor-id="spearmans-rank-correlation">Spearman’s Rank Correlation</h3>
+<section id="description-4" class="level4">
+<h4 class="anchored" data-anchor-id="description-4">Description</h4>
+<p>Spearman’s rank correlation coefficient is a nonparametric measure of the strength and direction of association between two ranked variables.</p>
+</section>
+<section id="procedure-4" class="level4">
+<h4 class="anchored" data-anchor-id="procedure-4">Procedure</h4>
+<section id="step-by-step-process-4" class="level5">
+<h5 class="anchored" data-anchor-id="step-by-step-process-4">Step-by-Step Process</h5>
+<ol type="1">
+<li>Rank the data for both variables.</li>
+<li>Calculate the difference between the ranks for each pair of observations.</li>
+<li>Square the rank differences and sum them.</li>
+<li>Use the formula: <span class="math display">\[
+r_s = 1 - \frac{6 \sum d_i^2}{n(n^2-1)}
+\]</span> to calculate the correlation coefficient.</li>
+</ol>
+</section>
+</section>
+<section id="example-4" class="level4">
+<h4 class="anchored" data-anchor-id="example-4">Example</h4>
+<p>If we want to examine the relationship between students’ ranks in math and science, Spearman’s rank correlation can quantify the degree of association between the two rankings.</p>
+</section>
+</section>
+<section id="kendalls-tau" class="level3">
+<h3 class="anchored" data-anchor-id="kendalls-tau">Kendall’s Tau</h3>
+<section id="description-5" class="level4">
+<h4 class="anchored" data-anchor-id="description-5">Description</h4>
+<p>Kendall’s tau is a nonparametric measure of correlation that assesses the ordinal association between two measured quantities.</p>
+</section>
+<section id="procedure-5" class="level4">
+<h4 class="anchored" data-anchor-id="procedure-5">Procedure</h4>
+<section id="step-by-step-process-5" class="level5">
+<h5 class="anchored" data-anchor-id="step-by-step-process-5">Step-by-Step Process</h5>
+<ol type="1">
+<li>For each pair of observations, determine the number of concordant and discordant pairs.</li>
+<li>Calculate the difference between the number of concordant and discordant pairs.</li>
+<li>Use the formula: <span class="math display">\[
+\tau = \frac{(C - D)}{\sqrt{(C + D + T)(C + D + U)}}
+\]</span> where ( C ) is the number of concordant pairs, ( D ) is the number of discordant pairs, ( T ) and ( U ) are ties in the first and second variable.</li>
+</ol>
+</section>
+</section>
+<section id="example-5" class="level4">
+<h4 class="anchored" data-anchor-id="example-5">Example</h4>
+<p>In a study ranking employees based on performance and potential, Kendall’s tau can measure the association between these two rankings.</p>
+</section>
+</section>
+</section>
+<section id="bootstrapping-methods" class="level2">
+<h2 class="anchored" data-anchor-id="bootstrapping-methods">Bootstrapping Methods</h2>
+<section id="overview-1" class="level3">
+<h3 class="anchored" data-anchor-id="overview-1">Overview</h3>
+<section id="introduction-1" class="level4">
+<h4 class="anchored" data-anchor-id="introduction-1">Introduction</h4>
+<p>Bootstrapping is a resampling technique used to estimate statistics on a dataset by sampling with replacement. It allows estimation of the sampling distribution of almost any statistic.</p>
+</section>
+<section id="purpose-and-applications" class="level4">
+<h4 class="anchored" data-anchor-id="purpose-and-applications">Purpose and Applications</h4>
+<p>Bootstrapping is particularly useful when the theoretical distribution of a statistic is complex or unknown. It is widely used in estimating confidence intervals, hypothesis testing, and model validation.</p>
+</section>
+</section>
+<section id="resampling-techniques-for-estimating-statistics" class="level3">
+<h3 class="anchored" data-anchor-id="resampling-techniques-for-estimating-statistics">Resampling Techniques for Estimating Statistics</h3>
+<section id="procedure-6" class="level4">
+<h4 class="anchored" data-anchor-id="procedure-6">Procedure</h4>
+<section id="step-by-step-process-6" class="level5">
+<h5 class="anchored" data-anchor-id="step-by-step-process-6">Step-by-Step Process</h5>
+<ol type="1">
+<li>Generate a large number of bootstrap samples from the original dataset by sampling with replacement.</li>
+<li>Calculate the statistic of interest for each bootstrap sample.</li>
+<li>Use the distribution of the bootstrap estimates to approximate the sampling distribution.</li>
+<li>Derive estimates, confidence intervals, or perform hypothesis tests based on the bootstrap distribution.</li>
+</ol>
+</section>
+</section>
+<section id="example-6" class="level4">
+<h4 class="anchored" data-anchor-id="example-6">Example</h4>
+<p>Suppose we want to estimate the mean and its confidence interval for a small sample of data. By repeatedly resampling the data and calculating the mean for each sample, we can construct an empirical distribution of the mean and derive confidence intervals from it.</p>
+</section>
+</section>
+</section>
+<section id="additional-related-topics" class="level2">
+<h2 class="anchored" data-anchor-id="additional-related-topics">Additional Related Topics</h2>
+<section id="chi-square-test" class="level3">
+<h3 class="anchored" data-anchor-id="chi-square-test">Chi-Square Test</h3>
+<section id="description-6" class="level4">
+<h4 class="anchored" data-anchor-id="description-6">Description</h4>
+<p>The Chi-Square test is a nonparametric test used to determine if there is a significant association between categorical variables. It compares the observed frequencies in each category with the frequencies expected if the variables were independent.</p>
+</section>
+<section id="types" class="level4">
+<h4 class="anchored" data-anchor-id="types">Types</h4>
+<section id="chi-square-test-of-independence" class="level5">
+<h5 class="anchored" data-anchor-id="chi-square-test-of-independence">Chi-Square Test of Independence</h5>
+<p>Used to test if two categorical variables are independent.</p>
+</section>
+<section id="chi-square-goodness-of-fit-test" class="level5">
+<h5 class="anchored" data-anchor-id="chi-square-goodness-of-fit-test">Chi-Square Goodness of Fit Test</h5>
+<p>Used to test if a sample data matches a population with a specific distribution.</p>
+</section>
+</section>
+<section id="example-7" class="level4">
+<h4 class="anchored" data-anchor-id="example-7">Example</h4>
+<p>A researcher might use the Chi-Square test to determine if there is an association between gender and voting preference in an election.</p>
+</section>
+</section>
+<section id="sign-test" class="level3">
+<h3 class="anchored" data-anchor-id="sign-test">Sign Test</h3>
+<section id="description-7" class="level4">
+<h4 class="anchored" data-anchor-id="description-7">Description</h4>
+<p>The Sign Test is a nonparametric test used to evaluate the median of a distribution. It is often used for matched pairs or to test if the median of a single sample differs from a specified value.</p>
+</section>
+<section id="procedure-7" class="level4">
+<h4 class="anchored" data-anchor-id="procedure-7">Procedure</h4>
+<section id="step-by-step-process-7" class="level5">
+<h5 class="anchored" data-anchor-id="step-by-step-process-7">Step-by-Step Process</h5>
+<ol type="1">
+<li>Determine the number of positive and negative differences from the median or specified value.</li>
+<li>Use the binomial distribution to calculate the test statistic and p-value.</li>
+</ol>
+</section>
+</section>
+<section id="example-8" class="level4">
+<h4 class="anchored" data-anchor-id="example-8">Example</h4>
+<p>The Sign Test can be applied to test if a new medication’s effect differs from no effect, by analyzing the number of patients whose condition improved or worsened.</p>
+</section>
+</section>
+<section id="median-test" class="level3">
+<h3 class="anchored" data-anchor-id="median-test">Median Test</h3>
+<section id="description-8" class="level4">
+<h4 class="anchored" data-anchor-id="description-8">Description</h4>
+<p>The Median Test is used to determine if the medians of two or more groups differ. It is a nonparametric alternative to the one-way ANOVA.</p>
+</section>
+<section id="procedure-8" class="level4">
+<h4 class="anchored" data-anchor-id="procedure-8">Procedure</h4>
+<section id="step-by-step-process-8" class="level5">
+<h5 class="anchored" data-anchor-id="step-by-step-process-8">Step-by-Step Process</h5>
+<ol type="1">
+<li>Combine all samples and find the overall median.</li>
+<li>Count the number of observations in each group above and below the overall median.</li>
+<li>Use the Chi-Square test to determine if the observed frequencies differ from expected frequencies.</li>
+</ol>
+</section>
+</section>
+<section id="example-9" class="level4">
+<h4 class="anchored" data-anchor-id="example-9">Example</h4>
+<p>To compare the median incomes of different professions, the Median Test can determine if there is a significant difference in incomes across groups.</p>
+</section>
+</section>
+<section id="permutation-tests" class="level3">
+<h3 class="anchored" data-anchor-id="permutation-tests">Permutation Tests</h3>
+<section id="description-9" class="level4">
+<h4 class="anchored" data-anchor-id="description-9">Description</h4>
+<p>Permutation tests are nonparametric tests that involve rearranging the observed data to test a hypothesis. They are used to determine the distribution of a test statistic under the null hypothesis.</p>
+</section>
+<section id="procedure-9" class="level4">
+<h4 class="anchored" data-anchor-id="procedure-9">Procedure</h4>
+<section id="step-by-step-process-9" class="level5">
+<h5 class="anchored" data-anchor-id="step-by-step-process-9">Step-by-Step Process</h5>
+<ol type="1">
+<li>Calculate the test statistic for the observed data.</li>
+<li>Randomly shuffle the data and recalculate the test statistic for each permutation.</li>
+<li>Compare the observed test statistic to the distribution of permuted test statistics to determine significance.</li>
+</ol>
+</section>
+</section>
+<section id="example-10" class="level4">
+<h4 class="anchored" data-anchor-id="example-10">Example</h4>
+<p>In a clinical trial comparing two treatments, a permutation test can be used to determine if the observed difference in outcomes is significant by comparing it to differences obtained from random permutations of the data.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,1760 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>regression_analysis – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="chapter-6-regression-analysis" class="level1 text-content">
+<h1>Chapter 6: Regression Analysis</h1>
+<section id="simple-linear-regression" class="level3">
+<h3 class="anchored" data-anchor-id="simple-linear-regression">Simple Linear Regression</h3>
+<section id="definition" class="level4">
+<h4 class="anchored" data-anchor-id="definition">Definition</h4>
+<p>Simple linear regression is a method to model the relationship between a dependent variable (<span class="math inline">\(y\)</span>) and a single independent variable (<span class="math inline">\(x\)</span>) using a straight line. It aims to predict the value of <span class="math inline">\(y\)</span> based on the value of <span class="math inline">\(x\)</span>.</p>
+</section>
+<section id="least-squares-estimation" class="level4">
+<h4 class="anchored" data-anchor-id="least-squares-estimation">Least Squares Estimation</h4>
+<section id="definition-1" class="level5">
+<h5 class="anchored" data-anchor-id="definition-1">Definition</h5>
+<p>Least squares estimation is a method to find the best-fit line by minimising the sum of the squares of the residuals (the differences between observed and predicted values).</p>
+</section>
+<section id="formula" class="level5">
+<h5 class="anchored" data-anchor-id="formula">Formula</h5>
+<p><span class="math display">\[
+y = \beta_0 + \beta_1x + \epsilon
+\]</span> where <span class="math inline">\(\beta_0\)</span> is the intercept, <span class="math inline">\(\beta_1\)</span> is the slope, and <span class="math inline">\(\epsilon\)</span> is the error term.</p>
+</section>
+<section id="example" class="level5">
+<h5 class="anchored" data-anchor-id="example">Example</h5>
+<p>Predicting a student’s exam score based on the number of study hours. If we have data points of hours studied and corresponding exam scores, we can fit a line to model this relationship and make predictions for new values.</p>
+</section>
+</section>
+<section id="assumptions-of-linear-regression" class="level4">
+<h4 class="anchored" data-anchor-id="assumptions-of-linear-regression">Assumptions of Linear Regression</h4>
+<ul>
+<li><p><strong>Linearity</strong>: The relationship between the dependent and independent variables is linear. For example, the relationship between height and weight is often linear within certain ranges.</p></li>
+<li><p><strong>Independence</strong>: Observations are independent of each other. For instance, the scores of students in different classrooms should not influence each other.</p></li>
+<li><p><strong>Homoscedasticity</strong>: The variance of residuals is constant across all levels of the independent variable. This means the spread of residuals should be similar at all values of <span class="math inline">\(x\)</span>. For example, the variability in house prices should be similar across different levels of house size.</p></li>
+<li><p><strong>Normality</strong>: Residuals are normally distributed. This can be checked using Q-Q plots to ensure the residuals follow a straight line. For instance, the residuals from predicting income based on education level should be normally distributed.</p></li>
+</ul>
+</section>
+<section id="r-squared-and-adjusted-r-squared" class="level4">
+<h4 class="anchored" data-anchor-id="r-squared-and-adjusted-r-squared">R-squared and Adjusted R-squared</h4>
+<section id="r-squared" class="level5">
+<h5 class="anchored" data-anchor-id="r-squared">R-squared</h5>
+<section id="definition-2" class="level6">
+<h6 class="anchored" data-anchor-id="definition-2">Definition</h6>
+<p>R-squared is a measure of the proportion of variance in the dependent variable that is predictable from the independent variable.</p>
+</section>
+<section id="formula-1" class="level6">
+<h6 class="anchored" data-anchor-id="formula-1">Formula</h6>
+<p><span class="math display">\[
+R^2 = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}
+\]</span></p>
+</section>
+<section id="example-1" class="level6">
+<h6 class="anchored" data-anchor-id="example-1">Example</h6>
+<p>An <span class="math inline">\(R^2\)</span> of 0.8 means that 80% of the variance in the dependent variable is explained by the independent variable. For instance, if we are predicting house prices based on square footage, an <span class="math inline">\(R^2\)</span> of 0.8 indicates that 80% of the variation in house prices can be explained by the square footage.</p>
+</section>
+</section>
+<section id="adjusted-r-squared" class="level5">
+<h5 class="anchored" data-anchor-id="adjusted-r-squared">Adjusted R-squared</h5>
+<section id="definition-3" class="level6">
+<h6 class="anchored" data-anchor-id="definition-3">Definition</h6>
+<p>Adjusted R-squared is a modified version of R-squared that adjusts for the number of predictors in the model.</p>
+</section>
+<section id="formula-2" class="level6">
+<h6 class="anchored" data-anchor-id="formula-2">Formula</h6>
+<p><span class="math display">\[
+\text{Adjusted } R^2 = 1 - \left( \frac{(1-R^2)(n-1)}{n-p-1} \right)
+\]</span></p>
+</section>
+<section id="example-2" class="level6">
+<h6 class="anchored" data-anchor-id="example-2">Example</h6>
+<p>Adjusted <span class="math inline">\(R^2\)</span> is used to compare models with different numbers of predictors. For example, when adding more variables to predict house prices, Adjusted <span class="math inline">\(R^2\)</span> helps determine if the new model with more variables is actually better.</p>
+<div id="fa9cc985" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> r2_score</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.stattools <span class="im">import</span> jarque_bera</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.graphics.gofplots <span class="im">import</span> qqplot</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Set random seed for reproducibility</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate sample data</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>hours_studied <span class="op">=</span> np.random.uniform(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>noise <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">100</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>exam_scores <span class="op">=</span> <span class="dv">40</span> <span class="op">+</span> <span class="dv">5</span> <span class="op">*</span> hours_studied <span class="op">+</span> noise</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a DataFrame</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({<span class="st">'Hours_Studied'</span>: hours_studied, <span class="st">'Exam_Score'</span>: exam_scores})</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform simple linear regression</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df[[<span class="st">'Hours_Studied'</span>]]</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df[<span class="st">'Exam_Score'</span>]</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LinearRegression()</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>model.fit(X, y)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Print coefficients</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Intercept (β0): </span><span class="sc">{</span>model<span class="sc">.</span>intercept_<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Slope (β1): </span><span class="sc">{</span>model<span class="sc">.</span>coef_[<span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> model.predict(X)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate R-squared</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>r_squared <span class="op">=</span> r2_score(y, y_pred)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"R-squared: </span><span class="sc">{</span>r_squared<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Adjusted R-squared</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(y)</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> X.shape[<span class="dv">1</span>]</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>adjusted_r_squared <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> (<span class="dv">1</span> <span class="op">-</span> r_squared) <span class="op">*</span> (n <span class="op">-</span> <span class="dv">1</span>) <span class="op">/</span> (n <span class="op">-</span> p <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Adjusted R-squared: </span><span class="sc">{</span>adjusted_r_squared<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the regression line</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>plt.scatter(X, y, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>plt.plot(X, y_pred, color<span class="op">=</span><span class="st">'red'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Hours Studied'</span>)</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Exam Score'</span>)</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Simple Linear Regression: Exam Score vs. Hours Studied'</span>)</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Check assumptions</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Linearity (already visualized in the scatter plot above)</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Independence (assumed based on data collection method)</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Homoscedasticity</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>residuals <span class="op">=</span> y <span class="op">-</span> y_pred</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>plt.scatter(y_pred, residuals)</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Predicted Values'</span>)</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Residuals'</span>)</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Residual Plot (Check for Homoscedasticity)'</span>)</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>plt.axhline(y<span class="op">=</span><span class="dv">0</span>, color<span class="op">=</span><span class="st">'r'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Normality of residuals</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>qqplot(residuals, line<span class="op">=</span><span class="st">'s'</span>)</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Q-Q Plot of Residuals'</span>)</span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="co"># Jarque-Bera test for normality</span></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>jb_results <span class="op">=</span> jarque_bera(residuals)</span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>jb_statistic, jb_pvalue <span class="op">=</span> jb_results[<span class="dv">0</span>], jb_results[<span class="dv">1</span>]</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Jarque-Bera test statistic: </span><span class="sc">{</span>jb_statistic<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Jarque-Bera test p-value: </span><span class="sc">{</span>jb_pvalue<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict exam score for a new value</span></span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>new_hours_studied <span class="op">=</span> np.array([[<span class="dv">8</span>]])</span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>predicted_score <span class="op">=</span> model.predict(new_hours_studied)</span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Predicted exam score for 8 hours of study: </span><span class="sc">{</span>predicted_score[<span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Intercept (β0): 41.33
+Slope (β1): 4.74
+R-squared: 0.8879
+Adjusted R-squared: 0.8868</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="6_regression_analysis_files/figure-html/cell-2-output-2.png" width="808" height="523" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="6_regression_analysis_files/figure-html/cell-2-output-3.png" width="823" height="523" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;Figure size 960x576 with 0 Axes&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="6_regression_analysis_files/figure-html/cell-2-output-5.png" width="596" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Jarque-Bera test statistic: 0.8079
+Jarque-Bera test p-value: 0.6677
+Predicted exam score for 8 hours of study: 79.29</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/ravishankar/miniforge3/lib/python3.10/site-packages/sklearn/base.py:439: UserWarning:
+
+X does not have valid feature names, but LinearRegression was fitted with feature names
+</code></pre>
+</div>
+</div>
+<hr>
+</section>
+</section>
+</section>
+</section>
+<section id="multiple-linear-regression" class="level3">
+<h3 class="anchored" data-anchor-id="multiple-linear-regression">Multiple Linear Regression</h3>
+<section id="definition-4" class="level4">
+<h4 class="anchored" data-anchor-id="definition-4">Definition</h4>
+<p>Multiple linear regression is a method to model the relationship between a dependent variable and multiple independent variables. It extends simple linear regression by using two or more predictors to estimate the dependent variable.</p>
+</section>
+<section id="formula-3" class="level4">
+<h4 class="anchored" data-anchor-id="formula-3">Formula</h4>
+<p><span class="math display">\[
+y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_nx_n + \epsilon
+\]</span></p>
+</section>
+<section id="example-3" class="level4">
+<h4 class="anchored" data-anchor-id="example-3">Example</h4>
+<p>Predicting a student’s exam score based on multiple factors like hours studied, attendance rate, and number of practice tests taken. For instance, a model could use these predictors to estimate the final exam score more accurately than using just one predictor.</p>
+</section>
+<section id="multicollinearity" class="level4">
+<h4 class="anchored" data-anchor-id="multicollinearity">Multicollinearity</h4>
+<section id="definition-5" class="level5">
+<h5 class="anchored" data-anchor-id="definition-5">Definition</h5>
+<p>Multicollinearity occurs when independent variables in a regression model are highly correlated with each other. This makes it difficult to determine the individual effect of each predictor on the dependent variable.</p>
+</section>
+<section id="consequences" class="level5">
+<h5 class="anchored" data-anchor-id="consequences">Consequences</h5>
+<ul>
+<li>Inflated standard errors, making it difficult to determine the effect of each predictor.</li>
+<li>Unstable estimates of regression coefficients, which can vary greatly with slight changes in the model or data.</li>
+</ul>
+</section>
+<section id="detection" class="level5">
+<h5 class="anchored" data-anchor-id="detection">Detection</h5>
+<ul>
+<li><strong>Variance Inflation Factor (VIF)</strong>: Measures how much the variance of a regression coefficient is inflated due to multicollinearity.</li>
+<li><strong>High correlation coefficients</strong>: High pairwise correlations between independent variables indicate multicollinearity.</li>
+</ul>
+</section>
+<section id="example-4" class="level5">
+<h5 class="anchored" data-anchor-id="example-4">Example</h5>
+<p>Including both weight and BMI in a regression model to predict health outcomes can lead to multicollinearity because these variables are highly correlated.</p>
+</section>
+</section>
+<section id="heteroscedasticity" class="level4">
+<h4 class="anchored" data-anchor-id="heteroscedasticity">Heteroscedasticity</h4>
+<section id="definition-6" class="level5">
+<h5 class="anchored" data-anchor-id="definition-6">Definition</h5>
+<p>Heteroscedasticity occurs when the variance of the residuals is not constant across all levels of the independent variables. This violates the assumption of homoscedasticity.</p>
+</section>
+<section id="consequences-1" class="level5">
+<h5 class="anchored" data-anchor-id="consequences-1">Consequences</h5>
+<ul>
+<li>Inefficiency of estimates, leading to suboptimal predictions.</li>
+<li>Invalid hypothesis tests, affecting the reliability of confidence intervals and p-values.</li>
+</ul>
+</section>
+<section id="detection-1" class="level5">
+<h5 class="anchored" data-anchor-id="detection-1">Detection</h5>
+<ul>
+<li><strong>Breusch-Pagan test</strong>: Tests for the presence of heteroscedasticity.</li>
+<li><strong>White test</strong>: A general test for heteroscedasticity that does not rely on a specific form of heteroscedasticity.</li>
+</ul>
+</section>
+<section id="example-5" class="level5">
+<h5 class="anchored" data-anchor-id="example-5">Example</h5>
+<p>Modelling income based on years of education, where the variability of income increases with more education, can lead to heteroscedasticity. This means higher education levels may have more varied income levels.</p>
+</section>
+</section>
+<section id="autocorrelation" class="level4">
+<h4 class="anchored" data-anchor-id="autocorrelation">Autocorrelation</h4>
+<section id="definition-7" class="level5">
+<h5 class="anchored" data-anchor-id="definition-7">Definition</h5>
+<p>Autocorrelation occurs when the residuals are correlated with each other, often occurring in time series data. This violates the assumption of independence of residuals.</p>
+</section>
+<section id="consequences-2" class="level5">
+<h5 class="anchored" data-anchor-id="consequences-2">Consequences</h5>
+<ul>
+<li>Inefficiency of estimates, reducing the precision of the regression coefficients.</li>
+<li>Invalid hypothesis tests, leading to incorrect inferences.</li>
+</ul>
+</section>
+<section id="detection-2" class="level5">
+<h5 class="anchored" data-anchor-id="detection-2">Detection</h5>
+<ul>
+<li><strong>Durbin-Watson test</strong>: Tests for the presence of autocorrelation in the residuals.</li>
+<li><strong>Ljung-Box test</strong>: A general test for autocorrelation at multiple lags.</li>
+</ul>
+</section>
+<section id="example-6" class="level5">
+<h5 class="anchored" data-anchor-id="example-6">Example</h5>
+<p>Time series data, where past values influence future values, can exhibit autocorrelation. For example, predicting stock prices based on past performance.</p>
+<div id="9cdd3a81" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, r2_score</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.outliers_influence <span class="im">import</span> variance_inflation_factor</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.diagnostic <span class="im">import</span> het_breuschpagan</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.stattools <span class="im">import</span> durbin_watson</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate sample data</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">0</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>X1 <span class="op">=</span> np.random.rand(n_samples)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>X2 <span class="op">=</span> <span class="fl">0.5</span> <span class="op">*</span> X1 <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> np.random.rand(n_samples)  <span class="co"># Introducing some correlation</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>X3 <span class="op">=</span> np.random.rand(n_samples)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> X1 <span class="op">+</span> <span class="dv">3</span> <span class="op">*</span> X2 <span class="op">+</span> <span class="fl">1.5</span> <span class="op">*</span> X3 <span class="op">+</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.1</span>, n_samples)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a DataFrame</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({<span class="st">'X1'</span>: X1, <span class="st">'X2'</span>: X2, <span class="st">'X3'</span>: X3, <span class="st">'y'</span>: y})</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the data</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df[[<span class="st">'X1'</span>, <span class="st">'X2'</span>, <span class="st">'X3'</span>]]</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df[<span class="st">'y'</span>]</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the model</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LinearRegression()</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>model.fit(X_train, y_train)</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> model.predict(X_test)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the model</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>mse <span class="op">=</span> mean_squared_error(y_test, y_pred)</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>r2 <span class="op">=</span> r2_score(y_test, y_pred)</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mean Squared Error: </span><span class="sc">{</span>mse<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"R-squared: </span><span class="sc">{</span>r2<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for multicollinearity</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_vif(X):</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    vif_data <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    vif_data[<span class="st">"feature"</span>] <span class="op">=</span> X.columns</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>    vif_data[<span class="st">"VIF"</span>] <span class="op">=</span> [variance_inflation_factor(X.values, i) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(X.shape[<span class="dv">1</span>])]</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> vif_data</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Variance Inflation Factors:"</span>)</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(calculate_vif(X))</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for heteroscedasticity</span></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>model_sm <span class="op">=</span> sm.OLS(y, sm.add_constant(X)).fit()</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>_, p_value, _, _ <span class="op">=</span> het_breuschpagan(model_sm.resid, model_sm.model.exog)</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Breusch-Pagan test p-value: </span><span class="sc">{</span>p_value<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for autocorrelation</span></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>dw_statistic <span class="op">=</span> durbin_watson(model_sm.resid)</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Durbin-Watson statistic: </span><span class="sc">{</span>dw_statistic<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize residuals</span></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>plt.scatter(model_sm.fittedvalues, model_sm.resid)</span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Fitted values"</span>)</span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Residuals"</span>)</span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Residual Plot"</span>)</span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Mean Squared Error: 0.011712328380179804
+R-squared: 0.990021330177989
+
+Variance Inflation Factors:
+  feature       VIF
+0      X1  7.163849
+1      X2  8.731192
+2      X3  2.569448
+
+Breusch-Pagan test p-value: 0.4392736984236715
+
+Durbin-Watson statistic: 2.4044896301384426</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="6_regression_analysis_files/figure-html/cell-3-output-2.png" width="823" height="523" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+</section>
+<section id="polynomial-regression" class="level3">
+<h3 class="anchored" data-anchor-id="polynomial-regression">Polynomial Regression</h3>
+<section id="definition-8" class="level4">
+<h4 class="anchored" data-anchor-id="definition-8">Definition</h4>
+<p>Polynomial regression is a regression model that fits a polynomial equation to the data, allowing for non-linear relationships between the dependent and independent variables.</p>
+</section>
+<section id="formula-4" class="level4">
+<h4 class="anchored" data-anchor-id="formula-4">Formula</h4>
+<p><span class="math display">\[
+y = \beta_0 + \beta_1x + \beta_2x^2 + \cdots + \beta_nx^n + \epsilon
+\]</span></p>
+</section>
+<section id="example-7" class="level4">
+<h4 class="anchored" data-anchor-id="example-7">Example</h4>
+<p>Modelling the relationship between the dosage of a drug and its effect, where the effect is not linear. For example, a small increase in dosage might have a large effect at low doses but a smaller effect at higher doses.</p>
+<div id="31ba7dc6" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> PolynomialFeatures</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, r2_score</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate sample data</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">0</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.sort(<span class="dv">5</span> <span class="op">*</span> np.random.rand(<span class="dv">80</span>, <span class="dv">1</span>), axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.sin(X).ravel() <span class="op">+</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.1</span>, X.shape[<span class="dv">0</span>])</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the data into training and testing sets</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create polynomial features</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>degrees <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>]</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">10</span>))</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, degree <span class="kw">in</span> <span class="bu">enumerate</span>(degrees):</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> plt.subplot(<span class="dv">2</span>, <span class="dv">2</span>, i <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    poly_features <span class="op">=</span> PolynomialFeatures(degree<span class="op">=</span>degree, include_bias<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    X_poly_train <span class="op">=</span> poly_features.fit_transform(X_train)</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    X_poly_test <span class="op">=</span> poly_features.transform(X_test)</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fit the model</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> LinearRegression()</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    model.fit(X_poly_train, y_train)</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Make predictions</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> model.predict(X_poly_test)</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Evaluate the model</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    mse <span class="op">=</span> mean_squared_error(y_test, y_pred)</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>    r2 <span class="op">=</span> r2_score(y_test, y_pred)</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Degree </span><span class="sc">{</span>degree<span class="sc">}</span><span class="ss">:"</span>)</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Mean Squared Error: </span><span class="sc">{</span>mse<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"R-squared: </span><span class="sc">{</span>r2<span class="sc">:.4f}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot the results</span></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    X_plot <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">100</span>).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>    y_plot <span class="op">=</span> model.predict(poly_features.transform(X_plot))</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>    plt.scatter(X_test, y_test, color<span class="op">=</span><span class="st">'b'</span>, label<span class="op">=</span><span class="st">'Test data'</span>)</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>    plt.plot(X_plot, y_plot, color<span class="op">=</span><span class="st">'r'</span>, label<span class="op">=</span><span class="st">'Polynomial regression'</span>)</span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">'X'</span>)</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">'y'</span>)</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="ss">f'Polynomial Regression (Degree </span><span class="sc">{</span>degree<span class="sc">}</span><span class="ss">)'</span>)</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>    plt.legend()</span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Degree 1:
+Mean Squared Error: 0.2885
+R-squared: 0.3927
+
+Degree 2:
+Mean Squared Error: 0.0770
+R-squared: 0.8380
+
+Degree 3:
+Mean Squared Error: 0.0129
+R-squared: 0.9728
+
+Degree 5:
+Mean Squared Error: 0.0082
+R-squared: 0.9827
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="6_regression_analysis_files/figure-html/cell-4-output-2.png" width="1333" height="948" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="logistic-regression" class="level3">
+<h3 class="anchored" data-anchor-id="logistic-regression">Logistic Regression</h3>
+<section id="definition-9" class="level4">
+<h4 class="anchored" data-anchor-id="definition-9">Definition</h4>
+<p>Logistic regression is a regression model used when the dependent variable is binary (i.e., it has two possible outcomes). It estimates the probability of an event occurring based on one or more predictor variables.</p>
+</section>
+<section id="formula-5" class="level4">
+<h4 class="anchored" data-anchor-id="formula-5">Formula</h4>
+<p><span class="math display">\[
+\log \left( \frac{p}{1-p} \right) = \beta_0 + \beta_1x_1 + \cdots + \beta_nx_n
+\]</span> where <span class="math inline">\(p\)</span> is the probability of the event occurring.</p>
+</section>
+<section id="binary-logistic-regression" class="level4">
+<h4 class="anchored" data-anchor-id="binary-logistic-regression">Binary Logistic Regression</h4>
+<section id="definition-10" class="level5">
+<h5 class="anchored" data-anchor-id="definition-10">Definition</h5>
+<p>Binary logistic regression is a type of logistic regression where the dependent variable has two possible outcomes, such as success/failure, yes/no, or presence/absence.</p>
+</section>
+<section id="example-8" class="level5">
+<h5 class="anchored" data-anchor-id="example-8">Example</h5>
+<p>Predicting whether a student passes or fails an exam based on study hours, attendance, and previous grades.</p>
+<hr>
+</section>
+</section>
+<section id="multinomial-logistic-regression" class="level4">
+<h4 class="anchored" data-anchor-id="multinomial-logistic-regression">Multinomial Logistic Regression</h4>
+<section id="definition-11" class="level5">
+<h5 class="anchored" data-anchor-id="definition-11">Definition</h5>
+<p>Multinomial logistic regression is used when the dependent variable has more than two categories. It extends binary logistic regression to handle multiple outcome categories.</p>
+</section>
+<section id="example-9" class="level5">
+<h5 class="anchored" data-anchor-id="example-9">Example</h5>
+<p>Predicting the type of cuisine a person will choose among several options, such as Italian, Chinese, or Mexican, based on demographic and preference data.</p>
+<hr>
+</section>
+</section>
+<section id="ordinal-logistic-regression" class="level4">
+<h4 class="anchored" data-anchor-id="ordinal-logistic-regression">Ordinal Logistic Regression</h4>
+<section id="definition-12" class="level5">
+<h5 class="anchored" data-anchor-id="definition-12">Definition</h5>
+<p>Ordinal logistic regression is used when the dependent variable is ordinal, meaning the categories have a natural order but no fixed interval between them.</p>
+</section>
+<section id="example-10" class="level5">
+<h5 class="anchored" data-anchor-id="example-10">Example</h5>
+<p>Predicting a customer’s satisfaction level (e.g., satisfied, neutral, dissatisfied) based on service attributes like response time, friendliness, and problem resolution.</p>
+</section>
+</section>
+<section id="odds-ratios" class="level4">
+<h4 class="anchored" data-anchor-id="odds-ratios">Odds Ratios</h4>
+<section id="definition-13" class="level5">
+<h5 class="anchored" data-anchor-id="definition-13">Definition</h5>
+<p>Odds ratios measure the association between an exposure and an outcome. They compare the odds of the outcome occurring in the presence of the exposure to the odds of it occurring without the exposure.</p>
+</section>
+<section id="formula-6" class="level5">
+<h5 class="anchored" data-anchor-id="formula-6">Formula</h5>
+<p><span class="math display">\[
+\text{OR} = \frac{p/(1-p)}{q/(1-q)}
+\]</span> where <span class="math inline">\(p\)</span> is the probability of the event in the exposed group and <span class="math inline">\(q\)</span> is the probability in the unexposed group.</p>
+</section>
+<section id="example-11" class="level5">
+<h5 class="anchored" data-anchor-id="example-11">Example</h5>
+<p>An OR of 2 means the event is twice as likely in the exposed group compared to the unexposed group. For example, if the odds of developing a condition are twice as high in smokers as in non-smokers, the OR is 2.</p>
+</section>
+</section>
+<section id="maximum-likelihood-estimation-mle" class="level4">
+<h4 class="anchored" data-anchor-id="maximum-likelihood-estimation-mle">Maximum Likelihood Estimation (MLE)</h4>
+<section id="definition-14" class="level5">
+<h5 class="anchored" data-anchor-id="definition-14">Definition</h5>
+<p>Maximum Likelihood Estimation (MLE) is a method to estimate the parameters of a logistic regression model by maximising the likelihood function, which represents the probability of the observed data given the model parameters.</p>
+</section>
+<section id="procedure" class="level5">
+<h5 class="anchored" data-anchor-id="procedure">Procedure</h5>
+<ol type="1">
+<li>Define the likelihood function based on the observed data.</li>
+<li>Find the parameter values that maximise the likelihood function.</li>
+</ol>
+</section>
+<section id="example-12" class="level5">
+<h5 class="anchored" data-anchor-id="example-12">Example</h5>
+<p>Estimating the probability of disease based on patient characteristics, such as age, gender, and medical history, using logistic regression. MLE is used to find the best-fitting model parameters.</p>
+</section>
+</section>
+</section>
+<section id="regularization-techniques" class="level3">
+<h3 class="anchored" data-anchor-id="regularization-techniques">Regularization Techniques</h3>
+<section id="lasso-l1" class="level4">
+<h4 class="anchored" data-anchor-id="lasso-l1">Lasso (L1)</h4>
+<section id="definition-15" class="level5">
+<h5 class="anchored" data-anchor-id="definition-15">Definition</h5>
+<p>Lasso (Least Absolute Shrinkage and Selection Operator) is a regularization technique that adds a penalty equivalent to the absolute value of the magnitude of coefficients to the loss function. It can shrink some coefficients to zero, effectively selecting a simpler model with fewer predictors.</p>
+</section>
+<section id="example-13" class="level5">
+<h5 class="anchored" data-anchor-id="example-13">Example</h5>
+<p>Used to encourage sparsity in models by shrinking some coefficients to zero. For example, in a model predicting house prices, Lasso can help select a subset of important features by shrinking the coefficients of less important ones to zero, such as less influential factors like the color of the house.</p>
+</section>
+</section>
+<section id="ridge-l2" class="level4">
+<h4 class="anchored" data-anchor-id="ridge-l2">Ridge (L2)</h4>
+<section id="definition-16" class="level5">
+<h5 class="anchored" data-anchor-id="definition-16">Definition</h5>
+<p>Ridge regression adds a penalty equivalent to the square of the magnitude of coefficients to the loss function. Unlike Lasso, Ridge regression does not shrink coefficients to zero but reduces their magnitude, preventing overfitting by discouraging complex models.</p>
+</section>
+<section id="example-14" class="level5">
+<h5 class="anchored" data-anchor-id="example-14">Example</h5>
+<p>Used to prevent overfitting by shrinking the coefficients. For instance, in a model predicting sales based on advertising spend in various media, Ridge regression can reduce the impact of less important media types without eliminating them.</p>
+</section>
+</section>
+<section id="elastic-net" class="level4">
+<h4 class="anchored" data-anchor-id="elastic-net">Elastic Net</h4>
+<section id="definition-17" class="level5">
+<h5 class="anchored" data-anchor-id="definition-17">Definition</h5>
+<p>Elastic Net is a regularization technique that combines both L1 (Lasso) and L2 (Ridge) penalties. It balances the benefits of both methods, encouraging sparsity and reducing the impact of correlated predictors.</p>
+</section>
+<section id="example-15" class="level5">
+<h5 class="anchored" data-anchor-id="example-15">Example</h5>
+<p>Used when there are multiple correlated features. For example, in a model predicting health outcomes based on various lifestyle factors, Elastic Net can handle correlated variables like diet and exercise, providing a more stable and interpretable model.</p>
+</section>
+</section>
+</section>
+<section id="generalized-linear-models-glms" class="level3">
+<h3 class="anchored" data-anchor-id="generalized-linear-models-glms">Generalized Linear Models (GLMs)</h3>
+<section id="poisson-regression" class="level4">
+<h4 class="anchored" data-anchor-id="poisson-regression">Poisson Regression</h4>
+<section id="definition-18" class="level5">
+<h5 class="anchored" data-anchor-id="definition-18">Definition</h5>
+<p>Poisson regression is a type of GLM used for modelling count data, where the response variable represents counts of events occurring within a fixed interval.</p>
+</section>
+<section id="example-16" class="level5">
+<h5 class="anchored" data-anchor-id="example-16">Example</h5>
+<p>Modelling the number of customer complaints received per day. For instance, a call center might use Poisson regression to predict the number of daily complaints based on factors like call volume and time of day.</p>
+</section>
+</section>
+<section id="negative-binomial-regression" class="level4">
+<h4 class="anchored" data-anchor-id="negative-binomial-regression">Negative Binomial Regression</h4>
+<section id="definition-19" class="level5">
+<h5 class="anchored" data-anchor-id="definition-19">Definition</h5>
+<p>Negative binomial regression is a type of GLM used for over-dispersed count data, where the variance exceeds the mean. It is an extension of Poisson regression that accounts for extra variability.</p>
+</section>
+<section id="example-17" class="level5">
+<h5 class="anchored" data-anchor-id="example-17">Example</h5>
+<p>Modelling the number of accidents occurring at a factory, where variance exceeds the mean. For example, a factory might use negative binomial regression to predict accident counts based on hours worked and safety measures, accounting for over-dispersion in the data.</p>
+</section>
+</section>
+<section id="gamma-regression" class="level4">
+<h4 class="anchored" data-anchor-id="gamma-regression">Gamma Regression</h4>
+<section id="definition-20" class="level5">
+<h5 class="anchored" data-anchor-id="definition-20">Definition</h5>
+<p>Gamma regression is a type of GLM used for modelling continuous, positive-skewed data. It is suitable for response variables that are positively skewed and strictly positive.</p>
+</section>
+<section id="example-18" class="level5">
+<h5 class="anchored" data-anchor-id="example-18">Example</h5>
+<p>Modelling the time until a machine breaks down. For instance, a manufacturing plant might use gamma regression to predict the time to failure of equipment based on maintenance schedules and operating conditions.</p>
+</section>
+</section>
+</section>
+<section id="non-linear-regression" class="level3">
+<h3 class="anchored" data-anchor-id="non-linear-regression">Non-linear Regression</h3>
+<section id="definition-21" class="level4">
+<h4 class="anchored" data-anchor-id="definition-21">Definition</h4>
+<p>Non-linear regression models non-linear relationships between the independent and dependent variables. Unlike linear regression, it can capture more complex patterns in the data.</p>
+</section>
+<section id="formula-7" class="level4">
+<h4 class="anchored" data-anchor-id="formula-7">Formula</h4>
+<p><span class="math display">\[
+y = f(x, \beta) + \epsilon
+\]</span> where <span class="math inline">\(f\)</span> is a non-linear function.</p>
+</section>
+<section id="example-19" class="level4">
+<h4 class="anchored" data-anchor-id="example-19">Example</h4>
+<p>Modelling the growth rate of bacteria, where growth follows a logistic curve. For instance, a biologist might use non-linear regression to model bacterial growth over time, capturing the initial exponential growth and eventual plateau.</p>
+</section>
+<section id="nonlinear-least-squares" class="level4">
+<h4 class="anchored" data-anchor-id="nonlinear-least-squares">Nonlinear Least Squares</h4>
+<section id="definition-22" class="level5">
+<h5 class="anchored" data-anchor-id="definition-22">Definition</h5>
+<p>Nonlinear least squares is a method to estimate the parameters of a non-linear model by minimising the sum of the squares of the residuals.</p>
+</section>
+<section id="example-20" class="level5">
+<h5 class="anchored" data-anchor-id="example-20">Example</h5>
+<p>Fitting a logistic growth model to population data. For example, a researcher might use nonlinear least squares to estimate the parameters of a logistic growth curve for a population of animals in a confined habitat.</p>
+</section>
+</section>
+<section id="generalized-additive-models-gams" class="level4">
+<h4 class="anchored" data-anchor-id="generalized-additive-models-gams">Generalized Additive Models (GAMs)</h4>
+<section id="definition-23" class="level5">
+<h5 class="anchored" data-anchor-id="definition-23">Definition</h5>
+<p>Generalized Additive Models (GAMs) are a flexible generalisation of linear models that allow for non-linear relationships through the use of smoothing functions. GAMs can model complex, non-linear relationships while retaining interpretability.</p>
+</section>
+<section id="example-21" class="level5">
+<h5 class="anchored" data-anchor-id="example-21">Example</h5>
+<p>Modelling the effect of temperature on crop yield, where the relationship is non-linear. For instance, an agricultural scientist might use GAMs to model how temperature variations throughout the growing season affect crop yield, allowing for non-linear effects.</p>
+</section>
+</section>
+</section>
+<section id="quantile-regression" class="level3">
+<h3 class="anchored" data-anchor-id="quantile-regression">Quantile Regression</h3>
+<section id="definition-24" class="level4">
+<h4 class="anchored" data-anchor-id="definition-24">Definition</h4>
+<p>Quantile regression is a type of regression that estimates the conditional quantiles of the response variable, providing a more complete view of possible outcomes beyond the mean.</p>
+<section id="example-22" class="level5">
+<h5 class="anchored" data-anchor-id="example-22">Example</h5>
+<p>Modelling the median house price based on various predictors. For example, a real estate analyst might use quantile regression to estimate the 25th, 50th (median), and 75th percentile house prices based on factors like location, size, and age of the property.</p>
+</section>
+</section>
+</section>
+<section id="robust-regression" class="level3">
+<h3 class="anchored" data-anchor-id="robust-regression">Robust Regression</h3>
+<section id="definition-25" class="level4">
+<h4 class="anchored" data-anchor-id="definition-25">Definition</h4>
+<p>Robust regression methods are designed to be less sensitive to outliers and violations of assumptions, providing reliable estimates even when standard regression methods fail.</p>
+</section>
+<section id="m-estimators" class="level4">
+<h4 class="anchored" data-anchor-id="m-estimators">M-estimators</h4>
+<section id="definition-26" class="level5">
+<h5 class="anchored" data-anchor-id="definition-26">Definition</h5>
+<p>M-estimators are a general class of estimators that are solutions to minimising a sum of a chosen function of the residuals. They are used in robust regression to reduce the influence of outliers.</p>
+</section>
+<section id="example-23" class="level5">
+<h5 class="anchored" data-anchor-id="example-23">Example</h5>
+<p>Using Huber loss to reduce the influence of outliers in a regression model predicting employee performance based on hours worked and job satisfaction. The Huber loss function provides a balance between least squares and absolute value loss, making the model more robust to outliers.</p>
+</section>
+</section>
+<section id="least-trimmed-squares" class="level4">
+<h4 class="anchored" data-anchor-id="least-trimmed-squares">Least Trimmed Squares</h4>
+<section id="definition-27" class="level5">
+<h5 class="anchored" data-anchor-id="definition-27">Definition</h5>
+<p>Least Trimmed Squares (LTS) is a robust regression technique that minimises the sum of the smallest squared residuals, effectively ignoring the largest residuals that may be outliers.</p>
+</section>
+<section id="example-24" class="level5">
+<h5 class="anchored" data-anchor-id="example-24">Example</h5>
+<p>Fitting a model to data with outliers by excluding the largest residuals. For instance, in a study measuring the effect of medication on blood pressure, LTS can help fit a model that is not unduly influenced by extreme outliers in the data.</p>
+</section>
+</section>
+</section>
+<section id="stepwise-regression" class="level3">
+<h3 class="anchored" data-anchor-id="stepwise-regression">Stepwise Regression</h3>
+<section id="definition-28" class="level4">
+<h4 class="anchored" data-anchor-id="definition-28">Definition</h4>
+<p>Stepwise regression is a method of fitting regression models in which the choice of predictive variables is carried out by an automatic procedure. It involves adding or removing predictors based on statistical criteria like AIC or BIC.</p>
+<section id="example-25" class="level5">
+<h5 class="anchored" data-anchor-id="example-25">Example</h5>
+<p>Selecting variables in a stepwise manner based on statistical criteria to predict housing prices. For instance, a model might start with an empty set of predictors and add significant predictors like square footage and number of bedrooms, while removing less significant predictors.</p>
+</section>
+</section>
+</section>
+<section id="principal-component-regression" class="level3">
+<h3 class="anchored" data-anchor-id="principal-component-regression">Principal Component Regression</h3>
+<section id="definition-29" class="level4">
+<h4 class="anchored" data-anchor-id="definition-29">Definition</h4>
+<p>Principal Component Regression (PCR) is a regression technique that uses principal component analysis (PCA) to reduce the dimensionality of the predictor space before fitting a linear regression model. It is useful for handling multicollinearity and high-dimensional data.</p>
+<section id="example-26" class="level5">
+<h5 class="anchored" data-anchor-id="example-26">Example</h5>
+<p>Predicting wine quality using principal components derived from chemical properties. For instance, a winemaker might use PCR to reduce the dimensionality of data on various chemical compounds in wine and predict overall wine quality.</p>
+</section>
+</section>
+</section>
+<section id="partial-least-squares-regression" class="level3">
+<h3 class="anchored" data-anchor-id="partial-least-squares-regression">Partial Least Squares Regression</h3>
+<section id="definition-30" class="level4">
+<h4 class="anchored" data-anchor-id="definition-30">Definition</h4>
+<p>Partial Least Squares (PLS) regression is a technique that finds the linear regression model by projecting the predictors and the response variables to a new space. It is particularly useful when predictors are highly collinear or when the number of predictors exceeds the number of observations.</p>
+<section id="example-27" class="level5">
+<h5 class="anchored" data-anchor-id="example-27">Example</h5>
+<p>Modelling the relationship between spectral data and chemical concentrations. For example, a chemist might use PLS regression to relate spectral data from a substance to its chemical composition, handling the high collinearity of spectral data.</p>
+</section>
+</section>
+</section>
+<section id="isotonic-regression" class="level3">
+<h3 class="anchored" data-anchor-id="isotonic-regression">Isotonic Regression</h3>
+<section id="definition-31" class="level4">
+<h4 class="anchored" data-anchor-id="definition-31">Definition</h4>
+<p>Isotonic regression is a non-parametric regression technique that fits a non-decreasing function to the data. It is used when there is an order or ranking in the data that should be preserved in the model.</p>
+<section id="example-28" class="level5">
+<h5 class="anchored" data-anchor-id="example-28">Example</h5>
+<p>Modelling dose-response relationships in pharmacology. For instance, a pharmacologist might use isotonic regression to model the relationship between drug dosage and patient response, ensuring that higher doses do not produce lower responses.</p>
+</section>
+</section>
+</section>
+<section id="segmented-regression" class="level3">
+<h3 class="anchored" data-anchor-id="segmented-regression">Segmented Regression</h3>
+<section id="definition-32" class="level4">
+<h4 class="anchored" data-anchor-id="definition-32">Definition</h4>
+<p>Segmented regression, also known as piecewise regression, is a type of regression that fits multiple linear segments to the data. It is used to identify changes in the relationship between the independent and dependent variables at specific points, called breakpoints.</p>
+<section id="example-29" class="level5">
+<h5 class="anchored" data-anchor-id="example-29">Example</h5>
+<p>Modelling the effect of a policy change at a specific point in time. For instance, an economist might use segmented regression to analyse the impact of a new tax policy on consumer spending, identifying the point at which the policy was implemented and its effect on the trend.</p>
+</section>
+</section>
+</section>
+<section id="multivariate-regression" class="level3">
+<h3 class="anchored" data-anchor-id="multivariate-regression">Multivariate Regression</h3>
+<section id="definition-33" class="level4">
+<h4 class="anchored" data-anchor-id="definition-33">Definition</h4>
+<p>Multivariate regression is a method to model the relationship between multiple dependent variables and multiple independent variables. It extends multiple linear regression to handle multiple outcomes simultaneously.</p>
+<section id="example-30" class="level5">
+<h5 class="anchored" data-anchor-id="example-30">Example</h5>
+<p>Predicting multiple health outcomes based on lifestyle factors. For instance, a public health researcher might use multivariate regression to predict outcomes like blood pressure, cholesterol levels, and body mass index based on factors such as diet, exercise, and smoking habits.</p>
+</section>
+</section>
+</section>
+<section id="questions" class="level2">
+<h2 class="anchored" data-anchor-id="questions">Questions</h2>
+<section id="simple-linear-regression-1" class="level4">
+<h4 class="anchored" data-anchor-id="simple-linear-regression-1">1. Simple Linear Regression</h4>
+<p><strong>Question:</strong> How would you use simple linear regression to predict the number of likes a post will receive on Instagram based on the number of followers?</p>
+<p><strong>Answer:</strong> Simple linear regression models the relationship between a dependent variable (likes) and a single independent variable (followers). The model has the form:</p>
+<p><span class="math display">\[
+y = \beta_0 + \beta_1 x + \epsilon
+\]</span></p>
+<p>where <span class="math inline">\(y\)</span> is the number of likes, <span class="math inline">\(x\)</span> is the number of followers, <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are coefficients, and <span class="math inline">\(\epsilon\)</span> is the error term. By fitting this model to historical data, we estimate the coefficients and can predict the number of likes for a given number of followers. For example, if the model estimates <span class="math inline">\(\beta_0 = 10\)</span> and <span class="math inline">\(\beta_1 = 0.05\)</span>, a user with 1,000 followers would be predicted to receive <span class="math inline">\(10 + 0.05 \times 1000 = 60\)</span> likes.</p>
+</section>
+<section id="multiple-linear-regression-1" class="level4">
+<h4 class="anchored" data-anchor-id="multiple-linear-regression-1">2. Multiple Linear Regression</h4>
+<p><strong>Question:</strong> Explain how multiple linear regression could be used to predict user engagement on Facebook considering multiple features like age, gender, and time spent on the platform.</p>
+<p><strong>Answer:</strong> Multiple linear regression extends simple linear regression to include multiple independent variables. The model has the form:</p>
+<p><span class="math display">\[
+y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p + \epsilon
+\]</span></p>
+<p>where <span class="math inline">\(y\)</span> is user engagement, <span class="math inline">\(x_1, x_2, \ldots, x_p\)</span> are features like age, gender, and time spent, and <span class="math inline">\(\beta_0, \beta_1, \ldots, \beta_p\)</span> are coefficients. By fitting this model to data, we estimate the coefficients to predict engagement. For instance, if the model suggests that age and time spent are significant predictors, with coefficients indicating older users and those who spend more time have higher engagement, we use these coefficients to predict engagement for any user profile.</p>
+</section>
+<section id="assumptions-of-linear-regression-1" class="level4">
+<h4 class="anchored" data-anchor-id="assumptions-of-linear-regression-1">3. Assumptions of Linear Regression</h4>
+<p><strong>Question:</strong> What are the key assumptions of linear regression, and how would you check them when analyzing social media data?</p>
+<p><strong>Answer:</strong> The key assumptions of linear regression are:</p>
+<ol type="1">
+<li><p><strong>Linearity</strong>: The relationship between the dependent and independent variables is linear.</p></li>
+<li><p><strong>Independence</strong>: Observations are independent of each other.</p></li>
+<li><p><strong>Homoscedasticity</strong>: The residuals have constant variance.</p></li>
+<li><p><strong>Normality</strong>: The residuals are normally distributed.</p></li>
+<li><p><strong>No multicollinearity</strong>: Independent variables are not highly correlated.</p></li>
+</ol>
+<p>To check these assumptions in social media data:</p>
+<ul>
+<li><p><strong>Linearity</strong>: Plot residuals vs.&nbsp;fitted values; a random scatter suggests linearity.</p></li>
+<li><p><strong>Independence</strong>: Ensure the data collection process avoids related observations.</p></li>
+<li><p><strong>Homoscedasticity</strong>: Plot residuals vs.&nbsp;fitted values; constant spread indicates homoscedasticity.</p></li>
+<li><p><strong>Normality</strong>: Use a Q-Q plot or Shapiro-Wilk test to assess residual normality.</p></li>
+<li><p><strong>No multi collinearity</strong>: Calculate Variance Inflation Factor (VIF) for independent variables; VIF &gt; 10 indicates high multi collinearity.</p></li>
+</ul>
+</section>
+<section id="multicollinearity-1" class="level4">
+<h4 class="anchored" data-anchor-id="multicollinearity-1">4. Multicollinearity</h4>
+<p><strong>Question:</strong> How would you detect and address multicollinearity in a multiple regression model predicting ad click-through rates on Facebook?</p>
+<p><strong>Answer:</strong> Multicollinearity occurs when independent variables are highly correlated. To detect multicollinearity, calculate the Variance Inflation Factor (VIF) for each predictor. A VIF &gt; 10 suggests significant multicollinearity.</p>
+<p>To address it, consider:</p>
+<ul>
+<li><p>Removing or combining correlated predictors.</p></li>
+<li><p>Using principal component regression or partial least squares regression to reduce dimensionality.</p></li>
+<li><p>Applying regularization techniques like Lasso or Ridge regression to penalize large coefficients.</p></li>
+</ul>
+<p>For example, if age and time spent on Facebook are highly correlated, we might combine them into a single variable representing overall engagement level or use regularization to mitigate their impact.</p>
+</section>
+<section id="heteroscedasticity-1" class="level4">
+<h4 class="anchored" data-anchor-id="heteroscedasticity-1">5. Heteroscedasticity</h4>
+<p><strong>Question:</strong> What is heteroscedasticity, and how can you detect and correct it in a regression model analyzing user engagement on Instagram?</p>
+<p><strong>Answer:</strong> Heteroscedasticity refers to non-constant variance of residuals. It can lead to inefficient estimates and unreliable hypothesis tests. To detect it, plot residuals vs.&nbsp;fitted values; a funnel shape suggests heteroscedasticity. Breusch-Pagan or White’s test can also be used for formal detection.</p>
+<p>To correct heteroscedasticity:</p>
+<ul>
+<li><p>Transform the dependent variable (e.g., log transformation).</p></li>
+<li><p>Use heteroscedasticity-robust standard errors.</p></li>
+<li><p>Apply weighted least squares, giving less weight to observations with larger variances.</p></li>
+</ul>
+<p>For example, if engagement variance increases with the number of followers, a log transformation of engagement might stabilize the variance.</p>
+</section>
+<section id="autocorrelation-1" class="level4">
+<h4 class="anchored" data-anchor-id="autocorrelation-1">6. Autocorrelation</h4>
+<p><strong>Question:</strong> How would you address autocorrelation in a regression model for predicting daily active users on a social media platform?</p>
+<p><strong>Answer:</strong> Autocorrelation occurs when residuals are correlated across time. It violates the independence assumption and can be detected using the Durbin-Watson test.</p>
+<p>To address autocorrelation:</p>
+<ul>
+<li><p>Include lagged variables of the dependent variable or predictors.</p></li>
+<li><p>Use time-series models like ARIMA.</p></li>
+<li><p>Apply Generalized Least Squares (GLS) or Cochrane-Orcutt correction to adjust for autocorrelation.</p></li>
+</ul>
+<p>For example, if daily active users show autocorrelation, incorporating the number of users from previous days as predictors can help account for this dependency.</p>
+</section>
+<section id="polynomial-regression-1" class="level4">
+<h4 class="anchored" data-anchor-id="polynomial-regression-1">7. Polynomial Regression</h4>
+<p><strong>Question:</strong> How would you use polynomial regression to model the relationship between the number of posts a user makes and their follower growth on Instagram?</p>
+<p><strong>Answer:</strong> Polynomial regression models non-linear relationships by including polynomial terms of the independent variable. The model has the form:</p>
+<p><span class="math display">\[
+y = \beta_0 + \beta_1 x + \beta_2 x^2 + \cdots + \beta_k x^k + \epsilon
+\]</span></p>
+<p>where <span class="math inline">\(x\)</span> is the number of posts and <span class="math inline">\(y\)</span> is follower growth.</p>
+<p>For example, if we suspect that follower growth accelerates as users post more frequently but then plateaus, we might use a quadratic model (<span class="math inline">\(k = 2\)</span>). By fitting this model, we capture the curvature in the relationship, providing a better fit than a linear model.</p>
+</section>
+<section id="binary-logistic-regression-1" class="level4">
+<h4 class="anchored" data-anchor-id="binary-logistic-regression-1">8. Binary Logistic Regression</h4>
+<p><strong>Question:</strong> Explain how binary logistic regression can be used to predict whether a user will click on an ad on Facebook.</p>
+<p><strong>Answer:</strong> Binary logistic regression models the probability of a binary outcome, using the logit link function. The model has the form:</p>
+<p><span class="math display">\[
+\log \left( \frac{p}{1-p} \right) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_p x_p
+\]</span></p>
+<p>where <span class="math inline">\(p\)</span> is the probability of clicking on an ad.</p>
+<p>For example, to predict ad clicks, we use features like user demographics, past behavior, and ad characteristics. The model estimates the log-odds of clicking an ad, which we convert to probabilities. If the model predicts a 0.7 probability for a given user, we infer a 70% chance they will click the ad.</p>
+</section>
+<section id="multinomial-logistic-regression-1" class="level4">
+<h4 class="anchored" data-anchor-id="multinomial-logistic-regression-1">9. Multinomial Logistic Regression</h4>
+<p><strong>Question:</strong> How would you apply multinomial logistic regression to predict the category of content a user is most likely to engage with on Instagram?</p>
+<p><strong>Answer:</strong> Multinomial logistic regression models the probabilities of multiple categorical outcomes. The model has the form:</p>
+<p><span class="math display">\[
+\log \left( \frac{p_j}{p_k} \right) = \beta_{0j} + \beta_{1j} x_1 + \cdots + \beta_{pj} x_p
+\]</span></p>
+<p>where <span class="math inline">\(p_j\)</span> is the probability of outcome <span class="math inline">\(j\)</span> and <span class="math inline">\(k\)</span> is a reference category.</p>
+<p>To predict content category engagement (e.g., photos, videos, stories), we use user features and past behavior. The model estimates probabilities for each category, allowing us to predict the most likely category a user will engage with. For instance, if a user has a 50% probability for photos, 30% for videos, and 20% for stories, we predict they will most likely engage with photos.</p>
+</section>
+<section id="ordinal-logistic-regression-1" class="level4">
+<h4 class="anchored" data-anchor-id="ordinal-logistic-regression-1">10. Ordinal Logistic Regression</h4>
+<p><strong>Question:</strong> Describe how ordinal logistic regression can be used to predict user ratings of a social media post.</p>
+<p><strong>Answer:</strong> Ordinal logistic regression models the probabilities of ordered categorical outcomes. The model uses cumulative logit functions:</p>
+<p><span class="math display">\[
+\log \left( \frac{P(y \leq j)}{P(y &gt; j)} \right) = \beta_0^j + \beta_1 x_1 + \cdots + \beta_p x_p
+\]</span></p>
+<p>where <span class="math inline">\(j\)</span> represents the ordered categories.</p>
+<p>To predict user ratings (e.g., 1 to 5 stars), we use features like post content, user demographics, and engagement metrics. The model estimates the log-odds of a rating being less than or equal to each category. For example, if the model predicts higher probabilities for 4 and 5-star ratings, we infer that users are likely to rate the post highly.</p>
+</section>
+<section id="regularization-techniques-1" class="level3">
+<h3 class="anchored" data-anchor-id="regularization-techniques-1">Regularization Techniques</h3>
+<section id="lasso-l1-1" class="level4">
+<h4 class="anchored" data-anchor-id="lasso-l1-1">11. Lasso (L1)</h4>
+<p><strong>Question:</strong> How would you use Lasso regression to select features for predicting the popularity of posts on Instagram?</p>
+<p><strong>Answer:</strong> Lasso regression adds an L1 penalty to the loss function, encouraging sparsity in the coefficients. The model has the form:</p>
+<p><span class="math display">\[
+\text{min} \left( \sum (y_i - \hat{y}_i)^2 + \lambda \sum |\beta_j| \right)
+\]</span></p>
+<p>where <span class="math inline">\(\lambda\)</span> controls the strength of the penalty.</p>
+<p>For predicting post popularity, we include many potential predictors (e.g., hashtags, posting time, user characteristics). Lasso regression shrinks less important coefficients to zero, effectively selecting a subset of features. For instance, if Lasso selects only hashtags and posting time as significant predictors, we focus on these features for further analysis.</p>
+</section>
+<section id="ridge-l2-1" class="level4">
+<h4 class="anchored" data-anchor-id="ridge-l2-1">12. Ridge (L2)</h4>
+<p><strong>Question:</strong> Explain the application of Ridge regression in handling multicollinearity when analyzing social media ad performance.</p>
+<p><strong>Answer:</strong> Ridge regression adds an L2 penalty to the loss function, shrinking coefficients but not setting them to zero. The model has the form:</p>
+<p><span class="math display">\[
+\text{min} \left( \sum (y_i - \hat{y}_i)^2 + \lambda \sum \beta_j^2 \right)
+\]</span></p>
+<p>For analyzing ad performance, if predictors like ad spend and reach are highly correlated, Ridge regression mitigates multicollinearity by shrinking coefficients. This stabilizes estimates and improves prediction accuracy. For example, Ridge might reduce the impact of highly correlated features, providing more reliable estimates of how ad spend and reach affect performance.</p>
+</section>
+<section id="elastic-net-1" class="level4">
+<h4 class="anchored" data-anchor-id="elastic-net-1">13. Elastic Net</h4>
+<p><strong>Question:</strong> How does Elastic Net regression combine the benefits of Lasso and Ridge regression for feature selection in social media analytics?</p>
+<p><strong>Answer:</strong> Elastic Net regression combines L1 and L2 penalties:</p>
+<p><span class="math display">\[
+\text{min} \left( \sum (y_i - \hat{y}_i)^2 + \lambda_1 \sum |\beta_j| + \lambda_2 \sum \beta_j^2 \right)
+\]</span></p>
+<p>It balances sparsity and stability.</p>
+<p>For feature selection in social media analytics, Elastic Net is useful when there are many correlated predictors. It selects groups of correlated features, unlike Lasso, which might select only one. For example, when predicting engagement from various post attributes, Elastic Net might retain related features like hashtags and keywords, improving model interpretability and performance.</p>
+</section>
+</section>
+<section id="generalized-linear-models-glms-1" class="level3">
+<h3 class="anchored" data-anchor-id="generalized-linear-models-glms-1">Generalized Linear Models (GLMs)</h3>
+<section id="poisson-regression-1" class="level4">
+<h4 class="anchored" data-anchor-id="poisson-regression-1">14. Poisson Regression</h4>
+<p><strong>Question:</strong> How would you use Poisson regression to model the count of user comments on Facebook posts?</p>
+<p><strong>Answer:</strong> Poisson regression models count data with the form:</p>
+<p><span class="math display">\[
+\log(\mu) = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p
+\]</span></p>
+<p>where <span class="math inline">\(\mu\)</span> is the expected count of comments.</p>
+<p>To model user comments, we use predictors like post length, number of likes, and user characteristics. The model estimates the expected count of comments for given predictor values. For instance, if the model indicates that longer posts and higher likes lead to more comments, we use these insights to predict and optimize for higher engagement.</p>
+</section>
+<section id="negative-binomial-regression-1" class="level4">
+<h4 class="anchored" data-anchor-id="negative-binomial-regression-1">15. Negative Binomial Regression</h4>
+<p><strong>Question:</strong> When would you prefer negative binomial regression over Poisson regression for modeling social media data, such as shares of posts?</p>
+<p><strong>Answer:</strong> Negative binomial regression is preferred when the data exhibits overdispersion, where the variance exceeds the mean. The model has an additional parameter to account for this overdispersion.</p>
+<p>For modeling shares of posts, if the data shows high variability (e.g., some posts go viral while others get few shares), negative binomial regression provides better estimates. It adjusts for overdispersion, leading to more accurate predictions. For example, it might reveal that certain types of posts are more likely to be shared widely, despite high variance in shares.</p>
+</section>
+<section id="gamma-regression-1" class="level4">
+<h4 class="anchored" data-anchor-id="gamma-regression-1">16. Gamma Regression</h4>
+<p><strong>Question:</strong> How can Gamma regression be applied to model the time users spend on a social media platform?</p>
+<p><strong>Answer:</strong> Gamma regression models continuous positive data with a skewed distribution. The model is:</p>
+<p><span class="math display">\[
+y = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p + \epsilon
+\]</span></p>
+<p>where <span class="math inline">\(y\)</span> is the time spent on the platform.</p>
+<p>To model time spent, we use predictors like session length, number of interactions, and user demographics. Gamma regression captures the skewed nature of time data, providing accurate predictions. For example, it might show that users with more interactions and longer session lengths tend to spend more time on the platform.</p>
+</section>
+</section>
+<section id="non-linear-regression-1" class="level3">
+<h3 class="anchored" data-anchor-id="non-linear-regression-1">Non-linear Regression</h3>
+<section id="nonlinear-least-squares-1" class="level4">
+<h4 class="anchored" data-anchor-id="nonlinear-least-squares-1">17. Nonlinear Least Squares</h4>
+<p><strong>Question:</strong> Describe how you would use nonlinear least squares to model the relationship between ad spend and conversions on Instagram.</p>
+<p><strong>Answer:</strong> Nonlinear least squares fits a nonlinear relationship between variables by minimizing the sum of squared residuals. The model has the form:</p>
+<p><span class="math display">\[
+y = f(x, \beta) + \epsilon
+\]</span></p>
+<p>where <span class="math inline">\(f\)</span> is a nonlinear function.</p>
+<p>To model ad spend and conversions, we specify a nonlinear function (e.g., a logistic growth curve) and fit it to the data. For instance, if conversions initially increase with ad spend but plateau at higher levels, a logistic function can capture this relationship. By fitting the model, we estimate the optimal ad spend for maximum conversions.</p>
+</section>
+<section id="generalized-additive-models-gams-1" class="level4">
+<h4 class="anchored" data-anchor-id="generalized-additive-models-gams-1">18. Generalized Additive Models (GAMs)</h4>
+<p><strong>Question:</strong> How would you apply GAMs to predict user engagement on social media platforms?</p>
+<p><strong>Answer:</strong> GAMs model relationships between the dependent variable and predictors using smooth functions. The model has the form:</p>
+<p><span class="math display">\[
+y = \beta_0 + f_1(x_1) + f_2(x_2) + \cdots + f_p(x_p) + \epsilon
+\]</span></p>
+<p>where <span class="math inline">\(f_i\)</span> are smooth functions.</p>
+<p>To predict user engagement, we include predictors like post frequency, time of day, and user demographics. GAMs allow for flexible relationships, capturing non-linear patterns. For example, if engagement varies non-linearly with time of day, GAMs can model this relationship, providing accurate predictions and insights for optimizing posting times.</p>
+</section>
+</section>
+<section id="quantile-regression-1" class="level3">
+<h3 class="anchored" data-anchor-id="quantile-regression-1">Quantile Regression</h3>
+<section id="quantile-regression-2" class="level4">
+<h4 class="anchored" data-anchor-id="quantile-regression-2">19. Quantile Regression</h4>
+<p><strong>Question:</strong> Explain how quantile regression can be used to analyze the impact of post characteristics on different levels of engagement on Instagram.</p>
+<p><strong>Answer:</strong> Quantile regression models the relationship between predictors and different quantiles of the dependent variable. Unlike ordinary least squares, which estimates the mean effect, quantile regression estimates the effects at different points (e.g., median, 90th percentile).</p>
+<p>To analyze post characteristics (e.g., length, media type) on engagement, we fit quantile regression models at various quantiles. This provides insights into how these characteristics affect low, median, and high engagement levels. For example, it might reveal that while post length has a minimal impact on median engagement, it significantly boosts high engagement (90th percentile), helping tailor content strategies.</p>
+</section>
+</section>
+<section id="robust-regression-1" class="level3">
+<h3 class="anchored" data-anchor-id="robust-regression-1">Robust Regression</h3>
+<section id="m-estimators-1" class="level4">
+<h4 class="anchored" data-anchor-id="m-estimators-1">20. M-estimators</h4>
+<p><strong>Question:</strong> How would you use M-estimators to handle outliers in a regression model predicting user interaction on social media?</p>
+<p><strong>Answer:</strong> M-estimators provide robust regression estimates by minimizing a loss function less sensitive to outliers. Unlike least squares, which squares residuals, M-estimators use functions like Huber loss, which is quadratic for small residuals and linear for large ones.</p>
+<p>For predicting user interaction, we fit a robust regression model using M-estimators to reduce the influence of outliers. For example, if a few posts have exceptionally high interactions, M-estimators prevent these from disproportionately affecting the model, leading to more reliable estimates for typical user interactions.</p>
+</section>
+<section id="least-trimmed-squares-1" class="level4">
+<h4 class="anchored" data-anchor-id="least-trimmed-squares-1">21. Least Trimmed Squares</h4>
+<p><strong>Question:</strong> Describe the application of least trimmed squares regression in handling outliers when analyzing the effect of social media campaigns on brand awareness.</p>
+<p><strong>Answer:</strong> Least trimmed squares regression minimizes the sum of the smallest squared residuals, trimming a portion of the largest residuals to reduce outlier influence.</p>
+<p>To analyze the effect of social media campaigns, we fit a least trimmed squares model, excluding extreme outliers from the estimation process. This provides robust estimates of campaign effectiveness. For instance, if a few campaigns show unusually high or low brand awareness due to external factors, trimming these outliers leads to more accurate assessment of typical campaign impact.</p>
+</section>
+</section>
+<section id="stepwise-regression-1" class="level3">
+<h3 class="anchored" data-anchor-id="stepwise-regression-1">Stepwise Regression</h3>
+<section id="stepwise-regression-2" class="level4">
+<h4 class="anchored" data-anchor-id="stepwise-regression-2">22. Stepwise Regression</h4>
+<p><strong>Question:</strong> How would you use stepwise regression to select significant predictors for user engagement on Facebook?</p>
+<p><strong>Answer:</strong> Stepwise regression iteratively adds or removes predictors based on statistical criteria (e.g., AIC, BIC, p-values) to find the most significant predictors.</p>
+<p>For user engagement, we start with no predictors or all predictors in the model. At each step, we add or remove predictors based on their significance, building a model that balances complexity and explanatory power. For example, stepwise regression might identify that time spent, post type, and user demographics are significant predictors of engagement, simplifying the model and improving interpretability.</p>
+</section>
+</section>
+<section id="principal-component-regression-1" class="level3">
+<h3 class="anchored" data-anchor-id="principal-component-regression-1">Principal Component Regression</h3>
+<section id="principal-component-regression-2" class="level4">
+<h4 class="anchored" data-anchor-id="principal-component-regression-2">23. Principal Component Regression</h4>
+<p><strong>Question:</strong> Explain how principal component regression (PCR) can be used to handle multicollinearity in a model predicting ad performance on Instagram.</p>
+<p><strong>Answer:</strong> PCR combines principal component analysis (PCA) with regression. PCA transforms correlated predictors into uncorrelated principal components. PCR then regresses the outcome on these components.</p>
+<p>To predict ad performance, we apply PCA to the predictors (e.g., ad spend, reach, frequency) to reduce multicollinearity. We then use the principal components as predictors in the regression model. This approach stabilizes coefficient estimates and improves prediction accuracy. For example, PCR might reveal that a few principal components capture most of the variance in ad performance, simplifying the model.</p>
+</section>
+</section>
+<section id="partial-least-squares-regression-1" class="level3">
+<h3 class="anchored" data-anchor-id="partial-least-squares-regression-1">Partial Least Squares Regression</h3>
+<section id="partial-least-squares-regression-2" class="level4">
+<h4 class="anchored" data-anchor-id="partial-least-squares-regression-2">24. Partial Least Squares Regression</h4>
+<p><strong>Question:</strong> How would you use partial least squares regression (PLS) to predict user retention on a social media platform with highly correlated features?</p>
+<p><strong>Answer:</strong> PLS regression handles multicollinearity by extracting components that maximize the covariance between predictors and the outcome. It combines features of PCA and regression.</p>
+<p>To predict user retention, we use PLS to extract latent variables from highly correlated features (e.g., user activity, interaction types). These latent variables are then used to predict retention. PLS provides robust estimates even with multicollinearity, improving prediction accuracy. For example, PLS might show that a combination of activity metrics and interaction patterns strongly predicts retention.</p>
+</section>
+</section>
+<section id="isotonic-regression-1" class="level3">
+<h3 class="anchored" data-anchor-id="isotonic-regression-1">Isotonic Regression</h3>
+<section id="isotonic-regression-2" class="level4">
+<h4 class="anchored" data-anchor-id="isotonic-regression-2">25. Isotonic Regression</h4>
+<p><strong>Question:</strong> Describe how isotonic regression can be used to model monotonic relationships in social media data, such as the effect of user activity level on engagement.</p>
+<p><strong>Answer:</strong> Isotonic regression fits a non-decreasing (or non-increasing) function to data, capturing monotonic relationships without assuming a specific form.</p>
+<p>For modeling the effect of user activity on engagement, if we expect higher activity to consistently increase engagement, we use isotonic regression. It ensures the fitted values are non-decreasing with activity level, providing a flexible yet constrained model. For example, isotonic regression might reveal that engagement steadily rises with increased activity, highlighting the importance of active user participation.</p>
+</section>
+</section>
+<section id="segmented-regression-1" class="level3">
+<h3 class="anchored" data-anchor-id="segmented-regression-1">Segmented Regression</h3>
+<section id="segmented-regression-2" class="level4">
+<h4 class="anchored" data-anchor-id="segmented-regression-2">26. Segmented Regression</h4>
+<p><strong>Question:</strong> How would you apply segmented regression to identify change points in the effect of ad spend on conversion rates on Instagram?</p>
+<p><strong>Answer:</strong> Segmented regression models piecewise linear relationships, identifying change points where the relationship between predictors and the outcome changes.</p>
+<p>To identify change points in ad spend effects, we fit a segmented regression model with potential breakpoints. This reveals how conversion rates vary with different levels of ad spend. For example, we might find that conversion rates increase with ad spend up to a certain point, then plateau or decrease, helping optimize ad budgets.</p>
+</section>
+</section>
+<section id="multivariate-regression-1" class="level3">
+<h3 class="anchored" data-anchor-id="multivariate-regression-1">Multivariate Regression</h3>
+<section id="multivariate-regression-2" class="level4">
+<h4 class="anchored" data-anchor-id="multivariate-regression-2">27. Multivariate Regression</h4>
+<p><strong>Question:</strong> Explain how multivariate regression can be used to analyze multiple related outcomes, such as likes, shares, and comments on Facebook posts.</p>
+<p><strong>Answer:</strong> Multivariate regression models multiple dependent variables simultaneously, accounting for their correlations. The model has the form:</p>
+<p><span class="math display">\[
+Y = XB + E
+\]</span></p>
+<p>where <span class="math inline">\(Y\)</span> is a matrix of outcomes, <span class="math inline">\(X\)</span> is a matrix of predictors, <span class="math inline">\(B\)</span> is a matrix of coefficients, and <span class="math inline">\(E\)</span> is the error term.</p>
+<p>To analyze likes, shares, and comments, we fit a multivariate regression model using predictors like post content, user demographics, and posting time. This approach captures the relationships between these outcomes and their shared predictors. For example, the model might show that certain post characteristics boost likes, shares, and comments, providing comprehensive insights into post performance.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

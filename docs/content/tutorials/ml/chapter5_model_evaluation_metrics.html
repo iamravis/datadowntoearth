@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>chapter5_model_evaluation_metrics – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="text-content">
+<section id="classification-metrics" class="level1">
+<h1>5.1 Classification Metrics</h1>
+<p>Classification metrics are used to evaluate the performance of a classification model. These metrics help to understand how well the model is predicting the classes and where it might be making errors.</p>
+<section id="accuracy" class="level2">
+<h2 class="anchored" data-anchor-id="accuracy">5.1.1 Accuracy</h2>
+<p>Accuracy is the ratio of correctly predicted instances to the total instances. It is a simple and commonly used metric for classification problems.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{Accuracy} = \frac{\text{TP + TN}}{\text{TP + TN + FP + FN}}
+\]</span> where TP is True Positives, TN is True Negatives, FP is False Positives, and FN is False Negatives.</p></li>
+<li><p><strong>Example:</strong> If a model correctly predicts 90 out of 100 instances, its accuracy is 90%.</p></li>
+</ul>
+<section id="steps" class="level3">
+<h3 class="anchored" data-anchor-id="steps">Steps:</h3>
+<ol type="1">
+<li><p><strong>Count the correct predictions:</strong> Identify the number of TP and TN.</p></li>
+<li><p><strong>Count the total predictions:</strong> Sum the number of TP, TN, FP, and FN.</p></li>
+<li><p><strong>Calculate accuracy:</strong> Use the formula to compute the accuracy.</p></li>
+</ol>
+</section>
+</section>
+<section id="precision-and-recall" class="level2">
+<h2 class="anchored" data-anchor-id="precision-and-recall">5.1.2 Precision and Recall</h2>
+<p>Precision and recall are metrics that provide more granular insight into the performance of a classification model, especially in the context of imbalanced datasets.</p>
+<ul>
+<li><p><strong>Precision:</strong> The ratio of correctly predicted positive observations to the total predicted positives.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{Precision} = \frac{\text{TP}}{\text{TP + FP}}
+\]</span></p></li>
+<li><p><strong>Example:</strong> If a model identifies 70 true positives out of 100 predicted positives, its precision is 70%.</p></li>
+</ul></li>
+<li><p><strong>Recall (Sensitivity or True Positive Rate):</strong> The ratio of correctly predicted positive observations to the all observations in actual class.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{Recall} = \frac{\text{TP}}{\text{TP + FN}}
+\]</span></p></li>
+<li><p><strong>Example:</strong> If a model correctly identifies 70 true positives out of 80 actual positives, its recall is 87.5%.</p></li>
+</ul></li>
+</ul>
+<section id="steps-1" class="level3">
+<h3 class="anchored" data-anchor-id="steps-1">Steps:</h3>
+<ol type="1">
+<li><p><strong>Calculate precision:</strong> Count TP and FP, then apply the precision formula.</p></li>
+<li><p><strong>Calculate recall:</strong> Count TP and FN, then apply the recall formula.</p></li>
+</ol>
+</section>
+</section>
+<section id="f1-score" class="level2">
+<h2 class="anchored" data-anchor-id="f1-score">5.1.3 F1-score</h2>
+<p>The F1-score is the harmonic mean of precision and recall. It balances the two metrics and is useful when the class distribution is imbalanced.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{F1-score} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision + Recall}}
+\]</span></p></li>
+<li><p><strong>Example:</strong> If a model has a precision of 0.75 and a recall of 0.60, its F1-score is 0.67.</p></li>
+</ul>
+<section id="steps-2" class="level3">
+<h3 class="anchored" data-anchor-id="steps-2">Steps:</h3>
+<ol type="1">
+<li><p><strong>Calculate precision and recall:</strong> Use the formulas provided.</p></li>
+<li><p><strong>Compute F1-score:</strong> Apply the F1-score formula using the calculated precision and recall values.</p></li>
+</ol>
+</section>
+</section>
+<section id="roc-curve-and-auc" class="level2">
+<h2 class="anchored" data-anchor-id="roc-curve-and-auc">5.1.4 ROC Curve and AUC</h2>
+<p>The Receiver Operating Characteristic (ROC) curve is a graphical representation of the trade-off between the true positive rate (TPR) and false positive rate (FPR) at various threshold settings. The Area Under the Curve (AUC) quantifies the overall ability of the model to discriminate between positive and negative classes.</p>
+<ul>
+<li><p><strong>ROC Curve:</strong></p>
+<ul>
+<li><p><strong>True Positive Rate (TPR):</strong> <span class="math display">\[
+\text{TPR} = \frac{\text{TP}}{\text{TP + FN}}
+\]</span></p></li>
+<li><p><strong>False Positive Rate (FPR):</strong> <span class="math display">\[
+\text{FPR} = \frac{\text{FP}}{\text{FP + TN}}
+\]</span></p></li>
+</ul></li>
+<li><p><strong>AUC:</strong> The area under the ROC curve, ranging from 0 to 1, where 1 indicates a perfect model and 0.5 indicates a random model.</p></li>
+<li><p><strong>Example:</strong> An AUC of 0.85 indicates a strong ability of the model to distinguish between positive and negative classes.</p></li>
+</ul>
+<section id="steps-3" class="level3">
+<h3 class="anchored" data-anchor-id="steps-3">Steps:</h3>
+<ol type="1">
+<li><p><strong>Calculate TPR and FPR for different thresholds:</strong> Use various threshold values to compute TPR and FPR.</p></li>
+<li><p><strong>Plot the ROC curve:</strong> Plot TPR against FPR.</p></li>
+<li><p><strong>Compute AUC:</strong> Calculate the area under the ROC curve.</p></li>
+</ol>
+</section>
+</section>
+<section id="precision-recall-curve" class="level2">
+<h2 class="anchored" data-anchor-id="precision-recall-curve">5.1.5 Precision-Recall Curve</h2>
+<p>The Precision-Recall curve is a graphical representation of the trade-off between precision and recall for different threshold settings. It is particularly useful for imbalanced datasets.</p>
+<ul>
+<li><p><strong>Precision-Recall Curve:</strong></p>
+<ul>
+<li>Plot precision on the y-axis and recall on the x-axis for various thresholds.</li>
+</ul></li>
+<li><p><strong>Average Precision (AP):</strong> The weighted mean of precisions achieved at each threshold, taking into account the increase in recall.</p></li>
+<li><p><strong>Example:</strong> A Precision-Recall curve with high precision and recall across thresholds indicates a good model.</p></li>
+</ul>
+<section id="steps-4" class="level3">
+<h3 class="anchored" data-anchor-id="steps-4">Steps:</h3>
+<ol type="1">
+<li><p><strong>Calculate precision and recall for different thresholds:</strong> Use various threshold values to compute precision and recall.</p></li>
+<li><p><strong>Plot the Precision-Recall curve:</strong> Plot precision against recall.</p></li>
+<li><p><strong>Compute AP:</strong> Calculate the area under the Precision-Recall curve.</p></li>
+</ol>
+</section>
+</section>
+<section id="cohens-kappa" class="level2">
+<h2 class="anchored" data-anchor-id="cohens-kappa">5.1.6 Cohen’s Kappa</h2>
+<p>Cohen’s Kappa measures the agreement between two raters who each classify items into mutually exclusive categories, correcting for agreement occurring by chance.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\kappa = \frac{p_o - p_e}{1 - p_e}
+\]</span> where <span class="math inline">\(p_o\)</span> is the observed agreement, and <span class="math inline">\(p_e\)</span> is the expected agreement by chance.</p></li>
+<li><p><strong>Example:</strong> A Cohen’s Kappa of 0.75 indicates substantial agreement between the model’s predictions and the true labels.</p></li>
+</ul>
+<section id="steps-5" class="level3">
+<h3 class="anchored" data-anchor-id="steps-5">Steps:</h3>
+<ol type="1">
+<li><p><strong>Calculate observed agreement (<span class="math inline">\(p_o\)</span>):</strong> Count the proportion of instances where the raters agree.</p></li>
+<li><p><strong>Calculate expected agreement (<span class="math inline">\(p_e\)</span>):</strong> Compute the expected agreement based on the class distributions.</p></li>
+<li><p><strong>Compute Cohen’s Kappa:</strong> Apply the formula using <span class="math inline">\(p_o\)</span> and <span class="math inline">\(p_e\)</span>.</p></li>
+</ol>
+</section>
+</section>
+<section id="matthews-correlation-coefficient" class="level2">
+<h2 class="anchored" data-anchor-id="matthews-correlation-coefficient">5.1.7 Matthews Correlation Coefficient</h2>
+<p>The Matthews Correlation Coefficient (MCC) measures the quality of binary classifications. It considers all four confusion matrix categories and is regarded as a balanced metric even for imbalanced datasets.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{MCC} = \frac{\text{TP} \times \text{TN} - \text{FP} \times \text{FN}}{\sqrt{(\text{TP} + \text{FP})(\text{TP} + \text{FN})(\text{TN} + \text{FP})(\text{TN} + \text{FN})}}
+\]</span></p></li>
+<li><p><strong>Example:</strong> An MCC of 0.65 indicates a good classification performance.</p></li>
+</ul>
+<section id="steps-6" class="level3">
+<h3 class="anchored" data-anchor-id="steps-6">Steps:</h3>
+<ol type="1">
+<li><p><strong>Calculate the confusion matrix components:</strong> Identify TP, TN, FP, and FN.</p></li>
+<li><p><strong>Compute MCC:</strong> Apply the formula using the confusion matrix components.</p></li>
+</ol>
+</section>
+</section>
+<section id="log-loss-cross-entropy" class="level2">
+<h2 class="anchored" data-anchor-id="log-loss-cross-entropy">5.1.8 Log Loss (Cross-entropy)</h2>
+<p>Log Loss, or Cross-entropy Loss, measures the performance of a classification model where the prediction is a probability value between 0 and 1. It penalizes false classifications by taking the logarithm of the predicted probability.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{Log Loss} = -\frac{1}{n} \sum_{i=1}^{n} [y_i \log(p_i) + (1 - y_i) \log(1 - p_i)]
+\]</span> where <span class="math inline">\(n\)</span> is the number of instances, <span class="math inline">\(y_i\)</span> is the true label, and <span class="math inline">\(p_i\)</span> is the predicted probability.</p></li>
+<li><p><strong>Example:</strong> A lower log loss indicates better performance, with 0 being a perfect model.</p></li>
+</ul>
+<section id="steps-7" class="level3">
+<h3 class="anchored" data-anchor-id="steps-7">Steps:</h3>
+<ol type="1">
+<li><p><strong>Compute predicted probabilities:</strong> Obtain the predicted probabilities for each instance.</p></li>
+<li><p><strong>Calculate log loss for each instance:</strong> Apply the log loss formula.</p></li>
+<li><p><strong>Average the log loss:</strong> Compute the mean log loss across all instances.</p></li>
+</ol>
+<p>Advanced considerations in classification metrics include:</p>
+<ul>
+<li><p><strong>Threshold Tuning:</strong> Optimize the decision threshold to balance precision and recall based on the specific application.</p></li>
+<li><p><strong>Cost-sensitive Metrics:</strong> Consider the cost of false positives and false negatives, especially in applications where the cost of misclassification varies.</p></li>
+<li><p><strong>Model Comparison:</strong> Use multiple metrics to compare and select the best model, as relying on a single metric can be misleading.</p></li>
+<li><p><strong>Visualizations:</strong> Utilize visualizations like confusion matrices, ROC curves, and Precision-Recall curves to better understand model performance.</p></li>
+</ul>
+<p>By following these detailed steps and considerations, you can effectively evaluate and interpret the performance of classification models, ensuring they meet the specific requirements of your application.</p>
+</section>
+</section>
+</section>
+<section id="regression-metrics" class="level1">
+<h1>5.2 Regression Metrics</h1>
+<p>Regression metrics are used to evaluate the performance of regression models. These metrics help to understand how well the model predicts continuous outcomes and where it might be making errors.</p>
+<section id="mean-squared-error-mse" class="level2">
+<h2 class="anchored" data-anchor-id="mean-squared-error-mse">5.2.1 Mean Squared Error (MSE)</h2>
+<p>Mean Squared Error (MSE) measures the average of the squares of the errors—that is, the average squared difference between the estimated values and the actual value.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y_i})^2
+\]</span> where <span class="math inline">\(n\)</span> is the number of observations, <span class="math inline">\(y_i\)</span> is the actual value, and <span class="math inline">\(\hat{y_i}\)</span> is the predicted value.</p></li>
+<li><p><strong>Example:</strong> If a model predicts house prices and the actual prices and predicted prices differ by 100,000 on average, the MSE can quantify this error.</p></li>
+</ul>
+<section id="steps-8" class="level3">
+<h3 class="anchored" data-anchor-id="steps-8">Steps:</h3>
+<ol type="1">
+<li><p><strong>Calculate the errors:</strong> Compute the difference between each actual value and its corresponding predicted value.</p></li>
+<li><p><strong>Square the errors:</strong> Square each error to remove negative values.</p></li>
+<li><p><strong>Average the squared errors:</strong> Sum all squared errors and divide by the number of observations.</p></li>
+</ol>
+<ul>
+<li><strong>Interpretation:</strong> MSE gives a sense of how far the predictions are from the actual values. Lower values indicate better model performance.</li>
+</ul>
+</section>
+</section>
+<section id="root-mean-squared-error-rmse" class="level2">
+<h2 class="anchored" data-anchor-id="root-mean-squared-error-rmse">5.2.2 Root Mean Squared Error (RMSE)</h2>
+<p>Root Mean Squared Error (RMSE) is the square root of the mean of the squared errors. It is a standard way to measure the error of a model in predicting quantitative data.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y_i})^2}
+\]</span></p></li>
+<li><p><strong>Example:</strong> RMSE is used in forecasting models to assess the average magnitude of errors in predictions.</p></li>
+</ul>
+<section id="steps-9" class="level3">
+<h3 class="anchored" data-anchor-id="steps-9">Steps:</h3>
+<ol type="1">
+<li><p><strong>Compute MSE:</strong> Follow the steps to calculate MSE.</p></li>
+<li><p><strong>Take the square root:</strong> Compute the square root of the MSE to get RMSE.</p></li>
+</ol>
+<ul>
+<li><strong>Interpretation:</strong> RMSE provides an error metric in the same units as the target variable, making it easier to interpret. Lower values indicate better model performance.</li>
+</ul>
+</section>
+</section>
+<section id="mean-absolute-error-mae" class="level2">
+<h2 class="anchored" data-anchor-id="mean-absolute-error-mae">5.2.3 Mean Absolute Error (MAE)</h2>
+<p>Mean Absolute Error (MAE) measures the average magnitude of the errors in a set of predictions, without considering their direction.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{MAE} = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y_i}|
+\]</span></p></li>
+<li><p><strong>Example:</strong> MAE is useful for understanding the average error in units, such as predicting house prices in dollars.</p></li>
+</ul>
+<section id="steps-10" class="level3">
+<h3 class="anchored" data-anchor-id="steps-10">Steps:</h3>
+<ol type="1">
+<li><p><strong>Calculate the absolute errors:</strong> Compute the absolute difference between each actual value and its corresponding predicted value.</p></li>
+<li><p><strong>Average the absolute errors:</strong> Sum all absolute errors and divide by the number of observations.</p></li>
+</ol>
+<ul>
+<li><strong>Interpretation:</strong> MAE is less sensitive to outliers compared to MSE and RMSE. Lower values indicate better model performance.</li>
+</ul>
+</section>
+</section>
+<section id="r-squared-coefficient-of-determination" class="level2">
+<h2 class="anchored" data-anchor-id="r-squared-coefficient-of-determination">5.2.4 R-squared (Coefficient of Determination)</h2>
+<p>R-squared (R²) measures the proportion of the variance in the dependent variable that is predictable from the independent variables.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+R^2 = 1 - \frac{\sum_{i=1}^{n} (y_i - \hat{y_i})^2}{\sum_{i=1}^{n} (y_i - \bar{y})^2}
+\]</span> where <span class="math inline">\(\bar{y}\)</span> is the mean of the actual values.</p></li>
+<li><p><strong>Example:</strong> An R² of 0.9 indicates that 90% of the variance in the dependent variable is predictable from the independent variables.</p></li>
+</ul>
+<section id="steps-11" class="level3">
+<h3 class="anchored" data-anchor-id="steps-11">Steps:</h3>
+<ol type="1">
+<li><p><strong>Calculate the total sum of squares (TSS):</strong> Compute the variance of the actual values around their mean.</p></li>
+<li><p><strong>Calculate the residual sum of squares (RSS):</strong> Compute the variance of the actual values around the predicted values.</p></li>
+<li><p><strong>Compute R²:</strong> Use the formula to find the proportion of variance explained by the model.</p></li>
+</ol>
+<ul>
+<li><strong>Interpretation:</strong> R² ranges from 0 to 1. Higher values indicate a better fit of the model. An R² of 1 means the model explains all the variability of the response data around its mean.</li>
+</ul>
+</section>
+</section>
+<section id="adjusted-r-squared" class="level2">
+<h2 class="anchored" data-anchor-id="adjusted-r-squared">5.2.5 Adjusted R-squared</h2>
+<p>Adjusted R-squared adjusts the R² value based on the number of predictors in the model, providing a more accurate measure when multiple predictors are used.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{Adjusted } R^2 = 1 - \frac{(1 - R^2)(n - 1)}{n - p - 1}
+\]</span> where <span class="math inline">\(n\)</span> is the number of observations and <span class="math inline">\(p\)</span> is the number of predictors.</p></li>
+<li><p><strong>Example:</strong> Adjusted R² is particularly useful in multiple regression models to account for the number of predictors.</p></li>
+</ul>
+<section id="steps-12" class="level3">
+<h3 class="anchored" data-anchor-id="steps-12">Steps:</h3>
+<ol type="1">
+<li><p><strong>Calculate R²:</strong> Follow the steps to compute R².</p></li>
+<li><p><strong>Adjust R²:</strong> Use the formula to adjust R² based on the number of predictors and observations.</p></li>
+</ol>
+<ul>
+<li><strong>Interpretation:</strong> Adjusted R² can be lower than R². It increases only if the new predictor improves the model more than would be expected by chance.</li>
+</ul>
+</section>
+</section>
+<section id="mean-absolute-percentage-error-mape" class="level2">
+<h2 class="anchored" data-anchor-id="mean-absolute-percentage-error-mape">5.2.6 Mean Absolute Percentage Error (MAPE)</h2>
+<p>Mean Absolute Percentage Error (MAPE) measures the accuracy of a forecast system as a percentage.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{MAPE} = \frac{100\%}{n} \sum_{i=1}^{n} \left| \frac{y_i - \hat{y_i}}{y_i} \right|
+\]</span></p></li>
+<li><p><strong>Example:</strong> MAPE is useful for comparing the accuracy of forecasts across different datasets.</p></li>
+</ul>
+<section id="steps-13" class="level3">
+<h3 class="anchored" data-anchor-id="steps-13">Steps:</h3>
+<ol type="1">
+<li><p><strong>Calculate the absolute percentage errors:</strong> Compute the absolute percentage difference between each actual value and its corresponding predicted value.</p></li>
+<li><p><strong>Average the absolute percentage errors:</strong> Sum all absolute percentage errors and divide by the number of observations.</p></li>
+</ol>
+<ul>
+<li><strong>Interpretation:</strong> MAPE is expressed as a percentage, making it easier to interpret. Lower values indicate better model performance.</li>
+</ul>
+</section>
+</section>
+<section id="huber-loss" class="level2">
+<h2 class="anchored" data-anchor-id="huber-loss">5.2.7 Huber Loss</h2>
+<p>Huber Loss is used in regression models to combine the advantages of both MAE and MSE. It is less sensitive to outliers in data than the squared error loss.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+L_\delta(y, f(x)) = \begin{cases}
+\frac{1}{2}(y - f(x))^2 &amp; \text{for } |y - f(x)| \leq \delta \\
+\delta |y - f(x)| - \frac{1}{2}\delta^2 &amp; \text{for } |y - f(x)| &gt; \delta
+\end{cases}
+\]</span> where <span class="math inline">\(\delta\)</span> is a threshold parameter.</p></li>
+<li><p><strong>Example:</strong> Huber Loss is useful in robust regression models where data contains outliers.</p></li>
+</ul>
+<section id="steps-14" class="level3">
+<h3 class="anchored" data-anchor-id="steps-14">Steps:</h3>
+<ol type="1">
+<li><p><strong>Calculate the residuals:</strong> Compute the difference between each actual value and its corresponding predicted value.</p></li>
+<li><p><strong>Apply the Huber loss function:</strong> Use the formula to compute the Huber loss for each residual based on the threshold <span class="math inline">\(\delta\)</span>.</p></li>
+<li><p><strong>Average the Huber loss:</strong> Sum all Huber losses and divide by the number of observations.</p></li>
+</ol>
+<ul>
+<li><strong>Interpretation:</strong> Huber loss is less sensitive to outliers compared to MSE and provides a more robust measure of model performance.</li>
+</ul>
+<p>Advanced considerations in regression metrics include:</p>
+<ul>
+<li><p><strong>Model Comparison:</strong> Use multiple metrics to compare and select the best model, as relying on a single metric can be misleading.</p></li>
+<li><p><strong>Residual Analysis:</strong> Analyze residuals to diagnose potential issues with the model, such as heteroscedasticity or autocorrelation.</p></li>
+<li><p><strong>Metric Selection:</strong> Choose the most appropriate metric based on the specific application and the nature of the data. For example, MAPE is useful for business forecasts where percentage errors are more meaningful.</p></li>
+<li><p><strong>Cross-validation:</strong> Use cross-validation to assess the performance of regression models, ensuring that the metrics are robust and generalizable to new data.</p></li>
+<li><p><strong>Handling Outliers:</strong> Consider using robust metrics like Huber loss or MAE when the data contains outliers.</p></li>
+<li><p><strong>Scaling and Normalization:</strong> Ensure that the data is appropriately scaled and normalized, especially when using metrics like RMSE, which are sensitive to the scale of the data.</p></li>
+</ul>
+<p>By following these detailed steps and considerations, you can effectively evaluate and interpret the performance of regression models, ensuring they meet the specific requirements of your application.</p>
+</section>
+</section>
+</section>
+<section id="ranking-metrics" class="level1">
+<h1>5.3 Ranking Metrics</h1>
+<p>Ranking metrics are used to evaluate the performance of ranking models, which are designed to order items based on their relevance to a query. These metrics help to understand how well the model ranks the relevant items compared to irrelevant ones.</p>
+<section id="mean-reciprocal-rank-mrr" class="level2">
+<h2 class="anchored" data-anchor-id="mean-reciprocal-rank-mrr">5.3.1 Mean Reciprocal Rank (MRR)</h2>
+<p>Mean Reciprocal Rank (MRR) is a measure of the effectiveness of a ranking algorithm, computed as the average of the reciprocal ranks of results for a sample of queries. It is used to evaluate systems that return a list of ranked results.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{MRR} = \frac{1}{|Q|} \sum_{i=1}^{|Q|} \frac{1}{\text{rank}_i}
+\]</span> where <span class="math inline">\(|Q|\)</span> is the number of queries, and <span class="math inline">\(\text{rank}_i\)</span> is the rank position of the first relevant document for the <span class="math inline">\(i\)</span>-th query.</p></li>
+<li><p><strong>Example:</strong> If the relevant document for a query appears in positions 1, 3, and 2 for three different queries, MRR would be: <span class="math display">\[
+\text{MRR} = \frac{1}{3} \left(1 + \frac{1}{3} + \frac{1}{2}\right) = 0.611
+\]</span></p></li>
+</ul>
+<section id="steps-15" class="level3">
+<h3 class="anchored" data-anchor-id="steps-15">Steps:</h3>
+<ol type="1">
+<li><p><strong>Identify the rank of the first relevant document:</strong> For each query, determine the rank position of the first relevant document.</p></li>
+<li><p><strong>Calculate the reciprocal rank:</strong> Take the reciprocal of the rank position for each query.</p></li>
+<li><p><strong>Average the reciprocal ranks:</strong> Sum all reciprocal ranks and divide by the number of queries.</p></li>
+</ol>
+<ul>
+<li><strong>Interpretation:</strong> MRR values range from 0 to 1, where higher values indicate better ranking performance.</li>
+</ul>
+</section>
+</section>
+<section id="normalized-discounted-cumulative-gain-ndcg" class="level2">
+<h2 class="anchored" data-anchor-id="normalized-discounted-cumulative-gain-ndcg">5.3.2 Normalized Discounted Cumulative Gain (NDCG)</h2>
+<p>Normalized Discounted Cumulative Gain (NDCG) measures the usefulness, or gain, of a document based on its position in the result list. It accounts for the graded relevance of the result set and the position of the relevant documents, giving higher weights to documents at higher ranks.</p>
+<ul>
+<li><strong>Formula:</strong> <span class="math display">\[
+\text{DCG}_p = \sum_{i=1}^{p} \frac{2^{rel_i} - 1}{\log_2(i + 1)}
+\]</span> where <span class="math inline">\(rel_i\)</span> is the graded relevance of the result at position <span class="math inline">\(i\)</span>.</li>
+</ul>
+<p><span class="math display">\[
+\text{NDCG}_p = \frac{\text{DCG}_p}{\text{IDCG}_p}
+\]</span> where <span class="math inline">\(\text{IDCG}_p\)</span> is the ideal DCG, which is the maximum possible DCG for the given query.</p>
+<ul>
+<li><strong>Example:</strong> Calculating NDCG for a query with ideal ranking and actual ranking.</li>
+</ul>
+<section id="steps-16" class="level3">
+<h3 class="anchored" data-anchor-id="steps-16">Steps:</h3>
+<ol type="1">
+<li><p><strong>Compute DCG:</strong> Calculate the discounted cumulative gain for the ranked results.</p></li>
+<li><p><strong>Compute IDCG:</strong> Calculate the ideal discounted cumulative gain based on the perfect ranking.</p></li>
+<li><p><strong>Normalize DCG:</strong> Divide the DCG by IDCG to obtain NDCG.</p></li>
+</ol>
+<ul>
+<li><strong>Interpretation:</strong> NDCG values range from 0 to 1, where higher values indicate better ranking performance.</li>
+</ul>
+</section>
+</section>
+<section id="mean-average-precision-map" class="level2">
+<h2 class="anchored" data-anchor-id="mean-average-precision-map">5.3.3 Mean Average Precision (MAP)</h2>
+<p>Mean Average Precision (MAP) is used to evaluate the quality of ranked retrieval results. It computes the average precision at each position in the ranking list where a relevant document is retrieved, averaged over all queries.</p>
+<ul>
+<li><strong>Formula:</strong> <span class="math display">\[
+\text{AP} = \frac{\sum_{k=1}^{n} (P(k) \cdot \text{rel}(k))}{\text{number of relevant documents}}
+\]</span> where <span class="math inline">\(P(k)\)</span> is the precision at cut-off <span class="math inline">\(k\)</span> in the list, and <span class="math inline">\(\text{rel}(k)\)</span> is an indicator function equaling 1 if the item at rank <span class="math inline">\(k\)</span> is relevant, 0 otherwise.</li>
+</ul>
+<p><span class="math display">\[
+\text{MAP} = \frac{1}{|Q|} \sum_{q=1}^{|Q|} \text{AP}(q)
+\]</span> where <span class="math inline">\(|Q|\)</span> is the number of queries.</p>
+<ul>
+<li><strong>Example:</strong> Calculating MAP for multiple queries with given precision and relevance values.</li>
+</ul>
+<section id="steps-17" class="level3">
+<h3 class="anchored" data-anchor-id="steps-17">Steps:</h3>
+<ol type="1">
+<li><p><strong>Calculate precision at each relevant document:</strong> For each query, compute precision at each position where a relevant document is retrieved.</p></li>
+<li><p><strong>Compute Average Precision (AP):</strong> Average these precision values for each query.</p></li>
+<li><p><strong>Average AP over all queries:</strong> Sum all AP values and divide by the number of queries to get MAP.</p></li>
+</ol>
+<ul>
+<li><strong>Interpretation:</strong> MAP values range from 0 to 1, where higher values indicate better ranking performance.</li>
+</ul>
+</section>
+<section id="detailed-examples-and-applications" class="level3">
+<h3 class="anchored" data-anchor-id="detailed-examples-and-applications">Detailed Examples and Applications:</h3>
+<ol type="1">
+<li><p><strong>MRR Example:</strong></p>
+<ul>
+<li>Query 1: Relevant document at rank 1.</li>
+<li>Query 2: Relevant document at rank 3.</li>
+<li>Query 3: Relevant document at rank 2.</li>
+</ul>
+<p>MRR Calculation: <span class="math display">\[
+\text{MRR} = \frac{1}{3} \left(1 + \frac{1}{3} + \frac{1}{2}\right) = 0.611
+\]</span></p></li>
+<li><p><strong>NDCG Example:</strong></p>
+<ul>
+<li>Actual ranking: [3, 2, 3, 0, 1]</li>
+<li>Ideal ranking: [3, 3, 2, 1, 0]</li>
+</ul>
+<p>DCG Calculation: <span class="math display">\[
+\text{DCG}_5 = 3 + \frac{2}{\log_2(3)} + \frac{3}{\log_2(4)} + \frac{0}{\log_2(5)} + \frac{1}{\log_2(6)}
+\]</span></p>
+<p>IDCG Calculation: <span class="math display">\[
+\text{IDCG}_5 = 3 + \frac{3}{\log_2(3)} + \frac{2}{\log_2(4)} + \frac{1}{\log_2(5)} + \frac{0}{\log_2(6)}
+\]</span></p>
+<p>NDCG Calculation: <span class="math display">\[
+\text{NDCG}_5 = \frac{\text{DCG}_5}{\text{IDCG}_5}
+\]</span></p></li>
+<li><p><strong>MAP Example:</strong></p>
+<ul>
+<li>Query 1: Precision at ranks [1, 2, 3]</li>
+<li>Query 2: Precision at ranks [2, 3]</li>
+<li>Query 3: Precision at ranks [1, 2, 3, 4]</li>
+</ul>
+<p>AP Calculation for each query: <span class="math display">\[
+\text{AP}_1 = \frac{1 + 1 + 1}{3} = 1.0
+\]</span> <span class="math display">\[
+\text{AP}_2 = \frac{1 + 1}{2} = 1.0
+\]</span> <span class="math display">\[
+\text{AP}_3 = \frac{1 + 1 + 1 + 1}{4} = 1.0
+\]</span></p>
+<p>MAP Calculation: <span class="math display">\[
+\text{MAP} = \frac{1}{3} (1.0 + 1.0 + 1.0) = 1.0
+\]</span></p></li>
+</ol>
+<p>Advanced considerations in ranking metrics include:</p>
+<ul>
+<li><p><strong>Query Diversity:</strong> Consider the diversity of queries when evaluating ranking models to ensure robustness across different types of queries.</p></li>
+<li><p><strong>Position Bias:</strong> Address position bias, where users are more likely to click on higher-ranked results, by incorporating click models or user interaction data.</p></li>
+<li><p><strong>Metric Selection:</strong> Choose the most appropriate metric based on the specific application and goals. For instance, NDCG is often preferred in scenarios where the relevance of items varies in degrees, while MAP is useful when relevance is binary.</p></li>
+<li><p><strong>Personalization:</strong> Incorporate user-specific preferences and behaviors to personalize the ranking model and improve user satisfaction.</p></li>
+</ul>
+<p>By following these detailed steps and considerations, you can effectively evaluate and interpret the performance of ranking models, ensuring they meet the specific requirements of your application.</p>
+</section>
+</section>
+</section>
+<section id="confusion-matrix-and-its-interpretation" class="level1">
+<h1>5.4 Confusion Matrix and Its Interpretation</h1>
+<p>A confusion matrix is a summary of prediction results on a classification problem. The number of correct and incorrect predictions are summarized with count values and broken down by each class. This matrix is essential for evaluating the performance of a classification model.</p>
+<section id="true-positives-true-negatives-false-positives-false-negatives" class="level2">
+<h2 class="anchored" data-anchor-id="true-positives-true-negatives-false-positives-false-negatives">5.4.1 True Positives, True Negatives, False Positives, False Negatives</h2>
+<p>The confusion matrix includes four components:</p>
+<ul>
+<li><p><strong>True Positives (TP):</strong> The number of instances correctly predicted as positive.</p></li>
+<li><p><strong>True Negatives (TN):</strong> The number of instances correctly predicted as negative.</p></li>
+<li><p><strong>False Positives (FP):</strong> The number of instances incorrectly predicted as positive (Type I error).</p></li>
+<li><p><strong>False Negatives (FN):</strong> The number of instances incorrectly predicted as negative (Type II error).</p></li>
+</ul>
+<section id="example" class="level3">
+<h3 class="anchored" data-anchor-id="example">Example:</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Predicted Positive</th>
+<th>Predicted Negative</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Actual Positive</td>
+<td>TP</td>
+<td>FN</td>
+</tr>
+<tr class="even">
+<td>Actual Negative</td>
+<td>FP</td>
+<td>TN</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="sensitivity-and-specificity" class="level2">
+<h2 class="anchored" data-anchor-id="sensitivity-and-specificity">5.4.2 Sensitivity and Specificity</h2>
+<p>Sensitivity (also known as Recall or True Positive Rate) and Specificity (True Negative Rate) are metrics derived from the confusion matrix that measure the performance of a classification model.</p>
+<ul>
+<li><p><strong>Sensitivity (Recall/True Positive Rate):</strong> The proportion of actual positives that are correctly identified by the model.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{Sensitivity} = \frac{\text{TP}}{\text{TP + FN}}
+\]</span></p></li>
+<li><p><strong>Example:</strong> If there are 100 actual positives and the model correctly identifies 80 of them, the sensitivity is 80%.</p></li>
+</ul></li>
+<li><p><strong>Specificity (True Negative Rate):</strong> The proportion of actual negatives that are correctly identified by the model.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{Specificity} = \frac{\text{TN}}{\text{TN + FP}}
+\]</span></p></li>
+<li><p><strong>Example:</strong> If there are 100 actual negatives and the model correctly identifies 90 of them, the specificity is 90%.</p></li>
+</ul></li>
+</ul>
+<section id="steps-to-calculate" class="level3">
+<h3 class="anchored" data-anchor-id="steps-to-calculate">Steps to Calculate:</h3>
+<ol type="1">
+<li><p><strong>Identify TP, TN, FP, and FN from the confusion matrix.</strong></p></li>
+<li><p><strong>Apply the formulas to compute sensitivity and specificity.</strong></p></li>
+</ol>
+<ul>
+<li><strong>Interpretation:</strong> High sensitivity means the model is good at identifying positive cases, while high specificity means the model is good at identifying negative cases.</li>
+</ul>
+</section>
+</section>
+<section id="positive-predictive-value-and-negative-predictive-value" class="level2">
+<h2 class="anchored" data-anchor-id="positive-predictive-value-and-negative-predictive-value">5.4.3 Positive Predictive Value and Negative Predictive Value</h2>
+<p>Positive Predictive Value (PPV) and Negative Predictive Value (NPV) are metrics that measure the accuracy of positive and negative predictions made by the model.</p>
+<ul>
+<li><p><strong>Positive Predictive Value (Precision):</strong> The proportion of positive predictions that are actually positive.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{PPV} = \frac{\text{TP}}{\text{TP + FP}}
+\]</span></p></li>
+<li><p><strong>Example:</strong> If the model predicts 100 positives and 80 of them are actually positive, the PPV is 80%.</p></li>
+</ul></li>
+<li><p><strong>Negative Predictive Value:</strong> The proportion of negative predictions that are actually negative.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{NPV} = \frac{\text{TN}}{\text{TN + FN}}
+\]</span></p></li>
+<li><p><strong>Example:</strong> If the model predicts 100 negatives and 90 of them are actually negative, the NPV is 90%.</p></li>
+</ul></li>
+</ul>
+<section id="steps-to-calculate-1" class="level3">
+<h3 class="anchored" data-anchor-id="steps-to-calculate-1">Steps to Calculate:</h3>
+<ol type="1">
+<li><p><strong>Identify TP, TN, FP, and FN from the confusion matrix.</strong></p></li>
+<li><p><strong>Apply the formulas to compute PPV and NPV.</strong></p></li>
+</ol>
+<ul>
+<li><strong>Interpretation:</strong> High PPV indicates that when the model predicts a positive, it is likely correct. High NPV indicates that when the model predicts a negative, it is likely correct.</li>
+</ul>
+</section>
+<section id="detailed-example" class="level3">
+<h3 class="anchored" data-anchor-id="detailed-example">Detailed Example:</h3>
+<p>Assume we have the following confusion matrix for a binary classification problem:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Predicted Positive</th>
+<th>Predicted Negative</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Actual Positive</td>
+<td>50 (TP)</td>
+<td>10 (FN)</td>
+</tr>
+<tr class="even">
+<td>Actual Negative</td>
+<td>5 (FP)</td>
+<td>35 (TN)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p><strong>Sensitivity (Recall):</strong> <span class="math display">\[
+\text{Sensitivity} = \frac{50}{50 + 10} = \frac{50}{60} = 0.83
+\]</span></p></li>
+<li><p><strong>Specificity:</strong> <span class="math display">\[
+\text{Specificity} = \frac{35}{35 + 5} = \frac{35}{40} = 0.875
+\]</span></p></li>
+<li><p><strong>Positive Predictive Value (Precision):</strong> <span class="math display">\[
+\text{PPV} = \frac{50}{50 + 5} = \frac{50}{55} = 0.91
+\]</span></p></li>
+<li><p><strong>Negative Predictive Value:</strong> <span class="math display">\[
+\text{NPV} = \frac{35}{35 + 10} = \frac{35}{45} = 0.78
+\]</span></p></li>
+</ul>
+</section>
+<section id="interpretation-of-the-example" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation-of-the-example">Interpretation of the Example:</h3>
+<ul>
+<li>The model correctly identifies 83% of the actual positives (Sensitivity).</li>
+<li>The model correctly identifies 87.5% of the actual negatives (Specificity).</li>
+<li>When the model predicts a positive, it is correct 91% of the time (PPV).</li>
+<li>When the model predicts a negative, it is correct 78% of the time (NPV).</li>
+</ul>
+<p>Advanced considerations in confusion matrix interpretation include:</p>
+<ul>
+<li><p><strong>Balancing Metrics:</strong> Consider the trade-offs between sensitivity and specificity, as improving one often comes at the expense of the other. Use metrics like F1-score to balance precision and recall.</p></li>
+<li><p><strong>Threshold Tuning:</strong> Adjust the decision threshold to optimize for specific metrics depending on the application (e.g., maximizing sensitivity for medical diagnoses).</p></li>
+<li><p><strong>Class Imbalance:</strong> In cases of class imbalance, metrics like PPV, NPV, and F1-score are more informative than accuracy alone.</p></li>
+<li><p><strong>ROC and Precision-Recall Curves:</strong> Use ROC and Precision-Recall curves to visualize the performance of the model across different thresholds and to compare different models.</p></li>
+</ul>
+<p>By understanding and interpreting the confusion matrix and its derived metrics, you can gain valuable insights into the performance of your classification models and make informed decisions on model improvements.</p>
+</section>
+</section>
+</section>
+<section id="multi-class-and-multi-label-evaluation" class="level1">
+<h1>5.5 Multi-class and Multi-label Evaluation</h1>
+<p>Multi-class and multi-label evaluation metrics extend the binary classification metrics to handle multiple classes or labels. These metrics help evaluate the performance of models when dealing with more complex classification problems.</p>
+<section id="micro-averaging" class="level2">
+<h2 class="anchored" data-anchor-id="micro-averaging">5.5.1 Micro-averaging</h2>
+<p>Micro-averaging aggregates the contributions of all classes to compute the average metric. It calculates metrics globally by counting the total true positives, false negatives, and false positives.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{Micro-averaged Precision} = \frac{\sum \text{TP}}{\sum \text{TP} + \sum \text{FP}}
+\]</span> <span class="math display">\[
+\text{Micro-averaged Recall} = \frac{\sum \text{TP}}{\sum \text{TP} + \sum \text{FN}}
+\]</span> <span class="math display">\[
+\text{Micro-averaged F1-score} = 2 \times \frac{\text{Micro-averaged Precision} \times \text{Micro-averaged Recall}}{\text{Micro-averaged Precision} + \text{Micro-averaged Recall}}
+\]</span></p></li>
+<li><p><strong>Example:</strong> Used when the classes are imbalanced and each instance has equal importance.</p></li>
+</ul>
+<section id="steps-18" class="level3">
+<h3 class="anchored" data-anchor-id="steps-18">Steps:</h3>
+<ol type="1">
+<li><p><strong>Aggregate counts of TP, FP, and FN across all classes.</strong></p></li>
+<li><p><strong>Calculate micro-averaged precision, recall, and F1-score using the formulas.</strong></p></li>
+</ol>
+<ul>
+<li><strong>Interpretation:</strong> Micro-averaging is useful when you want to give equal weight to each instance, regardless of its class.</li>
+</ul>
+</section>
+</section>
+<section id="macro-averaging" class="level2">
+<h2 class="anchored" data-anchor-id="macro-averaging">5.5.2 Macro-averaging</h2>
+<p>Macro-averaging calculates the metric independently for each class and then takes the average. It treats all classes equally.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{Macro-averaged Precision} = \frac{1}{N} \sum_{i=1}^{N} \text{Precision}_i
+\]</span> <span class="math display">\[
+\text{Macro-averaged Recall} = \frac{1}{N} \sum_{i=1}^{N} \text{Recall}_i
+\]</span> <span class="math display">\[
+\text{Macro-averaged F1-score} = \frac{1}{N} \sum_{i=1}^{N} \text{F1-score}_i
+\]</span> where <span class="math inline">\(N\)</span> is the number of classes.</p></li>
+<li><p><strong>Example:</strong> Used when you want to treat all classes equally, regardless of their frequency.</p></li>
+</ul>
+<section id="steps-19" class="level3">
+<h3 class="anchored" data-anchor-id="steps-19">Steps:</h3>
+<ol type="1">
+<li><p><strong>Calculate precision, recall, and F1-score for each class.</strong></p></li>
+<li><p><strong>Average the metrics across all classes.</strong></p></li>
+</ol>
+<ul>
+<li><strong>Interpretation:</strong> Macro-averaging is useful when you want to give equal weight to each class, regardless of its size.</li>
+</ul>
+</section>
+</section>
+<section id="weighted-averaging" class="level2">
+<h2 class="anchored" data-anchor-id="weighted-averaging">5.5.3 Weighted Averaging</h2>
+<p>Weighted averaging calculates the metric for each class and then takes the average, weighted by the number of true instances for each class.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{Weighted Precision} = \frac{\sum_{i=1}^{N} (\text{Precision}_i \times \text{Support}_i)}{\sum_{i=1}^{N} \text{Support}_i}
+\]</span> <span class="math display">\[
+\text{Weighted Recall} = \frac{\sum_{i=1}^{N} (\text{Recall}_i \times \text{Support}_i)}{\sum_{i=1}^{N} \text{Support}_i}
+\]</span> <span class="math display">\[
+\text{Weighted F1-score} = \frac{\sum_{i=1}^{N} (\text{F1-score}_i \times \text{Support}_i)}{\sum_{i=1}^{N} \text{Support}_i}
+\]</span> where <span class="math inline">\(\text{Support}_i\)</span> is the number of true instances for class <span class="math inline">\(i\)</span>.</p></li>
+<li><p><strong>Example:</strong> Used when you want to consider both the performance on each class and the class frequency.</p></li>
+</ul>
+<section id="steps-20" class="level3">
+<h3 class="anchored" data-anchor-id="steps-20">Steps:</h3>
+<ol type="1">
+<li><p><strong>Calculate precision, recall, and F1-score for each class.</strong></p></li>
+<li><p><strong>Multiply each metric by the number of true instances for that class (support).</strong></p></li>
+<li><p><strong>Sum the weighted metrics and divide by the total number of instances.</strong></p></li>
+</ol>
+<ul>
+<li><strong>Interpretation:</strong> Weighted averaging is useful when you want to balance the performance across classes while considering their frequency.</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="evaluation-for-imbalanced-datasets" class="level1">
+<h1>5.6 Evaluation for Imbalanced Datasets</h1>
+<p>Imbalanced datasets are common in real-world applications, where some classes are underrepresented. Specific metrics are used to evaluate models on such datasets.</p>
+<section id="balanced-accuracy" class="level2">
+<h2 class="anchored" data-anchor-id="balanced-accuracy">5.6.1 Balanced Accuracy</h2>
+<p>Balanced accuracy adjusts for imbalanced class distributions by averaging the recall obtained on each class.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{Balanced Accuracy} = \frac{1}{2} \left( \frac{\text{TP}}{\text{TP} + \text{FN}} + \frac{\text{TN}}{\text{TN} + \text{FP}} \right)
+\]</span></p></li>
+<li><p><strong>Example:</strong> Useful when the class distribution is imbalanced, as it gives equal weight to the positive and negative classes.</p></li>
+</ul>
+<section id="steps-21" class="level3">
+<h3 class="anchored" data-anchor-id="steps-21">Steps:</h3>
+<ol type="1">
+<li><p><strong>Calculate recall for the positive class.</strong></p></li>
+<li><p><strong>Calculate recall for the negative class.</strong></p></li>
+<li><p><strong>Average the two recall values.</strong></p></li>
+</ol>
+<ul>
+<li><strong>Interpretation:</strong> Balanced accuracy is useful for evaluating models on imbalanced datasets, giving equal importance to both classes.</li>
+</ul>
+</section>
+</section>
+<section id="g-mean" class="level2">
+<h2 class="anchored" data-anchor-id="g-mean">5.6.2 G-mean</h2>
+<p>G-mean (Geometric Mean) is the geometric mean of sensitivity and specificity. It balances the performance of the classifier across different classes.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{G-mean} = \sqrt{\text{Sensitivity} \times \text{Specificity}}
+\]</span></p></li>
+<li><p><strong>Example:</strong> Useful for evaluating models where it is important to have a balance between sensitivity and specificity.</p></li>
+</ul>
+<section id="steps-22" class="level3">
+<h3 class="anchored" data-anchor-id="steps-22">Steps:</h3>
+<ol type="1">
+<li><p><strong>Calculate sensitivity (recall for the positive class).</strong></p></li>
+<li><p><strong>Calculate specificity (recall for the negative class).</strong></p></li>
+<li><p><strong>Compute the geometric mean of sensitivity and specificity.</strong></p></li>
+</ol>
+<ul>
+<li><strong>Interpretation:</strong> G-mean is useful for maintaining a balance between correctly identifying positive and negative instances.</li>
+</ul>
+</section>
+</section>
+<section id="f-beta-score" class="level2">
+<h2 class="anchored" data-anchor-id="f-beta-score">5.6.3 F-beta Score</h2>
+<p>The F-beta score is a generalization of the F1-score that weights recall more than precision by a factor of beta. It is useful when the balance between precision and recall is not equally important.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{F}_\beta = (1 + \beta^2) \times \frac{\text{Precision} \times \text{Recall}}{(\beta^2 \times \text{Precision}) + \text{Recall}}
+\]</span></p></li>
+<li><p><strong>Example:</strong> When evaluating medical tests where missing a positive case (high recall) is more critical than a false positive (high precision).</p></li>
+</ul>
+<section id="steps-23" class="level3">
+<h3 class="anchored" data-anchor-id="steps-23">Steps:</h3>
+<ol type="1">
+<li><p><strong>Calculate precision and recall.</strong></p></li>
+<li><p><strong>Choose a beta value based on the relative importance of recall to precision.</strong></p></li>
+<li><p><strong>Compute the F-beta score using the formula.</strong></p></li>
+</ol>
+<ul>
+<li><strong>Interpretation:</strong> The F-beta score allows adjusting the importance of precision vs recall, making it useful for specific application needs.</li>
+</ul>
+</section>
+<section id="detailed-examples-and-applications-1" class="level3">
+<h3 class="anchored" data-anchor-id="detailed-examples-and-applications-1">Detailed Examples and Applications:</h3>
+<ol type="1">
+<li><p><strong>Balanced Accuracy Example:</strong></p>
+<p>Assume we have the following confusion matrix for a binary classification problem:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Predicted Positive</th>
+<th>Predicted Negative</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Actual Positive</td>
+<td>50 (TP)</td>
+<td>10 (FN)</td>
+</tr>
+<tr class="even">
+<td>Actual Negative</td>
+<td>5 (FP)</td>
+<td>35 (TN)</td>
+</tr>
+</tbody>
+</table>
+<p>Calculate recall for positive and negative classes: <span class="math display">\[
+\text{Recall}_\text{positive} = \frac{50}{50 + 10} = 0.83
+\]</span> <span class="math display">\[
+\text{Recall}_\text{negative} = \frac{35}{35 + 5} = 0.875
+\]</span></p>
+<p>Calculate balanced accuracy: <span class="math display">\[
+\text{Balanced Accuracy} = \frac{1}{2} (0.83 + 0.875) = 0.853
+\]</span></p></li>
+<li><p><strong>G-mean Example:</strong></p>
+<p>Using the same confusion matrix as above, calculate sensitivity and specificity: <span class="math display">\[
+\text{Sensitivity} = 0.83
+\]</span> <span class="math display">\[
+\text{Specificity} = 0.875
+\]</span></p>
+<p>Calculate G-mean: <span class="math display">\[
+\text{G-mean} = \sqrt{0.83 \times 0.875} = 0.852
+\]</span></p></li>
+<li><p><strong>F-beta Score Example:</strong></p>
+<p>Given precision = 0.91 and recall = 0.83, calculate F-beta score for beta = 2: <span class="math display">\[
+\text{F}_2 = (1 + 2^2) \times \frac{0.91 \times 0.83}{(2^2 \times 0.91) + 0.83} = 0.85
+\]</span></p></li>
+</ol>
+<p>Advanced considerations in evaluation for imbalanced datasets include:</p>
+<ul>
+<li><p><strong>Resampling Techniques:</strong> Use oversampling (e.g., SMOTE) or undersampling to balance the dataset before training.</p></li>
+<li><p><strong>Cost-sensitive Learning:</strong> Incorporate different misclassification costs into the model training process to handle imbalanced datasets.</p></li>
+<li><p><strong>Ensemble Methods:</strong> Use ensemble methods like balanced random forests or boosting techniques to improve performance on imbalanced datasets.</p></li>
+</ul>
+<p>By understanding and interpreting these advanced metrics, you can better evaluate the performance of models on multi-class, multi-label, and imbalanced datasets, ensuring they meet the specific requirements of your application.</p>
+</section>
+</section>
+</section>
+<section id="time-series-evaluation-metrics" class="level1">
+<h1>5.7 Time Series Evaluation Metrics</h1>
+<p>Time series evaluation metrics are used to assess the accuracy and effectiveness of models that predict time-dependent data. These metrics help understand how well the model captures the temporal patterns and forecasts future values.</p>
+<section id="mean-absolute-scaled-error-mase" class="level2">
+<h2 class="anchored" data-anchor-id="mean-absolute-scaled-error-mase">5.7.1 Mean Absolute Scaled Error (MASE)</h2>
+<p>Mean Absolute Scaled Error (MASE) is a relative measure of forecast accuracy that compares the mean absolute error of the forecast to the mean absolute error of a naive forecast. It scales the forecast error by the in-sample mean absolute error of a naive forecasting method.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{MASE} = \frac{\text{MAE}}{\frac{1}{n-1} \sum_{t=2}^{n} |y_t - y_{t-1}|}
+\]</span> where MAE is the mean absolute error of the model, <span class="math inline">\(y_t\)</span> is the actual value at time <span class="math inline">\(t\)</span>, and <span class="math inline">\(y_{t-1}\)</span> is the actual value at time <span class="math inline">\(t-1\)</span>.</p></li>
+<li><p><strong>Example:</strong> Used to compare the performance of different forecasting models on a time series dataset.</p></li>
+</ul>
+<section id="steps-24" class="level3">
+<h3 class="anchored" data-anchor-id="steps-24">Steps:</h3>
+<ol type="1">
+<li><p><strong>Calculate the mean absolute error (MAE) of the model:</strong> <span class="math display">\[
+\text{MAE} = \frac{1}{n} \sum_{t=1}^{n} |y_t - \hat{y}_t|
+\]</span> where <span class="math inline">\(y_t\)</span> is the actual value, <span class="math inline">\(\hat{y}_t\)</span> is the predicted value, and <span class="math inline">\(n\)</span> is the number of observations.</p></li>
+<li><p><strong>Calculate the MAE of the naive forecast:</strong> <span class="math display">\[
+\text{Naive MAE} = \frac{1}{n-1} \sum_{t=2}^{n} |y_t - y_{t-1}|
+\]</span></p></li>
+<li><p><strong>Compute MASE:</strong> <span class="math display">\[
+\text{MASE} = \frac{\text{MAE}}{\text{Naive MAE}}
+\]</span></p></li>
+</ol>
+<ul>
+<li><strong>Interpretation:</strong> A MASE value less than 1 indicates that the model performs better than the naive forecast, while a value greater than 1 indicates worse performance.</li>
+</ul>
+</section>
+</section>
+<section id="symmetric-mean-absolute-percentage-error-smape" class="level2">
+<h2 class="anchored" data-anchor-id="symmetric-mean-absolute-percentage-error-smape">5.7.2 Symmetric Mean Absolute Percentage Error (SMAPE)</h2>
+<p>Symmetric Mean Absolute Percentage Error (SMAPE) is a measure of accuracy based on percentage errors, which is symmetric and prevents issues with the scale of the data. It normalizes the absolute error by the average of the actual and forecast values.</p>
+<ul>
+<li><p><strong>Formula:</strong> <span class="math display">\[
+\text{SMAPE} = \frac{100\%}{n} \sum_{t=1}^{n} \frac{|y_t - \hat{y}_t|}{(|y_t| + |\hat{y}_t|) / 2}
+\]</span></p></li>
+<li><p><strong>Example:</strong> Used to evaluate the accuracy of a forecast model in predicting future values of a time series.</p></li>
+</ul>
+<section id="steps-25" class="level3">
+<h3 class="anchored" data-anchor-id="steps-25">Steps:</h3>
+<ol type="1">
+<li><p><strong>Calculate the absolute error for each time period:</strong> <span class="math display">\[
+\text{Absolute Error}_t = |y_t - \hat{y}_t|
+\]</span></p></li>
+<li><p><strong>Normalize the absolute error:</strong> <span class="math display">\[
+\text{Normalized Error}_t = \frac{\text{Absolute Error}_t}{(|y_t| + |\hat{y}_t|) / 2}
+\]</span></p></li>
+<li><p><strong>Compute SMAPE:</strong> <span class="math display">\[
+\text{SMAPE} = \frac{100\%}{n} \sum_{t=1}^{n} \text{Normalized Error}_t
+\]</span></p></li>
+</ol>
+<ul>
+<li><strong>Interpretation:</strong> SMAPE provides a percentage measure of the forecast accuracy, where lower values indicate better performance. It is symmetric, meaning it treats overestimates and underestimates equally.</li>
+</ul>
+</section>
+<section id="detailed-example-1" class="level3">
+<h3 class="anchored" data-anchor-id="detailed-example-1">Detailed Example:</h3>
+<ol type="1">
+<li><p><strong>MASE Example:</strong></p>
+<p>Assume we have the following time series data and predictions:</p>
+<ul>
+<li>Actual values: [100, 120, 130, 140, 150]</li>
+<li>Predicted values: [105, 115, 135, 145, 155]</li>
+</ul>
+<p>Calculate MAE of the model: <span class="math display">\[
+\text{MAE} = \frac{1}{5} (|100 - 105| + |120 - 115| + |130 - 135| + |140 - 145| + |150 - 155|) = \frac{1}{5} (5 + 5 + 5 + 5 + 5) = 5
+\]</span></p>
+<p>Calculate MAE of the naive forecast: <span class="math display">\[
+\text{Naive MAE} = \frac{1}{4} (|120 - 100| + |130 - 120| + |140 - 130| + |150 - 140|) = \frac{1}{4} (20 + 10 + 10 + 10) = 12.5
+\]</span></p>
+<p>Compute MASE: <span class="math display">\[
+\text{MASE} = \frac{5}{12.5} = 0.4
+\]</span></p>
+<p>Interpretation: Since MASE is less than 1, the model performs better than the naive forecast.</p></li>
+<li><p><strong>SMAPE Example:</strong></p>
+<p>Using the same actual and predicted values:</p>
+<p>Calculate absolute errors and normalized errors for each time period: <span class="math display">\[
+\text{Absolute Error}_1 = |100 - 105| = 5
+\]</span> <span class="math display">\[
+\text{Normalized Error}_1 = \frac{5}{(100 + 105) / 2} = \frac{5}{102.5} = 0.0488
+\]</span></p>
+<p>Repeat for all time periods: <span class="math display">\[
+\text{Normalized Error}_2 = \frac{5}{(120 + 115) / 2} = 0.0435
+\]</span> <span class="math display">\[
+\text{Normalized Error}_3 = \frac{5}{(130 + 135) / 2} = 0.0370
+\]</span> <span class="math display">\[
+\text{Normalized Error}_4 = \frac{5}{(140 + 145) / 2} = 0.0345
+\]</span> <span class="math display">\[
+\text{Normalized Error}_5 = \frac{5}{(150 + 155) / 2} = 0.0323
+\]</span></p>
+<p>Compute SMAPE: <span class="math display">\[
+\text{SMAPE} = \frac{100\%}{5} (0.0488 + 0.0435 + 0.0370 + 0.0345 + 0.0323) = \frac{100\%}{5} \times 0.1961 = 3.92\%
+\]</span></p>
+<p>Interpretation: The SMAPE of 3.92% indicates the average percentage error of the forecast, with lower values indicating better performance.</p></li>
+</ol>
+<p>Advanced considerations in time series evaluation metrics include:</p>
+<ul>
+<li><p><strong>Handling Seasonality:</strong> Adjust metrics to account for seasonality and trends in the data, using seasonally adjusted versions of MASE or SMAPE.</p></li>
+<li><p><strong>Forecast Horizon:</strong> Evaluate metrics over different forecast horizons to understand model performance at varying time steps.</p></li>
+<li><p><strong>Scale Sensitivity:</strong> Consider the impact of scale and unit differences in time series data when choosing evaluation metrics, favoring percentage-based metrics like SMAPE when appropriate.</p></li>
+</ul>
+<p>By understanding and interpreting these time series evaluation metrics, you can better assess the performance of forecasting models and ensure they meet the specific requirements of your application.</p>
+</section>
+</section>
+</section>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

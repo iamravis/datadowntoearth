@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>data_security_and_privacy – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="chapter-8-data-security-and-privacy" class="level1 text-content">
+<h1>Chapter 8: Data Security and Privacy</h1>
+<section id="data-encryption-at-rest-and-in-transit" class="level2">
+<h2 class="anchored" data-anchor-id="data-encryption-at-rest-and-in-transit">Data Encryption (At Rest and In Transit)</h2>
+<section id="definition" class="level3">
+<h3 class="anchored" data-anchor-id="definition">Definition</h3>
+<p>Data encryption involves transforming data into a secure format that can only be read by authorized individuals. Encryption is critical for protecting data confidentiality, both when it is stored (at rest) and when it is being transmitted across networks (in transit).</p>
+</section>
+<section id="encryption-at-rest" class="level3">
+<h3 class="anchored" data-anchor-id="encryption-at-rest">Encryption at Rest</h3>
+<p><strong>Description</strong>: Encryption at rest protects data stored on physical media, such as hard drives, SSDs, or cloud storage. It ensures that data remains secure even if the storage medium is accessed or stolen by unauthorized individuals.</p>
+<p><strong>Techniques</strong>: Common techniques include Full Disk Encryption (FDE), file-level encryption, and database encryption. Tools such as BitLocker, LUKS, and Transparent Data Encryption (TDE) are commonly used.</p>
+<p><strong>Example</strong>: A financial institution encrypts its databases using TDE to protect customer financial information stored on its servers. Even if the storage medium is compromised, the data remains inaccessible without the encryption keys.</p>
+</section>
+<section id="encryption-in-transit" class="level3">
+<h3 class="anchored" data-anchor-id="encryption-in-transit">Encryption in Transit</h3>
+<p><strong>Description</strong>: Encryption in transit protects data as it moves across networks, preventing unauthorized access during transmission. This is crucial for securing communications between clients and servers, as well as between different systems within a network.</p>
+<p><strong>Techniques</strong>: Common protocols include SSL/TLS for web traffic, VPNs for secure network connections, and SSH for secure remote access. End-to-end encryption (E2EE) ensures that data is encrypted on the sender’s side and decrypted only by the recipient.</p>
+<p><strong>Example</strong>: An e-commerce website uses HTTPS (SSL/TLS) to encrypt data transmitted between users’ browsers and the web server, ensuring that sensitive information such as credit card numbers and passwords are protected during transmission.</p>
+<hr>
+</section>
+</section>
+<section id="data-masking-and-anonymization" class="level2">
+<h2 class="anchored" data-anchor-id="data-masking-and-anonymization">Data Masking and Anonymization</h2>
+<section id="definition-1" class="level3">
+<h3 class="anchored" data-anchor-id="definition-1">Definition</h3>
+<p>Data masking and anonymization are techniques used to protect sensitive data by obscuring or removing personally identifiable information (PII) while retaining the data’s utility for analysis and testing.</p>
+</section>
+<section id="data-masking" class="level3">
+<h3 class="anchored" data-anchor-id="data-masking">Data Masking</h3>
+<p><strong>Description</strong>: Data masking involves altering data in a way that it is still usable for its intended purpose but is no longer identifiable. Masked data maintains its format and structure, ensuring that applications can continue to function correctly.</p>
+<p><strong>Techniques</strong>: Common techniques include shuffling (randomly rearranging data), substitution (replacing original data with fictitious data), and encryption (using reversible encryption algorithms to mask data).</p>
+<p><strong>Example</strong>: A development team masks customer names and addresses in a production database before using it for testing, ensuring that sensitive information is not exposed to unauthorized individuals while preserving the data’s structure for functional testing.</p>
+</section>
+<section id="anonymization" class="level3">
+<h3 class="anchored" data-anchor-id="anonymization">Anonymization</h3>
+<p><strong>Description</strong>: Anonymization involves removing or modifying personally identifiable information so that individuals cannot be re-identified. It is used to protect privacy in datasets used for analytics, research, and sharing with third parties.</p>
+<p><strong>Techniques</strong>: Common techniques include data aggregation (combining data to a higher level of abstraction), generalization (reducing the precision of data), and suppression (removing sensitive data entirely).</p>
+<p><strong>Example</strong>: A healthcare provider anonymizes patient data by removing names, addresses, and other identifiers before sharing the data with researchers. This allows researchers to analyze health trends without compromising patient privacy.</p>
+<hr>
+</section>
+</section>
+<section id="access-control-models-rbac-abac" class="level2">
+<h2 class="anchored" data-anchor-id="access-control-models-rbac-abac">Access Control Models (RBAC, ABAC)</h2>
+<section id="definition-2" class="level3">
+<h3 class="anchored" data-anchor-id="definition-2">Definition</h3>
+<p>Access control models define how access permissions are granted and enforced within an organization. They ensure that only authorized individuals can access specific resources, enhancing security and compliance.</p>
+</section>
+<section id="role-based-access-control-rbac" class="level3">
+<h3 class="anchored" data-anchor-id="role-based-access-control-rbac">Role-Based Access Control (RBAC)</h3>
+<p><strong>Description</strong>: RBAC assigns permissions to users based on their roles within an organization. Roles are defined according to job functions, and users are granted access to resources based on their assigned roles.</p>
+<p><strong>Features</strong>: - Simplifies administration by grouping permissions into roles - Supports the principle of least privilege by granting only necessary permissions - Provides scalability for large organizations</p>
+<p><strong>Example</strong>: In a hospital, RBAC is used to grant access to medical records. Doctors have access to patient records, nurses have access to nursing notes, and administrative staff have access to billing information, each according to their roles.</p>
+</section>
+<section id="attribute-based-access-control-abac" class="level3">
+<h3 class="anchored" data-anchor-id="attribute-based-access-control-abac">Attribute-Based Access Control (ABAC)</h3>
+<p><strong>Description</strong>: ABAC grants access based on attributes associated with users, resources, and the environment. Policies are defined using logical expressions that evaluate attributes to determine access permissions.</p>
+<p><strong>Features</strong>: - Offers fine-grained access control - Supports complex and dynamic environments - Allows for flexible policy definitions that can incorporate a wide range of attributes</p>
+<p><strong>Example</strong>: A government agency uses ABAC to control access to classified documents. Access decisions are based on attributes such as security clearance level, department, and project assignment, ensuring that only authorized personnel can access sensitive information.</p>
+<hr>
+</section>
+</section>
+<section id="data-classification-and-sensitive-data-discovery" class="level2">
+<h2 class="anchored" data-anchor-id="data-classification-and-sensitive-data-discovery">Data Classification and Sensitive Data Discovery</h2>
+<section id="definition-3" class="level3">
+<h3 class="anchored" data-anchor-id="definition-3">Definition</h3>
+<p>Data classification involves categorizing data based on its sensitivity and criticality, which helps in applying appropriate security controls. Sensitive data discovery is the process of identifying and locating sensitive information within an organization’s data assets.</p>
+</section>
+<section id="data-classification" class="level3">
+<h3 class="anchored" data-anchor-id="data-classification">Data Classification</h3>
+<p><strong>Description</strong>: Classifying data into categories such as public, internal, confidential, and highly confidential helps in managing and protecting data according to its sensitivity. Classification guides the application of security controls and access policies.</p>
+<p><strong>Techniques</strong>: Manual classification by data owners, automated classification using tools that analyze data content and context, and hybrid approaches combining manual and automated methods.</p>
+<p><strong>Example</strong>: A financial institution classifies data into categories such as public (marketing materials), internal (employee communications), confidential (customer account details), and highly confidential (financial reports). Each category has specific access controls and security measures.</p>
+</section>
+<section id="sensitive-data-discovery" class="level3">
+<h3 class="anchored" data-anchor-id="sensitive-data-discovery">Sensitive Data Discovery</h3>
+<p><strong>Description</strong>: Sensitive data discovery involves scanning data repositories to identify sensitive information, such as PII, financial data, and intellectual property. This process helps organizations understand their data landscape and apply appropriate protections.</p>
+<p><strong>Techniques</strong>: Using data discovery tools that employ pattern matching, regular expressions, machine learning, and metadata analysis to identify sensitive data. Integrating discovery processes into data governance frameworks for continuous monitoring.</p>
+<p><strong>Example</strong>: A healthcare provider uses sensitive data discovery tools to scan its databases and file systems for PII and PHI (Protected Health Information). The tools identify sensitive data, enabling the organization to implement encryption, access controls, and other security measures.</p>
+<hr>
+</section>
+</section>
+<section id="compliance-frameworks-gdpr-ccpa-hipaa" class="level2">
+<h2 class="anchored" data-anchor-id="compliance-frameworks-gdpr-ccpa-hipaa">Compliance Frameworks (GDPR, CCPA, HIPAA)</h2>
+<section id="definition-4" class="level3">
+<h3 class="anchored" data-anchor-id="definition-4">Definition</h3>
+<p>Compliance frameworks are sets of guidelines, regulations, and standards that organizations must follow to ensure data protection, privacy, and security. These frameworks help organizations meet legal and regulatory requirements, protecting sensitive information and building trust with stakeholders.</p>
+</section>
+<section id="gdpr-general-data-protection-regulation" class="level3">
+<h3 class="anchored" data-anchor-id="gdpr-general-data-protection-regulation">GDPR (General Data Protection Regulation)</h3>
+<p><strong>Description</strong>: GDPR is a comprehensive data protection regulation implemented by the European Union to protect the privacy and personal data of EU citizens. It sets strict requirements for data processing, storage, and transfer, and grants individuals rights over their data.</p>
+<p><strong>Key Requirements</strong>: Includes data subject rights (access, rectification, erasure), data breach notification, data protection impact assessments, and appointing Data Protection Officers (DPOs). Non-compliance can result in significant fines.</p>
+<p><strong>Example</strong>: A multinational company operating in the EU must comply with GDPR by ensuring that personal data of EU citizens is processed lawfully, transparently, and securely. This includes obtaining explicit consent for data processing and implementing robust data protection measures.</p>
+</section>
+<section id="ccpa-california-consumer-privacy-act" class="level3">
+<h3 class="anchored" data-anchor-id="ccpa-california-consumer-privacy-act">CCPA (California Consumer Privacy Act)</h3>
+<p><strong>Description</strong>: CCPA is a state-level data privacy law in California that grants residents rights over their personal data, including the right to know what data is collected, the right to request deletion, and the right to opt-out of data sales.</p>
+<p><strong>Key Requirements</strong>: Requires businesses to provide clear notices about data collection, honor consumer requests for data access and deletion, and implement measures to protect personal data. Non-compliance can result in fines and penalties.</p>
+<p><strong>Example</strong>: A tech company collecting data from California residents must comply with CCPA by providing transparent privacy notices, allowing users to request access to and deletion of their data, and offering an opt-out mechanism for data sales.</p>
+</section>
+<section id="hipaa-health-insurance-portability-and-accountability-act" class="level3">
+<h3 class="anchored" data-anchor-id="hipaa-health-insurance-portability-and-accountability-act">HIPAA (Health Insurance Portability and Accountability Act)</h3>
+<p><strong>Description</strong>: HIPAA is a US federal law that establishes standards for protecting the privacy and security of health information. It applies to healthcare providers, health plans, and other entities handling Protected Health Information (PHI).</p>
+<p><strong>Key Requirements</strong>: Includes the Privacy Rule (standards for PHI use and disclosure), Security Rule (requirements for protecting electronic PHI), and Breach Notification Rule (obligations to notify affected individuals and authorities in case of data breaches).</p>
+<p><strong>Example</strong>: A healthcare provider must comply with HIPAA by implementing administrative, physical, and technical safeguards to protect patient health information, ensuring that PHI is used and disclosed appropriately, and notifying patients in the event of a data breach.</p>
+<hr>
+</section>
+</section>
+<section id="auditing-and-monitoring" class="level2">
+<h2 class="anchored" data-anchor-id="auditing-and-monitoring">Auditing and Monitoring</h2>
+<section id="definition-5" class="level3">
+<h3 class="anchored" data-anchor-id="definition-5">Definition</h3>
+<p>Auditing and monitoring involve tracking and analyzing activities related to data access, usage, and security within an organization. These practices help ensure compliance with policies and regulations, detect and respond to security incidents, and maintain data integrity.</p>
+</section>
+<section id="auditing" class="level3">
+<h3 class="anchored" data-anchor-id="auditing">Auditing</h3>
+<p><strong>Description</strong>: Auditing involves systematically recording and reviewing logs of data access, modifications, and transactions. This helps in identifying policy violations, security breaches, and other anomalies.</p>
+<p><strong>Techniques</strong>: Using audit trails, log management systems, and regular audit reviews. Auditing can be automated or manual, and should cover all critical data assets and systems.</p>
+<p><strong>Example</strong>: A financial institution conducts regular audits of its database access logs to ensure compliance with regulatory requirements, detect unauthorized access attempts, and maintain data integrity.</p>
+</section>
+<section id="monitoring" class="level3">
+<h3 class="anchored" data-anchor-id="monitoring">Monitoring</h3>
+<p><strong>Description</strong>: Monitoring involves continuously observing data systems and activities in real-time to detect and respond to security threats, performance issues, and compliance violations. Monitoring helps in maintaining situational awareness and proactive incident response.</p>
+<p><strong>Techniques</strong>: Implementing security information and event management (SIEM) systems, intrusion detection systems (IDS), and continuous monitoring tools. Monitoring should cover network traffic, user activities, system performance, and data flows.</p>
+<p><strong>Example</strong>: An e-commerce platform uses a SIEM system to monitor network traffic, detect potential security threats, and respond to incidents in real-time. The system alerts security teams to suspicious activities, enabling quick mitigation.</p>
+<hr>
+</section>
+</section>
+<section id="secure-data-sharing-techniques" class="level2">
+<h2 class="anchored" data-anchor-id="secure-data-sharing-techniques">Secure Data Sharing Techniques</h2>
+<section id="definition-6" class="level3">
+<h3 class="anchored" data-anchor-id="definition-6">Definition</h3>
+<p>Secure data sharing involves methods and practices to share data between entities while ensuring its confidentiality, integrity, and availability. These techniques protect data from unauthorized access and ensure that only authorized parties can access and use the data.</p>
+</section>
+<section id="techniques" class="level3">
+<h3 class="anchored" data-anchor-id="techniques">Techniques</h3>
+<ul>
+<li><p><strong>Data Encryption</strong>: Encrypting data before sharing ensures that only authorized recipients with the decryption key can access the data. This applies to both data at rest and in transit.</p></li>
+<li><p><strong>Access Control</strong>: Implementing strong access control mechanisms, such as multi-factor authentication (MFA) and role-based access control (RBAC), ensures that only authorized users can access shared data.</p></li>
+<li><p><strong>Secure Protocols</strong>: Using secure communication protocols, such as HTTPS, SFTP, and VPNs, ensures that data is transmitted securely over networks, preventing interception and unauthorized access.</p></li>
+<li><p><strong>Data Masking and Tokenization</strong>: Masking or tokenizing sensitive data before sharing reduces the risk of exposing sensitive information. Tokenization replaces sensitive data with tokens that can only be mapped back to the original data through a secure process.</p></li>
+</ul>
+</section>
+<section id="example" class="level3">
+<h3 class="anchored" data-anchor-id="example">Example</h3>
+<p>A healthcare organization shares patient data with a research institution using encryption to protect the data during transmission, RBAC to control access, and tokenization to replace sensitive patient identifiers with tokens. This ensures that patient privacy is maintained while enabling research.</p>
+</section>
+</section>
+</section>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

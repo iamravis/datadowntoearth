@@ -1,0 +1,3584 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>machine_learning – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../logo.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="text-content">
+<section id="machine-learning" class="level1">
+<h1>Machine Learning</h1>
+<p><a href="../content/tutorials/ml/images/ml_banner.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../content/tutorials/ml/images/ml_banner.png" class="full-width-image img-fluid"></a></p>
+</section>
+<section id="beginner-level" class="level1">
+<h1>Beginner Level:</h1>
+<h4 class="topic anchored" data-anchor-id="beginner-level">
+<a href="../content/tutorials/ml/chapter1_introduction_to_machine_learning.html">Chapter 1. Introduction to Machine Learning</a>
+</h4>
+<section id="foundations-of-machine-learning" class="level5">
+<h5 class="anchored" data-anchor-id="foundations-of-machine-learning">1.1. Foundations of Machine Learning</h5>
+<ul>
+<li>1.1.1. Definition and basic concepts</li>
+<li>1.1.2. The learning problem</li>
+<li>1.1.3. Statistical learning theory basics</li>
+<li>1.1.4. Computational learning theory introduction</li>
+</ul>
+</section>
+<section id="types-of-machine-learning" class="level5">
+<h5 class="anchored" data-anchor-id="types-of-machine-learning">1.2. Types of Machine Learning</h5>
+<ul>
+<li>1.2.1. Supervised Learning
+<ul>
+<li>1.2.1.1. Classification</li>
+<li>1.2.1.2. Regression</li>
+<li>1.2.1.3. Structured prediction</li>
+</ul></li>
+<li>1.2.2. Unsupervised Learning
+<ul>
+<li>1.2.2.1. Clustering</li>
+<li>1.2.2.2. Dimensionality Reduction</li>
+<li>1.2.2.3. Density estimation</li>
+</ul></li>
+<li>1.2.3. Reinforcement Learning
+<ul>
+<li>1.2.3.1. Basic concepts and terminology</li>
+<li>1.2.3.2. Exploration vs.&nbsp;exploitation</li>
+</ul></li>
+<li>1.2.4. Semi-supervised Learning</li>
+<li>1.2.5. Self-supervised Learning</li>
+<li>1.2.6. Online Learning</li>
+</ul>
+</section>
+<section id="applications-and-real-world-examples" class="level5">
+<h5 class="anchored" data-anchor-id="applications-and-real-world-examples">1.3. Applications and Real-World Examples</h5>
+<ul>
+<li>1.3.1. Image and speech recognition</li>
+<li>1.3.2. Natural language processing</li>
+<li>1.3.3. Recommender systems</li>
+<li>1.3.4. Autonomous vehicles</li>
+<li>1.3.5. Healthcare and bioinformatics</li>
+<li>1.3.6. Financial modeling and fraud detection</li>
+</ul>
+</section>
+<section id="brief-history-of-machine-learning" class="level5">
+<h5 class="anchored" data-anchor-id="brief-history-of-machine-learning">1.4. Brief History of Machine Learning</h5>
+<ul>
+<li>1.4.1. Early AI and cybernetics</li>
+<li>1.4.2. Symbolic AI and expert systems</li>
+<li>1.4.3. Statistical learning and neural networks</li>
+<li>1.4.4. The rise of big data and deep learning</li>
+<li>1.4.5. Recent breakthroughs and future directions</li>
+</ul>
+</section>
+<section id="machine-learning-pipeline" class="level5">
+<h5 class="anchored" data-anchor-id="machine-learning-pipeline">1.5. Machine Learning Pipeline</h5>
+<ul>
+<li>1.5.1. Data collection and preparation</li>
+<li>1.5.2. Feature engineering</li>
+<li>1.5.3. Model selection and training</li>
+<li>1.5.4. Evaluation and deployment</li>
+</ul>
+</section>
+<section id="challenges-in-machine-learning" class="level5">
+<h5 class="anchored">1.6. Challenges in Machine Learning</h5>
+<ul>
+<li>1.6.1. Bias and variance</li>
+<li>1.6.2. Overfitting and underfitting</li>
+<li>1.6.3. Curse of dimensionality</li>
+<li>1.6.4. Class imbalance</li>
+</ul>
+<h4 class="topic anchored" data-anchor-id="challenges-in-machine-learning">
+<a href="../content/tutorials/ml/chapter2_data_preprocessing.html">Chapter 2. Data Preprocessing</a>
+</h4>
+</section>
+<section id="data-cleaning" class="level5">
+<h5 class="anchored" data-anchor-id="data-cleaning">2.1. Data Cleaning</h5>
+<ul>
+<li>2.1.1. Handling missing values
+<ul>
+<li>2.1.1.1. Deletion methods</li>
+<li>2.1.1.2. Imputation techniques</li>
+</ul></li>
+<li>2.1.2. Dealing with outliers
+<ul>
+<li>2.1.2.1. Statistical methods</li>
+<li>2.1.2.2. Machine learning-based methods</li>
+</ul></li>
+<li>2.1.3. Correcting inconsistent data</li>
+<li>2.1.4. Handling duplicate data</li>
+</ul>
+</section>
+<section id="feature-scaling-and-normalization" class="level5">
+<h5 class="anchored" data-anchor-id="feature-scaling-and-normalization">2.2. Feature Scaling and Normalization</h5>
+<ul>
+<li>2.2.1. Min-Max scaling</li>
+<li>2.2.2. Standardization (Z-score normalization)</li>
+<li>2.2.3. Robust scaling</li>
+<li>2.2.4. Log transformation</li>
+<li>2.2.5. Box-Cox transformation</li>
+</ul>
+</section>
+<section id="encoding-categorical-variables" class="level5">
+<h5 class="anchored" data-anchor-id="encoding-categorical-variables">2.3. Encoding Categorical Variables</h5>
+<ul>
+<li>2.3.1. One-hot encoding</li>
+<li>2.3.2. Label encoding</li>
+<li>2.3.3. Ordinal encoding</li>
+<li>2.3.4. Binary encoding</li>
+<li>2.3.5. Frequency encoding</li>
+<li>2.3.6. Target encoding</li>
+</ul>
+</section>
+<section id="handling-imbalanced-datasets" class="level5">
+<h5 class="anchored" data-anchor-id="handling-imbalanced-datasets">2.4. Handling Imbalanced Datasets</h5>
+<ul>
+<li>2.4.1. Oversampling techniques
+<ul>
+<li>2.4.1.1. Random oversampling</li>
+<li>2.4.1.2. SMOTE (Synthetic Minority Over-sampling Technique)</li>
+<li>2.4.1.3. ADASYN (Adaptive Synthetic)</li>
+</ul></li>
+<li>2.4.2. Undersampling techniques
+<ul>
+<li>2.4.2.1. Random undersampling</li>
+<li>2.4.2.2. Tomek links</li>
+<li>2.4.2.3. Cluster centroids</li>
+</ul></li>
+<li>2.4.3. Combination methods
+<ul>
+<li>2.4.3.1. SMOTEENN</li>
+<li>2.4.3.2. SMOTETomek</li>
+</ul></li>
+<li>2.4.4. Ensemble methods for imbalanced learning</li>
+</ul>
+</section>
+<section id="data-augmentation-techniques" class="level5">
+<h5 class="anchored" data-anchor-id="data-augmentation-techniques">2.5. Data Augmentation Techniques</h5>
+<ul>
+<li>2.5.1. Image augmentation
+<ul>
+<li>2.5.1.1. Geometric transformations</li>
+<li>2.5.1.2. Color space augmentations</li>
+<li>2.5.1.3. Mixing images</li>
+</ul></li>
+<li>2.5.2. Text augmentation
+<ul>
+<li>2.5.2.1. Synonym replacement</li>
+<li>2.5.2.2. Back-translation</li>
+<li>2.5.2.3. Text generation with language models</li>
+</ul></li>
+<li>2.5.3. Time series augmentation
+<ul>
+<li>2.5.3.1. Time warping</li>
+<li>2.5.3.2. Magnitude warping</li>
+<li>2.5.3.3. Frequency warping</li>
+</ul></li>
+</ul>
+</section>
+<section id="handling-time-dependent-data" class="level5">
+<h5 class="anchored" data-anchor-id="handling-time-dependent-data">2.6. Handling Time-dependent Data</h5>
+<ul>
+<li>2.6.1. Time-based splitting</li>
+<li>2.6.2. Lag features</li>
+<li>2.6.3. Rolling statistics</li>
+</ul>
+</section>
+<section id="handling-geospatial-data" class="level5">
+<h5 class="anchored">2.7. Handling Geospatial Data</h5>
+<ul>
+<li>2.7.1. Coordinate systems and projections</li>
+<li>2.7.2. Spatial indexing</li>
+<li>2.7.3. Geohashing</li>
+</ul>
+<h4 class="topic anchored" data-anchor-id="handling-geospatial-data">
+<a href="../content/tutorials/ml/chapter3_exploratory_data_analysis.html">Chapter 3. Exploratory Data Analysis (EDA)</a>
+</h4>
+</section>
+<section id="data-visualization-techniques" class="level5">
+<h5 class="anchored" data-anchor-id="data-visualization-techniques">3.1. Data Visualization Techniques</h5>
+<ul>
+<li>3.1.1. Univariate visualizations
+<ul>
+<li>3.1.1.1. Histograms and density plots</li>
+<li>3.1.1.2. Box plots and violin plots</li>
+<li>3.1.1.3. Bar charts and pie charts</li>
+</ul></li>
+<li>3.1.2. Bivariate visualizations
+<ul>
+<li>3.1.2.1. Scatter plots</li>
+<li>3.1.2.2. Hexbin plots</li>
+<li>3.1.2.3. 2D histograms</li>
+</ul></li>
+<li>3.1.3. Multivariate visualizations
+<ul>
+<li>3.1.3.1. Pair plots</li>
+<li>3.1.3.2. Parallel coordinates</li>
+<li>3.1.3.3. Andrews curves</li>
+</ul></li>
+<li>3.1.4. Time series visualizations
+<ul>
+<li>3.1.4.1. Line plots</li>
+<li>3.1.4.2. Area charts</li>
+<li>3.1.4.3. Seasonal decomposition plots</li>
+</ul></li>
+<li>3.1.5. Geospatial visualizations
+<ul>
+<li>3.1.5.1. Choropleth maps</li>
+<li>3.1.5.2. Point maps</li>
+<li>3.1.5.3. Heat maps</li>
+</ul></li>
+</ul>
+</section>
+<section id="statistical-analysis-of-datasets" class="level5">
+<h5 class="anchored" data-anchor-id="statistical-analysis-of-datasets">3.2. Statistical Analysis of Datasets</h5>
+<ul>
+<li>3.2.1. Descriptive statistics
+<ul>
+<li>3.2.1.1. Measures of central tendency</li>
+<li>3.2.1.2. Measures of dispersion</li>
+<li>3.2.1.3. Measures of shape (skewness, kurtosis)</li>
+</ul></li>
+<li>3.2.2. Inferential statistics basics
+<ul>
+<li>3.2.2.1. Confidence intervals</li>
+<li>3.2.2.2. Hypothesis testing</li>
+</ul></li>
+<li>3.2.3. Distribution fitting
+<ul>
+<li>3.2.3.1. Probability plots</li>
+<li>3.2.3.2. Goodness-of-fit tests</li>
+</ul></li>
+</ul>
+</section>
+<section id="correlation-analysis" class="level5">
+<h5 class="anchored" data-anchor-id="correlation-analysis">3.3. Correlation Analysis</h5>
+<ul>
+<li>3.3.1. Pearson correlation</li>
+<li>3.3.2. Spearman correlation</li>
+<li>3.3.3. Kendall’s tau</li>
+<li>3.3.4. Distance correlation</li>
+<li>3.3.5. Mutual information</li>
+</ul>
+</section>
+<section id="outlier-detection" class="level5">
+<h5 class="anchored" data-anchor-id="outlier-detection">3.4. Outlier Detection</h5>
+<ul>
+<li>3.4.1. Univariate methods
+<ul>
+<li>3.4.1.1. Z-score method</li>
+<li>3.4.1.2. Interquartile Range (IQR) method</li>
+</ul></li>
+<li>3.4.2. Multivariate methods
+<ul>
+<li>3.4.2.1. Mahalanobis distance</li>
+<li>3.4.2.2. Local Outlier Factor (LOF)</li>
+</ul></li>
+<li>3.4.3. Time series outlier detection
+<ul>
+<li>3.4.3.1. Moving average</li>
+<li>3.4.3.2. Seasonal decomposition</li>
+</ul></li>
+</ul>
+</section>
+<section id="dimensionality-reduction-for-eda" class="level5">
+<h5 class="anchored" data-anchor-id="dimensionality-reduction-for-eda">3.5. Dimensionality Reduction for EDA</h5>
+<ul>
+<li>3.5.1. Principal Component Analysis (PCA)</li>
+<li>3.5.2. t-SNE</li>
+<li>3.5.3. UMAP</li>
+</ul>
+</section>
+<section id="feature-importance-and-selection-in-eda" class="level5">
+<h5 class="anchored" data-anchor-id="feature-importance-and-selection-in-eda">3.6. Feature Importance and Selection in EDA</h5>
+<ul>
+<li>3.6.1. Correlation-based feature selection</li>
+<li>3.6.2. Mutual information</li>
+<li>3.6.3. Random forest feature importance</li>
+</ul>
+</section>
+<section id="interactive-and-dynamic-visualizations" class="level5">
+<h5 class="anchored">3.7. Interactive and Dynamic Visualizations</h5>
+<ul>
+<li>3.7.1. Plotly</li>
+<li>3.7.2. Bokeh</li>
+<li>3.7.3. D3.js basics</li>
+</ul>
+<h4 class="topic anchored" data-anchor-id="interactive-and-dynamic-visualizations">
+<a href="../content/tutorials/ml/chapter4_basic_supervised_learning_algorithms.html">Chapter 4. Basic Supervised Learning Algorithms</a>
+</h4>
+</section>
+<section id="linear-regression" class="level5">
+<h5 class="anchored" data-anchor-id="linear-regression">4.1. Linear Regression</h5>
+<ul>
+<li>4.1.1. Simple linear regression</li>
+<li>4.1.2. Multiple linear regression</li>
+<li>4.1.3. Polynomial regression</li>
+<li>4.1.4. Assumptions of linear regression</li>
+<li>4.1.5. Gradient descent for linear regression</li>
+</ul>
+</section>
+<section id="logistic-regression" class="level5">
+<h5 class="anchored" data-anchor-id="logistic-regression">4.2. Logistic Regression</h5>
+<ul>
+<li>4.2.1. Binary logistic regression</li>
+<li>4.2.2. Multinomial logistic regression</li>
+<li>4.2.3. Ordinal logistic regression</li>
+<li>4.2.4. Maximum likelihood estimation</li>
+</ul>
+</section>
+<section id="k-nearest-neighbors-k-nn" class="level5">
+<h5 class="anchored" data-anchor-id="k-nearest-neighbors-k-nn">4.3. k-Nearest Neighbors (k-NN)</h5>
+<ul>
+<li>4.3.1. Distance metrics
+<ul>
+<li>4.3.1.1. Euclidean distance</li>
+<li>4.3.1.2. Manhattan distance</li>
+<li>4.3.1.3. Minkowski distance</li>
+</ul></li>
+<li>4.3.2. Choosing the optimal k</li>
+<li>4.3.3. Weighted k-NN</li>
+<li>4.3.4. k-NN for regression</li>
+</ul>
+</section>
+<section id="decision-trees" class="level5">
+<h5 class="anchored" data-anchor-id="decision-trees">4.4. Decision Trees</h5>
+<ul>
+<li>4.4.1. Information gain and entropy</li>
+<li>4.4.2. Gini impurity</li>
+<li>4.4.3. CART algorithm</li>
+<li>4.4.4. Pruning techniques
+<ul>
+<li>4.4.4.1. Pre-pruning</li>
+<li>4.4.4.2. Post-pruning</li>
+</ul></li>
+<li>4.4.5. Handling missing values in decision trees</li>
+</ul>
+</section>
+<section id="naive-bayes" class="level5">
+<h5 class="anchored" data-anchor-id="naive-bayes">4.5. Naive Bayes</h5>
+<ul>
+<li>4.5.1. Gaussian Naive Bayes</li>
+<li>4.5.2. Multinomial Naive Bayes</li>
+<li>4.5.3. Bernoulli Naive Bayes</li>
+<li>4.5.4. Complement Naive Bayes</li>
+<li>4.5.5. Handling continuous features</li>
+</ul>
+</section>
+<section id="support-vector-machines-svm-basics" class="level5">
+<h5 class="anchored">4.6. Support Vector Machines (SVM) Basics</h5>
+<ul>
+<li>4.6.1. Linear SVM</li>
+<li>4.6.2. Kernel trick introduction
+<ul>
+<li>4.6.2.1. Polynomial kernel</li>
+<li>4.6.2.2. Radial Basis Function (RBF) kernel</li>
+</ul></li>
+<li>4.6.3. Soft margin SVM</li>
+<li>4.6.4. SVM for regression (SVR)</li>
+</ul>
+<h4 class="topic anchored" data-anchor-id="support-vector-machines-svm-basics">
+<a href="../content/tutorials/ml/chapter5_model_evaluation_metrics.html">Chapter 5. Model Evaluation Metrics</a>
+</h4>
+</section>
+<section id="classification-metrics" class="level5">
+<h5 class="anchored" data-anchor-id="classification-metrics">5.1. Classification Metrics</h5>
+<ul>
+<li>5.1.1. Accuracy</li>
+<li>5.1.2. Precision and Recall</li>
+<li>5.1.3. F1-score</li>
+<li>5.1.4. ROC Curve and AUC</li>
+<li>5.1.5. Precision-Recall curve</li>
+<li>5.1.6. Cohen’s Kappa</li>
+<li>5.1.7. Matthews Correlation Coefficient</li>
+<li>5.1.8. Log loss (Cross-entropy)</li>
+</ul>
+</section>
+<section id="regression-metrics" class="level5">
+<h5 class="anchored" data-anchor-id="regression-metrics">5.2. Regression Metrics</h5>
+<ul>
+<li>5.2.1. Mean Squared Error (MSE)</li>
+<li>5.2.2. Root Mean Squared Error (RMSE)</li>
+<li>5.2.3. Mean Absolute Error (MAE)</li>
+<li>5.2.4. R-squared (Coefficient of Determination)</li>
+<li>5.2.5. Adjusted R-squared</li>
+<li>5.2.6. Mean Absolute Percentage Error (MAPE)</li>
+<li>5.2.7. Huber loss</li>
+</ul>
+</section>
+<section id="ranking-metrics" class="level5">
+<h5 class="anchored" data-anchor-id="ranking-metrics">5.3. Ranking Metrics</h5>
+<ul>
+<li>5.3.1. Mean Reciprocal Rank (MRR)</li>
+<li>5.3.2. Normalized Discounted Cumulative Gain (NDCG)</li>
+<li>5.3.3. Mean Average Precision (MAP)</li>
+</ul>
+</section>
+<section id="confusion-matrix-and-its-interpretation" class="level5">
+<h5 class="anchored" data-anchor-id="confusion-matrix-and-its-interpretation">5.4. Confusion Matrix and Its Interpretation</h5>
+<ul>
+<li>5.4.1. True Positives, True Negatives, False Positives, False Negatives</li>
+<li>5.4.2. Sensitivity and Specificity</li>
+<li>5.4.3. Positive Predictive Value and Negative Predictive Value</li>
+</ul>
+</section>
+<section id="multi-class-and-multi-label-evaluation" class="level5">
+<h5 class="anchored" data-anchor-id="multi-class-and-multi-label-evaluation">5.5. Multi-class and Multi-label Evaluation</h5>
+<ul>
+<li>5.5.1. Micro-averaging</li>
+<li>5.5.2. Macro-averaging</li>
+<li>5.5.3. Weighted averaging</li>
+</ul>
+</section>
+<section id="evaluation-for-imbalanced-datasets" class="level5">
+<h5 class="anchored" data-anchor-id="evaluation-for-imbalanced-datasets">5.6. Evaluation for Imbalanced Datasets</h5>
+<ul>
+<li>5.6.1. Balanced accuracy</li>
+<li>5.6.2. G-mean</li>
+<li>5.6.3. F-beta score</li>
+</ul>
+</section>
+<section id="time-series-evaluation-metrics" class="level5">
+<h5 class="anchored">5.7. Time Series Evaluation Metrics</h5>
+<ul>
+<li>5.7.1. Mean Absolute Scaled Error (MASE)</li>
+<li>5.7.2. Symmetric Mean Absolute Percentage Error (SMAPE)</li>
+</ul>
+<h4 class="topic anchored" data-anchor-id="time-series-evaluation-metrics">
+<a href="../content/tutorials/ml/chapter6_cross_validation_techniques.html">Chapter 6. Cross-validation Techniques</a>
+</h4>
+</section>
+<section id="k-fold-cross-validation" class="level5">
+<h5 class="anchored" data-anchor-id="k-fold-cross-validation">6.1. K-fold Cross-validation</h5>
+</section>
+<section id="stratified-k-fold-cross-validation" class="level5">
+<h5 class="anchored" data-anchor-id="stratified-k-fold-cross-validation">6.2. Stratified K-fold Cross-validation</h5>
+</section>
+<section id="leave-one-out-cross-validation" class="level5">
+<h5 class="anchored" data-anchor-id="leave-one-out-cross-validation">6.3. Leave-one-out Cross-validation</h5>
+</section>
+<section id="leave-p-out-cross-validation" class="level5">
+<h5 class="anchored" data-anchor-id="leave-p-out-cross-validation">6.4. Leave-p-out Cross-validation</h5>
+</section>
+<section id="repeated-k-fold-cross-validation" class="level5">
+<h5 class="anchored" data-anchor-id="repeated-k-fold-cross-validation">6.5. Repeated K-fold Cross-validation</h5>
+</section>
+<section id="nested-cross-validation" class="level5">
+<h5 class="anchored" data-anchor-id="nested-cross-validation">6.6. Nested Cross-validation</h5>
+</section>
+<section id="time-series-cross-validation" class="level5">
+<h5 class="anchored" data-anchor-id="time-series-cross-validation">6.7. Time Series Cross-validation</h5>
+<ul>
+<li>6.7.1. Forward chaining</li>
+<li>6.7.2. Sliding window</li>
+<li>6.7.3. Expanding window</li>
+</ul>
+</section>
+<section id="group-k-fold-cross-validation" class="level5">
+<h5 class="anchored" data-anchor-id="group-k-fold-cross-validation">6.8. Group K-fold Cross-validation</h5>
+</section>
+<section id="cross-validation-for-hierarchical-data" class="level5">
+<h5 class="anchored" data-anchor-id="cross-validation-for-hierarchical-data">6.9. Cross-validation for Hierarchical Data</h5>
+</section>
+<section id="monte-carlo-cross-validation" class="level5">
+<h5 class="anchored">6.10. Monte Carlo Cross-validation</h5>
+<h4 class="topic anchored" data-anchor-id="monte-carlo-cross-validation">
+<a href="../content/tutorials/ml/chapter7_bias_variance_tradeoff.html">Chapter 7. Bias-Variance Tradeoff</a>
+</h4>
+</section>
+<section id="understanding-underfitting-and-overfitting" class="level5">
+<h5 class="anchored" data-anchor-id="understanding-underfitting-and-overfitting">7.1. Understanding Underfitting and Overfitting</h5>
+</section>
+<section id="bias-variance-decomposition" class="level5">
+<h5 class="anchored" data-anchor-id="bias-variance-decomposition">7.2. Bias-Variance Decomposition</h5>
+</section>
+<section id="learning-curves" class="level5">
+<h5 class="anchored" data-anchor-id="learning-curves">7.3. Learning Curves</h5>
+</section>
+<section id="regularization-techniques" class="level5">
+<h5 class="anchored">7.4. Regularization Techniques</h5>
+<ul>
+<li>7.4.1. L1 Regularization (Lasso)</li>
+<li>7.4.2. L2 Regularization (Ridge)</li>
+<li>7.4.3. Elastic Net ##### 7.5. Early Stopping in Iterative Algorithms ##### 7.6. Pruning in Decision Trees ##### 7.7. Dropout in Neural Networks ##### 7.8. Data Augmentation for Reducing Overfitting</li>
+</ul>
+<h4 class="topic anchored" data-anchor-id="regularization-techniques">
+<a href="../content/tutorials/ml/chapter8_introduction_to_python_for_machine_learning.html">Chapter 8. Introduction to Python for Machine Learning</a>
+</h4>
+</section>
+<section id="numpy-basics" class="level5">
+<h5 class="anchored" data-anchor-id="numpy-basics">8.1. NumPy Basics</h5>
+<ul>
+<li>8.1.1. Arrays and operations</li>
+<li>8.1.2. Broadcasting</li>
+<li>8.1.3. Vectorization</li>
+<li>8.1.4. Random number generation</li>
+<li>8.1.5. Linear algebra operations</li>
+</ul>
+</section>
+<section id="pandas-for-data-manipulation" class="level5">
+<h5 class="anchored" data-anchor-id="pandas-for-data-manipulation">8.2. Pandas for Data Manipulation</h5>
+<ul>
+<li>8.2.1. DataFrames and Series</li>
+<li>8.2.2. Data loading and saving</li>
+<li>8.2.3. Data filtering and transformation</li>
+<li>8.2.4. Grouping and aggregation</li>
+<li>8.2.5. Merging and joining data</li>
+<li>8.2.6. Time series functionality</li>
+</ul>
+</section>
+<section id="matplotlib-and-seaborn-for-visualization" class="level5">
+<h5 class="anchored" data-anchor-id="matplotlib-and-seaborn-for-visualization">8.3. Matplotlib and Seaborn for Visualization</h5>
+<ul>
+<li>8.3.1. Basic plot types</li>
+<li>8.3.2. Customizing plots</li>
+<li>8.3.3. Statistical visualizations</li>
+<li>8.3.4. Subplots and multiple figures</li>
+<li>8.3.5. Interactive plotting with ipywidgets</li>
+</ul>
+</section>
+<section id="scikit-learn-for-machine-learning" class="level5">
+<h5 class="anchored" data-anchor-id="scikit-learn-for-machine-learning">8.4. Scikit-learn for Machine Learning</h5>
+<ul>
+<li>8.4.1. Data preprocessing modules</li>
+<li>8.4.2. Model selection and evaluation</li>
+<li>8.4.3. Implementing basic ML algorithms</li>
+<li>8.4.4. Pipeline and FeatureUnion</li>
+<li>8.4.5. Model persistence</li>
+</ul>
+</section>
+<section id="jupyter-notebooks-for-interactive-computing" class="level5">
+<h5 class="anchored" data-anchor-id="jupyter-notebooks-for-interactive-computing">8.5. Jupyter Notebooks for Interactive Computing</h5>
+<ul>
+<li>8.5.1. Basic usage and cell types</li>
+<li>8.5.2. Magic commands</li>
+<li>8.5.3. Notebook extensions</li>
+</ul>
+</section>
+<section id="version-control-with-git" class="level5">
+<h5 class="anchored" data-anchor-id="version-control-with-git">8.6. Version Control with Git</h5>
+<ul>
+<li>8.6.1. Basic Git commands</li>
+<li>8.6.2. Branching and merging</li>
+<li>8.6.3. Collaborative workflows</li>
+</ul>
+</section>
+</section>
+<section id="intermediate-level" class="level1">
+<h1>Intermediate Level</h1>
+<h4 class="topic anchored" data-anchor-id="intermediate-level">
+<a href="../content/tutorials/ml/chapter9_ensemble_methods.html">Chapter 9. Ensemble Methods</a>
+</h4>
+<section id="bagging-and-random-forests" class="level5">
+<h5 class="anchored" data-anchor-id="bagging-and-random-forests">9.1. Bagging and Random Forests</h5>
+<ul>
+<li>9.1.3. Extra Trees</li>
+<li>9.1.4. Feature importance in Random Forests</li>
+<li>9.1.5. Out-of-bag (OOB) error estimation</li>
+</ul>
+</section>
+<section id="boosting" class="level5">
+<h5 class="anchored" data-anchor-id="boosting">9.2. Boosting</h5>
+<ul>
+<li>9.2.1. AdaBoost
+<ul>
+<li>9.2.1.1. AdaBoost.M1 for classification</li>
+<li>9.2.1.2. AdaBoost.R2 for regression</li>
+</ul></li>
+<li>9.2.2. Gradient Boosting
+<ul>
+<li>9.2.2.1. Gradient Boosting Decision Trees (GBDT)</li>
+<li>9.2.2.2. Stochastic Gradient Boosting</li>
+</ul></li>
+<li>9.2.3. XGBoost
+<ul>
+<li>9.2.3.1. Regularized boosting</li>
+<li>9.2.3.2. Handling missing values</li>
+<li>9.2.3.3. Built-in cross-validation</li>
+</ul></li>
+<li>9.2.4. LightGBM
+<ul>
+<li>9.2.4.1. Gradient-based One-Side Sampling (GOSS)</li>
+<li>9.2.4.2. Exclusive Feature Bundling (EFB)</li>
+</ul></li>
+<li>9.2.5. CatBoost
+<ul>
+<li>9.2.5.1. Ordered boosting</li>
+<li>9.2.5.2. Symmetric trees</li>
+<li>9.2.5.3. Handling categorical features</li>
+</ul></li>
+</ul>
+</section>
+<section id="stacking-and-blending" class="level5">
+<h5 class="anchored" data-anchor-id="stacking-and-blending">9.3. Stacking and Blending</h5>
+<ul>
+<li>9.3.1. Basic stacking concepts</li>
+<li>9.3.2. Multi-level stacking</li>
+<li>9.3.3. Feature-weighted linear stacking</li>
+<li>9.3.4. Blending techniques</li>
+</ul>
+</section>
+<section id="voting-classifiers-and-regressors" class="level5">
+<h5 class="anchored" data-anchor-id="voting-classifiers-and-regressors">9.4. Voting Classifiers and Regressors</h5>
+<ul>
+<li>9.4.1. Hard voting</li>
+<li>9.4.2. Soft voting</li>
+</ul>
+</section>
+<section id="ensemble-diversity" class="level5">
+<h5 class="anchored" data-anchor-id="ensemble-diversity">9.5. Ensemble Diversity</h5>
+<ul>
+<li>9.5.1. Measures of diversity</li>
+<li>9.5.2. Methods for promoting diversity</li>
+</ul>
+</section>
+<section id="ensemble-pruning" class="level5">
+<h5 class="anchored" data-anchor-id="ensemble-pruning">9.6. Ensemble Pruning</h5>
+<ul>
+<li>9.6.1. Ranking-based pruning</li>
+<li>9.6.2. Optimization-based pruning</li>
+</ul>
+</section>
+<section id="online-ensemble-learning" class="level5">
+<h5 class="anchored">9.7. Online Ensemble Learning</h5>
+<h4 class="topic anchored" data-anchor-id="online-ensemble-learning">
+<a href="../content/tutorials/ml/chapter10_unsupervised_learning.html">Chapter 10. Unsupervised Learning</a>
+</h4>
+</section>
+<section id="k-means-clustering" class="level5">
+<h5 class="anchored" data-anchor-id="k-means-clustering">10.1. K-means Clustering</h5>
+<ul>
+<li>10.1.1. Algorithm details and implementation</li>
+<li>10.1.2. Choosing the optimal K
+<ul>
+<li>10.1.2.1. Elbow method</li>
+<li>10.1.2.2. Silhouette analysis</li>
+<li>10.1.2.3. Gap statistic</li>
+</ul></li>
+<li>10.1.3. K-means++</li>
+<li>10.1.4. Mini-batch K-means</li>
+</ul>
+</section>
+<section id="hierarchical-clustering" class="level5">
+<h5 class="anchored" data-anchor-id="hierarchical-clustering">10.2. Hierarchical Clustering</h5>
+<ul>
+<li>10.2.1. Agglomerative clustering</li>
+<li>10.2.2. Divisive clustering</li>
+<li>10.2.3. Linkage methods
+<ul>
+<li>10.2.3.1. Single linkage</li>
+<li>10.2.3.2. Complete linkage</li>
+<li>10.2.3.3. Average linkage</li>
+<li>10.2.3.4. Ward’s method</li>
+</ul></li>
+<li>10.2.4. Dendrograms and cluster interpretation</li>
+</ul>
+</section>
+<section id="dbscan-density-based-spatial-clustering-of-applications-with-noise" class="level5">
+<h5 class="anchored" data-anchor-id="dbscan-density-based-spatial-clustering-of-applications-with-noise">10.3. DBSCAN (Density-Based Spatial Clustering of Applications with Noise)</h5>
+<ul>
+<li>10.3.1. Core points, border points, and noise points</li>
+<li>10.3.2. Epsilon and MinPts parameters</li>
+<li>10.3.3. OPTICS (Ordering Points To Identify the Clustering Structure)</li>
+</ul>
+</section>
+<section id="gaussian-mixture-models" class="level5">
+<h5 class="anchored" data-anchor-id="gaussian-mixture-models">10.4. Gaussian Mixture Models</h5>
+<ul>
+<li>10.4.1. EM algorithm for GMM</li>
+<li>10.4.2. Choosing the number of components</li>
+<li>10.4.3. Bayesian Information Criterion (BIC)</li>
+<li>10.4.4. Variational Bayesian GMM</li>
+</ul>
+</section>
+<section id="principal-component-analysis-pca" class="level5">
+<h5 class="anchored" data-anchor-id="principal-component-analysis-pca">10.5. Principal Component Analysis (PCA)</h5>
+<ul>
+<li>10.5.1. Eigenvalues and eigenvectors</li>
+<li>10.5.2. Explained variance ratio</li>
+<li>10.5.3. Dimensionality reduction with PCA</li>
+<li>10.5.4. Kernel PCA</li>
+<li>10.5.5. Incremental PCA for large datasets</li>
+</ul>
+</section>
+<section id="t-sne-and-umap" class="level5">
+<h5 class="anchored" data-anchor-id="t-sne-and-umap">10.6. t-SNE and UMAP</h5>
+<ul>
+<li>10.6.1. t-SNE algorithm
+<ul>
+<li>10.6.1.1. Perplexity parameter</li>
+<li>10.6.1.2. Early exaggeration</li>
+</ul></li>
+<li>10.6.2. UMAP algorithm
+<ul>
+<li>10.6.2.1. Topological foundations</li>
+<li>10.6.2.2. Comparison with t-SNE</li>
+</ul></li>
+</ul>
+</section>
+<section id="self-organizing-maps-som" class="level5">
+<h5 class="anchored" data-anchor-id="self-organizing-maps-som">10.7. Self-Organizing Maps (SOM)</h5>
+</section>
+<section id="anomaly-detection-techniques" class="level5">
+<h5 class="anchored" data-anchor-id="anomaly-detection-techniques">10.8. Anomaly Detection Techniques</h5>
+<ul>
+<li>10.8.1. Isolation Forest</li>
+<li>10.8.2. One-class SVM</li>
+<li>10.8.3. Local Outlier Factor (LOF)</li>
+</ul>
+</section>
+<section id="association-rule-learning" class="level5">
+<h5 class="anchored">10.9. Association Rule Learning</h5>
+<ul>
+<li>10.9.1. Apriori algorithm</li>
+<li>10.9.2. FP-growth algorithm</li>
+</ul>
+<h4 class="topic anchored" data-anchor-id="association-rule-learning">
+<a href="../content/tutorials/ml/chapter11_feature_engineering.html">Chapter 11. Feature Engineering</a>
+</h4>
+</section>
+<section id="feature-creation" class="level5">
+<h5 class="anchored" data-anchor-id="feature-creation">11.1. Feature Creation</h5>
+<ul>
+<li>11.1.1. Domain-specific feature engineering</li>
+<li>11.1.2. Mathematical transformations</li>
+<li>11.1.3. Temporal features</li>
+<li>11.1.4. Spatial features</li>
+</ul>
+</section>
+<section id="polynomial-features" class="level5">
+<h5 class="anchored" data-anchor-id="polynomial-features">11.2. Polynomial Features</h5>
+<ul>
+<li>11.2.1. Interaction terms</li>
+<li>11.2.2. Higher-order terms</li>
+</ul>
+</section>
+<section id="feature-scaling-and-normalization-1" class="level5">
+<h5 class="anchored" data-anchor-id="feature-scaling-and-normalization-1">11.4. Feature Scaling and Normalization</h5>
+<ul>
+<li>11.4.1. Standardization</li>
+<li>11.4.2. Min-Max scaling</li>
+<li>11.4.3. Robust scaling</li>
+<li>11.4.4. Normalization (L1, L2)</li>
+</ul>
+</section>
+<section id="feature-importance-and-selection-techniques" class="level5">
+<h5 class="anchored" data-anchor-id="feature-importance-and-selection-techniques">11.5. Feature Importance and Selection Techniques</h5>
+<ul>
+<li>11.5.1. Filter methods
+<ul>
+<li>11.5.1.1. Correlation-based feature selection</li>
+<li>11.5.1.2. Mutual information</li>
+<li>11.5.1.3. Chi-squared test</li>
+</ul></li>
+<li>11.5.2. Wrapper methods
+<ul>
+<li>11.5.2.1. Recursive feature elimination</li>
+<li>11.5.2.2. Forward/backward selection</li>
+</ul></li>
+<li>11.5.3. Embedded methods
+<ul>
+<li>11.5.3.1. Lasso regularization</li>
+<li>11.5.3.2. Random forest feature importance</li>
+</ul></li>
+</ul>
+</section>
+<section id="automated-feature-engineering" class="level5">
+<h5 class="anchored" data-anchor-id="automated-feature-engineering">11.6. Automated Feature Engineering</h5>
+<ul>
+<li>11.6.1. Featuretools library</li>
+<li>11.6.2. AutoFeat</li>
+<li>11.6.3. tsfresh for time series feature extraction</li>
+</ul>
+</section>
+<section id="feature-learning" class="level5">
+<h5 class="anchored" data-anchor-id="feature-learning">11.7. Feature Learning</h5>
+<ul>
+<li>11.7.1. Autoencoders for feature learning</li>
+<li>11.7.2. Restricted Boltzmann Machines</li>
+</ul>
+</section>
+<section id="handling-missing-data" class="level5">
+<h5 class="anchored">11.8. Handling Missing Data</h5>
+<ul>
+<li>11.8.1. Imputation techniques</li>
+<li>11.8.2. Missing value indicators</li>
+</ul>
+<h4 class="topic anchored" data-anchor-id="handling-missing-data">
+<a href="../content/tutorials/ml/chapter12_dimensionality_reduction.html">Chapter 12. Dimensionality Reduction</a>
+</h4>
+</section>
+<section id="pca-in-depth" class="level5">
+<h5 class="anchored" data-anchor-id="pca-in-depth">12.1. PCA In-depth</h5>
+<ul>
+<li>12.1.1. Singular Value Decomposition (SVD)</li>
+<li>12.1.2. Truncated SVD (LSA)</li>
+<li>12.1.3. Randomized PCA</li>
+<li>12.1.4. Sparse PCA</li>
+</ul>
+</section>
+<section id="linear-discriminant-analysis-lda" class="level5">
+<h5 class="anchored" data-anchor-id="linear-discriminant-analysis-lda">12.2. Linear Discriminant Analysis (LDA)</h5>
+<ul>
+<li>12.2.1. Fisher’s linear discriminant</li>
+<li>12.2.2. Multi-class LDA</li>
+</ul>
+</section>
+<section id="factor-analysis" class="level5">
+<h5 class="anchored" data-anchor-id="factor-analysis">12.3. Factor Analysis</h5>
+<ul>
+<li>12.3.1. Exploratory Factor Analysis</li>
+<li>12.3.2. Confirmatory Factor Analysis</li>
+</ul>
+</section>
+<section id="independent-component-analysis-ica" class="level5">
+<h5 class="anchored" data-anchor-id="independent-component-analysis-ica">12.4. Independent Component Analysis (ICA)</h5>
+</section>
+<section id="non-negative-matrix-factorization-nmf" class="level5">
+<h5 class="anchored" data-anchor-id="non-negative-matrix-factorization-nmf">12.5. Non-negative Matrix Factorization (NMF)</h5>
+</section>
+<section id="multidimensional-scaling-mds" class="level5">
+<h5 class="anchored" data-anchor-id="multidimensional-scaling-mds">12.6. Multidimensional Scaling (MDS)</h5>
+<ul>
+<li>12.6.1. Classical MDS</li>
+<li>12.6.2. Metric MDS</li>
+<li>12.6.3. Non-metric MDS</li>
+</ul>
+</section>
+<section id="isomap" class="level5">
+<h5 class="anchored" data-anchor-id="isomap">12.7. Isomap</h5>
+</section>
+<section id="locally-linear-embedding-lle" class="level5">
+<h5 class="anchored" data-anchor-id="locally-linear-embedding-lle">12.8. Locally Linear Embedding (LLE)</h5>
+</section>
+<section id="autoencoders-for-dimensionality-reduction" class="level5">
+<h5 class="anchored" data-anchor-id="autoencoders-for-dimensionality-reduction">12.9. Autoencoders for Dimensionality Reduction</h5>
+<ul>
+<li>12.9.1. Undercomplete autoencoders</li>
+<li>12.9.2. Denoising autoencoders</li>
+<li>12.9.3. Variational autoencoders</li>
+</ul>
+</section>
+<section id="random-projection" class="level5">
+<h5 class="anchored" data-anchor-id="random-projection">12.10. Random Projection</h5>
+</section>
+<section id="feature-agglomeration" class="level5">
+<h5 class="anchored">12.11. Feature Agglomeration</h5>
+<h4 class="topic anchored" data-anchor-id="feature-agglomeration">
+<a href="../content/tutorials/ml/chapter13_time_series_analysis.html">Chapter 13. Time Series Analysis</a>
+</h4>
+</section>
+<section id="time-series-decomposition" class="level5">
+<h5 class="anchored" data-anchor-id="time-series-decomposition">13.1. Time Series Decomposition</h5>
+<ul>
+<li>13.1.1. Trend</li>
+<li>13.1.2. Seasonality</li>
+<li>13.1.3. Residuals</li>
+<li>13.1.4. Additive and multiplicative models</li>
+</ul>
+</section>
+<section id="stationarity-and-differencing" class="level5">
+<h5 class="anchored" data-anchor-id="stationarity-and-differencing">13.2. Stationarity and Differencing</h5>
+<ul>
+<li>13.2.1. Augmented Dickey-Fuller test</li>
+<li>13.2.2. KPSS test</li>
+</ul>
+</section>
+<section id="autocorrelation-and-partial-autocorrelation" class="level5">
+<h5 class="anchored" data-anchor-id="autocorrelation-and-partial-autocorrelation">13.3. Autocorrelation and Partial Autocorrelation</h5>
+</section>
+<section id="arima-and-sarima-models" class="level5">
+<h5 class="anchored" data-anchor-id="arima-and-sarima-models">13.4. ARIMA and SARIMA Models</h5>
+<ul>
+<li>13.4.1. Autoregressive (AR) models</li>
+<li>13.4.2. Moving Average (MA) models</li>
+<li>13.4.3. Integrated (I) component</li>
+<li>13.4.4. Seasonal components</li>
+<li>13.4.5. Box-Jenkins methodology</li>
+</ul>
+</section>
+<section id="prophet" class="level5">
+<h5 class="anchored" data-anchor-id="prophet">13.5. Prophet</h5>
+<ul>
+<li>13.5.1. Trend modeling</li>
+<li>13.5.2. Seasonality modeling</li>
+<li>13.5.3. Holiday effects</li>
+<li>13.5.4. Changepoint detection</li>
+</ul>
+</section>
+<section id="lstm-for-time-series" class="level5">
+<h5 class="anchored" data-anchor-id="lstm-for-time-series">13.6. LSTM for Time Series</h5>
+<ul>
+<li>13.6.1. LSTM architecture for sequential data</li>
+<li>13.6.2. Time series forecasting with LSTM</li>
+<li>13.6.3. Sequence-to-sequence models</li>
+</ul>
+</section>
+<section id="dynamic-time-warping" class="level5">
+<h5 class="anchored" data-anchor-id="dynamic-time-warping">13.7. Dynamic Time Warping</h5>
+</section>
+<section id="exponential-smoothing-methods" class="level5">
+<h5 class="anchored" data-anchor-id="exponential-smoothing-methods">13.8. Exponential Smoothing Methods</h5>
+<ul>
+<li>13.8.1. Simple exponential smoothing</li>
+<li>13.8.2. Double exponential smoothing (Holt’s method)</li>
+<li>13.8.3. Triple exponential smoothing (Holt-Winters’ method)</li>
+</ul>
+</section>
+<section id="state-space-models" class="level5">
+<h5 class="anchored" data-anchor-id="state-space-models">13.9. State Space Models</h5>
+<ul>
+<li>13.9.1. Kalman filters</li>
+<li>13.9.2. Hidden Markov Models</li>
+</ul>
+</section>
+<section id="vector-autoregression-var" class="level5">
+<h5 class="anchored" data-anchor-id="vector-autoregression-var">13.10. Vector Autoregression (VAR)</h5>
+</section>
+<section id="granger-causality" class="level5">
+<h5 class="anchored" data-anchor-id="granger-causality">13.11. Granger Causality</h5>
+</section>
+<section id="spectral-analysis" class="level5">
+<h5 class="anchored">13.12. Spectral Analysis</h5>
+<ul>
+<li>13.12.1. Fourier transform</li>
+<li>13.12.2. Wavelet analysis</li>
+</ul>
+<h4 class="topic anchored" data-anchor-id="spectral-analysis">
+<a href="../content/tutorials/ml/chapter14_natural_language_processing_basics.html">Chapter 14. Natural Language Processing (NLP) Basics</a>
+</h4>
+</section>
+<section id="text-preprocessing-techniques" class="level5">
+<h5 class="anchored" data-anchor-id="text-preprocessing-techniques">14.1. Text Preprocessing Techniques</h5>
+<ul>
+<li>14.1.1. Lowercasing</li>
+<li>14.1.2. Punctuation removal</li>
+<li>14.1.3. Stop word removal</li>
+<li>14.1.4. Spelling correction</li>
+<li>14.1.5. Handling contractions</li>
+</ul>
+</section>
+<section id="tokenization-and-stemming" class="level5">
+<h5 class="anchored" data-anchor-id="tokenization-and-stemming">14.2. Tokenization and Stemming</h5>
+<ul>
+<li>14.2.1. Word tokenization</li>
+<li>14.2.2. Sentence tokenization</li>
+<li>14.2.3. Subword tokenization (BPE, WordPiece)</li>
+<li>14.2.4. Stemming algorithms (Porter, Snowball)</li>
+<li>14.2.5. Lemmatization</li>
+</ul>
+</section>
+<section id="part-of-speech-tagging" class="level5">
+<h5 class="anchored" data-anchor-id="part-of-speech-tagging">14.3. Part-of-Speech Tagging</h5>
+<ul>
+<li>14.3.1. Rule-based POS tagging</li>
+<li>14.3.2. Statistical POS tagging</li>
+<li>14.3.3. Neural POS tagging</li>
+</ul>
+</section>
+<section id="named-entity-recognition-ner" class="level5">
+<h5 class="anchored" data-anchor-id="named-entity-recognition-ner">14.4. Named Entity Recognition (NER)</h5>
+<ul>
+<li>14.4.1. Rule-based NER</li>
+<li>14.4.2. Statistical NER</li>
+<li>14.4.3. Neural NER</li>
+</ul>
+</section>
+<section id="sentiment-analysis" class="level5">
+<h5 class="anchored" data-anchor-id="sentiment-analysis">14.5. Sentiment Analysis</h5>
+<ul>
+<li>14.5.1. Rule-based approaches</li>
+<li>14.5.2. Machine learning approaches</li>
+<li>14.5.3. Lexicon-based methods</li>
+<li>14.5.4. Aspect-based sentiment analysis</li>
+</ul>
+</section>
+<section id="topic-modeling" class="level5">
+<h5 class="anchored" data-anchor-id="topic-modeling">14.6. Topic Modeling</h5>
+<ul>
+<li>14.6.1. Latent Dirichlet Allocation (LDA)</li>
+<li>14.6.2. Non-negative Matrix Factorization (NMF)</li>
+<li>14.6.3. Probabilistic Latent Semantic Analysis (pLSA)</li>
+</ul>
+</section>
+<section id="word-embeddings" class="level5">
+<h5 class="anchored" data-anchor-id="word-embeddings">14.7. Word Embeddings</h5>
+<ul>
+<li>14.7.1. Word2Vec
+<ul>
+<li>14.7.1.1. CBOW architecture</li>
+<li>14.7.1.2. Skip-gram architecture</li>
+</ul></li>
+<li>14.7.2. GloVe</li>
+<li>14.7.3. FastText</li>
+<li>14.7.4. ELMo (Embeddings from Language Models)</li>
+</ul>
+</section>
+<section id="text-classification" class="level5">
+<h5 class="anchored" data-anchor-id="text-classification">14.8. Text Classification</h5>
+<ul>
+<li>14.8.1. Naive Bayes for text classification</li>
+<li>14.8.2. SVM for text classification</li>
+<li>14.8.3. Deep learning approaches</li>
+</ul>
+</section>
+<section id="language-models" class="level5">
+<h5 class="anchored">14.9. Language Models</h5>
+<ul>
+<li>14.9.1. N-gram models</li>
+<li>14.9.2. Neural language models</li>
+</ul>
+<h4 class="topic anchored" data-anchor-id="language-models">
+<a href="../content/tutorials/ml/chapter15_introduction_to_neural_networks.html">Chapter 15. Introduction to Neural Networks</a>
+</h4>
+</section>
+<section id="perceptrons-and-multi-layer-perceptrons" class="level5">
+<h5 class="anchored" data-anchor-id="perceptrons-and-multi-layer-perceptrons">15.1. Perceptrons and Multi-layer Perceptrons</h5>
+<ul>
+<li>15.1.1. Single layer perceptron</li>
+<li>15.1.2. Multi-layer perceptron architecture</li>
+<li>15.1.3. Universal approximation theorem</li>
+</ul>
+</section>
+<section id="activation-functions" class="level5">
+<h5 class="anchored" data-anchor-id="activation-functions">15.2. Activation Functions</h5>
+<ul>
+<li>15.2.1. Sigmoid</li>
+<li>15.2.2. Tanh</li>
+<li>15.2.3. ReLU and variants (Leaky ReLU, ELU, SELU)</li>
+<li>15.2.4. Softmax</li>
+</ul>
+</section>
+<section id="loss-functions" class="level5">
+<h5 class="anchored" data-anchor-id="loss-functions">15.3. Loss Functions</h5>
+<ul>
+<li>15.3.1. Mean Squared Error</li>
+<li>15.3.2. Cross-entropy</li>
+<li>15.3.3. Hinge loss</li>
+</ul>
+</section>
+<section id="backpropagation" class="level5">
+<h5 class="anchored" data-anchor-id="backpropagation">15.4. Backpropagation</h5>
+<ul>
+<li>15.4.1. Chain rule</li>
+<li>15.4.2. Gradient descent in neural networks</li>
+<li>15.4.3. Vanishing and exploding gradients</li>
+</ul>
+</section>
+<section id="optimization-algorithms" class="level5">
+<h5 class="anchored" data-anchor-id="optimization-algorithms">15.5. Optimization Algorithms</h5>
+<ul>
+<li>15.5.1. Stochastic Gradient Descent (SGD)</li>
+<li>15.5.2. Mini-batch Gradient Descent</li>
+<li>15.5.3. Momentum</li>
+<li>15.5.4. RMSprop</li>
+<li>15.5.5. Adam optimizer</li>
+</ul>
+</section>
+<section id="regularization-in-neural-networks" class="level5">
+<h5 class="anchored" data-anchor-id="regularization-in-neural-networks">15.6. Regularization in Neural Networks</h5>
+<ul>
+<li>15.6.1. L1 and L2 regularization</li>
+<li>15.6.2. Dropout</li>
+<li>15.6.3. Batch Normalization</li>
+<li>15.6.4. Early stopping</li>
+</ul>
+</section>
+<section id="weight-initialization-techniques" class="level5">
+<h5 class="anchored" data-anchor-id="weight-initialization-techniques">15.7. Weight Initialization Techniques</h5>
+<ul>
+<li>15.7.1. Xavier/Glorot initialization</li>
+<li>15.7.2. He initialization</li>
+</ul>
+</section>
+<section id="neural-network-architectures" class="level5">
+<h5 class="anchored">15.8. Neural Network Architectures</h5>
+<ul>
+<li>15.8.1. Feedforward Neural Networks</li>
+<li>15.8.2. Convolutional Neural Networks (basics)</li>
+<li>15.8.3. Recurrent Neural Networks (basics)</li>
+</ul>
+<h4 class="topic anchored" data-anchor-id="neural-network-architectures">
+<a href="../content/tutorials/ml/chapter16_introduction_to_deep_learning_frameworks.html">Chapter 16. Introduction to Deep Learning Frameworks</a>
+</h4>
+</section>
+<section id="tensorflow-basics" class="level5">
+<h5 class="anchored" data-anchor-id="tensorflow-basics">16.1. TensorFlow Basics</h5>
+<ul>
+<li>16.1.1. Tensors and operations</li>
+<li>16.1.2. Computational graphs</li>
+<li>16.1.3. TensorFlow 2.x eager execution</li>
+<li>16.1.4. tf.keras API</li>
+</ul>
+</section>
+<section id="pytorch-fundamentals" class="level5">
+<h5 class="anchored" data-anchor-id="pytorch-fundamentals">16.2. PyTorch Fundamentals</h5>
+<ul>
+<li>16.2.1. Tensors in PyTorch</li>
+<li>16.2.2. Autograd for automatic differentiation</li>
+<li>16.2.3. Neural network modules</li>
+<li>16.2.4. Optimizers and loss functions</li>
+</ul>
+</section>
+<section id="keras-high-level-api" class="level5">
+<h5 class="anchored" data-anchor-id="keras-high-level-api">16.3. Keras High-level API</h5>
+<ul>
+<li>16.3.1. Sequential API</li>
+<li>16.3.2. Functional API</li>
+<li>16.3.3. Custom layers and models</li>
+<li>16.3.4. Callbacks and model checkpointing</li>
+</ul>
+</section>
+<section id="data-loading-and-preprocessing" class="level5">
+<h5 class="anchored" data-anchor-id="data-loading-and-preprocessing">16.4. Data Loading and Preprocessing</h5>
+<ul>
+<li>16.4.1. TensorFlow Data API</li>
+<li>16.4.2. PyTorch DataLoader and Datasets</li>
+</ul>
+</section>
+<section id="model-training-and-evaluation" class="level5">
+<h5 class="anchored" data-anchor-id="model-training-and-evaluation">16.5. Model Training and Evaluation</h5>
+<ul>
+<li>16.5.1. Training loops</li>
+<li>16.5.2. Validation strategies</li>
+<li>16.5.3. TensorBoard for visualization</li>
+</ul>
+</section>
+<section id="saving-and-loading-models" class="level5">
+<h5 class="anchored" data-anchor-id="saving-and-loading-models">16.6. Saving and Loading Models</h5>
+<ul>
+<li>16.6.1. Checkpointing</li>
+<li>16.6.2. Exporting models for deployment</li>
+</ul>
+</section>
+<section id="transfer-learning-with-pre-trained-models" class="level5">
+<h5 class="anchored" data-anchor-id="transfer-learning-with-pre-trained-models">16.7. Transfer Learning with Pre-trained Models</h5>
+</section>
+<section id="distributed-training-basics" class="level5">
+<h5 class="anchored" data-anchor-id="distributed-training-basics">16.8. Distributed Training Basics</h5>
+</section>
+</section>
+<section id="advanced-level" class="level1">
+<h1>Advanced Level</h1>
+<h4 class="topic anchored" data-anchor-id="advanced-level">
+<a href="../content/tutorials/ml/chapter17_deep_learning_architectures.html">Chapter 17. Deep Learning Architectures</a>
+</h4>
+<section id="convolutional-neural-networks-cnns" class="level5">
+<h5 class="anchored" data-anchor-id="convolutional-neural-networks-cnns">17.1. Convolutional Neural Networks (CNNs)</h5>
+<ul>
+<li>17.1.1. Convolutional layers
+<ul>
+<li>17.1.1.1. Filters and feature maps</li>
+<li>17.1.1.2. Stride and padding</li>
+<li>17.1.1.3. Dilated convolutions</li>
+</ul></li>
+<li>17.1.2. Pooling layers
+<ul>
+<li>17.1.2.1. Max pooling</li>
+<li>17.1.2.2. Average pooling</li>
+<li>17.1.2.3. Global pooling</li>
+</ul></li>
+<li>17.1.3. Classic Architectures
+<ul>
+<li>17.1.3.1. LeNet</li>
+<li>17.1.3.2. AlexNet</li>
+<li>17.1.3.3. VGG</li>
+</ul></li>
+<li>17.1.4. Modern Architectures
+<ul>
+<li>17.1.4.1. ResNet and ResNeXt</li>
+<li>17.1.4.2. Inception and Xception</li>
+<li>17.1.4.3. DenseNet</li>
+<li>17.1.4.4. EfficientNet</li>
+</ul></li>
+<li>17.1.5. 1x1 Convolutions</li>
+<li>17.1.6. Depthwise Separable Convolutions</li>
+<li>17.1.7. Transposed Convolutions</li>
+<li>17.1.8. Network in Network (NiN)</li>
+<li>17.1.9. Spatial Pyramid Pooling</li>
+</ul>
+</section>
+<section id="recurrent-neural-networks-rnns" class="level5">
+<h5 class="anchored" data-anchor-id="recurrent-neural-networks-rnns">17.2. Recurrent Neural Networks (RNNs)</h5>
+<ul>
+<li>17.2.1. Basic RNN architecture</li>
+<li>17.2.2. Backpropagation Through Time (BPTT)</li>
+<li>17.2.3. Long Short-Term Memory (LSTM)
+<ul>
+<li>17.2.3.1. LSTM cell structure</li>
+<li>17.2.3.2. Forget, input, and output gates</li>
+</ul></li>
+<li>17.2.4. Gated Recurrent Unit (GRU)</li>
+<li>17.2.5. Bidirectional RNNs</li>
+<li>17.2.6. Deep RNNs (stacked RNNs)</li>
+<li>17.2.7. Attention mechanisms in RNNs</li>
+<li>17.2.8. Sequence-to-sequence models</li>
+</ul>
+</section>
+<section id="generative-adversarial-networks-gans" class="level5">
+<h5 class="anchored" data-anchor-id="generative-adversarial-networks-gans">17.3. Generative Adversarial Networks (GANs)</h5>
+<ul>
+<li>17.3.1. GAN architecture and training</li>
+<li>17.3.2. DCGAN (Deep Convolutional GAN)</li>
+<li>17.3.3. Conditional GANs</li>
+<li>17.3.4. CycleGAN for unpaired image-to-image translation</li>
+<li>17.3.5. Progressive Growing of GANs</li>
+<li>17.3.6. StyleGAN and StyleGAN2</li>
+<li>17.3.7. Wasserstein GAN (WGAN)</li>
+<li>17.3.8. Evaluation metrics for GANs</li>
+</ul>
+</section>
+<section id="variational-autoencoders-vaes" class="level5">
+<h5 class="anchored" data-anchor-id="variational-autoencoders-vaes">17.4. Variational Autoencoders (VAEs)</h5>
+<ul>
+<li>17.4.1. VAE architecture</li>
+<li>17.4.2. Reparameterization trick</li>
+<li>17.4.3. Loss function: reconstruction loss and KL divergence</li>
+<li>17.4.4. Conditional VAEs</li>
+<li>17.4.5. β-VAE for disentangled representations</li>
+<li>17.4.6. VQ-VAE (Vector Quantized VAE)</li>
+</ul>
+</section>
+<section id="transformer-architecture" class="level5">
+<h5 class="anchored" data-anchor-id="transformer-architecture">17.5. Transformer Architecture</h5>
+<ul>
+<li>17.5.1. Self-attention mechanism</li>
+<li>17.5.2. Multi-head attention</li>
+<li>17.5.3. Position-wise Feed-Forward Networks</li>
+<li>17.5.4. Positional encoding</li>
+<li>17.5.5. Encoder-decoder architecture</li>
+<li>17.5.6. Variants: Transformer-XL, XLNet, Reformer</li>
+</ul>
+</section>
+<section id="graph-neural-networks-gnns" class="level5">
+<h5 class="anchored" data-anchor-id="graph-neural-networks-gnns">17.6. Graph Neural Networks (GNNs)</h5>
+<ul>
+<li>17.6.1. Graph Convolutional Networks (GCN)</li>
+<li>17.6.2. GraphSAGE</li>
+<li>17.6.3. Graph Attention Networks (GAT)</li>
+<li>17.6.4. Message Passing Neural Networks</li>
+</ul>
+</section>
+<section id="memory-networks" class="level5">
+<h5 class="anchored" data-anchor-id="memory-networks">17.7. Memory Networks</h5>
+<ul>
+<li>17.7.1. End-to-End Memory Networks</li>
+<li>17.7.2. Dynamic Memory Networks</li>
+</ul>
+</section>
+<section id="capsule-networks" class="level5">
+<h5 class="anchored">17.8. Capsule Networks</h5>
+<ul>
+<li>17.8.1. Dynamic routing between capsules</li>
+<li>17.8.2. Capsule architecture and applications</li>
+</ul>
+<h4 class="topic anchored" data-anchor-id="capsule-networks">
+<a href="../content/tutorials/ml/chapter18_advanced_nlp.html">Chapter 18. Advanced NLP</a>
+</h4>
+</section>
+<section id="word-embeddings-and-language-models" class="level5">
+<h5 class="anchored" data-anchor-id="word-embeddings-and-language-models">18.1. Word Embeddings and Language Models</h5>
+<ul>
+<li>18.1.1. Contextual embeddings (ELMo, CoVe)</li>
+<li>18.1.2. ULMFiT (Universal Language Model Fine-tuning)</li>
+</ul>
+</section>
+<section id="transformer-based-models" class="level5">
+<h5 class="anchored" data-anchor-id="transformer-based-models">18.2. Transformer-based Models</h5>
+<ul>
+<li>18.2.1. BERT and its variants
+<ul>
+<li>18.2.1.1. Pre-training objectives (MLM, NSP)</li>
+<li>18.2.1.2. Fine-tuning for downstream tasks</li>
+<li>18.2.1.3. RoBERTa, ALBERT, DistilBERT</li>
+</ul></li>
+<li>18.2.2. GPT models (GPT, GPT-2, GPT-3)
+<ul>
+<li>18.2.2.1. Autoregressive language modeling</li>
+<li>18.2.2.2. Few-shot and zero-shot capabilities</li>
+</ul></li>
+<li>18.2.3. T5 (Text-to-Text Transfer Transformer)</li>
+<li>18.2.4. ELECTRA (Efficiently Learning an Encoder that Classifies Token Replacements Accurately)</li>
+</ul>
+</section>
+<section id="sequence-to-sequence-models" class="level5">
+<h5 class="anchored" data-anchor-id="sequence-to-sequence-models">18.3. Sequence-to-sequence Models</h5>
+<ul>
+<li>18.3.1. Encoder-decoder architecture</li>
+<li>18.3.2. Attention mechanisms in seq2seq models</li>
+<li>18.3.3. Beam search decoding</li>
+<li>18.3.4. Copy mechanism</li>
+</ul>
+</section>
+<section id="transfer-learning-in-nlp" class="level5">
+<h5 class="anchored" data-anchor-id="transfer-learning-in-nlp">18.4. Transfer Learning in NLP</h5>
+<ul>
+<li>18.4.1. Fine-tuning pre-trained models</li>
+<li>18.4.2. Domain adaptation techniques</li>
+</ul>
+</section>
+<section id="multi-task-learning-in-nlp" class="level5">
+<h5 class="anchored" data-anchor-id="multi-task-learning-in-nlp">18.5. Multi-task Learning in NLP</h5>
+</section>
+<section id="zero-shot-and-few-shot-learning-in-nlp" class="level5">
+<h5 class="anchored" data-anchor-id="zero-shot-and-few-shot-learning-in-nlp">18.6. Zero-shot and Few-shot Learning in NLP</h5>
+<ul>
+<li>18.6.1. Meta-learning approaches</li>
+<li>18.6.2. Prompt-based learning</li>
+</ul>
+</section>
+<section id="multilingual-and-cross-lingual-models" class="level5">
+<h5 class="anchored" data-anchor-id="multilingual-and-cross-lingual-models">18.7. Multilingual and Cross-lingual Models</h5>
+<ul>
+<li>18.7.1. mBERT (multilingual BERT)</li>
+<li>18.7.2. XLM (Cross-lingual Language Model)</li>
+<li>18.7.3. XLM-R (XLM-RoBERTa)</li>
+</ul>
+</section>
+<section id="question-answering-systems" class="level5">
+<h5 class="anchored" data-anchor-id="question-answering-systems">18.8. Question Answering Systems</h5>
+<ul>
+<li>18.8.1. Extractive QA</li>
+<li>18.8.2. Generative QA</li>
+<li>18.8.3. Multi-hop QA</li>
+</ul>
+</section>
+<section id="summarization" class="level5">
+<h5 class="anchored" data-anchor-id="summarization">18.9. Summarization</h5>
+<ul>
+<li>18.9.1. Extractive summarization</li>
+<li>18.9.2. Abstractive summarization</li>
+<li>18.9.3. Multi-document summarization</li>
+</ul>
+</section>
+<section id="machine-translation" class="level5">
+<h5 class="anchored" data-anchor-id="machine-translation">18.10. Machine Translation</h5>
+<ul>
+<li>18.10.1. Neural Machine Translation (NMT)</li>
+<li>18.10.2. Unsupervised Machine Translation</li>
+<li>18.10.3. Multilingual NMT</li>
+</ul>
+</section>
+<section id="dialogue-systems-and-chatbots" class="level5">
+<h5 class="anchored" data-anchor-id="dialogue-systems-and-chatbots">18.11. Dialogue Systems and Chatbots</h5>
+<ul>
+<li>18.11.1. Task-oriented dialogue systems</li>
+<li>18.11.2. Open-domain chatbots</li>
+<li>18.11.3. Retrieval-based vs.&nbsp;Generative models</li>
+</ul>
+</section>
+<section id="named-entity-recognition-ner-1" class="level5">
+<h5 class="anchored" data-anchor-id="named-entity-recognition-ner-1">18.12. Named Entity Recognition (NER)</h5>
+<ul>
+<li>18.12.1. BiLSTM-CRF for NER</li>
+<li>18.12.2. BERT-based NER</li>
+</ul>
+</section>
+<section id="sentiment-analysis-and-emotion-detection" class="level5">
+<h5 class="anchored" data-anchor-id="sentiment-analysis-and-emotion-detection">18.13. Sentiment Analysis and Emotion Detection</h5>
+<ul>
+<li>18.13.1. Aspect-based sentiment analysis</li>
+<li>18.13.2. Multimodal sentiment analysis</li>
+</ul>
+</section>
+<section id="text-style-transfer" class="level5">
+<h5 class="anchored" data-anchor-id="text-style-transfer">18.14. Text Style Transfer</h5>
+</section>
+<section id="natural-language-inference-nli" class="level5">
+<h5 class="anchored" data-anchor-id="natural-language-inference-nli">18.15. Natural Language Inference (NLI)</h5>
+</section>
+<section id="coreference-resolution" class="level5">
+<h5 class="anchored" data-anchor-id="coreference-resolution">18.16. Coreference Resolution</h5>
+</section>
+<section id="information-extraction" class="level5">
+<h5 class="anchored" data-anchor-id="information-extraction">18.17. Information Extraction</h5>
+<ul>
+<li>18.17.1. Relation extraction</li>
+<li>18.17.2. Event extraction</li>
+</ul>
+</section>
+<section id="text-generation" class="level5">
+<h5 class="anchored" data-anchor-id="text-generation">18.18. Text Generation</h5>
+<ul>
+<li>18.18.1. Language model-based generation</li>
+<li>18.18.2. Controlled text generation</li>
+</ul>
+</section>
+<section id="evaluation-metrics-for-nlp-tasks" class="level5">
+<h5 class="anchored">18.19. Evaluation Metrics for NLP Tasks</h5>
+<ul>
+<li>18.19.1. BLEU, ROUGE, METEOR for translation and summarization</li>
+<li>18.19.2. Perplexity for language models</li>
+<li>18.19.3. GLUE and SuperGLUE benchmarks</li>
+</ul>
+<h4 class="topic anchored" data-anchor-id="evaluation-metrics-for-nlp-tasks">
+<a href="../content/tutorials/ml/chapter19_reinforcement_learning.html">Chapter 19. Reinforcement Learning</a>
+</h4>
+</section>
+<section id="foundations-of-reinforcement-learning" class="level5">
+<h5 class="anchored" data-anchor-id="foundations-of-reinforcement-learning">19.1. Foundations of Reinforcement Learning</h5>
+<ul>
+<li>19.1.1. Markov Decision Processes (MDPs)</li>
+<li>19.1.2. Value functions and Q-functions</li>
+<li>19.1.3. Bellman equations</li>
+<li>19.1.4. Exploration vs.&nbsp;exploitation</li>
+</ul>
+</section>
+<section id="dynamic-programming" class="level5">
+<h5 class="anchored" data-anchor-id="dynamic-programming">19.2. Dynamic Programming</h5>
+<ul>
+<li>19.2.1. Policy iteration</li>
+<li>19.2.2. Value iteration</li>
+</ul>
+</section>
+<section id="monte-carlo-methods" class="level5">
+<h5 class="anchored" data-anchor-id="monte-carlo-methods">19.3. Monte Carlo Methods</h5>
+</section>
+<section id="temporal-difference-learning" class="level5">
+<h5 class="anchored" data-anchor-id="temporal-difference-learning">19.4. Temporal Difference Learning</h5>
+<ul>
+<li>19.4.1. SARSA</li>
+<li>19.4.2. Q-learning</li>
+<li>19.4.3. Expected SARSA</li>
+</ul>
+</section>
+<section id="function-approximation-in-rl" class="level5">
+<h5 class="anchored" data-anchor-id="function-approximation-in-rl">19.5. Function Approximation in RL</h5>
+<ul>
+<li>19.5.1. Linear function approximation</li>
+<li>19.5.2. Neural networks for function approximation</li>
+</ul>
+</section>
+<section id="policy-gradient-methods" class="level5">
+<h5 class="anchored" data-anchor-id="policy-gradient-methods">19.6. Policy Gradient Methods</h5>
+<ul>
+<li>19.6.1. REINFORCE algorithm</li>
+<li>19.6.2. Actor-Critic methods</li>
+<li>19.6.3. Proximal Policy Optimization (PPO)</li>
+<li>19.6.4. Trust Region Policy Optimization (TRPO)</li>
+</ul>
+</section>
+<section id="deep-reinforcement-learning" class="level5">
+<h5 class="anchored" data-anchor-id="deep-reinforcement-learning">19.7. Deep Reinforcement Learning</h5>
+<ul>
+<li>19.7.1. Deep Q-Networks (DQN)
+<ul>
+<li>19.7.1.1. Experience replay</li>
+<li>19.7.1.2. Target networks</li>
+</ul></li>
+<li>19.7.2. Double DQN</li>
+<li>19.7.3. Dueling DQN</li>
+<li>19.7.4. Prioritized Experience Replay</li>
+</ul>
+</section>
+<section id="deterministic-policy-gradient-dpg" class="level5">
+<h5 class="anchored" data-anchor-id="deterministic-policy-gradient-dpg">19.8. Deterministic Policy Gradient (DPG)</h5>
+<ul>
+<li>19.8.1. DDPG (Deep Deterministic Policy Gradient)</li>
+<li>19.8.2. TD3 (Twin Delayed DDPG)</li>
+</ul>
+</section>
+<section id="distributional-rl" class="level5">
+<h5 class="anchored" data-anchor-id="distributional-rl">19.9. Distributional RL</h5>
+<ul>
+<li>19.9.1. C51</li>
+<li>19.9.2. Quantile Regression DQN</li>
+</ul>
+</section>
+<section id="model-based-reinforcement-learning" class="level5">
+<h5 class="anchored" data-anchor-id="model-based-reinforcement-learning">19.10. Model-based Reinforcement Learning</h5>
+<ul>
+<li>19.10.1. Dyna-Q</li>
+<li>19.10.2. Monte Carlo Tree Search (MCTS)</li>
+</ul>
+</section>
+<section id="inverse-reinforcement-learning" class="level5">
+<h5 class="anchored" data-anchor-id="inverse-reinforcement-learning">19.11. Inverse Reinforcement Learning</h5>
+</section>
+<section id="multi-agent-reinforcement-learning" class="level5">
+<h5 class="anchored" data-anchor-id="multi-agent-reinforcement-learning">19.12. Multi-agent Reinforcement Learning</h5>
+<ul>
+<li>19.12.1. Independent Q-learning</li>
+<li>19.12.2. QMIX</li>
+<li>19.12.3. Multi-Agent DDPG (MADDPG)</li>
+</ul>
+</section>
+<section id="hierarchical-reinforcement-learning" class="level5">
+<h5 class="anchored" data-anchor-id="hierarchical-reinforcement-learning">19.13. Hierarchical Reinforcement Learning</h5>
+</section>
+<section id="imitation-learning-and-behavioral-cloning" class="level5">
+<h5 class="anchored" data-anchor-id="imitation-learning-and-behavioral-cloning">19.14. Imitation Learning and Behavioral Cloning</h5>
+</section>
+<section id="safe-reinforcement-learning" class="level5">
+<h5 class="anchored" data-anchor-id="safe-reinforcement-learning">19.15. Safe Reinforcement Learning</h5>
+</section>
+<section id="meta-reinforcement-learning" class="level5">
+<h5 class="anchored" data-anchor-id="meta-reinforcement-learning">19.16. Meta-Reinforcement Learning</h5>
+</section>
+<section id="offline-reinforcement-learning" class="level5">
+<h5 class="anchored" data-anchor-id="offline-reinforcement-learning">19.17. Offline Reinforcement Learning</h5>
+</section>
+<section id="curiosity-driven-exploration" class="level5">
+<h5 class="anchored" data-anchor-id="curiosity-driven-exploration">19.18. Curiosity-driven Exploration</h5>
+</section>
+<section id="reinforcement-learning-in-continuous-action-spaces" class="level5">
+<h5 class="anchored" data-anchor-id="reinforcement-learning-in-continuous-action-spaces">19.19. Reinforcement Learning in Continuous Action Spaces</h5>
+</section>
+<section id="applications-of-rl" class="level5">
+<h5 class="anchored">19.20. Applications of RL</h5>
+<ul>
+<li>19.20.1. Game playing (e.g., AlphaGo, OpenAI Five)</li>
+<li>19.20.2. Robotics</li>
+<li>19.20.3. Autonomous driving</li>
+<li>19.20.4. Recommendation systems</li>
+</ul>
+<h4 class="topic anchored" data-anchor-id="applications-of-rl">
+<a href="../content/tutorials/ml/chapter20_bayesian_machine_learning.html">Chapter 20. Bayesian Machine Learning</a>
+</h4>
+</section>
+<section id="bayesian-inference" class="level5">
+<h5 class="anchored" data-anchor-id="bayesian-inference">20.1. Bayesian Inference</h5>
+<ul>
+<li>20.1.1. Bayes’ theorem</li>
+<li>20.1.2. Prior and posterior distributions</li>
+<li>20.1.3. Conjugate priors</li>
+<li>20.1.4. Maximum A Posteriori (MAP) estimation</li>
+</ul>
+</section>
+<section id="bayesian-linear-regression" class="level5">
+<h5 class="anchored" data-anchor-id="bayesian-linear-regression">20.2. Bayesian Linear Regression</h5>
+</section>
+<section id="bayesian-logistic-regression" class="level5">
+<h5 class="anchored" data-anchor-id="bayesian-logistic-regression">20.3. Bayesian Logistic Regression</h5>
+</section>
+<section id="bayesian-model-selection" class="level5">
+<h5 class="anchored" data-anchor-id="bayesian-model-selection">20.4. Bayesian Model Selection</h5>
+<ul>
+<li>20.4.1. Bayesian Information Criterion (BIC)</li>
+<li>20.4.2. Deviance Information Criterion (DIC)</li>
+</ul>
+</section>
+<section id="gaussian-processes" class="level5">
+<h5 class="anchored" data-anchor-id="gaussian-processes">20.5. Gaussian Processes</h5>
+<ul>
+<li>20.5.1. Kernel functions</li>
+<li>20.5.2. GP regression</li>
+<li>20.5.3. GP classification</li>
+<li>20.5.4. Sparse Gaussian Processes</li>
+</ul>
+</section>
+<section id="variational-inference" class="level5">
+<h5 class="anchored" data-anchor-id="variational-inference">20.6. Variational Inference</h5>
+<ul>
+<li>20.6.1. Mean field approximation</li>
+<li>20.6.2. Variational EM algorithm</li>
+<li>20.6.3. Stochastic Variational Inference (SVI)</li>
+</ul>
+</section>
+<section id="markov-chain-monte-carlo-mcmc-methods" class="level5">
+<h5 class="anchored" data-anchor-id="markov-chain-monte-carlo-mcmc-methods">20.7. Markov Chain Monte Carlo (MCMC) Methods</h5>
+<ul>
+<li>20.7.1. Metropolis-Hastings algorithm</li>
+<li>20.7.2. Gibbs sampling</li>
+<li>20.7.3. Hamiltonian Monte Carlo (HMC)</li>
+<li>20.7.4. No-U-Turn Sampler (NUTS)</li>
+</ul>
+</section>
+<section id="bayesian-neural-networks" class="level5">
+<h5 class="anchored" data-anchor-id="bayesian-neural-networks">20.8. Bayesian Neural Networks</h5>
+<ul>
+<li>20.8.1. Weight uncertainty</li>
+<li>20.8.2. Variational inference for BNNs</li>
+<li>20.8.3. Monte Carlo dropout</li>
+</ul>
+</section>
+<section id="bayesian-optimization" class="level5">
+<h5 class="anchored" data-anchor-id="bayesian-optimization">20.9. Bayesian Optimization</h5>
+<ul>
+<li>20.9.1. Acquisition functions</li>
+<li>20.9.2. Gaussian Process Regression for surrogate modeling</li>
+</ul>
+</section>
+<section id="bayesian-nonparametrics" class="level5">
+<h5 class="anchored" data-anchor-id="bayesian-nonparametrics">20.10. Bayesian Nonparametrics</h5>
+<ul>
+<li>20.10.1. Dirichlet Process</li>
+<li>20.10.2. Chinese Restaurant Process</li>
+<li>20.10.3. Indian Buffet Process</li>
+</ul>
+</section>
+<section id="probabilistic-programming" class="level5">
+<h5 class="anchored" data-anchor-id="probabilistic-programming">20.11. Probabilistic Programming</h5>
+<ul>
+<li>20.11.1. PyMC3</li>
+<li>20.11.2. Stan</li>
+<li>20.11.3. Edward2</li>
+</ul>
+</section>
+<section id="bayesian-deep-learning" class="level5">
+<h5 class="anchored" data-anchor-id="bayesian-deep-learning">20.12. Bayesian Deep Learning</h5>
+<ul>
+<li>20.12.1. Bayes by Backprop</li>
+<li>20.12.2. Probabilistic Backpropagation</li>
+</ul>
+</section>
+<section id="bayesian-reinforcement-learning" class="level5">
+<h5 class="anchored" data-anchor-id="bayesian-reinforcement-learning">20.13. Bayesian Reinforcement Learning</h5>
+</section>
+<section id="bayesian-generative-models" class="level5">
+<h5 class="anchored">20.14. Bayesian Generative Models</h5>
+<ul>
+<li>20.14.1. Variational Autoencoders (VAEs)</li>
+<li>20.14.2. Bayesian GANs</li>
+</ul>
+<h4 class="topic anchored" data-anchor-id="bayesian-generative-models">
+<a href="../content/tutorials/ml/chapter21_anomaly_detection.html">Chapter 21. Anomaly Detection</a>
+</h4>
+</section>
+<section id="statistical-methods" class="level5">
+<h5 class="anchored" data-anchor-id="statistical-methods">21.1. Statistical Methods</h5>
+<ul>
+<li>21.1.1. Parametric methods
+<ul>
+<li>21.1.1.1. Gaussian distribution-based</li>
+<li>21.1.1.2. Student’s t-distribution-based</li>
+</ul></li>
+<li>21.1.2. Non-parametric methods
+<ul>
+<li>21.1.2.1. Kernel density estimation</li>
+<li>21.1.2.2. Histogram-based</li>
+</ul></li>
+</ul>
+</section>
+<section id="distance-based-methods" class="level5">
+<h5 class="anchored" data-anchor-id="distance-based-methods">21.2. Distance-based Methods</h5>
+<ul>
+<li>21.2.1. k-Nearest Neighbors (k-NN) for anomaly detection</li>
+<li>21.2.2. Local Outlier Factor (LOF)</li>
+<li>21.2.3. Connectivity-Based Outlier Factor (COF)</li>
+</ul>
+</section>
+<section id="clustering-based-methods" class="level5">
+<h5 class="anchored" data-anchor-id="clustering-based-methods">21.3. Clustering-based Methods</h5>
+<ul>
+<li>21.3.1. DBSCAN for anomaly detection</li>
+<li>21.3.2. OPTICS for anomaly detection</li>
+</ul>
+</section>
+<section id="isolation-forest" class="level5">
+<h5 class="anchored" data-anchor-id="isolation-forest">21.4. Isolation Forest</h5>
+<ul>
+<li>21.4.1. Random forest adaptation for anomaly detection</li>
+<li>21.4.2. Extended Isolation Forest</li>
+</ul>
+</section>
+<section id="one-class-svm" class="level5">
+<h5 class="anchored" data-anchor-id="one-class-svm">21.5. One-class SVM</h5>
+<ul>
+<li>21.5.1. One-class SVM with different kernels</li>
+<li>21.5.2. Support Vector Data Description (SVDD)</li>
+</ul>
+</section>
+<section id="autoencoders-for-anomaly-detection" class="level5">
+<h5 class="anchored" data-anchor-id="autoencoders-for-anomaly-detection">21.6. Autoencoders for Anomaly Detection</h5>
+<ul>
+<li>21.6.1. Reconstruction error as anomaly score</li>
+<li>21.6.2. Variational Autoencoders (VAEs) for anomaly detection</li>
+</ul>
+</section>
+<section id="generative-models-for-anomaly-detection" class="level5">
+<h5 class="anchored" data-anchor-id="generative-models-for-anomaly-detection">21.7. Generative Models for Anomaly Detection</h5>
+<ul>
+<li>21.7.1. GANs for anomaly detection
+<ul>
+<li>21.7.1.1. AnoGAN</li>
+<li>21.7.1.2. BiGAN</li>
+</ul></li>
+<li>21.7.2. Energy-based models</li>
+</ul>
+</section>
+<section id="time-series-anomaly-detection" class="level5">
+<h5 class="anchored" data-anchor-id="time-series-anomaly-detection">21.8. Time Series Anomaly Detection</h5>
+<ul>
+<li>21.8.1. ARIMA-based methods</li>
+<li>21.8.2. Prophet for anomaly detection</li>
+<li>21.8.3. LSTM-based anomaly detection</li>
+</ul>
+</section>
+<section id="ensemble-methods-for-anomaly-detection" class="level5">
+<h5 class="anchored" data-anchor-id="ensemble-methods-for-anomaly-detection">21.9. Ensemble Methods for Anomaly Detection</h5>
+<ul>
+<li>21.9.1. Feature bagging</li>
+<li>21.9.2. Isolation Forest ensembles</li>
+</ul>
+</section>
+<section id="anomaly-detection-in-high-dimensional-data" class="level5">
+<h5 class="anchored" data-anchor-id="anomaly-detection-in-high-dimensional-data">21.10. Anomaly Detection in High-dimensional Data</h5>
+<ul>
+<li>21.10.1. Subspace methods</li>
+<li>21.10.2. Random projection techniques</li>
+</ul>
+</section>
+<section id="online-and-streaming-anomaly-detection" class="level5">
+<h5 class="anchored" data-anchor-id="online-and-streaming-anomaly-detection">21.11. Online and Streaming Anomaly Detection</h5>
+</section>
+<section id="anomaly-explanation-and-interpretation" class="level5">
+<h5 class="anchored">21.12. Anomaly Explanation and Interpretation</h5>
+<h4 class="topic anchored" data-anchor-id="anomaly-explanation-and-interpretation">
+<a href="../content/tutorials/ml/chapter22_advanced_optimization_techniques.html">Chapter 22. Advanced Optimization Techniques</a>
+</h4>
+</section>
+<section id="first-order-optimization-methods" class="level5">
+<h5 class="anchored" data-anchor-id="first-order-optimization-methods">22.1. First-order Optimization Methods</h5>
+<ul>
+<li>22.1.1. Gradient Descent variants
+<ul>
+<li>22.1.1.1. Stochastic Gradient Descent (SGD)</li>
+<li>22.1.1.2. Mini-batch Gradient Descent</li>
+<li>22.1.1.3. Momentum</li>
+<li>22.1.1.4. Nesterov Accelerated Gradient</li>
+</ul></li>
+<li>22.1.2. Adaptive Learning Rate Methods
+<ul>
+<li>22.1.2.1. AdaGrad</li>
+<li>22.1.2.2. RMSprop</li>
+<li>22.1.2.3. Adam</li>
+<li>22.1.2.4. AdamW</li>
+<li>22.1.2.5. Nadam</li>
+</ul></li>
+<li>22.1.3. Learning rate schedules
+<ul>
+<li>22.1.3.1. Step decay</li>
+<li>22.1.3.2. Exponential decay</li>
+<li>22.1.3.3. Cosine annealing</li>
+</ul></li>
+</ul>
+</section>
+<section id="second-order-optimization-methods" class="level5">
+<h5 class="anchored" data-anchor-id="second-order-optimization-methods">22.2. Second-order Optimization Methods</h5>
+<ul>
+<li>22.2.1. Newton’s method</li>
+<li>22.2.2. Quasi-Newton methods
+<ul>
+<li>22.2.2.1. BFGS</li>
+<li>22.2.2.2. L-BFGS</li>
+</ul></li>
+<li>22.2.3. Conjugate Gradient</li>
+<li>22.2.4. Natural Gradient Descent</li>
+</ul>
+</section>
+<section id="constrained-optimization" class="level5">
+<h5 class="anchored" data-anchor-id="constrained-optimization">22.3. Constrained Optimization</h5>
+<ul>
+<li>22.3.1. Lagrange multipliers</li>
+<li>22.3.2. Karush-Kuhn-Tucker (KKT) conditions</li>
+<li>22.3.3. Projected Gradient Descent</li>
+<li>22.3.4. Interior Point Methods</li>
+</ul>
+</section>
+<section id="global-optimization" class="level5">
+<h5 class="anchored" data-anchor-id="global-optimization">22.4. Global Optimization</h5>
+<ul>
+<li>22.4.1. Simulated Annealing</li>
+<li>22.4.2. Particle Swarm Optimization</li>
+<li>22.4.3. Differential Evolution</li>
+</ul>
+</section>
+<section id="multi-objective-optimization" class="level5">
+<h5 class="anchored" data-anchor-id="multi-objective-optimization">22.5. Multi-objective Optimization</h5>
+<ul>
+<li>22.5.1. Pareto optimality</li>
+<li>22.5.2. NSGA-II (Non-dominated Sorting Genetic Algorithm II)</li>
+<li>22.5.3. MOEA/D (Multiobjective Evolutionary Algorithm Based on Decomposition)</li>
+</ul>
+</section>
+<section id="bayesian-optimization-1" class="level5">
+<h5 class="anchored" data-anchor-id="bayesian-optimization-1">22.6. Bayesian Optimization</h5>
+<ul>
+<li>22.6.1. Gaussian process regression for surrogate modeling</li>
+<li>22.6.2. Acquisition functions
+<ul>
+<li>22.6.2.1. Expected Improvement</li>
+<li>22.6.2.2. Upper Confidence Bound</li>
+<li>22.6.2.3. Thompson Sampling</li>
+</ul></li>
+<li>22.6.3. Multi-armed bandits</li>
+</ul>
+</section>
+<section id="gradient-free-optimization" class="level5">
+<h5 class="anchored" data-anchor-id="gradient-free-optimization">22.7. Gradient-free Optimization</h5>
+<ul>
+<li>22.7.1. Nelder-Mead method</li>
+<li>22.7.2. Powell’s method</li>
+</ul>
+</section>
+<section id="distributed-and-parallel-optimization" class="level5">
+<h5 class="anchored" data-anchor-id="distributed-and-parallel-optimization">22.8. Distributed and Parallel Optimization</h5>
+<ul>
+<li>22.8.1. Data parallelism</li>
+<li>22.8.2. Model parallelism</li>
+</ul>
+</section>
+<section id="optimization-for-deep-learning" class="level5">
+<h5 class="anchored">22.9. Optimization for Deep Learning</h5>
+<ul>
+<li>22.9.1. Batch Normalization</li>
+<li>22.9.2. Layer Normalization</li>
+<li>22.9.3. Weight Normalization</li>
+<li>22.9.4. Gradient Clipping</li>
+</ul>
+<h4 class="topic anchored" data-anchor-id="optimization-for-deep-learning">
+<a href="../content/tutorials/ml/chapter23_model_interpretability_and_explainability.html">Chapter 23. Model Interpretability and Explainability</a>
+</h4>
+</section>
+<section id="feature-importance-methods" class="level5">
+<h5 class="anchored" data-anchor-id="feature-importance-methods">23.1. Feature Importance Methods</h5>
+<ul>
+<li>23.1.1. Permutation importance</li>
+<li>23.1.2. SHAP (SHapley Additive exPlanations) Values
+<ul>
+<li>23.1.2.1. KernelSHAP</li>
+<li>23.1.2.2. TreeSHAP</li>
+<li>23.1.2.3. DeepSHAP</li>
+</ul></li>
+<li>23.1.3. LIME (Local Interpretable Model-agnostic Explanations)</li>
+<li>23.1.4. Integrated Gradients</li>
+</ul>
+</section>
+<section id="model-specific-interpretation-methods" class="level5">
+<h5 class="anchored" data-anchor-id="model-specific-interpretation-methods">23.2. Model-specific Interpretation Methods</h5>
+<ul>
+<li>23.2.1. Decision tree visualization</li>
+<li>23.2.2. Linear model coefficients</li>
+<li>23.2.3. Attention visualization in neural networks</li>
+</ul>
+</section>
+<section id="surrogate-models" class="level5">
+<h5 class="anchored" data-anchor-id="surrogate-models">23.3. Surrogate Models</h5>
+<ul>
+<li>23.3.1. Global surrogate models</li>
+<li>23.3.2. Local surrogate models</li>
+</ul>
+</section>
+<section id="partial-dependence-plots-pdp" class="level5">
+<h5 class="anchored" data-anchor-id="partial-dependence-plots-pdp">23.4. Partial Dependence Plots (PDP)</h5>
+</section>
+<section id="individual-conditional-expectation-ice-plots" class="level5">
+<h5 class="anchored" data-anchor-id="individual-conditional-expectation-ice-plots">23.5. Individual Conditional Expectation (ICE) Plots</h5>
+</section>
+<section id="accumulated-local-effects-ale-plots" class="level5">
+<h5 class="anchored" data-anchor-id="accumulated-local-effects-ale-plots">23.6. Accumulated Local Effects (ALE) Plots</h5>
+</section>
+<section id="counterfactual-explanations" class="level5">
+<h5 class="anchored" data-anchor-id="counterfactual-explanations">23.7. Counterfactual Explanations</h5>
+<ul>
+<li>23.7.1. Diverse Counterfactual Explanations (DiCE)</li>
+</ul>
+</section>
+<section id="concept-activation-vectors" class="level5">
+<h5 class="anchored" data-anchor-id="concept-activation-vectors">23.8. Concept Activation Vectors</h5>
+</section>
+<section id="layer-wise-relevance-propagation-lrp" class="level5">
+<h5 class="anchored" data-anchor-id="layer-wise-relevance-propagation-lrp">23.9. Layer-wise Relevance Propagation (LRP)</h5>
+</section>
+<section id="grad-cam-and-its-variants" class="level5">
+<h5 class="anchored" data-anchor-id="grad-cam-and-its-variants">23.10. Grad-CAM and its variants</h5>
+</section>
+<section id="influence-functions" class="level5">
+<h5 class="anchored" data-anchor-id="influence-functions">23.11. Influence Functions</h5>
+</section>
+<section id="tcav-testing-with-concept-activation-vectors" class="level5">
+<h5 class="anchored" data-anchor-id="tcav-testing-with-concept-activation-vectors">23.12. TCAV (Testing with Concept Activation Vectors)</h5>
+</section>
+<section id="interpretability-in-nlp" class="level5">
+<h5 class="anchored" data-anchor-id="interpretability-in-nlp">23.13. Interpretability in NLP</h5>
+<ul>
+<li>23.13.1. Attention visualization</li>
+<li>23.13.2. Probing classifiers</li>
+</ul>
+</section>
+<section id="interpretability-in-computer-vision" class="level5">
+<h5 class="anchored" data-anchor-id="interpretability-in-computer-vision">23.14. Interpretability in Computer Vision</h5>
+<ul>
+<li>23.14.1. Saliency maps</li>
+<li>23.14.2. Class activation mapping</li>
+</ul>
+</section>
+<section id="model-distillation-for-interpretability" class="level5">
+<h5 class="anchored" data-anchor-id="model-distillation-for-interpretability">23.15. Model Distillation for Interpretability</h5>
+</section>
+<section id="adversarial-examples-for-interpretability" class="level5">
+<h5 class="anchored">23.16. Adversarial Examples for Interpretability</h5>
+<h4 class="topic anchored" data-anchor-id="adversarial-examples-for-interpretability">
+<a href="../content/tutorials/ml/chapter24_computer_vision_advanced_topics.html">Chapter 24. Computer Vision Advanced Topics</a>
+</h4>
+</section>
+<section id="object-detection" class="level5">
+<h5 class="anchored" data-anchor-id="object-detection">24.1. Object Detection</h5>
+<ul>
+<li>24.1.1. Two-stage detectors
+<ul>
+<li>24.1.1.1. R-CNN</li>
+<li>24.1.1.2. Fast R-CNN</li>
+<li>24.1.1.3. Faster R-CNN</li>
+</ul></li>
+<li>24.1.2. Single-stage detectors
+<ul>
+<li>24.1.2.1. YOLO (You Only Look Once)</li>
+<li>24.1.2.2. SSD (Single Shot Detector)</li>
+<li>24.1.2.3. RetinaNet</li>
+</ul></li>
+<li>24.1.3. Anchor-free detectors
+<ul>
+<li>24.1.3.1. CornerNet</li>
+<li>24.1.3.2. CenterNet</li>
+</ul></li>
+<li>24.1.4. 3D Object Detection</li>
+</ul>
+</section>
+<section id="image-segmentation" class="level5">
+<h5 class="anchored" data-anchor-id="image-segmentation">24.2. Image Segmentation</h5>
+<ul>
+<li>24.2.1. Semantic Segmentation
+<ul>
+<li>24.2.1.1. Fully Convolutional Networks (FCN)</li>
+<li>24.2.1.2. U-Net</li>
+<li>24.2.1.3. DeepLab series</li>
+</ul></li>
+<li>24.2.2. Instance Segmentation
+<ul>
+<li>24.2.2.1. Mask R-CNN</li>
+<li>24.2.2.2. YOLACT</li>
+</ul></li>
+<li>24.2.3. Panoptic Segmentation</li>
+</ul>
+</section>
+<section id="face-recognition-and-verification" class="level5">
+<h5 class="anchored" data-anchor-id="face-recognition-and-verification">24.3. Face Recognition and Verification</h5>
+<ul>
+<li>24.3.1. Siamese networks</li>
+<li>24.3.2. Triplet loss</li>
+<li>24.3.3. FaceNet</li>
+<li>24.3.4. DeepFace</li>
+<li>24.3.5. ArcFace</li>
+</ul>
+</section>
+<section id="d-computer-vision" class="level5">
+<h5 class="anchored" data-anchor-id="d-computer-vision">24.4. 3D Computer Vision</h5>
+<ul>
+<li>24.4.1. 3D shape representation
+<ul>
+<li>24.4.1.1. Voxels</li>
+<li>24.4.1.2. Point clouds</li>
+<li>24.4.1.3. Meshes</li>
+</ul></li>
+<li>24.4.2. 3D convolutions</li>
+<li>24.4.3. PointNet and PointNet++</li>
+<li>24.4.4. Graph Convolutional Networks for 3D data</li>
+<li>24.4.5. 3D reconstruction</li>
+<li>24.4.6. Depth estimation</li>
+</ul>
+</section>
+<section id="visual-question-answering" class="level5">
+<h5 class="anchored" data-anchor-id="visual-question-answering">24.5. Visual Question Answering</h5>
+<ul>
+<li>24.5.1. Image-text fusion techniques</li>
+<li>24.5.2. Attention mechanisms for VQA</li>
+<li>24.5.3. Knowledge incorporation in VQA</li>
+</ul>
+</section>
+<section id="image-generation-and-manipulation" class="level5">
+<h5 class="anchored" data-anchor-id="image-generation-and-manipulation">24.6. Image Generation and Manipulation</h5>
+<ul>
+<li>24.6.1. Style transfer</li>
+<li>24.6.2. Image-to-image translation</li>
+<li>24.6.3. Super-resolution</li>
+<li>24.6.4. Inpainting</li>
+</ul>
+</section>
+<section id="video-understanding" class="level5">
+<h5 class="anchored" data-anchor-id="video-understanding">24.7. Video Understanding</h5>
+<ul>
+<li>24.7.1. Action recognition</li>
+<li>24.7.2. Video captioning</li>
+<li>24.7.3. Video question answering</li>
+</ul>
+</section>
+<section id="few-shot-and-zero-shot-learning-in-computer-vision" class="level5">
+<h5 class="anchored" data-anchor-id="few-shot-and-zero-shot-learning-in-computer-vision">24.8. Few-shot and Zero-shot Learning in Computer Vision</h5>
+</section>
+<section id="self-supervised-learning-in-computer-vision" class="level5">
+<h5 class="anchored" data-anchor-id="self-supervised-learning-in-computer-vision">24.9. Self-supervised Learning in Computer Vision</h5>
+</section>
+<section id="adversarial-attacks-and-defenses-in-computer-vision" class="level5">
+<h5 class="anchored" data-anchor-id="adversarial-attacks-and-defenses-in-computer-vision">24.10. Adversarial Attacks and Defenses in Computer Vision</h5>
+</section>
+<section id="multimodal-learning" class="level5">
+<h5 class="anchored" data-anchor-id="multimodal-learning">24.11. Multimodal Learning</h5>
+<ul>
+<li>24.11.1. Vision-and-Language Navigation</li>
+<li>24.11.2. Visual Reasoning</li>
+</ul>
+</section>
+<section id="efficient-computer-vision-models" class="level5">
+<h5 class="anchored" data-anchor-id="efficient-computer-vision-models">24.12. Efficient Computer Vision Models</h5>
+<ul>
+<li>24.12.1. MobileNet</li>
+<li>24.12.2. EfficientNet</li>
+<li>24.12.3. ShuffleNet</li>
+</ul>
+</section>
+</section>
+<section id="very-advanced-state-of-the-art" class="level1">
+<h1>Very Advanced / State-of-the-Art</h1>
+<h4 class="topic anchored" data-anchor-id="very-advanced-state-of-the-art">
+<a href="../content/tutorials/ml/chapter25_meta_learning.html">Chapter 25. Meta-learning</a>
+</h4>
+<section id="problem-formulation-and-taxonomy" class="level5">
+<h5 class="anchored" data-anchor-id="problem-formulation-and-taxonomy">25.1. Problem Formulation and Taxonomy</h5>
+</section>
+<section id="metric-based-meta-learning" class="level5">
+<h5 class="anchored" data-anchor-id="metric-based-meta-learning">25.2. Metric-based Meta-learning</h5>
+<ul>
+<li>25.2.1. Siamese Networks</li>
+<li>25.2.2. Matching Networks</li>
+<li>25.2.3. Prototypical Networks</li>
+<li>25.2.4. Relation Networks</li>
+</ul>
+</section>
+<section id="model-based-meta-learning" class="level5">
+<h5 class="anchored" data-anchor-id="model-based-meta-learning">25.3. Model-based Meta-learning</h5>
+<ul>
+<li>25.3.1. Meta Networks</li>
+<li>25.3.2. Memory-Augmented Neural Networks</li>
+</ul>
+</section>
+<section id="optimization-based-meta-learning" class="level5">
+<h5 class="anchored" data-anchor-id="optimization-based-meta-learning">25.4. Optimization-based Meta-learning</h5>
+<ul>
+<li>25.4.1. MAML (Model-Agnostic Meta-Learning)</li>
+<li>25.4.2. Reptile</li>
+<li>25.4.3. LEO (Latent Embedding Optimization)</li>
+</ul>
+</section>
+<section id="few-shot-learning" class="level5">
+<h5 class="anchored" data-anchor-id="few-shot-learning">25.5. Few-shot Learning</h5>
+<ul>
+<li>25.5.1. Data augmentation for few-shot learning</li>
+<li>25.5.2. Semi-supervised few-shot learning</li>
+<li>25.5.3. Transductive few-shot learning</li>
+</ul>
+</section>
+<section id="zero-shot-learning" class="level5">
+<h5 class="anchored" data-anchor-id="zero-shot-learning">25.6. Zero-shot Learning</h5>
+<ul>
+<li>25.6.1. Attribute-based methods</li>
+<li>25.6.2. Embedding-based methods</li>
+</ul>
+</section>
+<section id="transfer-learning-advanced-techniques" class="level5">
+<h5 class="anchored" data-anchor-id="transfer-learning-advanced-techniques">25.7. Transfer Learning Advanced Techniques</h5>
+<ul>
+<li>25.7.1. Domain adaptation</li>
+<li>25.7.2. Multi-task learning</li>
+</ul>
+</section>
+<section id="learning-to-learn" class="level5">
+<h5 class="anchored" data-anchor-id="learning-to-learn">25.8. Learning to Learn</h5>
+<ul>
+<li>25.8.1. Learning optimizers</li>
+<li>25.8.2. Learning initializations</li>
+<li>25.8.3. Learning architectures</li>
+</ul>
+</section>
+<section id="meta-reinforcement-learning-1" class="level5">
+<h5 class="anchored" data-anchor-id="meta-reinforcement-learning-1">25.9. Meta-Reinforcement Learning</h5>
+</section>
+<section id="continual-meta-learning" class="level5">
+<h5 class="anchored" data-anchor-id="continual-meta-learning">25.10. Continual Meta-learning</h5>
+</section>
+<section id="meta-learning-for-neural-architecture-search" class="level5">
+<h5 class="anchored">25.11. Meta-learning for Neural Architecture Search</h5>
+<h4 class="topic anchored" data-anchor-id="meta-learning-for-neural-architecture-search">
+<a href="../content/tutorials/ml/chapter26_self_supervised_learning.html">Chapter 26. Self-supervised Learning</a>
+</h4>
+</section>
+<section id="pretext-tasks-in-computer-vision" class="level5">
+<h5 class="anchored" data-anchor-id="pretext-tasks-in-computer-vision">26.1. Pretext Tasks in Computer Vision</h5>
+<ul>
+<li>26.1.1. Rotation prediction</li>
+<li>26.1.2. Jigsaw puzzles</li>
+<li>26.1.3. Colorization</li>
+<li>26.1.4. Inpainting</li>
+</ul>
+</section>
+<section id="contrastive-learning" class="level5">
+<h5 class="anchored" data-anchor-id="contrastive-learning">26.2. Contrastive Learning</h5>
+<ul>
+<li>26.2.1. SimCLR</li>
+<li>26.2.2. MoCo (Momentum Contrast)</li>
+<li>26.2.3. BYOL (Bootstrap Your Own Latent)</li>
+<li>26.2.4. SwAV (Swapping Assignments between Views)</li>
+</ul>
+</section>
+<section id="masked-language-modeling" class="level5">
+<h5 class="anchored" data-anchor-id="masked-language-modeling">26.3. Masked Language Modeling</h5>
+<ul>
+<li>26.3.1. BERT and its variants</li>
+<li>26.3.2. RoBERTa</li>
+<li>26.3.3. ALBERT</li>
+</ul>
+</section>
+<section id="self-supervised-vision-transformers" class="level5">
+<h5 class="anchored" data-anchor-id="self-supervised-vision-transformers">26.4. Self-supervised Vision Transformers</h5>
+<ul>
+<li>26.4.1. ViT (Vision Transformer)</li>
+<li>26.4.2. DeiT (Data-efficient Image Transformers)</li>
+<li>26.4.3. DINO (Self-Distillation with No Labels)</li>
+</ul>
+</section>
+<section id="self-supervised-learning-in-graph-neural-networks" class="level5">
+<h5 class="anchored" data-anchor-id="self-supervised-learning-in-graph-neural-networks">26.5. Self-supervised Learning in Graph Neural Networks</h5>
+</section>
+<section id="self-supervised-learning-for-speech-recognition" class="level5">
+<h5 class="anchored" data-anchor-id="self-supervised-learning-for-speech-recognition">26.6. Self-supervised Learning for Speech Recognition</h5>
+</section>
+<section id="self-supervised-learning-in-reinforcement-learning" class="level5">
+<h5 class="anchored" data-anchor-id="self-supervised-learning-in-reinforcement-learning">26.7. Self-supervised Learning in Reinforcement Learning</h5>
+</section>
+<section id="multi-modal-self-supervised-learning" class="level5">
+<h5 class="anchored" data-anchor-id="multi-modal-self-supervised-learning">26.8. Multi-modal Self-supervised Learning</h5>
+</section>
+<section id="self-supervised-few-shot-learning" class="level5">
+<h5 class="anchored" data-anchor-id="self-supervised-few-shot-learning">26.9. Self-supervised Few-shot Learning</h5>
+</section>
+<section id="theoretical-aspects-of-self-supervised-learning" class="level5">
+<h5 class="anchored">26.10. Theoretical Aspects of Self-supervised Learning</h5>
+<h4 class="topic anchored" data-anchor-id="theoretical-aspects-of-self-supervised-learning">
+<a href="../content/tutorials/ml/chapter27_federated_learning.html">Chapter 27. Federated Learning</a>
+</h4>
+</section>
+<section id="federated-averaging-fedavg-algorithm" class="level5">
+<h5 class="anchored" data-anchor-id="federated-averaging-fedavg-algorithm">27.1. Federated Averaging (FedAvg) Algorithm</h5>
+</section>
+<section id="privacy-preserving-machine-learning" class="level5">
+<h5 class="anchored" data-anchor-id="privacy-preserving-machine-learning">27.2. Privacy-preserving Machine Learning</h5>
+<ul>
+<li>27.2.1. Differential privacy in federated learning</li>
+<li>27.2.2. Secure aggregation protocols</li>
+<li>27.2.3. Homomorphic encryption in federated learning</li>
+</ul>
+</section>
+<section id="decentralized-model-training" class="level5">
+<h5 class="anchored" data-anchor-id="decentralized-model-training">27.3. Decentralized Model Training</h5>
+<ul>
+<li>27.3.1. Peer-to-peer federated learning</li>
+<li>27.3.2. Blockchain-based federated learning</li>
+</ul>
+</section>
+<section id="secure-multi-party-computation" class="level5">
+<h5 class="anchored" data-anchor-id="secure-multi-party-computation">27.4. Secure Multi-party Computation</h5>
+</section>
+<section id="federated-learning-system-design" class="level5">
+<h5 class="anchored" data-anchor-id="federated-learning-system-design">27.5. Federated Learning System Design</h5>
+<ul>
+<li>27.5.1. Communication efficiency</li>
+<li>27.5.2. Client selection strategies</li>
+<li>27.5.3. Model compression for federated learning</li>
+</ul>
+</section>
+<section id="personalization-in-federated-learning" class="level5">
+<h5 class="anchored" data-anchor-id="personalization-in-federated-learning">27.6. Personalization in Federated Learning</h5>
+</section>
+<section id="federated-transfer-learning" class="level5">
+<h5 class="anchored" data-anchor-id="federated-transfer-learning">27.7. Federated Transfer Learning</h5>
+</section>
+<section id="vertical-federated-learning" class="level5">
+<h5 class="anchored" data-anchor-id="vertical-federated-learning">27.8. Vertical Federated Learning</h5>
+</section>
+<section id="federated-reinforcement-learning" class="level5">
+<h5 class="anchored" data-anchor-id="federated-reinforcement-learning">27.9. Federated Reinforcement Learning</h5>
+</section>
+<section id="federated-natural-language-processing" class="level5">
+<h5 class="anchored" data-anchor-id="federated-natural-language-processing">27.10. Federated Natural Language Processing</h5>
+</section>
+<section id="federated-learning-for-iot-and-edge-devices" class="level5">
+<h5 class="anchored" data-anchor-id="federated-learning-for-iot-and-edge-devices">27.11. Federated Learning for IoT and Edge Devices</h5>
+</section>
+<section id="adversarial-attacks-and-defenses-in-federated-learning" class="level5">
+<h5 class="anchored" data-anchor-id="adversarial-attacks-and-defenses-in-federated-learning">27.12. Adversarial Attacks and Defenses in Federated Learning</h5>
+</section>
+<section id="fairness-in-federated-learning" class="level5">
+<h5 class="anchored">27.13. Fairness in Federated Learning</h5>
+<h4 class="topic anchored" data-anchor-id="fairness-in-federated-learning">
+<a href="../content/tutorials/ml/chapter28_quantum_machine_learning.html">Chapter 28. Quantum Machine Learning</a>
+</h4>
+</section>
+<section id="fundamentals-of-quantum-computing" class="level5">
+<h5 class="anchored" data-anchor-id="fundamentals-of-quantum-computing">28.1. Fundamentals of Quantum Computing</h5>
+<ul>
+<li>28.1.1. Qubits and quantum gates</li>
+<li>28.1.2. Quantum circuits</li>
+<li>28.1.3. Quantum measurement</li>
+</ul>
+</section>
+<section id="quantum-algorithms-for-machine-learning" class="level5">
+<h5 class="anchored" data-anchor-id="quantum-algorithms-for-machine-learning">28.2. Quantum Algorithms for Machine Learning</h5>
+<ul>
+<li>28.2.1. Quantum Principal Component Analysis</li>
+<li>28.2.2. Quantum Support Vector Machines</li>
+<li>28.2.3. Quantum k-means clustering</li>
+<li>28.2.4. Quantum Neural Networks</li>
+</ul>
+</section>
+<section id="variational-quantum-algorithms" class="level5">
+<h5 class="anchored" data-anchor-id="variational-quantum-algorithms">28.3. Variational Quantum Algorithms</h5>
+<ul>
+<li>28.3.1. Variational Quantum Eigensolver (VQE)</li>
+<li>28.3.2. Quantum Approximate Optimization Algorithm (QAOA)</li>
+</ul>
+</section>
+<section id="quantum-inspired-classical-algorithms" class="level5">
+<h5 class="anchored" data-anchor-id="quantum-inspired-classical-algorithms">28.4. Quantum-inspired Classical Algorithms</h5>
+<ul>
+<li>28.4.1. Tensor networks for machine learning</li>
+<li>28.4.2. Quantum-inspired recommendation systems</li>
+</ul>
+</section>
+<section id="quantum-reinforcement-learning" class="level5">
+<h5 class="anchored" data-anchor-id="quantum-reinforcement-learning">28.5. Quantum Reinforcement Learning</h5>
+</section>
+<section id="quantum-generative-models" class="level5">
+<h5 class="anchored" data-anchor-id="quantum-generative-models">28.6. Quantum Generative Models</h5>
+<ul>
+<li>28.6.1. Quantum Generative Adversarial Networks</li>
+<li>28.6.2. Quantum Boltzmann Machines</li>
+</ul>
+</section>
+<section id="quantum-error-correction-for-machine-learning" class="level5">
+<h5 class="anchored" data-anchor-id="quantum-error-correction-for-machine-learning">28.7. Quantum Error Correction for Machine Learning</h5>
+</section>
+<section id="quantum-machine-learning" class="level5">
+<h5 class="anchored">28.8. Quantum Machine Learning</h5>
+<h4 class="topic anchored" data-anchor-id="quantum-machine-learning">
+<a href="../content/tutorials/ml/chapter29_neuro_symbolic_ai.html">Chapter 29. Neuro-symbolic AI</a>
+</h4>
+</section>
+<section id="foundations-of-neuro-symbolic-ai" class="level5">
+<h5 class="anchored" data-anchor-id="foundations-of-neuro-symbolic-ai">29.1. Foundations of Neuro-symbolic AI</h5>
+<ul>
+<li>29.1.1. Symbolic AI vs.&nbsp;Neural Networks</li>
+<li>29.1.2. Knowledge representation in neuro-symbolic systems</li>
+</ul>
+</section>
+<section id="combining-neural-networks-with-symbolic-reasoning" class="level5">
+<h5 class="anchored" data-anchor-id="combining-neural-networks-with-symbolic-reasoning">29.2. Combining Neural Networks with Symbolic Reasoning</h5>
+<ul>
+<li>29.2.1. Neural-symbolic integration architectures</li>
+<li>29.2.2. Differentiable reasoning</li>
+</ul>
+</section>
+<section id="neural-symbolic-integration" class="level5">
+<h5 class="anchored" data-anchor-id="neural-symbolic-integration">29.3. Neural-symbolic Integration</h5>
+<ul>
+<li>29.3.1. Logic Tensor Networks</li>
+<li>29.3.2. Neural Theorem Provers</li>
+</ul>
+</section>
+<section id="concept-learning-and-reasoning" class="level5">
+<h5 class="anchored" data-anchor-id="concept-learning-and-reasoning">29.4. Concept Learning and Reasoning</h5>
+<ul>
+<li>29.4.1. Concept formation in neural networks</li>
+<li>29.4.2. Analogical reasoning</li>
+</ul>
+</section>
+<section id="neuro-symbolic-program-synthesis" class="level5">
+<h5 class="anchored" data-anchor-id="neuro-symbolic-program-synthesis">29.5. Neuro-symbolic Program Synthesis</h5>
+</section>
+<section id="explainable-ai-through-neuro-symbolic-approaches" class="level5">
+<h5 class="anchored" data-anchor-id="explainable-ai-through-neuro-symbolic-approaches">29.6. Explainable AI through Neuro-symbolic Approaches</h5>
+</section>
+<section id="neuro-symbolic-planning-and-decision-making" class="level5">
+<h5 class="anchored" data-anchor-id="neuro-symbolic-planning-and-decision-making">29.7. Neuro-symbolic Planning and Decision Making</h5>
+</section>
+<section id="neuro-symbolic-natural-language-processing" class="level5">
+<h5 class="anchored" data-anchor-id="neuro-symbolic-natural-language-processing">29.8. Neuro-symbolic Natural Language Processing</h5>
+</section>
+<section id="neuro-symbolic-computer-vision" class="level5">
+<h5 class="anchored" data-anchor-id="neuro-symbolic-computer-vision">29.9. Neuro-symbolic Computer Vision</h5>
+</section>
+<section id="cognitive-architectures-for-neuro-symbolic-ai" class="level5">
+<h5 class="anchored">29.10. Cognitive Architectures for Neuro-symbolic AI</h5>
+<h4 class="topic anchored" data-anchor-id="cognitive-architectures-for-neuro-symbolic-ai">
+<a href="../content/tutorials/ml/chapter30_automated_machine_learning.html">Chapter 30. Automated Machine Learning (AutoML)</a>
+</h4>
+</section>
+<section id="neural-architecture-search-nas" class="level5">
+<h5 class="anchored" data-anchor-id="neural-architecture-search-nas">30.1. Neural Architecture Search (NAS)</h5>
+<ul>
+<li>30.1.1. Reinforcement learning-based NAS</li>
+<li>30.1.2. Evolutionary algorithms for NAS</li>
+<li>30.1.3. Gradient-based NAS</li>
+<li>30.1.4. One-shot NAS</li>
+</ul>
+</section>
+<section id="hyperparameter-optimization" class="level5">
+<h5 class="anchored" data-anchor-id="hyperparameter-optimization">30.2. Hyperparameter Optimization</h5>
+<ul>
+<li>30.2.1. Grid search and random search</li>
+<li>30.2.2. Bayesian optimization for hyperparameter tuning</li>
+<li>30.2.3. Multi-fidelity optimization</li>
+<li>30.2.4. Population-based training</li>
+</ul>
+</section>
+<section id="meta-learning-for-automl" class="level5">
+<h5 class="anchored" data-anchor-id="meta-learning-for-automl">30.3. Meta-learning for AutoML</h5>
+<ul>
+<li>30.3.1. Learning to learn optimizers</li>
+<li>30.3.2. Meta-learning for few-shot NAS</li>
+</ul>
+</section>
+<section id="automl-for-edge-devices" class="level5">
+<h5 class="anchored" data-anchor-id="automl-for-edge-devices">30.4. AutoML for Edge Devices</h5>
+<ul>
+<li>30.4.1. Hardware-aware NAS</li>
+<li>30.4.2. Model compression and quantization in AutoML</li>
+</ul>
+</section>
+<section id="automated-feature-engineering-1" class="level5">
+<h5 class="anchored" data-anchor-id="automated-feature-engineering-1">30.5. Automated Feature Engineering</h5>
+</section>
+<section id="auto-sklearn-and-auto-pytorch" class="level5">
+<h5 class="anchored" data-anchor-id="auto-sklearn-and-auto-pytorch">30.6. Auto-sklearn and Auto-PyTorch</h5>
+</section>
+<section id="google-cloud-automl-and-amazon-sagemaker-autopilot" class="level5">
+<h5 class="anchored" data-anchor-id="google-cloud-automl-and-amazon-sagemaker-autopilot">30.7. Google Cloud AutoML and Amazon SageMaker Autopilot</h5>
+</section>
+<section id="automl-for-time-series-forecasting" class="level5">
+<h5 class="anchored" data-anchor-id="automl-for-time-series-forecasting">30.8. AutoML for Time Series Forecasting</h5>
+</section>
+<section id="automl-for-reinforcement-learning" class="level5">
+<h5 class="anchored" data-anchor-id="automl-for-reinforcement-learning">30.9. AutoML for Reinforcement Learning</h5>
+</section>
+<section id="automated-data-augmentation" class="level5">
+<h5 class="anchored">30.10. Automated Data Augmentation</h5>
+<h4 class="topic anchored" data-anchor-id="automated-data-augmentation">
+<a href="../content/tutorials/ml/chapter31_causal_inference_in_machine_learning.html">Chapter 31. Causal Inference in Machine Learning</a>
+</h4>
+</section>
+<section id="fundamentals-of-causal-inference" class="level5">
+<h5 class="anchored" data-anchor-id="fundamentals-of-causal-inference">31.1. Fundamentals of Causal Inference</h5>
+<ul>
+<li>31.1.1. Causal graphs and structural causal models</li>
+<li>31.1.2. Potential outcomes framework</li>
+<li>31.1.3. Do-calculus</li>
+</ul>
+</section>
+<section id="causal-discovery" class="level5">
+<h5 class="anchored" data-anchor-id="causal-discovery">31.2. Causal Discovery</h5>
+<ul>
+<li>31.2.1. Constraint-based methods</li>
+<li>31.2.2. Score-based methods</li>
+<li>31.2.3. Hybrid methods</li>
+</ul>
+</section>
+<section id="counterfactual-reasoning" class="level5">
+<h5 class="anchored" data-anchor-id="counterfactual-reasoning">31.3. Counterfactual Reasoning</h5>
+<ul>
+<li>31.3.1. Individual treatment effects</li>
+<li>31.3.2. Counterfactual explanations</li>
+</ul>
+</section>
+<section id="causal-effect-estimation" class="level5">
+<h5 class="anchored" data-anchor-id="causal-effect-estimation">31.4. Causal Effect Estimation</h5>
+<ul>
+<li>31.4.1. Propensity score methods</li>
+<li>31.4.2. Instrumental variables</li>
+<li>31.4.3. Difference-in-differences</li>
+<li>31.4.4. Regression discontinuity design</li>
+</ul>
+</section>
+<section id="causal-representation-learning" class="level5">
+<h5 class="anchored" data-anchor-id="causal-representation-learning">31.5. Causal Representation Learning</h5>
+<ul>
+<li>31.5.1. Disentangled representations</li>
+<li>31.5.2. Invariant risk minimization</li>
+</ul>
+</section>
+<section id="causal-reinforcement-learning" class="level5">
+<h5 class="anchored" data-anchor-id="causal-reinforcement-learning">31.6. Causal Reinforcement Learning</h5>
+</section>
+<section id="causal-inference-in-natural-language-processing" class="level5">
+<h5 class="anchored" data-anchor-id="causal-inference-in-natural-language-processing">31.7. Causal Inference in Natural Language Processing</h5>
+</section>
+<section id="causal-fairness" class="level5">
+<h5 class="anchored" data-anchor-id="causal-fairness">31.8. Causal Fairness</h5>
+</section>
+<section id="causal-transfer-learning" class="level5">
+<h5 class="anchored" data-anchor-id="causal-transfer-learning">31.9. Causal Transfer Learning</h5>
+</section>
+<section id="causal-interpretability-of-machine-learning-models" class="level5">
+<h5 class="anchored">31.10. Causal Interpretability of Machine Learning Models</h5>
+<h4 class="topic anchored" data-anchor-id="causal-interpretability-of-machine-learning-models">
+<a href="../content/tutorials/ml/chapter32_continual_learning.html">Chapter 32. Continual Learning</a>
+</h4>
+</section>
+<section id="catastrophic-forgetting" class="level5">
+<h5 class="anchored" data-anchor-id="catastrophic-forgetting">32.1. Catastrophic Forgetting</h5>
+<ul>
+<li>32.1.1. Measuring forgetting</li>
+<li>32.1.2. Understanding the causes of forgetting</li>
+</ul>
+</section>
+<section id="regularization-based-methods" class="level5">
+<h5 class="anchored" data-anchor-id="regularization-based-methods">32.2. Regularization-based Methods</h5>
+<ul>
+<li>32.2.1. Elastic Weight Consolidation (EWC)</li>
+<li>32.2.2. Synaptic Intelligence</li>
+<li>32.2.3. Memory Aware Synapses</li>
+</ul>
+</section>
+<section id="dynamic-architectures" class="level5">
+<h5 class="anchored" data-anchor-id="dynamic-architectures">32.3. Dynamic Architectures</h5>
+<ul>
+<li>32.3.1. Progressive Neural Networks</li>
+<li>32.3.2. Dynamically Expandable Networks</li>
+</ul>
+</section>
+<section id="memory-based-approaches" class="level5">
+<h5 class="anchored" data-anchor-id="memory-based-approaches">32.4. Memory-based Approaches</h5>
+<ul>
+<li>32.4.1. Gradient Episodic Memory</li>
+<li>32.4.2. Experience Replay</li>
+</ul>
+</section>
+<section id="meta-learning-for-continual-learning" class="level5">
+<h5 class="anchored" data-anchor-id="meta-learning-for-continual-learning">32.5. Meta-learning for Continual Learning</h5>
+</section>
+<section id="generative-replay" class="level5">
+<h5 class="anchored" data-anchor-id="generative-replay">32.6. Generative Replay</h5>
+</section>
+<section id="continual-learning-in-reinforcement-learning" class="level5">
+<h5 class="anchored" data-anchor-id="continual-learning-in-reinforcement-learning">32.7. Continual Learning in Reinforcement Learning</h5>
+</section>
+<section id="continual-learning-for-natural-language-processing" class="level5">
+<h5 class="anchored" data-anchor-id="continual-learning-for-natural-language-processing">32.8. Continual Learning for Natural Language Processing</h5>
+</section>
+<section id="continual-learning-in-computer-vision" class="level5">
+<h5 class="anchored" data-anchor-id="continual-learning-in-computer-vision">32.9. Continual Learning in Computer Vision</h5>
+</section>
+<section id="evaluation-metrics-for-continual-learning" class="level5">
+<h5 class="anchored">32.10. Evaluation Metrics for Continual Learning</h5>
+<h4 class="topic anchored" data-anchor-id="evaluation-metrics-for-continual-learning">
+<a href="../content/tutorials/ml/chapter33_graph_neural_networks.html">Chapter 33. Graph Neural Networks</a>
+</h4>
+</section>
+<section id="foundations-of-graph-neural-networks" class="level5">
+<h5 class="anchored" data-anchor-id="foundations-of-graph-neural-networks">33.1. Foundations of Graph Neural Networks</h5>
+<ul>
+<li>33.1.1. Graph representation learning</li>
+<li>33.1.2. Message passing framework</li>
+</ul>
+</section>
+<section id="graph-convolutional-networks-gcn" class="level5">
+<h5 class="anchored" data-anchor-id="graph-convolutional-networks-gcn">33.2. Graph Convolutional Networks (GCN)</h5>
+<ul>
+<li>33.2.1. Spectral-based GCNs</li>
+<li>33.2.2. Spatial-based GCNs</li>
+</ul>
+</section>
+<section id="graph-attention-networks-gat" class="level5">
+<h5 class="anchored" data-anchor-id="graph-attention-networks-gat">33.3. Graph Attention Networks (GAT)</h5>
+</section>
+<section id="graphsage" class="level5">
+<h5 class="anchored" data-anchor-id="graphsage">33.4. GraphSAGE</h5>
+</section>
+<section id="graph-autoencoders" class="level5">
+<h5 class="anchored" data-anchor-id="graph-autoencoders">33.5. Graph Autoencoders</h5>
+</section>
+<section id="temporal-graph-networks" class="level5">
+<h5 class="anchored" data-anchor-id="temporal-graph-networks">33.6. Temporal Graph Networks</h5>
+<ul>
+<li>33.6.1. Dynamic Graph CNN</li>
+<li>33.6.2. Spatio-Temporal Graph Convolutional Networks</li>
+</ul>
+</section>
+<section id="graph-generation" class="level5">
+<h5 class="anchored" data-anchor-id="graph-generation">33.7. Graph Generation</h5>
+<ul>
+<li>33.7.1. GraphRNN</li>
+<li>33.7.2. Graph VAE</li>
+</ul>
+</section>
+<section id="graph-neural-networks-for-recommender-systems" class="level5">
+<h5 class="anchored" data-anchor-id="graph-neural-networks-for-recommender-systems">33.8. Graph Neural Networks for Recommender Systems</h5>
+</section>
+<section id="graph-neural-networks-for-natural-language-processing" class="level5">
+<h5 class="anchored" data-anchor-id="graph-neural-networks-for-natural-language-processing">33.9. Graph Neural Networks for Natural Language Processing</h5>
+</section>
+<section id="graph-neural-networks-for-computer-vision" class="level5">
+<h5 class="anchored" data-anchor-id="graph-neural-networks-for-computer-vision">33.10. Graph Neural Networks for Computer Vision</h5>
+</section>
+<section id="graph-neural-networks-for-bioinformatics-and-chemistry" class="level5">
+<h5 class="anchored" data-anchor-id="graph-neural-networks-for-bioinformatics-and-chemistry">33.11. Graph Neural Networks for Bioinformatics and Chemistry</h5>
+</section>
+<section id="scalability-in-graph-neural-networks" class="level5">
+<h5 class="anchored" data-anchor-id="scalability-in-graph-neural-networks">33.12. Scalability in Graph Neural Networks</h5>
+</section>
+<section id="explainability-in-graph-neural-networks" class="level5">
+<h5 class="anchored">33.13. Explainability in Graph Neural Networks</h5>
+<h4 class="topic anchored" data-anchor-id="explainability-in-graph-neural-networks">
+<a href="../content/tutorials/ml/chapter34_advanced_generative_models.html">Chapter 34. Advanced Generative Models</a>
+</h4>
+</section>
+<section id="flow-based-models" class="level5">
+<h5 class="anchored" data-anchor-id="flow-based-models">34.1. Flow-based Models</h5>
+<ul>
+<li>34.1.1. Normalizing Flows</li>
+<li>34.1.2. Real NVP</li>
+<li>34.1.3. Glow</li>
+</ul>
+</section>
+<section id="diffusion-models" class="level5">
+<h5 class="anchored" data-anchor-id="diffusion-models">34.2. Diffusion Models</h5>
+<ul>
+<li>34.2.1. Denoising Diffusion Probabilistic Models (DDPM)</li>
+<li>34.2.2. Score-based generative models</li>
+<li>34.2.3. Applications in image and audio generation</li>
+</ul>
+</section>
+<section id="energy-based-models" class="level5">
+<h5 class="anchored" data-anchor-id="energy-based-models">34.3. Energy-based Models</h5>
+<ul>
+<li>34.3.1. Contrastive Divergence</li>
+<li>34.3.2. Noise-Contrastive Estimation</li>
+</ul>
+</section>
+<section id="neural-radiance-fields-nerf" class="level5">
+<h5 class="anchored" data-anchor-id="neural-radiance-fields-nerf">34.4. Neural Radiance Fields (NeRF)</h5>
+<ul>
+<li>34.4.1. NeRF for novel view synthesis</li>
+<li>34.4.2. Dynamic NeRF</li>
+<li>34.4.3. Generalizable NeRF</li>
+</ul>
+</section>
+<section id="implicit-neural-representations" class="level5">
+<h5 class="anchored" data-anchor-id="implicit-neural-representations">34.5. Implicit Neural Representations</h5>
+</section>
+<section id="adversarial-generative-models" class="level5">
+<h5 class="anchored" data-anchor-id="adversarial-generative-models">34.6. Adversarial Generative Models</h5>
+<ul>
+<li>34.6.1. StyleGAN and StyleGAN2</li>
+<li>34.6.2. BigGAN</li>
+</ul>
+</section>
+<section id="transformer-based-generative-models" class="level5">
+<h5 class="anchored" data-anchor-id="transformer-based-generative-models">34.7. Transformer-based Generative Models</h5>
+<ul>
+<li>34.7.1. Image GPT</li>
+<li>34.7.2. DALL-E and DALL-E 2</li>
+</ul>
+</section>
+<section id="generative-models-for-3d-data" class="level5">
+<h5 class="anchored" data-anchor-id="generative-models-for-3d-data">34.8. Generative Models for 3D Data</h5>
+</section>
+<section id="controllable-generation" class="level5">
+<h5 class="anchored" data-anchor-id="controllable-generation">34.9. Controllable Generation</h5>
+</section>
+<section id="evaluation-metrics-for-generative-models" class="level5">
+<h5 class="anchored">34.10. Evaluation Metrics for Generative Models</h5>
+<h4 class="topic anchored" data-anchor-id="evaluation-metrics-for-generative-models">
+<a href="../content/tutorials/ml/chapter35_multimodal_learning.html">Chapter 35. Multimodal Learning</a>
+</h4>
+</section>
+<section id="vision-language-models" class="level5">
+<h5 class="anchored" data-anchor-id="vision-language-models">35.1. Vision-language Models</h5>
+<ul>
+<li>35.1.1. CLIP (Contrastive Language-Image Pre-training)</li>
+<li>35.1.2. DALL-E</li>
+<li>35.1.3. ViLBERT</li>
+</ul>
+</section>
+<section id="audio-visual-learning" class="level5">
+<h5 class="anchored" data-anchor-id="audio-visual-learning">35.2. Audio-visual Learning</h5>
+<ul>
+<li>35.2.1. Audio-visual speech recognition</li>
+<li>35.2.2. Sound source localization</li>
+<li>35.2.3. Audio-visual event localization</li>
+</ul>
+</section>
+<section id="cross-modal-retrieval" class="level5">
+<h5 class="anchored" data-anchor-id="cross-modal-retrieval">35.3. Cross-modal Retrieval</h5>
+<ul>
+<li>35.3.1. Image-text retrieval</li>
+<li>35.3.2. Audio-visual retrieval</li>
+</ul>
+</section>
+<section id="multimodal-transformers" class="level5">
+<h5 class="anchored" data-anchor-id="multimodal-transformers">35.4. Multimodal Transformers</h5>
+<ul>
+<li>35.4.1. MMBT (Multimodal BiTransformers)</li>
+<li>35.4.2. LXMERT</li>
+<li>35.4.3. UNITER</li>
+</ul>
+</section>
+<section id="multimodal-fusion-techniques" class="level5">
+<h5 class="anchored" data-anchor-id="multimodal-fusion-techniques">35.5. Multimodal Fusion Techniques</h5>
+<ul>
+<li>35.5.1. Early fusion</li>
+<li>35.5.2. Late fusion</li>
+<li>35.5.3. Hybrid fusion</li>
+</ul>
+</section>
+<section id="multimodal-representation-learning" class="level5">
+<h5 class="anchored" data-anchor-id="multimodal-representation-learning">35.6. Multimodal Representation Learning</h5>
+</section>
+<section id="multimodal-generation" class="level5">
+<h5 class="anchored" data-anchor-id="multimodal-generation">35.7. Multimodal Generation</h5>
+<ul>
+<li>35.7.1. Text-to-image synthesis</li>
+<li>35.7.2. Text-to-speech synthesis</li>
+</ul>
+</section>
+<section id="multimodal-question-answering" class="level5">
+<h5 class="anchored" data-anchor-id="multimodal-question-answering">35.8. Multimodal Question Answering</h5>
+</section>
+<section id="multimodal-emotion-recognition" class="level5">
+<h5 class="anchored" data-anchor-id="multimodal-emotion-recognition">35.9. Multimodal Emotion Recognition</h5>
+</section>
+<section id="multimodal-reinforcement-learning" class="level5">
+<h5 class="anchored">35.10. Multimodal Reinforcement Learning</h5>
+<h4 class="topic anchored" data-anchor-id="multimodal-reinforcement-learning">
+<a href="../content/tutorials/ml/chapter36_ethical_ai_and_fairness_in_machine_learning.html">Chapter 36. Ethical AI and Fairness in Machine Learning</a>
+</h4>
+</section>
+<section id="bias-detection-and-mitigation" class="level5">
+<h5 class="anchored" data-anchor-id="bias-detection-and-mitigation">36.1. Bias Detection and Mitigation</h5>
+<ul>
+<li>36.1.1. Data bias</li>
+<li>36.1.2. Algorithmic bias</li>
+<li>36.1.3. Debiasing techniques</li>
+</ul>
+</section>
+<section id="fairness-aware-machine-learning" class="level5">
+<h5 class="anchored" data-anchor-id="fairness-aware-machine-learning">36.2. Fairness-aware Machine Learning</h5>
+<ul>
+<li>36.2.1. Definitions of fairness</li>
+<li>36.2.2. Fair classification and regression</li>
+<li>36.2.3. Fair representation learning</li>
+</ul>
+</section>
+<section id="interpretability-for-ethical-ai" class="level5">
+<h5 class="anchored" data-anchor-id="interpretability-for-ethical-ai">36.3. Interpretability for Ethical AI</h5>
+<ul>
+<li>36.3.1. Model-agnostic interpretation methods</li>
+<li>36.3.2. Model-specific interpretation methods</li>
+</ul>
+</section>
+<section id="privacy-preserving-machine-learning-1" class="level5">
+<h5 class="anchored" data-anchor-id="privacy-preserving-machine-learning-1">36.4. Privacy-preserving Machine Learning</h5>
+<ul>
+<li>36.4.1. Differential privacy</li>
+<li>36.4.2. Federated learning for privacy</li>
+<li>36.4.3. Homomorphic encryption</li>
+</ul>
+</section>
+<section id="robustness-and-adversarial-machine-learning" class="level5">
+<h5 class="anchored" data-anchor-id="robustness-and-adversarial-machine-learning">36.5. Robustness and Adversarial Machine Learning</h5>
+<ul>
+<li>36.5.1. Adversarial attacks</li>
+<li>36.5.2. Adversarial defenses</li>
+<li>36.5.3. Certified robustness</li>
+</ul>
+</section>
+<section id="ai-safety" class="level5">
+<h5 class="anchored" data-anchor-id="ai-safety">36.6. AI Safety</h5>
+<ul>
+<li>36.6.1. Specification problems</li>
+<li>36.6.2. Robustness to distribution shift</li>
+<li>36.6.3. Safe exploration in reinforcement learning</li>
+</ul>
+</section>
+<section id="ethical-considerations-in-ai-development" class="level5">
+<h5 class="anchored" data-anchor-id="ethical-considerations-in-ai-development">36.7. Ethical Considerations in AI Development</h5>
+<ul>
+<li>36.7.1. AI governance</li>
+<li>36.7.2. Responsible AI practices</li>
+</ul>
+</section>
+<section id="accountability-and-transparency-in-ai-systems" class="level5">
+<h5 class="anchored" data-anchor-id="accountability-and-transparency-in-ai-systems">36.8. Accountability and Transparency in AI Systems</h5>
+</section>
+<section id="ai-ethics-in-specific-domains" class="level5">
+<h5 class="anchored" data-anchor-id="ai-ethics-in-specific-domains">36.9. AI Ethics in Specific Domains</h5>
+<ul>
+<li>36.9.1. Healthcare</li>
+<li>36.9.2. Finance</li>
+<li>36.9.3. Criminal justice</li>
+</ul>
+</section>
+<section id="long-term-impacts-of-ai-on-society" class="level5">
+<h5 class="anchored">36.10. Long-term Impacts of AI on Society</h5>
+<h4 class="topic anchored" data-anchor-id="long-term-impacts-of-ai-on-society">
+<a href="../content/tutorials/ml/chapter37_neuroscience_and_ai.html">Chapter 37. Neuroscience and AI</a>
+</h4>
+</section>
+<section id="brain-inspired-ai-architectures" class="level5">
+<h5 class="anchored" data-anchor-id="brain-inspired-ai-architectures">37.1. Brain-inspired AI Architectures</h5>
+<ul>
+<li>37.1.1. Spiking Neural Networks</li>
+<li>37.1.2. Neuromorphic computing</li>
+</ul>
+</section>
+<section id="computational-neuroscience-models" class="level5">
+<h5 class="anchored" data-anchor-id="computational-neuroscience-models">37.2. Computational Neuroscience Models</h5>
+<ul>
+<li>37.2.1. Models of visual processing</li>
+<li>37.2.2. Models of auditory processing</li>
+<li>37.2.3. Models of decision making</li>
+</ul>
+</section>
+<section id="neural-encoding-and-decoding" class="level5">
+<h5 class="anchored" data-anchor-id="neural-encoding-and-decoding">37.3. Neural Encoding and Decoding</h5>
+<ul>
+<li>37.3.1. Brain-computer interfaces</li>
+<li>37.3.2. Neural decoding for neuroprosthetics</li>
+</ul>
+</section>
+<section id="cognitive-architectures" class="level5">
+<h5 class="anchored" data-anchor-id="cognitive-architectures">37.4. Cognitive Architectures</h5>
+</section>
+<section id="attention-and-memory-in-neuroscience-and-ai" class="level5">
+<h5 class="anchored" data-anchor-id="attention-and-memory-in-neuroscience-and-ai">37.5. Attention and Memory in Neuroscience and AI</h5>
+</section>
+<section id="reinforcement-learning-in-the-brain" class="level5">
+<h5 class="anchored" data-anchor-id="reinforcement-learning-in-the-brain">37.6. Reinforcement Learning in the Brain</h5>
+</section>
+<section id="neuroscience-inspired-optimization-algorithms" class="level5">
+<h5 class="anchored" data-anchor-id="neuroscience-inspired-optimization-algorithms">37.7. Neuroscience-inspired Optimization Algorithms</h5>
+</section>
+<section id="ai-for-neuroscience" class="level5">
+<h5 class="anchored" data-anchor-id="ai-for-neuroscience">37.8. AI for Neuroscience</h5>
+<ul>
+<li>37.8.1. AI-assisted brain mapping</li>
+<li>37.8.2. AI for neurological disorder diagnosis</li>
+</ul>
+</section>
+<section id="computational-psychiatry" class="level5">
+<h5 class="anchored" data-anchor-id="computational-psychiatry">37.9. Computational Psychiatry</h5>
+</section>
+<section id="neuroevolution-and-artificial-life" class="level5">
+<h5 class="anchored">37.10. Neuroevolution and Artificial Life</h5>
+<h4 class="topic anchored" data-anchor-id="neuroevolution-and-artificial-life">
+<a href="../content/tutorials/ml/chapter38_edge_ai_and_tinyml.html">Chapter 38. Edge AI and TinyML</a>
+</h4>
+</section>
+<section id="model-compression-techniques" class="level5">
+<h5 class="anchored" data-anchor-id="model-compression-techniques">38.1. Model Compression Techniques</h5>
+<ul>
+<li>38.1.1. Pruning</li>
+<li>38.1.2. Knowledge distillation</li>
+<li>38.1.3. Low-rank factorization</li>
+</ul>
+</section>
+<section id="quantization-and-pruning" class="level5">
+<h5 class="anchored" data-anchor-id="quantization-and-pruning">38.2. Quantization and Pruning</h5>
+<ul>
+<li>38.2.1. Post-training quantization</li>
+<li>38.2.2. Quantization-aware training</li>
+<li>38.2.3. Structured and unstructured pruning</li>
+</ul>
+</section>
+<section id="hardware-aware-neural-architecture-search" class="level5">
+<h5 class="anchored" data-anchor-id="hardware-aware-neural-architecture-search">38.3. Hardware-aware Neural Architecture Search</h5>
+<ul>
+<li>38.3.1. FPGA-aware NAS</li>
+<li>38.3.2. Mobile device-aware NAS</li>
+</ul>
+</section>
+<section id="federated-learning-on-edge-devices" class="level5">
+<h5 class="anchored" data-anchor-id="federated-learning-on-edge-devices">38.4. Federated Learning on Edge Devices</h5>
+</section>
+<section id="efficient-inference-techniques" class="level5">
+<h5 class="anchored" data-anchor-id="efficient-inference-techniques">38.5. Efficient Inference Techniques</h5>
+<ul>
+<li>38.5.1. Sparse inference</li>
+<li>38.5.2. Binary neural networks</li>
+</ul>
+</section>
+<section id="energy-efficient-deep-learning" class="level5">
+<h5 class="anchored" data-anchor-id="energy-efficient-deep-learning">38.6. Energy-efficient Deep Learning</h5>
+</section>
+<section id="on-device-learning-and-adaptation" class="level5">
+<h5 class="anchored" data-anchor-id="on-device-learning-and-adaptation">38.7. On-device Learning and Adaptation</h5>
+</section>
+<section id="edge-ai-for-iot-and-sensor-networks" class="level5">
+<h5 class="anchored" data-anchor-id="edge-ai-for-iot-and-sensor-networks">38.8. Edge AI for IoT and Sensor Networks</h5>
+</section>
+<section id="privacy-and-security-in-edge-ai" class="level5">
+<h5 class="anchored" data-anchor-id="privacy-and-security-in-edge-ai">38.9. Privacy and Security in Edge AI</h5>
+</section>
+<section id="benchmarking-and-evaluation-for-edge-ai" class="level5">
+<h5 class="anchored">38.10. Benchmarking and Evaluation for Edge AI</h5>
+<h4 class="topic anchored" data-anchor-id="benchmarking-and-evaluation-for-edge-ai">
+<a href="../content/tutorials/ml/chapter39_ai_for_scientific_discovery.html">Chapter 39. AI for Scientific Discovery</a>
+</h4>
+</section>
+<section id="ai-in-drug-discovery" class="level5">
+<h5 class="anchored" data-anchor-id="ai-in-drug-discovery">39.1. AI in Drug Discovery</h5>
+<ul>
+<li>39.1.1. Molecular property prediction</li>
+<li>39.1.2. De novo drug design</li>
+<li>39.1.3. Drug-target interaction prediction</li>
+</ul>
+</section>
+<section id="machine-learning-for-physics-simulations" class="level5">
+<h5 class="anchored" data-anchor-id="machine-learning-for-physics-simulations">39.2. Machine Learning for Physics Simulations</h5>
+<ul>
+<li>39.2.1. Physics-informed neural networks</li>
+<li>39.2.2. Surrogate modeling for computational physics</li>
+</ul>
+</section>
+<section id="ai-assisted-materials-design" class="level5">
+<h5 class="anchored" data-anchor-id="ai-assisted-materials-design">39.3. AI-assisted Materials Design</h5>
+<ul>
+<li>39.3.1. Crystal structure prediction</li>
+<li>39.3.2. Inverse design of materials</li>
+</ul>
+</section>
+<section id="ai-in-astronomy-and-cosmology" class="level5">
+<h5 class="anchored" data-anchor-id="ai-in-astronomy-and-cosmology">39.4. AI in Astronomy and Cosmology</h5>
+</section>
+<section id="machine-learning-for-climate-science" class="level5">
+<h5 class="anchored" data-anchor-id="machine-learning-for-climate-science">39.5. Machine Learning for Climate Science</h5>
+</section>
+<section id="ai-in-genomics-and-proteomics" class="level5">
+<h5 class="anchored" data-anchor-id="ai-in-genomics-and-proteomics">39.6. AI in Genomics and Proteomics</h5>
+</section>
+<section id="accelerating-scientific-simulations-with-ai" class="level5">
+<h5 class="anchored" data-anchor-id="accelerating-scientific-simulations-with-ai">39.7. Accelerating Scientific Simulations with AI</h5>
+</section>
+<section id="ai-for-scientific-literature-mining" class="level5">
+<h5 class="anchored" data-anchor-id="ai-for-scientific-literature-mining">39.8. AI for Scientific Literature Mining</h5>
+</section>
+<section id="automated-hypothesis-generation" class="level5">
+<h5 class="anchored" data-anchor-id="automated-hypothesis-generation">39.9. Automated Hypothesis Generation</h5>
+</section>
+<section id="ai-driven-experimental-design" class="level5">
+<h5 class="anchored">39.10. AI-driven Experimental Design</h5>
+<h4 class="topic anchored" data-anchor-id="ai-driven-experimental-design">
+<a href="../content/tutorials/ml/chapter40_embodied_ai_and_robotics.html">Chapter 40. Embodied AI and Robotics</a>
+</h4>
+</section>
+<section id="reinforcement-learning-for-robotics" class="level5">
+<h5 class="anchored" data-anchor-id="reinforcement-learning-for-robotics">40.1. Reinforcement Learning for Robotics</h5>
+<ul>
+<li>40.1.1. Sample-efficient RL for robotics</li>
+<li>40.1.2. Sim-to-real transfer</li>
+<li>40.1.3. Multi-task and meta-learning for robotics</li>
+</ul>
+</section>
+<section id="imitation-learning" class="level5">
+<h5 class="anchored" data-anchor-id="imitation-learning">40.2. Imitation Learning</h5>
+<ul>
+<li>40.2.1. Behavioral cloning</li>
+<li>40.2.2. Inverse reinforcement learning</li>
+<li>40.2.3. One-shot imitation learning</li>
+</ul>
+</section>
+<section id="multi-modal-perception-for-robots" class="level5">
+<h5 class="anchored" data-anchor-id="multi-modal-perception-for-robots">40.3. Multi-modal Perception for Robots</h5>
+<ul>
+<li>40.3.1. Visual-tactile perception</li>
+<li>40.3.2. Audio-visual perception</li>
+</ul>
+</section>
+<section id="human-robot-interaction" class="level5">
+<h5 class="anchored" data-anchor-id="human-robot-interaction">40.4. Human-robot Interaction</h5>
+<ul>
+<li>40.4.1. Natural language interaction with robots</li>
+<li>40.4.2. Gesture recognition for HRI</li>
+<li>40.4.3. Emotion recognition in HRI</li>
+</ul>
+</section>
+<section id="robot-manipulation-and-grasping" class="level5">
+<h5 class="anchored" data-anchor-id="robot-manipulation-and-grasping">40.5. Robot Manipulation and Grasping</h5>
+</section>
+<section id="robot-navigation-and-slam" class="level5">
+<h5 class="anchored" data-anchor-id="robot-navigation-and-slam">40.6. Robot Navigation and SLAM</h5>
+</section>
+<section id="continual-learning-for-robotics" class="level5">
+<h5 class="anchored" data-anchor-id="continual-learning-for-robotics">40.7. Continual Learning for Robotics</h5>
+</section>
+<section id="explainable-ai-for-robotics" class="level5">
+<h5 class="anchored" data-anchor-id="explainable-ai-for-robotics">40.8. Explainable AI for Robotics</h5>
+</section>
+<section id="soft-robotics-and-ai" class="level5">
+<h5 class="anchored" data-anchor-id="soft-robotics-and-ai">40.9. Soft Robotics and AI</h5>
+</section>
+<section id="swarm-robotics-and-collective-intelligence" class="level5">
+<h5 class="anchored" data-anchor-id="swarm-robotics-and-collective-intelligence">40.10. Swarm Robotics and Collective Intelligence</h5>
+</section>
+</section>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="quarto-dev/quarto-web" data-repo-id="MDEwOlJlcG9zaXRvcnkzNDc2MzMzNTg=" data-category="General" data-category-id="DIC_kwDOFLh2zs4CBQCO" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"selector":".lightbox","openEffect":"zoom","descPosition":"bottom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>

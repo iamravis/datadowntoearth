@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>big_data_technologies – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="chapter-14-big-data-technologies" class="level1 text-content">
+<h1>Chapter 14: Big Data Technologies</h1>
+<section id="hadoop-ecosystem-deep-dive" class="level2">
+<h2 class="anchored" data-anchor-id="hadoop-ecosystem-deep-dive">Hadoop Ecosystem Deep Dive</h2>
+<section id="hdfs-architecture-and-operations" class="level3">
+<h3 class="anchored" data-anchor-id="hdfs-architecture-and-operations">HDFS Architecture and Operations</h3>
+<section id="definition" class="level4">
+<h4 class="anchored" data-anchor-id="definition">Definition</h4>
+<p>The Hadoop Distributed File System (HDFS) is a distributed storage system designed to store large volumes of data across many commodity servers, providing high throughput access to data and fault tolerance.</p>
+</section>
+<section id="components" class="level4">
+<h4 class="anchored" data-anchor-id="components">Components</h4>
+<ul>
+<li><p><strong>NameNode</strong>: The master node that manages the file system namespace, maintaining the directory tree and metadata about all files and directories in the system. It also manages the replication of data blocks across DataNodes.</p></li>
+<li><p><strong>DataNodes</strong>: The worker nodes that store and retrieve blocks of data upon instruction from the NameNode. They also periodically report back to the NameNode with lists of blocks they are storing.</p></li>
+<li><p><strong>Secondary NameNode</strong>: A helper node that periodically merges the NameNode’s namespace image with the edit log to prevent the edit log from growing indefinitely. It acts as a checkpoint node but does not serve the same role as a backup NameNode.</p></li>
+</ul>
+</section>
+<section id="operations" class="level4">
+<h4 class="anchored" data-anchor-id="operations">Operations</h4>
+<ul>
+<li><p><strong>Data Storage</strong>: Files are split into blocks (typically 128 MB), and each block is replicated across multiple DataNodes (default replication factor is 3) to ensure fault tolerance.</p></li>
+<li><p><strong>Data Retrieval</strong>: When a client requests a file, the NameNode provides the locations of the blocks that make up the file, allowing the client to read the data directly from the DataNodes.</p></li>
+<li><p><strong>Fault Tolerance</strong>: If a DataNode fails, the NameNode detects the failure through missed heartbeats and re-replicates the data blocks to other DataNodes to maintain the specified replication factor.</p></li>
+</ul>
+</section>
+<section id="example" class="level4">
+<h4 class="anchored" data-anchor-id="example">Example</h4>
+<p>A large-scale data processing task, such as indexing web pages, stores the raw HTML data in HDFS, ensuring high availability and reliability through data replication and fault tolerance mechanisms.</p>
+<hr>
+</section>
+</section>
+<section id="yarn-resource-management" class="level3">
+<h3 class="anchored" data-anchor-id="yarn-resource-management">YARN Resource Management</h3>
+<section id="definition-1" class="level4">
+<h4 class="anchored" data-anchor-id="definition-1">Definition</h4>
+<p>YARN (Yet Another Resource Negotiator) is the resource management layer of Hadoop, responsible for managing computing resources in clusters and scheduling user applications.</p>
+</section>
+<section id="components-1" class="level4">
+<h4 class="anchored" data-anchor-id="components-1">Components</h4>
+<ul>
+<li><p><strong>ResourceManager</strong>: The master daemon that arbitrates all available cluster resources and schedules applications based on resource availability and policies.</p></li>
+<li><p><strong>NodeManager</strong>: The per-node daemon that monitors resource usage (CPU, memory, disk) on each node, reports to the ResourceManager, and manages the life cycle of containers running on the nodes.</p></li>
+<li><p><strong>ApplicationMaster</strong>: A per-application manager that negotiates resources from the ResourceManager and works with the NodeManager(s) to execute and monitor tasks.</p></li>
+</ul>
+</section>
+<section id="operations-1" class="level4">
+<h4 class="anchored" data-anchor-id="operations-1">Operations</h4>
+<ul>
+<li><p><strong>Resource Allocation</strong>: ResourceManager allocates resources to various applications based on resource requests from ApplicationMasters, considering cluster-wide policies and availability.</p></li>
+<li><p><strong>Container Management</strong>: NodeManager manages containers, which are the computational units within YARN. It ensures containers receive the required resources and monitors their execution.</p></li>
+<li><p><strong>Application Lifecycle</strong>: ApplicationMaster handles the entire lifecycle of an application, including negotiating resources, launching tasks, monitoring progress, handling failures, and reporting back to the client.</p></li>
+</ul>
+</section>
+<section id="example-1" class="level4">
+<h4 class="anchored" data-anchor-id="example-1">Example</h4>
+<p>A MapReduce job running on YARN where the ResourceManager allocates containers to the ApplicationMaster, which then schedules the Map and Reduce tasks on the NodeManagers, effectively utilizing cluster resources and ensuring task completion.</p>
+<hr>
+</section>
+</section>
+<section id="mapreduce-programming-model" class="level3">
+<h3 class="anchored" data-anchor-id="mapreduce-programming-model">MapReduce Programming Model</h3>
+<section id="definition-2" class="level4">
+<h4 class="anchored" data-anchor-id="definition-2">Definition</h4>
+<p>MapReduce is a programming model for processing large data sets with a distributed algorithm on a Hadoop cluster. It divides the task into two phases: the Map phase and the Reduce phase.</p>
+</section>
+<section id="phases" class="level4">
+<h4 class="anchored" data-anchor-id="phases">Phases</h4>
+<ul>
+<li><p><strong>Map Phase</strong>: Processes input data by breaking it into key-value pairs. Each Map task processes a subset of the input data and produces intermediate key-value pairs.</p></li>
+<li><p><strong>Shuffle and Sort Phase</strong>: Intermediate key-value pairs are shuffled (grouped by key) and sorted. This phase ensures that all values for a given key are sent to the same Reduce task.</p></li>
+<li><p><strong>Reduce Phase</strong>: Aggregates the intermediate key-value pairs by processing all values associated with each key to produce the final output.</p></li>
+</ul>
+</section>
+<section id="operations-2" class="level4">
+<h4 class="anchored" data-anchor-id="operations-2">Operations</h4>
+<ul>
+<li><p><strong>Job Submission</strong>: Clients submit a MapReduce job to the Hadoop cluster, specifying the input data, the Map and Reduce functions, and other configuration details.</p></li>
+<li><p><strong>Task Execution</strong>: The job is divided into tasks, with Map tasks executed first to generate intermediate key-value pairs, followed by Reduce tasks that process these pairs to produce the final output.</p></li>
+<li><p><strong>Output Storage</strong>: The final output is written to HDFS or another distributed storage system, making it available for further processing or analysis.</p></li>
+</ul>
+</section>
+<section id="example-2" class="level4">
+<h4 class="anchored" data-anchor-id="example-2">Example</h4>
+<p>A word count application where the Map function processes each document to generate key-value pairs of words and their counts, and the Reduce function aggregates these counts to produce the total count for each word across all documents.</p>
+<hr>
+</section>
+</section>
+<section id="hive-for-sql-on-hadoop" class="level3">
+<h3 class="anchored" data-anchor-id="hive-for-sql-on-hadoop">Hive for SQL on Hadoop</h3>
+<section id="definition-3" class="level4">
+<h4 class="anchored" data-anchor-id="definition-3">Definition</h4>
+<p>Apache Hive is a data warehousing and SQL-like query language interface built on top of Hadoop, enabling users to query and manage large datasets stored in HDFS using a familiar SQL syntax.</p>
+</section>
+<section id="components-2" class="level4">
+<h4 class="anchored" data-anchor-id="components-2">Components</h4>
+<ul>
+<li><p><strong>MetaStore</strong>: Stores metadata about tables, columns, data types, and the location of data stored in HDFS. It enables efficient data discovery and schema management.</p></li>
+<li><p><strong>Driver</strong>: Manages the lifecycle of a HiveQL statement, including parsing, compiling, optimizing, and executing the query using MapReduce, Tez, or Spark as the execution engine.</p></li>
+<li><p><strong>Query Engine</strong>: Executes the query plan generated by the Driver, performing the necessary MapReduce or Spark jobs to retrieve and process the data.</p></li>
+<li><p><strong>StorageHandlers</strong>: Abstracts the storage layer, allowing Hive to interact with various storage formats and systems, such as HDFS, HBase, and Amazon S3.</p></li>
+</ul>
+</section>
+<section id="operations-3" class="level4">
+<h4 class="anchored" data-anchor-id="operations-3">Operations</h4>
+<ul>
+<li><p><strong>Data Definition</strong>: Allows users to create, modify, and manage tables, partitions, and schemas using HiveQL DDL commands (e.g., CREATE TABLE, ALTER TABLE).</p></li>
+<li><p><strong>Data Querying</strong>: Enables users to write complex queries to filter, join, aggregate, and transform data using HiveQL DML commands (e.g., SELECT, INSERT, UPDATE, DELETE).</p></li>
+<li><p><strong>Optimization</strong>: Applies various optimization techniques, such as partition pruning, predicate pushdown, and cost-based optimization, to improve query performance.</p></li>
+</ul>
+</section>
+<section id="example-3" class="level4">
+<h4 class="anchored" data-anchor-id="example-3">Example</h4>
+<p>Using Hive to analyze web server logs stored in HDFS by creating a table schema that matches the log format, loading the data into the table, and running SQL queries to generate insights on user behavior and traffic patterns.</p>
+<hr>
+</section>
+</section>
+<section id="pig-for-data-processing" class="level3">
+<h3 class="anchored" data-anchor-id="pig-for-data-processing">Pig for Data Processing</h3>
+<section id="definition-4" class="level4">
+<h4 class="anchored" data-anchor-id="definition-4">Definition</h4>
+<p>Apache Pig is a high-level platform for creating data processing programs on Hadoop. It uses a scripting language called Pig Latin, which abstracts the complexity of writing MapReduce programs, making it easier to perform complex data transformations and analysis.</p>
+</section>
+<section id="components-3" class="level4">
+<h4 class="anchored" data-anchor-id="components-3">Components</h4>
+<ul>
+<li><p><strong>Pig Latin</strong>: A data flow language that allows users to express data transformations and analysis tasks in a procedural manner. Pig Latin scripts are compiled into MapReduce jobs for execution on Hadoop.</p></li>
+<li><p><strong>Pig Engine</strong>: The runtime environment that parses, optimizes, and executes Pig Latin scripts on a Hadoop cluster, translating them into a series of MapReduce jobs.</p></li>
+<li><p><strong>Grunt Shell</strong>: An interactive command-line interface for executing Pig Latin commands and scripts, providing immediate feedback and debugging capabilities.</p></li>
+</ul>
+</section>
+<section id="operations-4" class="level4">
+<h4 class="anchored" data-anchor-id="operations-4">Operations</h4>
+<ul>
+<li><p><strong>Data Loading</strong>: Loads data from various sources, such as HDFS, HBase, or local files, using the LOAD statement and specifying the data schema and format.</p></li>
+<li><p><strong>Data Transformation</strong>: Performs a wide range of data transformations, including filtering, grouping, joining, sorting, and aggregating data using Pig Latin commands.</p></li>
+<li><p><strong>Data Storage</strong>: Stores the transformed data back into HDFS, HBase, or other storage systems using the STORE statement, enabling further analysis or processing.</p></li>
+</ul>
+</section>
+<section id="example-4" class="level4">
+<h4 class="anchored" data-anchor-id="example-4">Example</h4>
+<p>Using Pig to process and analyze large datasets of customer transactions by loading the data from HDFS, filtering out invalid records, grouping transactions by customer, and calculating total spending for each customer.</p>
+<hr>
+</section>
+</section>
+<section id="hbase-for-nosql-on-hadoop" class="level3">
+<h3 class="anchored" data-anchor-id="hbase-for-nosql-on-hadoop">HBase for NoSQL on Hadoop</h3>
+<section id="definition-5" class="level4">
+<h4 class="anchored" data-anchor-id="definition-5">Definition</h4>
+<p>Apache HBase is a distributed, scalable, NoSQL database built on top of Hadoop’s HDFS. It provides real-time read/write access to large datasets and supports structured and semi-structured data with a flexible schema.</p>
+</section>
+<section id="components-4" class="level4">
+<h4 class="anchored" data-anchor-id="components-4">Components</h4>
+<ul>
+<li><p><strong>RegionServers</strong>: Manage and serve regions, which are horizontal partitions of tables. Each RegionServer handles read and write requests for its assigned regions and communicates with HDFS for data storage.</p></li>
+<li><p><strong>HMaster</strong>: The master node responsible for monitoring RegionServers, managing schema changes (e.g., creating or deleting tables), and handling metadata operations such as splitting and merging regions.</p></li>
+<li><p><strong>Zookeeper</strong>: A coordination service that manages distributed synchronization and configuration for HBase. It helps in tracking the status of RegionServers and managing failover and recovery.</p></li>
+<li><p><strong>MemStore and HFiles</strong>: MemStore is an in-memory store for incoming data before it is flushed to disk. HFiles are the on-disk storage format used by HBase to store data in a columnar format, optimized for read and write performance.</p></li>
+</ul>
+</section>
+<section id="operations-5" class="level4">
+<h4 class="anchored" data-anchor-id="operations-5">Operations</h4>
+<ul>
+<li><p><strong>Data Modeling</strong>: Tables in HBase consist of rows and columns, with each row identified by a unique row key. Columns are grouped into column families, and data within a column family is stored together on disk.</p></li>
+<li><p><strong>Data Ingestion</strong>: Data is ingested into HBase through writes to MemStore, which are periodically flushed to HFiles. Data is stored in a highly available and fault-tolerant manner using HDFS replication.</p></li>
+<li><p><strong>Data Access</strong>: Supports fast, random read/write access to data. Clients can perform CRUD (Create, Read, Update, Delete) operations using the HBase API, with support for filtering and scanning large datasets.</p></li>
+</ul>
+</section>
+<section id="example-5" class="level4">
+<h4 class="anchored" data-anchor-id="example-5">Example</h4>
+<p>Using HBase to store and query time-series data from IoT sensors, where each row represents a sensor reading with a unique timestamp as the row key. This allows for efficient retrieval and analysis of historical sensor data.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="distributed-file-systems" class="level2">
+<h2 class="anchored" data-anchor-id="distributed-file-systems">Distributed File Systems</h2>
+<section id="glusterfs" class="level3">
+<h3 class="anchored" data-anchor-id="glusterfs">GlusterFS</h3>
+<section id="definition-6" class="level4">
+<h4 class="anchored" data-anchor-id="definition-6">Definition</h4>
+<p>GlusterFS is a scalable, distributed file system designed to handle large amounts of data across multiple storage servers. It aggregates storage resources from different servers into a single global namespace, providing high availability and fault tolerance.</p>
+</section>
+<section id="architecture" class="level4">
+<h4 class="anchored" data-anchor-id="architecture">Architecture</h4>
+<ul>
+<li><p><strong>Brick</strong>: The basic unit of storage in GlusterFS, typically a directory on a storage server. Multiple bricks are aggregated to form a volume.</p></li>
+<li><p><strong>Volume</strong>: A logical collection of bricks that forms a single file system. Volumes can be configured for different use cases, such as distributed, replicated, striped, or combinations thereof.</p></li>
+<li><p><strong>Translator</strong>: A modular component that implements various functionalities in GlusterFS, such as replication, striping, and encryption. Translators are stacked to create the desired volume configuration.</p></li>
+</ul>
+</section>
+<section id="operations-6" class="level4">
+<h4 class="anchored" data-anchor-id="operations-6">Operations</h4>
+<ul>
+<li><p><strong>Volume Management</strong>: Creating, modifying, and managing volumes using the GlusterFS command-line interface. This includes setting up replication for high availability and striping for performance.</p></li>
+<li><p><strong>Data Access</strong>: Clients access data stored in GlusterFS volumes using standard file system interfaces, such as FUSE (Filesystem in Userspace) or NFS (Network File System), enabling compatibility with existing applications.</p></li>
+<li><p><strong>Scaling and Fault Tolerance</strong>: Easily scales out by adding more bricks and servers to the cluster. Provides fault tolerance through data replication and self-healing mechanisms to recover from failures.</p></li>
+</ul>
+</section>
+<section id="example-6" class="level4">
+<h4 class="anchored" data-anchor-id="example-6">Example</h4>
+<p>A media company uses GlusterFS to store and serve large video files, configuring volumes for replication to ensure high availability and data durability, while also leveraging striping to improve read and write performance.</p>
+<hr>
+</section>
+</section>
+<section id="ceph" class="level3">
+<h3 class="anchored" data-anchor-id="ceph">Ceph</h3>
+<section id="definition-7" class="level4">
+<h4 class="anchored" data-anchor-id="definition-7">Definition</h4>
+<p>Ceph is a distributed storage system designed to provide scalable object, block, and file storage in a unified system. It is built to handle petabytes of data while ensuring high availability, fault tolerance, and performance.</p>
+</section>
+<section id="architecture-1" class="level4">
+<h4 class="anchored" data-anchor-id="architecture-1">Architecture</h4>
+<ul>
+<li><p><strong>Ceph Monitor (MON)</strong>: Maintains a master copy of the cluster map, which tracks the state of the cluster, including the location of objects and the status of nodes. It ensures consistency and coordination across the cluster.</p></li>
+<li><p><strong>Ceph OSD (Object Storage Daemon)</strong>: Handles the storage, replication, and recovery of data. Each OSD runs on a storage node and manages its own local storage, communicating with other OSDs to replicate and balance data.</p></li>
+<li><p><strong>Ceph MDS (Metadata Server)</strong>: Manages metadata for the Ceph file system (CephFS), enabling efficient directory operations and file metadata management. It allows CephFS to provide POSIX-compliant file system semantics.</p></li>
+<li><p><strong>CRUSH Algorithm</strong>: A data distribution algorithm that determines how to place and retrieve data across the storage nodes, ensuring even distribution and fault tolerance without relying on a central directory.</p></li>
+</ul>
+</section>
+<section id="operations-7" class="level4">
+<h4 class="anchored" data-anchor-id="operations-7">Operations</h4>
+<ul>
+<li><p><strong>Data Storage</strong>: Supports object storage (RADOS), block storage (RBD), and file storage (CephFS) within the same cluster, allowing for flexible storage configurations and unified management.</p></li>
+<li><p><strong>Data Access</strong>: Clients access data through various interfaces, such as librados for object storage, RBD for block storage, and CephFS for file storage, providing seamless integration with different types of applications.</p></li>
+<li><p><strong>Scaling and Fault Tolerance</strong>: Scales horizontally by adding more OSDs and nodes. Ensures high availability and fault tolerance through data replication, erasure coding, and automatic recovery from failures.</p></li>
+</ul>
+</section>
+<section id="example-7" class="level4">
+<h4 class="anchored" data-anchor-id="example-7">Example</h4>
+<p>A research institution uses Ceph to provide scalable storage for large datasets, including genomic data, imaging data, and simulation results. Ceph’s unified storage architecture allows researchers to access data using object, block, and file interfaces as needed.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="object-storage-systems" class="level2">
+<h2 class="anchored" data-anchor-id="object-storage-systems">Object Storage Systems</h2>
+<section id="minio" class="level3">
+<h3 class="anchored" data-anchor-id="minio">MinIO</h3>
+<section id="definition-8" class="level4">
+<h4 class="anchored" data-anchor-id="definition-8">Definition</h4>
+<p>MinIO is a high-performance, distributed object storage system designed to provide S3-compatible storage for large-scale data workloads. It is optimized for cloud-native environments and can be deployed on-premises or in the cloud.</p>
+</section>
+<section id="architecture-2" class="level4">
+<h4 class="anchored" data-anchor-id="architecture-2">Architecture</h4>
+<ul>
+<li><p><strong>Server</strong>: The core component of MinIO, responsible for handling object storage operations, managing metadata, and ensuring data integrity. MinIO servers can be clustered for scalability and high availability.</p></li>
+<li><p><strong>Erasure Coding</strong>: A data protection mechanism used by MinIO to provide fault tolerance and data durability. It splits data into multiple parts, encodes them with redundant information, and distributes them across the storage nodes.</p></li>
+<li><p><strong>S3 Compatibility</strong>: MinIO provides a fully S3-compatible API, enabling seamless integration with existing S3-based applications and tools. This ensures compatibility with the broader cloud ecosystem.</p></li>
+</ul>
+</section>
+<section id="operations-8" class="level4">
+<h4 class="anchored" data-anchor-id="operations-8">Operations</h4>
+<ul>
+<li><p><strong>Data Storage</strong>: Stores data as objects in buckets, similar to S3. Each object consists of the data itself and associated metadata, providing a flexible and scalable storage solution for unstructured data.</p></li>
+<li><p><strong>Data Access</strong>: Clients access data using the S3 API, supporting standard operations such as PUT, GET, DELETE, and LIST. MinIO also supports advanced features like versioning, lifecycle policies, and access control lists (ACLs).</p></li>
+<li><p><strong>Scaling and Fault Tolerance</strong>: Scales horizontally by adding more MinIO servers to the cluster. Ensures data durability and availability through erasure coding, replication, and automatic recovery from failures.</p></li>
+</ul>
+</section>
+<section id="example-8" class="level4">
+<h4 class="anchored" data-anchor-id="example-8">Example</h4>
+<p>A cloud-native application uses MinIO for scalable object storage, leveraging its S3 compatibility to store and retrieve user-generated content, such as images, videos, and documents, with high performance and reliability.</p>
+<hr>
+</section>
+</section>
+<section id="ceph-object-gateway" class="level3">
+<h3 class="anchored" data-anchor-id="ceph-object-gateway">Ceph Object Gateway</h3>
+<section id="definition-9" class="level4">
+<h4 class="anchored" data-anchor-id="definition-9">Definition</h4>
+<p>The Ceph Object Gateway, also known as RADOS Gateway (RGW), is a component of the Ceph storage system that provides object storage capabilities with an S3-compatible API. It allows users to store and retrieve unstructured data using standard object storage protocols.</p>
+</section>
+<section id="architecture-3" class="level4">
+<h4 class="anchored" data-anchor-id="architecture-3">Architecture</h4>
+<ul>
+<li><p><strong>RGW Instances</strong>: The gateway can be deployed as multiple instances for load balancing and high availability. Each instance handles object storage requests, manages metadata, and interacts with the underlying Ceph storage cluster.</p></li>
+<li><p><strong>RADOS (Reliable Autonomic Distributed Object Store)</strong>: The underlying storage layer of Ceph, providing scalable and fault-tolerant object storage. RGW interfaces with RADOS to store and retrieve object data.</p></li>
+<li><p><strong>S3 and Swift Compatibility</strong>: RGW supports both the S3 API and the OpenStack Swift API, enabling seamless integration with applications and tools that use these protocols for object storage.</p></li>
+</ul>
+</section>
+<section id="operations-9" class="level4">
+<h4 class="anchored" data-anchor-id="operations-9">Operations</h4>
+<ul>
+<li><p><strong>Data Storage</strong>: Stores data as objects within buckets, managed by RGW and stored in the RADOS cluster. Each object includes the data and associated metadata, providing a flexible and scalable storage solution.</p></li>
+<li><p><strong>Data Access</strong>: Clients access data using S3 or Swift APIs, supporting operations such as PUT, GET, DELETE, and LIST. RGW also supports advanced features like multipart uploads, versioning, and bucket policies.</p></li>
+<li><p><strong>Scaling and Fault Tolerance</strong>: Scales horizontally by adding more RGW instances to handle increased load. Ensures data durability and availability through RADOS’s replication, erasure coding, and automatic recovery mechanisms.</p></li>
+</ul>
+</section>
+<section id="example-9" class="level4">
+<h4 class="anchored" data-anchor-id="example-9">Example</h4>
+<p>A data analytics platform uses Ceph Object Gateway to store large volumes of raw and processed data. Researchers can access the data using S3-compatible tools, while Ceph ensures high availability and durability through its distributed architecture.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

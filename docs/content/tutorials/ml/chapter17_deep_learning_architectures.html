@@ -1,0 +1,1912 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>chapter17_deep_learning_architectures – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="text-content">
+<section id="chapter-17.-deep-learning-architectures" class="level1">
+<h1>Chapter 17. Deep Learning Architectures</h1>
+<p>Deep learning architectures have revolutionized various fields by enabling the development of models that can automatically learn hierarchical representations from raw data. This chapter explores some of the fundamental deep learning architectures, focusing on Convolutional Neural Networks (CNNs) and their components.</p>
+<section id="convolutional-neural-networks-cnns" class="level2">
+<h2 class="anchored" data-anchor-id="convolutional-neural-networks-cnns">17.1. Convolutional Neural Networks (CNNs)</h2>
+<p>Convolutional Neural Networks (CNNs) are specialized neural networks designed to process structured grid data such as images. They are highly effective in capturing spatial hierarchies and patterns through convolutional layers and pooling layers.</p>
+<section id="convolutional-layers" class="level3">
+<h3 class="anchored" data-anchor-id="convolutional-layers">17.1.1. Convolutional Layers</h3>
+<p>Convolutional layers are the core building blocks of CNNs. They apply convolution operations to the input data to extract features such as edges, textures, and shapes.</p>
+<section id="filters-and-feature-maps" class="level4">
+<h4 class="anchored" data-anchor-id="filters-and-feature-maps">17.1.1.1. Filters and Feature Maps</h4>
+<ul>
+<li><strong>Filters (Kernels):</strong> Small matrices that slide over the input data to perform the convolution operation. Each filter detects specific patterns or features in the input data.
+<ul>
+<li><strong>Mathematical Operation:</strong> <span class="math display">\[
+\text{Output}(i,j) = \sum_{m}\sum_{n} \text{Input}(i+m, j+n) \cdot \text{Filter}(m,n)
+\]</span> where <span class="math inline">\((i, j)\)</span> are the coordinates of the output feature map, and <span class="math inline">\((m, n)\)</span> are the coordinates within the filter.</li>
+<li><strong>Depth of Filters:</strong> In a color image, each filter has a depth equal to the number of color channels (e.g., 3 for RGB).</li>
+</ul></li>
+<li><strong>Feature Maps:</strong> The outputs of the convolution operation are known as feature maps or activation maps. These maps highlight the presence of specific features detected by the filters.</li>
+</ul>
+</section>
+<section id="stride-and-padding" class="level4">
+<h4 class="anchored" data-anchor-id="stride-and-padding">17.1.1.2. Stride and Padding</h4>
+<ul>
+<li><strong>Stride:</strong> The number of pixels by which the filter moves (slides) across the input data.
+<ul>
+<li><strong>Effect:</strong> Larger strides result in smaller output dimensions, as the filter covers less overlap between positions.</li>
+<li><strong>Formula for Output Size:</strong> <span class="math display">\[
+\text{Output Size} = \left\lfloor \frac{\text{Input Size} - \text{Filter Size}}{\text{Stride}} \right\rfloor + 1
+\]</span></li>
+</ul></li>
+<li><strong>Padding:</strong> The addition of extra pixels around the input data to control the spatial dimensions of the output feature maps.
+<ul>
+<li><strong>Types of Padding:</strong>
+<ul>
+<li><strong>Valid Padding:</strong> No padding; results in smaller output dimensions.</li>
+<li><strong>Same Padding:</strong> Pads the input so that the output has the same dimensions as the input.</li>
+</ul></li>
+<li><strong>Effect:</strong> Padding allows the filter to fully cover the edges of the input data.</li>
+</ul></li>
+</ul>
+</section>
+<section id="dilated-convolutions" class="level4">
+<h4 class="anchored" data-anchor-id="dilated-convolutions">17.1.1.3. Dilated Convolutions</h4>
+<p>Dilated convolutions (also known as atrous convolutions) introduce gaps between the filter elements, allowing the network to capture a larger receptive field without increasing the number of parameters.</p>
+<ul>
+<li><strong>Dilation Rate:</strong> The spacing between the filter elements.
+<ul>
+<li><strong>Effect:</strong> Increases the receptive field of the filter, enabling the detection of more complex patterns at multiple scales.</li>
+<li><strong>Formula for Effective Filter Size:</strong> <span class="math display">\[
+\text{Effective Filter Size} = \text{Filter Size} + (\text{Filter Size} - 1) \cdot (\text{Dilation Rate} - 1)
+\]</span></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="pooling-layers" class="level3">
+<h3 class="anchored" data-anchor-id="pooling-layers">17.1.2. Pooling Layers</h3>
+<p>Pooling layers reduce the spatial dimensions of the feature maps, providing translation invariance and reducing computational complexity. They are typically inserted between consecutive convolutional layers.</p>
+<section id="max-pooling" class="level4">
+<h4 class="anchored" data-anchor-id="max-pooling">17.1.2.1. Max Pooling</h4>
+<ul>
+<li><strong>Operation:</strong> Takes the maximum value from each patch of the feature map covered by the filter.
+<ul>
+<li><strong>Effect:</strong> Retains the most prominent features while reducing spatial dimensions.</li>
+<li><strong>Formula for Output Size:</strong> <span class="math display">\[
+\text{Output Size} = \left\lfloor \frac{\text{Input Size} - \text{Pool Size}}{\text{Stride}} \right\rfloor + 1
+\]</span></li>
+<li><strong>Common Use:</strong> Often used in early layers to aggressively downsample the input.</li>
+</ul></li>
+</ul>
+</section>
+<section id="average-pooling" class="level4">
+<h4 class="anchored" data-anchor-id="average-pooling">17.1.2.2. Average Pooling</h4>
+<ul>
+<li><strong>Operation:</strong> Takes the average value from each patch of the feature map covered by the filter.
+<ul>
+<li><strong>Effect:</strong> Smoothens the feature maps by averaging neighboring activations.</li>
+<li><strong>Formula for Output Size:</strong> <span class="math display">\[
+\text{Output Size} = \left\lfloor \frac{\text{Input Size} - \text{Pool Size}}{\text{Stride}} \right\rfloor + 1
+\]</span></li>
+<li><strong>Common Use:</strong> Used less frequently than max pooling, sometimes in later stages to average activations.</li>
+</ul></li>
+</ul>
+</section>
+<section id="global-pooling" class="level4">
+<h4 class="anchored" data-anchor-id="global-pooling">17.1.2.3. Global Pooling</h4>
+<ul>
+<li><strong>Operation:</strong> Reduces each feature map to a single value by taking the average or maximum over the entire spatial dimensions.
+<ul>
+<li><strong>Types:</strong>
+<ul>
+<li><strong>Global Average Pooling (GAP):</strong> Computes the average of each feature map.</li>
+<li><strong>Global Max Pooling:</strong> Computes the maximum of each feature map.</li>
+</ul></li>
+<li><strong>Effect:</strong> Dramatically reduces the number of parameters and prevents overfitting.</li>
+<li><strong>Common Use:</strong> Typically used before the final classification layer to aggregate global information.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="classic-architectures" class="level3">
+<h3 class="anchored" data-anchor-id="classic-architectures">17.1.3. Classic Architectures</h3>
+<p>Classic architectures have laid the foundation for modern advancements in Convolutional Neural Networks (CNNs). These pioneering models have introduced key concepts and techniques that continue to influence the design of contemporary networks.</p>
+<section id="lenet" class="level4">
+<h4 class="anchored" data-anchor-id="lenet">17.1.3.1. LeNet</h4>
+<p>LeNet, developed by Yann LeCun and his collaborators in the late 1980s and early 1990s, is one of the earliest CNN architectures designed for handwritten digit recognition (e.g., MNIST dataset).</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Input Layer:</strong> 32x32 grayscale image</li>
+<li><strong>Convolutional Layer 1:</strong> 6 filters of size 5x5, followed by average pooling</li>
+<li><strong>Convolutional Layer 2:</strong> 16 filters of size 5x5, followed by average pooling</li>
+<li><strong>Fully Connected Layer 1:</strong> 120 neurons</li>
+<li><strong>Fully Connected Layer 2:</strong> 84 neurons</li>
+<li><strong>Output Layer:</strong> 10 neurons with softmax activation</li>
+</ul></li>
+<li><strong>Impact:</strong>
+<ul>
+<li>Introduced key concepts like convolution, pooling, and the use of a fully connected layer for classification.</li>
+<li>Demonstrated the efficacy of CNNs in image recognition tasks.</li>
+</ul></li>
+</ul>
+</section>
+<section id="alexnet" class="level4">
+<h4 class="anchored" data-anchor-id="alexnet">17.1.3.2. AlexNet</h4>
+<p>AlexNet, developed by Alex Krizhevsky, Ilya Sutskever, and Geoffrey Hinton in 2012, significantly improved the performance of image classification models and won the ImageNet Large Scale Visual Recognition Challenge (ILSVRC) in 2012.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Input Layer:</strong> 224x224 RGB image</li>
+<li><strong>Convolutional Layer 1:</strong> 96 filters of size 11x11, stride 4, followed by max pooling</li>
+<li><strong>Convolutional Layer 2:</strong> 256 filters of size 5x5, followed by max pooling</li>
+<li><strong>Convolutional Layer 3:</strong> 384 filters of size 3x3</li>
+<li><strong>Convolutional Layer 4:</strong> 384 filters of size 3x3</li>
+<li><strong>Convolutional Layer 5:</strong> 256 filters of size 3x3, followed by max pooling</li>
+<li><strong>Fully Connected Layer 1:</strong> 4096 neurons</li>
+<li><strong>Fully Connected Layer 2:</strong> 4096 neurons</li>
+<li><strong>Output Layer:</strong> 1000 neurons with softmax activation</li>
+</ul></li>
+<li><strong>Innovations:</strong>
+<ul>
+<li>Used ReLU activation function to improve training speed.</li>
+<li>Implemented dropout to reduce overfitting.</li>
+<li>Utilized data augmentation to enhance generalization.</li>
+</ul></li>
+</ul>
+</section>
+<section id="vgg" class="level4">
+<h4 class="anchored" data-anchor-id="vgg">17.1.3.3. VGG</h4>
+<p>The VGG network, developed by the Visual Geometry Group at the University of Oxford, introduced the idea of using very small (3x3) convolution filters, which significantly improved the depth of the network and achieved state-of-the-art performance.</p>
+<ul>
+<li><strong>VGG16 Architecture:</strong>
+<ul>
+<li><strong>Input Layer:</strong> 224x224 RGB image</li>
+<li><strong>Block 1:</strong> 2 convolutional layers with 64 filters of size 3x3, followed by max pooling</li>
+<li><strong>Block 2:</strong> 2 convolutional layers with 128 filters of size 3x3, followed by max pooling</li>
+<li><strong>Block 3:</strong> 3 convolutional layers with 256 filters of size 3x3, followed by max pooling</li>
+<li><strong>Block 4:</strong> 3 convolutional layers with 512 filters of size 3x3, followed by max pooling</li>
+<li><strong>Block 5:</strong> 3 convolutional layers with 512 filters of size 3x3, followed by max pooling</li>
+<li><strong>Fully Connected Layer 1:</strong> 4096 neurons</li>
+<li><strong>Fully Connected Layer 2:</strong> 4096 neurons</li>
+<li><strong>Output Layer:</strong> 1000 neurons with softmax activation</li>
+</ul></li>
+<li><strong>Contributions:</strong>
+<ul>
+<li>Demonstrated that depth and very small convolution filters (3x3) can lead to significant improvements in model performance.</li>
+<li>VGG networks are known for their simplicity and uniformity in structure.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="modern-architectures" class="level3">
+<h3 class="anchored" data-anchor-id="modern-architectures">17.1.4. Modern Architectures</h3>
+<p>Modern architectures build upon the foundations laid by classic architectures, introducing new techniques to further improve performance, efficiency, and scalability of CNNs.</p>
+<section id="resnet-and-resnext" class="level4">
+<h4 class="anchored" data-anchor-id="resnet-and-resnext">17.1.4.1. ResNet and ResNeXt</h4>
+<p>ResNet (Residual Networks) introduced by Kaiming He et al., revolutionized deep learning by enabling the training of very deep networks through residual learning.</p>
+<ul>
+<li><strong>Key Concept:</strong>
+<ul>
+<li><strong>Residual Blocks:</strong> Allow the network to learn residual functions with reference to the layer inputs, which helps in addressing the vanishing gradient problem.</li>
+<li><strong>Shortcut Connections:</strong> Identity mappings that skip one or more layers, directly passing the input to subsequent layers.</li>
+</ul></li>
+<li><strong>ResNet Architecture:</strong>
+<ul>
+<li>Various versions with different depths (e.g., ResNet-50, ResNet-101, ResNet-152)</li>
+<li>Consists of an initial convolutional layer, followed by multiple residual blocks, and ends with fully connected layers.</li>
+</ul></li>
+<li><strong>ResNeXt:</strong> An extension of ResNet, introduces cardinality (the size of the set of transformations) as another dimension to improve model performance.
+<ul>
+<li><strong>Key Innovations:</strong>
+<ul>
+<li>Aggregated transformations through grouped convolutions.</li>
+<li>Enhanced model expressiveness and efficiency by increasing the cardinality.</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="inception-and-xception" class="level4">
+<h4 class="anchored" data-anchor-id="inception-and-xception">17.1.4.2. Inception and Xception</h4>
+<p>Inception networks, introduced by Szegedy et al., aim to improve computational efficiency while maintaining high accuracy by combining multiple convolutional filter sizes into one module.</p>
+<ul>
+<li><p><strong>Inception Module:</strong></p>
+<ul>
+<li>Combines 1x1, 3x3, and 5x5 convolutions in parallel.</li>
+<li>Includes pooling operations to capture different levels of feature abstraction.</li>
+<li>Followed by concatenation of outputs from these parallel operations.</li>
+</ul></li>
+<li><p><strong>Inception-v1 to Inception-v4:</strong> Iterative improvements in the module design, including the introduction of batch normalization and factorized convolutions.</p></li>
+<li><p><strong>Xception (Extreme Inception):</strong></p>
+<ul>
+<li>Introduced by François Chollet.</li>
+<li>Extends the idea of Inception modules by replacing them with depthwise separable convolutions, which further improve model efficiency and performance.</li>
+<li><strong>Key Innovations:</strong>
+<ul>
+<li>Depthwise separable convolutions: Separate the spatial convolutions from the depthwise convolutions, significantly reducing computational complexity.</li>
+<li>Linear stack of depthwise separable convolution layers without the intermediate concatenation step found in Inception modules.</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="densenet" class="level4">
+<h4 class="anchored" data-anchor-id="densenet">17.1.4.3. DenseNet</h4>
+<p>DenseNet (Densely Connected Convolutional Networks), introduced by Huang et al., connects each layer to every other layer in a feed-forward fashion.</p>
+<ul>
+<li><strong>Key Concept:</strong>
+<ul>
+<li><strong>Dense Blocks:</strong> Each layer receives the feature maps of all preceding layers as input, ensuring maximum information flow and gradient propagation.</li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Improved parameter efficiency.</li>
+<li>Mitigates the vanishing gradient problem.</li>
+<li>Encourages feature reuse, leading to more compact and efficient models.</li>
+</ul></li>
+<li><strong>Architecture:</strong>
+<ul>
+<li>Multiple dense blocks connected by transition layers that reduce the size of the feature maps.</li>
+<li>Dense connections lead to the inclusion of all previous layers’ feature maps in the computation of subsequent layers.</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="efficientnet" class="level4">
+<h4 class="anchored" data-anchor-id="efficientnet">17.1.4.4. EfficientNet</h4>
+<p>EfficientNet, introduced by Tan and Le, focuses on optimizing the network architecture through a systematic model scaling approach.</p>
+<ul>
+<li><strong>Model Scaling:</strong>
+<ul>
+<li><strong>Compound Scaling:</strong> Simultaneously scales up depth, width, and resolution of the network using a compound coefficient.</li>
+<li><strong>Efficiency:</strong> Achieves state-of-the-art accuracy while being computationally efficient.</li>
+<li><strong>Compound Scaling Formula:</strong> <span class="math display">\[
+\text{EfficientNet-B0} = \text{EfficientNet}-\alpha^{\phi}, \beta^{\phi}, \gamma^{\phi}
+\]</span> where <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span>, and <span class="math inline">\(\gamma\)</span> are constants and <span class="math inline">\(\phi\)</span> is the compound coefficient.</li>
+<li><strong>Architecture:</strong>
+<ul>
+<li>EfficientNet-B0 to EfficientNet-B7, each variant being scaled up using the compound scaling method.</li>
+<li>Incorporates techniques like depthwise separable convolutions and squeeze-and-excitation blocks for improved efficiency.</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>By understanding these classic and modern architectures, researchers and practitioners can select and design appropriate models for a wide range of tasks, from image classification to object detection and beyond.</p>
+</section>
+</section>
+<section id="x1-convolutions" class="level3">
+<h3 class="anchored" data-anchor-id="x1-convolutions">17.1.5. 1x1 Convolutions</h3>
+<p>1x1 convolutions, also known as pointwise convolutions, are convolutional filters with a kernel size of 1x1. Despite their seemingly trivial size, they play a crucial role in modern CNN architectures.</p>
+<ul>
+<li><strong>Dimensionality Reduction and Expansion:</strong>
+<ul>
+<li><strong>Reduction:</strong> By applying 1x1 convolutions, the number of channels can be reduced, which decreases the computational complexity and the number of parameters.</li>
+<li><strong>Expansion:</strong> Conversely, they can be used to increase the dimensionality of feature maps, enabling the network to learn more complex representations.</li>
+</ul></li>
+<li><strong>Cross-Channel Interaction:</strong>
+<ul>
+<li>1x1 convolutions enable interaction between different channels without considering the spatial dimensions, thus combining and recombining information across channels.</li>
+</ul></li>
+<li><strong>Activation and Non-linearity:</strong>
+<ul>
+<li>When combined with non-linear activation functions (like ReLU), 1x1 convolutions can introduce non-linearity into the model after convolutional layers, enhancing the network’s ability to learn complex mappings.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li><strong>Inception Modules:</strong> Widely used in the Inception architectures to reduce the dimensionality before applying more computationally expensive convolutions.</li>
+<li><strong>Residual Networks:</strong> Utilized in bottleneck blocks within ResNets to reduce the feature dimensionality before applying larger convolutions.</li>
+</ul></li>
+</ul>
+</section>
+<section id="depthwise-separable-convolutions" class="level3">
+<h3 class="anchored" data-anchor-id="depthwise-separable-convolutions">17.1.6. Depthwise Separable Convolutions</h3>
+<p>Depthwise separable convolutions decompose the standard convolution into two simpler operations: depthwise convolution and pointwise (1x1) convolution. This decomposition significantly reduces computational cost and the number of parameters.</p>
+<ul>
+<li><strong>Depthwise Convolution:</strong>
+<ul>
+<li>Applies a single convolutional filter per input channel (depth) independently. If the input has <span class="math inline">\(C\)</span> channels, <span class="math inline">\(C\)</span> different filters are applied.</li>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\text{Output}(i,j,c) = \sum_{m,n} \text{Input}(i+m, j+n, c) \cdot \text{Filter}(m,n,c)
+\]</span> where <span class="math inline">\((i,j)\)</span> are spatial coordinates, <span class="math inline">\(c\)</span> is the channel index, and <span class="math inline">\((m,n)\)</span> are filter coordinates.</li>
+</ul></li>
+<li><strong>Pointwise Convolution:</strong>
+<ul>
+<li>Applies a 1x1 convolution across all channels to combine the outputs of the depthwise convolution.</li>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\text{Output}(i,j,k) = \sum_{c} \text{DepthwiseOutput}(i,j,c) \cdot \text{Filter}(1,1,c,k)
+\]</span> where <span class="math inline">\(k\)</span> indexes the output channels.</li>
+</ul></li>
+<li><strong>Efficiency Gains:</strong>
+<ul>
+<li><strong>Computational Complexity:</strong> Reduces from <span class="math inline">\(D_k \times D_k \times C \times N\)</span> to <span class="math inline">\(D_k \times D_k \times C + 1 \times 1 \times C \times N\)</span>, where <span class="math inline">\(D_k\)</span> is the filter size, <span class="math inline">\(C\)</span> is the number of input channels, and <span class="math inline">\(N\)</span> is the number of output channels.</li>
+<li><strong>Parameter Reduction:</strong> Significantly fewer parameters are needed compared to standard convolutions.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li><strong>MobileNets:</strong> Extensively use depthwise separable convolutions to build efficient models suitable for mobile and embedded vision applications.</li>
+<li><strong>Xception:</strong> An extension of the Inception architecture that replaces standard Inception modules with depthwise separable convolutions.</li>
+</ul></li>
+</ul>
+</section>
+<section id="transposed-convolutions" class="level3">
+<h3 class="anchored" data-anchor-id="transposed-convolutions">17.1.7. Transposed Convolutions</h3>
+<p>Transposed convolutions, also known as deconvolutions or upsampled convolutions, are used to increase the spatial dimensions of the input feature maps, effectively performing the inverse operation of standard convolutions.</p>
+<ul>
+<li><strong>Mechanism:</strong>
+<ul>
+<li>Involves “unfolding” the input data by inserting zeros between elements (zero padding) and then applying a standard convolution. This process increases the spatial resolution of the feature map.</li>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\text{Output}(i,j) = \sum_{m,n} \text{Input}(i-m, j-n) \cdot \text{Filter}(m,n)
+\]</span> where <span class="math inline">\((i,j)\)</span> are spatial coordinates of the output and <span class="math inline">\((m,n)\)</span> are filter coordinates.</li>
+</ul></li>
+<li><strong>Stride and Output Size:</strong>
+<ul>
+<li>The stride of the transposed convolution determines the spacing between the pixels in the output. A stride of 2 effectively doubles the spatial dimensions.</li>
+<li><strong>Output Size Calculation:</strong> <span class="math display">\[
+\text{Output Size} = \text{Stride} \times (\text{Input Size} - 1) + \text{Filter Size} - 2 \times \text{Padding}
+\]</span></li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li><strong>Generative Adversarial Networks (GANs):</strong> Used in the generator network to produce high-resolution images from low-dimensional latent representations.</li>
+<li><strong>Segmentation Networks:</strong> Employed in architectures like U-Net and SegNet for upsampling feature maps to the original image size for pixel-wise classification.</li>
+</ul></li>
+</ul>
+</section>
+<section id="network-in-network-nin" class="level3">
+<h3 class="anchored" data-anchor-id="network-in-network-nin">17.1.8. Network in Network (NiN)</h3>
+<p>The Network in Network (NiN) architecture, proposed by Lin et al., introduces the concept of micro-networks (MLPs) within the convolutional layers to enhance the model’s ability to learn complex functions.</p>
+<ul>
+<li><strong>Micro-Networks:</strong>
+<ul>
+<li>Each convolutional layer is replaced by a micro-network, specifically a multilayer perceptron (MLP), which acts as the convolutional filter.</li>
+<li><strong>Conceptual Model:</strong>
+<ul>
+<li>Instead of applying a single linear filter, apply a small neural network to each local region of the input.</li>
+<li>Typically consists of 1x1 convolutions followed by non-linear activation functions.</li>
+</ul></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li><strong>Increased Representation Power:</strong> By incorporating non-linear transformations within each convolutional layer, the model can capture more complex patterns.</li>
+<li><strong>Dimensionality Reduction:</strong> 1x1 convolutions act as bottleneck layers, reducing the number of parameters and computational cost.</li>
+</ul></li>
+<li><strong>Architecture Example:</strong>
+<ul>
+<li>A typical NiN block might include a sequence of convolutional layers, each followed by ReLU activations and spatial pooling, but interspersed with 1x1 convolution layers acting as the micro-networks.</li>
+</ul></li>
+</ul>
+</section>
+<section id="spatial-pyramid-pooling" class="level3">
+<h3 class="anchored" data-anchor-id="spatial-pyramid-pooling">17.1.9. Spatial Pyramid Pooling</h3>
+<p>Spatial Pyramid Pooling (SPP) is a technique that allows the generation of fixed-length feature vectors from input images of varying sizes by applying multiple levels of pooling and concatenating the results.</p>
+<ul>
+<li><strong>Concept:</strong>
+<ul>
+<li>Applies pooling operations at different scales (e.g., 1x1, 2x2, 3x3, etc.) to create a pyramid of pooled features. Each level of the pyramid captures information at a different spatial scale.</li>
+</ul></li>
+<li><strong>Mechanism:</strong>
+<ul>
+<li><strong>Levels of Pooling:</strong>
+<ul>
+<li>Each level divides the input feature map into a grid of different sizes and performs pooling within each grid cell.</li>
+<li>The pooled outputs from each level are then concatenated to form a single feature vector.</li>
+</ul></li>
+<li><strong>Example:</strong>
+<ul>
+<li>For a 4-level pyramid, the pooling might be applied with 1x1, 2x2, 4x4, and 8x8 grid sizes, each providing a different level of spatial abstraction.</li>
+</ul></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li><strong>Fixed-Length Outputs:</strong> Ensures that the output feature vectors have a fixed length regardless of the input image size, facilitating the use of fully connected layers.</li>
+<li><strong>Multi-Scale Feature Capture:</strong> Captures information at multiple scales, enhancing the model’s ability to recognize objects of varying sizes.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li><strong>Object Detection:</strong> Incorporated in architectures like Fast R-CNN to handle images of varying sizes and improve object detection performance.</li>
+<li><strong>Image Classification:</strong> Enhances the ability to pool spatial information from different scales, improving classification accuracy.</li>
+</ul></li>
+</ul>
+<p>By understanding these advanced convolutional techniques, researchers and practitioners can design more efficient and powerful CNN architectures, pushing the boundaries of what is achievable with deep learning in various applications.</p>
+</section>
+</section>
+<section id="recurrent-neural-networks-rnns" class="level2">
+<h2 class="anchored" data-anchor-id="recurrent-neural-networks-rnns">17.2. Recurrent Neural Networks (RNNs)</h2>
+<p>Recurrent Neural Networks (RNNs) are a class of neural networks designed to process sequential data by maintaining a hidden state that captures information about previous elements in the sequence. This capability makes RNNs particularly suitable for tasks involving time series, language modeling, and other sequential data applications.</p>
+<section id="basic-rnn-architecture" class="level3">
+<h3 class="anchored" data-anchor-id="basic-rnn-architecture">17.2.1. Basic RNN Architecture</h3>
+<p>The basic RNN architecture consists of an input layer, one or more recurrent hidden layers, and an output layer. At each time step, the RNN takes an input and the hidden state from the previous time step to produce an output and update the hidden state.</p>
+<ul>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+h_t = \sigma(W_{hx} x_t + W_{hh} h_{t-1} + b_h)
+\]</span> <span class="math display">\[
+y_t = \phi(W_{hy} h_t + b_y)
+\]</span> where <span class="math inline">\(h_t\)</span> is the hidden state at time <span class="math inline">\(t\)</span>, <span class="math inline">\(x_t\)</span> is the input at time <span class="math inline">\(t\)</span>, <span class="math inline">\(y_t\)</span> is the output at time <span class="math inline">\(t\)</span>, <span class="math inline">\(W_{hx}\)</span>, <span class="math inline">\(W_{hh}\)</span>, and <span class="math inline">\(W_{hy}\)</span> are weight matrices, <span class="math inline">\(b_h\)</span> and <span class="math inline">\(b_y\)</span> are biases, <span class="math inline">\(\sigma\)</span> is the activation function (e.g., tanh or ReLU), and <span class="math inline">\(\phi\)</span> is the output activation function (e.g., softmax for classification).</li>
+</ul>
+</section>
+<section id="backpropagation-through-time-bptt" class="level3">
+<h3 class="anchored" data-anchor-id="backpropagation-through-time-bptt">17.2.2. Backpropagation Through Time (BPTT)</h3>
+<p>Backpropagation Through Time (BPTT) is the extension of the backpropagation algorithm used to train RNNs. It unrolls the RNN across time and computes the gradients for each time step, updating the weights accordingly.</p>
+<ul>
+<li><strong>Steps:</strong>
+<ul>
+<li><strong>Unrolling:</strong> Unroll the RNN for a fixed number of time steps (or the entire sequence).</li>
+<li><strong>Forward Pass:</strong> Compute the activations for each time step.</li>
+<li><strong>Backward Pass:</strong> Compute the gradients for each time step, starting from the last time step and propagating backwards.</li>
+<li><strong>Weight Update:</strong> Sum the gradients over all time steps and update the weights.</li>
+</ul></li>
+<li><strong>Challenges:</strong>
+<ul>
+<li><strong>Vanishing Gradients:</strong> Gradients can become very small, making it difficult for the network to learn long-term dependencies.</li>
+<li><strong>Exploding Gradients:</strong> Gradients can become very large, leading to unstable updates.</li>
+</ul></li>
+</ul>
+</section>
+<section id="long-short-term-memory-lstm" class="level3">
+<h3 class="anchored" data-anchor-id="long-short-term-memory-lstm">17.2.3. Long Short-Term Memory (LSTM)</h3>
+<p>LSTM networks are a type of RNN designed to overcome the vanishing gradient problem by introducing memory cells that can maintain information over long periods.</p>
+<section id="lstm-cell-structure" class="level4">
+<h4 class="anchored" data-anchor-id="lstm-cell-structure">17.2.3.1. LSTM Cell Structure</h4>
+<p>An LSTM cell contains a cell state and three types of gates: forget gate, input gate, and output gate, which control the flow of information into and out of the cell.</p>
+<ul>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+f_t = \sigma(W_f \cdot [h_{t-1}, x_t] + b_f)
+\]</span> <span class="math display">\[
+i_t = \sigma(W_i \cdot [h_{t-1}, x_t] + b_i)
+\]</span> <span class="math display">\[
+\tilde{C}_t = \tanh(W_C \cdot [h_{t-1}, x_t] + b_C)
+\]</span> <span class="math display">\[
+C_t = f_t \ast C_{t-1} + i_t \ast \tilde{C}_t
+\]</span> <span class="math display">\[
+o_t = \sigma(W_o \cdot [h_{t-1}, x_t] + b_o)
+\]</span> <span class="math display">\[
+h_t = o_t \ast \tanh(C_t)
+\]</span></li>
+</ul>
+</section>
+<section id="forget-input-and-output-gates" class="level4">
+<h4 class="anchored" data-anchor-id="forget-input-and-output-gates">17.2.3.2. Forget, Input, and Output Gates</h4>
+<ul>
+<li><strong>Forget Gate:</strong> Determines what portion of the previous cell state to retain.
+<ul>
+<li><strong>Formula:</strong> <span class="math inline">\(f_t = \sigma(W_f \cdot [h_{t-1}, x_t] + b_f)\)</span></li>
+</ul></li>
+<li><strong>Input Gate:</strong> Controls the extent to which new information is added to the cell state.
+<ul>
+<li><strong>Formula:</strong> <span class="math inline">\(i_t = \sigma(W_i \cdot [h_{t-1}, x_t] + b_i)\)</span></li>
+</ul></li>
+<li><strong>Output Gate:</strong> Decides what information from the cell state is outputted.
+<ul>
+<li><strong>Formula:</strong> <span class="math inline">\(o_t = \sigma(W_o \cdot [h_{t-1}, x_t] + b_o)\)</span></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="gated-recurrent-unit-gru" class="level3">
+<h3 class="anchored" data-anchor-id="gated-recurrent-unit-gru">17.2.4. Gated Recurrent Unit (GRU)</h3>
+<p>GRUs are a simplified version of LSTMs that combine the forget and input gates into a single update gate and merge the cell state and hidden state.</p>
+<ul>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+z_t = \sigma(W_z \cdot [h_{t-1}, x_t] + b_z)
+\]</span> <span class="math display">\[
+r_t = \sigma(W_r \cdot [h_{t-1}, x_t] + b_r)
+\]</span> <span class="math display">\[
+\tilde{h}_t = \tanh(W_h \cdot [r_t \ast h_{t-1}, x_t] + b_h)
+\]</span> <span class="math display">\[
+h_t = (1 - z_t) \ast h_{t-1} + z_t \ast \tilde{h}_t
+\]</span></p></li>
+<li><p><strong>Components:</strong></p>
+<ul>
+<li><strong>Update Gate (<span class="math inline">\(z_t\)</span>):</strong> Controls how much of the past information is passed along.</li>
+<li><strong>Reset Gate (<span class="math inline">\(r_t\)</span>):</strong> Determines how much past information to forget.</li>
+</ul></li>
+</ul>
+</section>
+<section id="bidirectional-rnns" class="level3">
+<h3 class="anchored" data-anchor-id="bidirectional-rnns">17.2.5. Bidirectional RNNs</h3>
+<p>Bidirectional RNNs consist of two RNNs running in parallel: one processes the sequence from start to end (forward direction), and the other processes it from end to start (backward direction). The outputs from both RNNs are combined to form the final output.</p>
+<ul>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Capture context from both past and future states, improving performance on tasks like speech recognition and language modeling.</li>
+</ul></li>
+</ul>
+</section>
+<section id="deep-rnns-stacked-rnns" class="level3">
+<h3 class="anchored" data-anchor-id="deep-rnns-stacked-rnns">17.2.6. Deep RNNs (Stacked RNNs)</h3>
+<p>Deep RNNs stack multiple RNN layers on top of each other, where each layer’s output is used as the input for the next layer. This architecture allows the model to learn hierarchical representations of the data.</p>
+<ul>
+<li><strong>Advantages:</strong>
+<ul>
+<li>More powerful representation of the sequential data.</li>
+<li>Capture complex patterns by learning multiple levels of abstraction.</li>
+</ul></li>
+</ul>
+</section>
+<section id="attention-mechanisms-in-rnns" class="level3">
+<h3 class="anchored" data-anchor-id="attention-mechanisms-in-rnns">17.2.7. Attention Mechanisms in RNNs</h3>
+<p>Attention mechanisms enable RNNs to focus on different parts of the input sequence when producing each output. This approach improves the performance of tasks like translation, where different words can have varying levels of importance in different contexts.</p>
+<ul>
+<li><strong>Mechanism:</strong>
+<ul>
+<li><strong>Score Calculation:</strong> Compute a score for each input based on its relevance to the current output.</li>
+<li><strong>Weights Calculation:</strong> Normalize the scores to get a set of attention weights.</li>
+<li><strong>Context Vector:</strong> Compute a weighted sum of the input states using the attention weights.</li>
+</ul></li>
+</ul>
+</section>
+<section id="sequence-to-sequence-models" class="level3">
+<h3 class="anchored" data-anchor-id="sequence-to-sequence-models">17.2.8. Sequence-to-Sequence Models</h3>
+<p>Sequence-to-sequence (seq2seq) models are designed to transform one sequence into another, such as translating a sentence from one language to another. These models typically use two RNNs: an encoder to process the input sequence and a decoder to generate the output sequence.</p>
+<ul>
+<li><strong>Components:</strong>
+<ul>
+<li><strong>Encoder:</strong> Processes the entire input sequence and compresses it into a context vector.</li>
+<li><strong>Decoder:</strong> Takes the context vector and generates the output sequence one step at a time.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Machine translation.</li>
+<li>Text summarization.</li>
+<li>Conversational agents.</li>
+</ul></li>
+</ul>
+<p>By understanding these advanced RNN concepts, researchers and practitioners can effectively design and implement models for a wide range of sequential data tasks, pushing the boundaries of what is achievable with deep learning.</p>
+</section>
+</section>
+<section id="generative-adversarial-networks-gans" class="level2">
+<h2 class="anchored" data-anchor-id="generative-adversarial-networks-gans">17.3. Generative Adversarial Networks (GANs)</h2>
+<p>Generative Adversarial Networks (GANs) are a class of machine learning frameworks designed to generate new data samples that mimic a given dataset. Introduced by Ian Goodfellow et al.&nbsp;in 2014, GANs have revolutionized the field of generative modeling.</p>
+<section id="gan-architecture-and-training" class="level3">
+<h3 class="anchored" data-anchor-id="gan-architecture-and-training">17.3.1. GAN Architecture and Training</h3>
+<p>A GAN consists of two neural networks: a generator and a discriminator. These networks are trained simultaneously in a game-theoretic framework.</p>
+<ul>
+<li><strong>Generator (<span class="math inline">\(G\)</span>):</strong>
+<ul>
+<li>Takes random noise as input and generates synthetic data samples.</li>
+<li>Objective: Generate data that is indistinguishable from real data.</li>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+G(z; \theta_G)
+\]</span> where <span class="math inline">\(z\)</span> is the input noise vector and <span class="math inline">\(\theta_G\)</span> are the generator’s parameters.</li>
+</ul></li>
+<li><strong>Discriminator (<span class="math inline">\(D\)</span>):</strong>
+<ul>
+<li>Takes a data sample (real or generated) as input and outputs a probability of the sample being real.</li>
+<li>Objective: Distinguish between real and synthetic data.</li>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+D(x; \theta_D)
+\]</span> where <span class="math inline">\(x\)</span> is the input data sample and <span class="math inline">\(\theta_D\)</span> are the discriminator’s parameters.</li>
+</ul></li>
+<li><strong>Training Process:</strong>
+<ul>
+<li><strong>Adversarial Loss:</strong> <span class="math display">\[
+\min_G \max_D \mathbb{E}_{x \sim p_{\text{data}}(x)} [\log D(x)] + \mathbb{E}_{z \sim p_z(z)} [\log (1 - D(G(z)))]
+\]</span></li>
+<li>The generator aims to minimize this loss, while the discriminator aims to maximize it.</li>
+</ul></li>
+</ul>
+</section>
+<section id="dcgan-deep-convolutional-gan" class="level3">
+<h3 class="anchored" data-anchor-id="dcgan-deep-convolutional-gan">17.3.2. DCGAN (Deep Convolutional GAN)</h3>
+<p>Deep Convolutional GANs (DCGANs) are an extension of GANs that leverage convolutional networks for both the generator and discriminator, leading to improved image generation quality.</p>
+<ul>
+<li><strong>Key Features:</strong>
+<ul>
+<li>Use of convolutional layers instead of fully connected layers.</li>
+<li>Use of batch normalization to stabilize training.</li>
+<li>Use of ReLU activation in the generator and LeakyReLU in the discriminator.</li>
+</ul></li>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Generator:</strong> Convolutional transpose layers with ReLU activations.</li>
+<li><strong>Discriminator:</strong> Convolutional layers with LeakyReLU activations.</li>
+</ul></li>
+</ul>
+</section>
+<section id="conditional-gans" class="level3">
+<h3 class="anchored" data-anchor-id="conditional-gans">17.3.3. Conditional GANs</h3>
+<p>Conditional GANs (cGANs) introduce conditional variables to both the generator and discriminator, allowing for control over the generated data.</p>
+<ul>
+<li><strong>Conditioning Information:</strong>
+<ul>
+<li>Can be class labels, text descriptions, or other auxiliary information.</li>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+G(z|y)
+\]</span> <span class="math display">\[
+D(x|y)
+\]</span> where <span class="math inline">\(y\)</span> is the conditioning variable.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Image-to-image translation.</li>
+<li>Text-to-image synthesis.</li>
+</ul></li>
+</ul>
+</section>
+<section id="cyclegan-for-unpaired-image-to-image-translation" class="level3">
+<h3 class="anchored" data-anchor-id="cyclegan-for-unpaired-image-to-image-translation">17.3.4. CycleGAN for Unpaired Image-to-Image Translation</h3>
+<p>CycleGANs enable image-to-image translation without paired training examples, using cycle consistency loss to enforce that an image translated to another domain and back should remain unchanged.</p>
+<ul>
+<li><strong>Cycle Consistency Loss:</strong>
+<ul>
+<li><strong>Forward Cycle:</strong> <span class="math display">\[
+\mathcal{L}_{\text{cyc}}(G, F) = \mathbb{E}_{x \sim p_{\text{data}}(x)} [||F(G(x)) - x||_1]
+\]</span></li>
+<li><strong>Backward Cycle:</strong> <span class="math display">\[
+\mathcal{L}_{\text{cyc}}(F, G) = \mathbb{E}_{y \sim p_{\text{data}}(y)} [||G(F(y)) - y||_1]
+\]</span></li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Artistic style transfer.</li>
+<li>Domain adaptation.</li>
+</ul></li>
+</ul>
+</section>
+<section id="progressive-growing-of-gans" class="level3">
+<h3 class="anchored" data-anchor-id="progressive-growing-of-gans">17.3.5. Progressive Growing of GANs</h3>
+<p>Progressive Growing of GANs involves training GANs by gradually increasing the resolution of generated images, starting from low-resolution and progressively adding layers to handle higher resolutions.</p>
+<ul>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Stabilizes training.</li>
+<li>Produces high-quality, high-resolution images.</li>
+</ul></li>
+<li><strong>Training Process:</strong>
+<ul>
+<li>Start with a low-resolution generator and discriminator.</li>
+<li>Gradually add layers to increase resolution during training.</li>
+</ul></li>
+</ul>
+</section>
+<section id="stylegan-and-stylegan2" class="level3">
+<h3 class="anchored" data-anchor-id="stylegan-and-stylegan2">17.3.6. StyleGAN and StyleGAN2</h3>
+<p>StyleGANs introduce style-based generator architectures, allowing for unprecedented control over the generated image styles.</p>
+<ul>
+<li><strong>Key Innovations:</strong>
+<ul>
+<li><strong>Style Mapping Network:</strong> Transforms the latent vector into an intermediate vector that controls the style.</li>
+<li><strong>Adaptive Instance Normalization (AdaIN):</strong> Adjusts the style of intermediate feature maps.</li>
+<li><strong>Style Mixing:</strong> Combines styles from different latent codes to generate images.</li>
+</ul></li>
+<li><strong>StyleGAN2 Improvements:</strong>
+<ul>
+<li>Improved architectural design to reduce artifacts.</li>
+<li>Replaces AdaIN with a new normalization technique.</li>
+</ul></li>
+</ul>
+</section>
+<section id="wasserstein-gan-wgan" class="level3">
+<h3 class="anchored" data-anchor-id="wasserstein-gan-wgan">17.3.7. Wasserstein GAN (WGAN)</h3>
+<p>Wasserstein GANs address the instability of GAN training by using the Wasserstein distance (Earth Mover’s distance) as the loss function.</p>
+<ul>
+<li><strong>Wasserstein Distance:</strong>
+<ul>
+<li>Provides a smoother and more meaningful gradient signal.</li>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\min_G \max_{D \in \mathcal{D}} \mathbb{E}_{x \sim p_{\text{data}}(x)} [D(x)] - \mathbb{E}_{z \sim p_z(z)} [D(G(z))]
+\]</span> where <span class="math inline">\(\mathcal{D}\)</span> is the set of 1-Lipschitz functions.</li>
+</ul></li>
+<li><strong>WGAN-GP (Gradient Penalty):</strong>
+<ul>
+<li>Adds a gradient penalty term to enforce the 1-Lipschitz constraint.</li>
+</ul></li>
+</ul>
+</section>
+<section id="evaluation-metrics-for-gans" class="level3">
+<h3 class="anchored" data-anchor-id="evaluation-metrics-for-gans">17.3.8. Evaluation Metrics for GANs</h3>
+<p>Evaluating GANs is challenging due to the subjective nature of generative tasks. Common evaluation metrics include:</p>
+<ul>
+<li><strong>Inception Score (IS):</strong>
+<ul>
+<li>Measures the quality and diversity of generated images based on the predictions of a pre-trained Inception network.</li>
+</ul></li>
+<li><strong>Fréchet Inception Distance (FID):</strong>
+<ul>
+<li>Computes the distance between the distributions of real and generated images in the feature space of an Inception network.</li>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\text{FID} = ||\mu_r - \mu_g||^2 + \text{Tr}(\Sigma_r + \Sigma_g - 2(\Sigma_r \Sigma_g)^{1/2})
+\]</span> where <span class="math inline">\((\mu_r, \Sigma_r)\)</span> and <span class="math inline">\((\mu_g, \Sigma_g)\)</span> are the mean and covariance of real and generated feature vectors, respectively.</li>
+</ul></li>
+<li><strong>Perceptual Path Length (PPL):</strong>
+<ul>
+<li>Measures the smoothness and disentanglement of the latent space.</li>
+</ul></li>
+</ul>
+<p>By understanding these advanced GAN architectures and techniques, researchers and practitioners can design and evaluate generative models for a wide range of applications, from image synthesis to domain adaptation and beyond.</p>
+</section>
+</section>
+<section id="variational-autoencoders-vaes" class="level2">
+<h2 class="anchored" data-anchor-id="variational-autoencoders-vaes">17.4. Variational Autoencoders (VAEs)</h2>
+<p>Variational Autoencoders (VAEs) are a class of generative models that aim to encode data into a latent space and then decode it back to the original space, while also ensuring that the latent space follows a known distribution (usually Gaussian). Introduced by Kingma and Welling in 2013, VAEs have become a fundamental tool in unsupervised learning and generative modeling.</p>
+<section id="vae-architecture" class="level3">
+<h3 class="anchored" data-anchor-id="vae-architecture">17.4.1. VAE Architecture</h3>
+<p>The VAE architecture consists of two main components: an encoder and a decoder, similar to traditional autoencoders. However, the key difference lies in how the latent space is handled.</p>
+<ul>
+<li><strong>Encoder (Inference Network):</strong>
+<ul>
+<li>Maps the input data <span class="math inline">\(x\)</span> to the parameters of a probability distribution over the latent space <span class="math inline">\(z\)</span>.</li>
+<li>Outputs the mean <span class="math inline">\(\mu(x)\)</span> and variance <span class="math inline">\(\sigma^2(x)\)</span> of the latent variables.</li>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+q(z|x) = \mathcal{N}(z; \mu(x), \sigma^2(x))
+\]</span></li>
+</ul></li>
+<li><strong>Decoder (Generative Network):</strong>
+<ul>
+<li>Maps the latent variable <span class="math inline">\(z\)</span> back to the data space, generating reconstructed data <span class="math inline">\(\hat{x}\)</span>.</li>
+<li><strong>Mathematical Formulation:</strong> <span class="math display">\[
+p(x|z) = \mathcal{N}(x; \hat{x}(z), I)
+\]</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="reparameterization-trick" class="level3">
+<h3 class="anchored" data-anchor-id="reparameterization-trick">17.4.2. Reparameterization Trick</h3>
+<p>The reparameterization trick is a technique used to enable gradient-based optimization of the VAE. Instead of sampling <span class="math inline">\(z\)</span> directly from <span class="math inline">\(q(z|x)\)</span>, we sample from a standard normal distribution and then shift and scale it using the learned parameters.</p>
+<ul>
+<li><strong>Formulation:</strong>
+<ul>
+<li>Sample <span class="math inline">\(\epsilon \sim \mathcal{N}(0, I)\)</span>.</li>
+<li>Compute <span class="math inline">\(z\)</span> as: <span class="math display">\[
+z = \mu(x) + \sigma(x) \ast \epsilon
+\]</span></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Allows the gradients to backpropagate through the sampling operation, enabling the use of standard optimization techniques like stochastic gradient descent.</li>
+</ul></li>
+</ul>
+</section>
+<section id="loss-function-reconstruction-loss-and-kl-divergence" class="level3">
+<h3 class="anchored" data-anchor-id="loss-function-reconstruction-loss-and-kl-divergence">17.4.3. Loss Function: Reconstruction Loss and KL Divergence</h3>
+<p>The VAE loss function consists of two parts: the reconstruction loss and the KL divergence. The goal is to maximize the likelihood of the data while regularizing the latent space to follow the prior distribution.</p>
+<ul>
+<li><strong>Reconstruction Loss:</strong>
+<ul>
+<li>Measures how well the VAE reconstructs the input data.</li>
+<li><strong>Common Formulation:</strong> Mean Squared Error (MSE) or Binary Cross-Entropy (BCE) between the input <span class="math inline">\(x\)</span> and the reconstructed <span class="math inline">\(\hat{x}\)</span>.</li>
+</ul></li>
+<li><strong>KL Divergence:</strong>
+<ul>
+<li>Regularizes the encoder to ensure that the distribution of the latent variables <span class="math inline">\(q(z|x)\)</span> is close to the prior distribution <span class="math inline">\(p(z)\)</span> (typically a standard normal distribution).</li>
+<li><strong>Formulation:</strong> <span class="math display">\[
+D_{KL}(q(z|x) || p(z)) = \frac{1}{2} \sum (1 + \log \sigma^2(x) - \mu^2(x) - \sigma^2(x))
+\]</span></li>
+</ul></li>
+<li><strong>Combined Loss:</strong>
+<ul>
+<li>The total VAE loss is the sum of the reconstruction loss and the KL divergence: <span class="math display">\[
+\mathcal{L}_{\text{VAE}} = \mathbb{E}_{q(z|x)}[\log p(x|z)] - D_{KL}(q(z|x) || p(z))
+\]</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="conditional-vaes" class="level3">
+<h3 class="anchored" data-anchor-id="conditional-vaes">17.4.4. Conditional VAEs</h3>
+<p>Conditional VAEs (CVAEs) extend the VAE framework by conditioning both the encoder and the decoder on additional information, such as class labels or other auxiliary data.</p>
+<ul>
+<li><strong>Formulation:</strong>
+<ul>
+<li>The encoder and decoder are conditioned on an additional variable <span class="math inline">\(y\)</span>: <span class="math display">\[
+q(z|x, y), \quad p(x|z, y)
+\]</span></li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Image generation conditioned on class labels.</li>
+<li>Data augmentation by generating new samples conditioned on specific attributes.</li>
+</ul></li>
+</ul>
+</section>
+<section id="β-vae-for-disentangled-representations" class="level3">
+<h3 class="anchored" data-anchor-id="β-vae-for-disentangled-representations">17.4.5. β-VAE for Disentangled Representations</h3>
+<p>β-VAEs introduce a hyperparameter <span class="math inline">\(\beta\)</span> to control the trade-off between the reconstruction loss and the KL divergence, encouraging the learning of disentangled representations.</p>
+<ul>
+<li><strong>Formulation:</strong>
+<ul>
+<li>Modify the VAE loss function to include a weight <span class="math inline">\(\beta\)</span> on the KL divergence term: <span class="math display">\[
+\mathcal{L}_{\beta\text{-VAE}} = \mathbb{E}_{q(z|x)}[\log p(x|z)] - \beta D_{KL}(q(z|x) || p(z))
+\]</span></li>
+</ul></li>
+<li><strong>Impact:</strong>
+<ul>
+<li>By increasing <span class="math inline">\(\beta\)</span>, the model is encouraged to learn more disentangled latent representations, where different dimensions of the latent space correspond to different factors of variation in the data.</li>
+</ul></li>
+</ul>
+</section>
+<section id="vq-vae-vector-quantized-vae" class="level3">
+<h3 class="anchored" data-anchor-id="vq-vae-vector-quantized-vae">17.4.6. VQ-VAE (Vector Quantized VAE)</h3>
+<p>Vector Quantized VAEs (VQ-VAEs) introduce discrete latent variables into the VAE framework, using vector quantization to map continuous latent variables to discrete codes.</p>
+<ul>
+<li><strong>Key Concepts:</strong>
+<ul>
+<li><strong>Codebook:</strong> A set of discrete latent vectors (codes) that the continuous latent variables are mapped to.</li>
+<li><strong>Quantization:</strong> During training, the continuous latent variables are replaced with the nearest code from the codebook.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Combines the strengths of VAEs and discrete latent variable models, such as autoregressive models.</li>
+<li>Enables efficient compression and generation of high-quality images.</li>
+</ul></li>
+<li><strong>Formulation:</strong>
+<ul>
+<li><strong>Encoder:</strong> Maps input <span class="math inline">\(x\)</span> to continuous latent variables <span class="math inline">\(z_e(x)\)</span>.</li>
+<li><strong>Quantization:</strong> Maps <span class="math inline">\(z_e(x)\)</span> to the nearest code <span class="math inline">\(z_q(x)\)</span> from the codebook.</li>
+<li><strong>Decoder:</strong> Maps <span class="math inline">\(z_q(x)\)</span> to the reconstructed data <span class="math inline">\(\hat{x}\)</span>.</li>
+</ul></li>
+<li><strong>Loss Function:</strong>
+<ul>
+<li>Consists of the reconstruction loss and a commitment loss to ensure the encoder commits to the quantized codes: <span class="math display">\[
+\mathcal{L}_{\text{VQ-VAE}} = ||x - \hat{x}||^2 + ||\text{sg}[z_e(x)] - z_q(x)||^2 + \beta ||z_e(x) - \text{sg}[z_q(x)]||^2
+\]</span> where <span class="math inline">\(\text{sg}\)</span> is the stop-gradient operator.</li>
+</ul></li>
+</ul>
+<p>By understanding these advanced VAE concepts, researchers and practitioners can design and implement models for a wide range of generative tasks, pushing the boundaries of what is achievable with unsupervised learning and generative modeling.</p>
+</section>
+</section>
+<section id="transformer-architecture" class="level2">
+<h2 class="anchored" data-anchor-id="transformer-architecture">17.5. Transformer Architecture</h2>
+<p>The Transformer architecture, introduced by Vaswani et al.&nbsp;in 2017, revolutionized the field of natural language processing (NLP) by leveraging self-attention mechanisms instead of recurrent or convolutional layers. This innovation enabled parallelization and improved the capture of long-range dependencies in sequences.</p>
+<section id="self-attention-mechanism" class="level3">
+<h3 class="anchored" data-anchor-id="self-attention-mechanism">17.5.1. Self-Attention Mechanism</h3>
+<p>Self-attention is the core component of the Transformer, allowing each position in the input sequence to attend to all other positions, thereby capturing dependencies regardless of their distance.</p>
+<ul>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right) V
+\]</span> where <span class="math inline">\(Q\)</span> (queries), <span class="math inline">\(K\)</span> (keys), and <span class="math inline">\(V\)</span> (values) are linear projections of the input, and <span class="math inline">\(d_k\)</span> is the dimension of the keys.</p></li>
+<li><p><strong>Scaled Dot-Product Attention:</strong></p>
+<ul>
+<li>The dot products of the queries and keys are scaled by <span class="math inline">\(\sqrt{d_k}\)</span> to stabilize gradients.</li>
+<li>The softmax function ensures the weights sum to 1, enabling the model to focus on relevant parts of the input.</li>
+</ul></li>
+</ul>
+</section>
+<section id="multi-head-attention" class="level3">
+<h3 class="anchored" data-anchor-id="multi-head-attention">17.5.2. Multi-Head Attention</h3>
+<p>Multi-head attention enhances the model’s ability to focus on different parts of the input by applying multiple self-attention mechanisms in parallel and concatenating their outputs.</p>
+<ul>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\text{MultiHead}(Q, K, V) = \text{Concat}(\text{head}_1, \ldots, \text{head}_h) W^O
+\]</span> where each head is computed as: <span class="math display">\[
+\text{head}_i = \text{Attention}(Q W_i^Q, K W_i^K, V W_i^V)
+\]</span> and <span class="math inline">\(W_i^Q, W_i^K, W_i^V\)</span> are projection matrices for the <span class="math inline">\(i\)</span>-th head.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Allows the model to jointly attend to information from different representation subspaces.</li>
+<li>Improves the capture of complex patterns and relationships in the input data.</li>
+</ul></li>
+</ul>
+</section>
+<section id="position-wise-feed-forward-networks" class="level3">
+<h3 class="anchored" data-anchor-id="position-wise-feed-forward-networks">17.5.3. Position-wise Feed-Forward Networks</h3>
+<p>Position-wise feed-forward networks are applied independently to each position in the sequence, providing additional non-linearity and transformation after the self-attention layers.</p>
+<ul>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\text{FFN}(x) = \max(0, xW_1 + b_1)W_2 + b_2
+\]</span> where <span class="math inline">\(W_1\)</span> and <span class="math inline">\(W_2\)</span> are learned weight matrices, and <span class="math inline">\(b_1\)</span> and <span class="math inline">\(b_2\)</span> are biases.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Enhances the model’s capacity to capture complex mappings.</li>
+<li>Provides a non-linear transformation to each position independently.</li>
+</ul></li>
+</ul>
+</section>
+<section id="positional-encoding" class="level3">
+<h3 class="anchored" data-anchor-id="positional-encoding">17.5.4. Positional Encoding</h3>
+<p>Since Transformers lack the sequential inductive bias of RNNs, positional encodings are added to the input embeddings to provide information about the relative or absolute position of the tokens in the sequence.</p>
+<ul>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li>Sinusoidal positional encodings: <span class="math display">\[
+\text{PE}_{(pos, 2i)} = \sin\left(\frac{pos}{10000^{2i/d_{\text{model}}}}\right)
+\]</span> <span class="math display">\[
+\text{PE}_{(pos, 2i+1)} = \cos\left(\frac{pos}{10000^{2i/d_{\text{model}}}}\right)
+\]</span> where <span class="math inline">\(pos\)</span> is the position and <span class="math inline">\(i\)</span> is the dimension.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Enables the model to learn the order of the sequence.</li>
+<li>Provides a fixed and interpretable method to incorporate positional information.</li>
+</ul></li>
+</ul>
+</section>
+<section id="encoder-decoder-architecture" class="level3">
+<h3 class="anchored" data-anchor-id="encoder-decoder-architecture">17.5.5. Encoder-Decoder Architecture</h3>
+<p>The Transformer consists of an encoder-decoder architecture where both the encoder and decoder are stacks of identical layers.</p>
+<ul>
+<li><strong>Encoder:</strong>
+<ul>
+<li>Composed of multiple layers, each with two main sub-layers: multi-head self-attention and position-wise feed-forward networks.</li>
+<li>Each sub-layer is followed by layer normalization and residual connections.</li>
+</ul></li>
+<li><strong>Decoder:</strong>
+<ul>
+<li>Similar to the encoder but includes an additional sub-layer for multi-head attention over the encoder’s output.</li>
+<li>The decoder generates the output sequence step-by-step, attending to the encoder’s representations.</li>
+</ul></li>
+</ul>
+</section>
+<section id="variants-transformer-xl-xlnet-reformer" class="level3">
+<h3 class="anchored" data-anchor-id="variants-transformer-xl-xlnet-reformer">17.5.6. Variants: Transformer-XL, XLNet, Reformer</h3>
+<p>Several Transformer variants have been proposed to address specific limitations and enhance performance.</p>
+<ul>
+<li><strong>Transformer-XL:</strong>
+<ul>
+<li>Introduces a segment-level recurrence mechanism and a new positional encoding scheme to handle longer sequences effectively.</li>
+<li>Improves the capture of long-range dependencies by reusing hidden states from previous segments.</li>
+</ul></li>
+<li><strong>XLNet:</strong>
+<ul>
+<li>Combines the benefits of autoregressive and autoencoding models using permutation-based training.</li>
+<li>Captures bidirectional context by maximizing the expected likelihood over all permutations of the factorization order.</li>
+</ul></li>
+<li><strong>Reformer:</strong>
+<ul>
+<li>Utilizes locality-sensitive hashing (LSH) to reduce the computational complexity of self-attention from <span class="math inline">\(O(n^2)\)</span> to <span class="math inline">\(O(n \log n)\)</span>.</li>
+<li>Introduces reversible layers to reduce memory usage during training.</li>
+</ul></li>
+</ul>
+<p>By understanding these components and variants of the Transformer architecture, researchers and practitioners can effectively design and implement state-of-the-art models for various NLP tasks, pushing the boundaries of what is achievable with deep learning.</p>
+</section>
+</section>
+<section id="graph-neural-networks-gnns" class="level2">
+<h2 class="anchored" data-anchor-id="graph-neural-networks-gnns">17.6. Graph Neural Networks (GNNs)</h2>
+<p>Graph Neural Networks (GNNs) are a class of neural networks designed to perform inference on data structured as graphs. GNNs leverage the relationships and structure of the graph to learn representations for nodes, edges, or the entire graph, making them powerful for tasks such as node classification, link prediction, and graph classification.</p>
+<section id="graph-convolutional-networks-gcn" class="level3">
+<h3 class="anchored" data-anchor-id="graph-convolutional-networks-gcn">17.6.1. Graph Convolutional Networks (GCN)</h3>
+<p>Graph Convolutional Networks (GCNs) extend the concept of convolutional neural networks (CNNs) to graph data. They aggregate information from a node’s neighbors to compute the node’s representation.</p>
+<ul>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+H^{(l+1)} = \sigma(\tilde{D}^{-1/2} \tilde{A} \tilde{D}^{-1/2} H^{(l)} W^{(l)})
+\]</span> where <span class="math inline">\(\tilde{A} = A + I\)</span> is the adjacency matrix with added self-loops, <span class="math inline">\(\tilde{D}\)</span> is the degree matrix of <span class="math inline">\(\tilde{A}\)</span>, <span class="math inline">\(H^{(l)}\)</span> is the matrix of node features at layer <span class="math inline">\(l\)</span>, <span class="math inline">\(W^{(l)}\)</span> is the weight matrix at layer <span class="math inline">\(l\)</span>, and <span class="math inline">\(\sigma\)</span> is an activation function (e.g., ReLU).</p></li>
+<li><p><strong>Layer-wise Propagation Rule:</strong></p>
+<ul>
+<li>At each layer, the node features are updated by aggregating the features from the neighboring nodes and transforming them linearly.</li>
+</ul></li>
+<li><p><strong>Applications:</strong></p>
+<ul>
+<li>Node classification in citation networks.</li>
+<li>Graph classification for molecular property prediction.</li>
+</ul></li>
+</ul>
+</section>
+<section id="graphsage" class="level3">
+<h3 class="anchored" data-anchor-id="graphsage">17.6.2. GraphSAGE</h3>
+<p>GraphSAGE (Graph Sample and Aggregation) is a framework that generates embeddings for nodes by sampling and aggregating features from a node’s local neighborhood.</p>
+<ul>
+<li><p><strong>Sampling and Aggregation:</strong></p>
+<ul>
+<li>Instead of using the entire neighborhood, GraphSAGE samples a fixed-size set of neighbors for each node.</li>
+<li>The aggregation function can be mean, LSTM-based, or a pooling operation.</li>
+</ul></li>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+h_v^{(l+1)} = \sigma(W^{(l)} \cdot \text{AGGREGATE}(\{h_v^{(l)}\} \cup \{h_u^{(l)}, \forall u \in \text{Neighbors}(v)\}))
+\]</span></p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Scalability: Handles large graphs by sampling a fixed number of neighbors.</li>
+<li>Flexibility: Allows for various aggregation functions to capture different aspects of the neighborhood.</li>
+</ul></li>
+<li><p><strong>Applications:</strong></p>
+<ul>
+<li>Social network analysis.</li>
+<li>Recommender systems.</li>
+</ul></li>
+</ul>
+</section>
+<section id="graph-attention-networks-gat" class="level3">
+<h3 class="anchored" data-anchor-id="graph-attention-networks-gat">17.6.3. Graph Attention Networks (GAT)</h3>
+<p>Graph Attention Networks (GATs) use attention mechanisms to assign different importance weights to different neighbors in the aggregation process.</p>
+<ul>
+<li><p><strong>Attention Mechanism:</strong></p>
+<ul>
+<li>Computes attention coefficients for each pair of nodes connected by an edge.</li>
+<li>The attention coefficient <span class="math inline">\(\alpha_{ij}\)</span> indicates the importance of node <span class="math inline">\(j\)</span>’s features to node <span class="math inline">\(i\)</span>.</li>
+</ul></li>
+<li><p><strong>Mathematical Formulation:</strong> <span class="math display">\[
+\alpha_{ij} = \frac{\exp(\text{LeakyReLU}(a^T [W h_i \parallel W h_j]))}{\sum_{k \in \mathcal{N}(i)} \exp(\text{LeakyReLU}(a^T [W h_i \parallel W h_k]))}
+\]</span> <span class="math display">\[
+h_i^{(l+1)} = \sigma\left(\sum_{j \in \mathcal{N}(i)} \alpha_{ij} W h_j^{(l)}\right)
+\]</span></p></li>
+<li><p><strong>Multi-Head Attention:</strong></p>
+<ul>
+<li>Uses multiple attention mechanisms to stabilize the learning process and capture different aspects of the neighborhood information.</li>
+</ul></li>
+<li><p><strong>Applications:</strong></p>
+<ul>
+<li>Protein-protein interaction networks.</li>
+<li>Node classification in citation networks.</li>
+</ul></li>
+</ul>
+</section>
+<section id="message-passing-neural-networks" class="level3">
+<h3 class="anchored" data-anchor-id="message-passing-neural-networks">17.6.4. Message Passing Neural Networks</h3>
+<p>Message Passing Neural Networks (MPNNs) generalize various graph neural networks by using a message-passing framework to update node representations.</p>
+<ul>
+<li><strong>Message Passing Framework:</strong>
+<ul>
+<li>Each node updates its representation by aggregating messages from its neighbors.</li>
+<li>The message passing consists of two phases: message aggregation and node update.</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li><strong>Message Aggregation:</strong> <span class="math display">\[
+m_v^{(t+1)} = \sum_{u \in \mathcal{N}(v)} M(h_u^{(t)}, h_v^{(t)}, e_{uv})
+\]</span> where <span class="math inline">\(M\)</span> is a message function, <span class="math inline">\(h_u^{(t)}\)</span> and <span class="math inline">\(h_v^{(t)}\)</span> are node features at time step <span class="math inline">\(t\)</span>, and <span class="math inline">\(e_{uv}\)</span> is the edge feature.</li>
+<li><strong>Node Update:</strong> <span class="math display">\[
+h_v^{(t+1)} = U(h_v^{(t)}, m_v^{(t+1)})
+\]</span> where <span class="math inline">\(U\)</span> is an update function.</li>
+</ul></li>
+<li><strong>Flexibility:</strong>
+<ul>
+<li>The message and update functions can be designed to capture various types of interactions and dependencies in the graph.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Molecular graph generation.</li>
+<li>Learning representations for graph-based learning tasks.</li>
+</ul></li>
+</ul>
+<p>By understanding these advanced GNN concepts and architectures, researchers and practitioners can design and implement models for a wide range of graph-based tasks, pushing the boundaries of what is achievable with graph neural networks.</p>
+</section>
+</section>
+<section id="memory-networks" class="level2">
+<h2 class="anchored" data-anchor-id="memory-networks">17.7. Memory Networks</h2>
+<p>Memory Networks are a class of neural networks designed to handle tasks that require reasoning over long-term dependencies and large amounts of knowledge. They incorporate an explicit memory component that can be read from and written to, allowing the model to maintain and manipulate information over extended sequences or interactions.</p>
+<section id="end-to-end-memory-networks" class="level3">
+<h3 class="anchored" data-anchor-id="end-to-end-memory-networks">17.7.1. End-to-End Memory Networks</h3>
+<p>End-to-End Memory Networks (MemN2N) are designed to improve question answering by explicitly incorporating memory that can be read and written to in a differentiable manner.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Input Module:</strong> Encodes the input into a continuous representation.</li>
+<li><strong>Memory Module:</strong> Stores representations of previous inputs or facts.</li>
+<li><strong>Output Module:</strong> Generates responses based on the query and the stored memory.</li>
+</ul></li>
+<li><strong>Memory Operations:</strong>
+<ul>
+<li><strong>Read Operation:</strong> Retrieves relevant information from the memory based on a similarity measure between the query and memory entries. <span class="math display">\[
+p_i = \text{softmax}(q^T m_i)
+\]</span> where <span class="math inline">\(q\)</span> is the query vector, <span class="math inline">\(m_i\)</span> are memory vectors, and <span class="math inline">\(p_i\)</span> are the attention weights.</li>
+<li><strong>Write Operation:</strong> Updates the memory with new information.</li>
+</ul></li>
+<li><strong>Inference:</strong>
+<ul>
+<li>Multiple passes (hops) over the memory to refine the query and extract relevant information.</li>
+<li>Final response generated from the updated query and memory.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Question answering.</li>
+<li>Dialogue systems.</li>
+</ul></li>
+</ul>
+</section>
+<section id="dynamic-memory-networks" class="level3">
+<h3 class="anchored" data-anchor-id="dynamic-memory-networks">17.7.2. Dynamic Memory Networks</h3>
+<p>Dynamic Memory Networks (DMNs) extend the concept of Memory Networks to handle a broader range of tasks by incorporating an attention mechanism and episodic memory updates.</p>
+<ul>
+<li><strong>Components:</strong>
+<ul>
+<li><strong>Input Module:</strong> Processes the input sequence into a series of vectors.</li>
+<li><strong>Question Module:</strong> Encodes the question or query.</li>
+<li><strong>Episodic Memory Module:</strong> Iteratively updates the memory based on the input and question representations.</li>
+<li><strong>Answer Module:</strong> Generates the final answer based on the episodic memory.</li>
+</ul></li>
+<li><strong>Episodic Memory Updates:</strong>
+<ul>
+<li><strong>Attention Mechanism:</strong> Focuses on relevant parts of the input sequence for each iteration. <span class="math display">\[
+g_i = \text{Attention}(m_{t-1}, c_i, q)
+\]</span> where <span class="math inline">\(m_{t-1}\)</span> is the memory from the previous iteration, <span class="math inline">\(c_i\)</span> is the input vector, and <span class="math inline">\(q\)</span> is the query vector.</li>
+<li><strong>Memory Update:</strong> Combines the attended input with the previous memory to update the memory state. <span class="math display">\[
+m_t = \text{GRU}(m_{t-1}, \sum_i g_i c_i)
+\]</span></li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Natural language understanding.</li>
+<li>Visual question answering.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="capsule-networks" class="level2">
+<h2 class="anchored" data-anchor-id="capsule-networks">17.8. Capsule Networks</h2>
+<p>Capsule Networks (CapsNets) are a type of neural network designed to better capture hierarchical relationships and spatial information in data. They address limitations of traditional convolutional networks by using capsules, which are groups of neurons that represent different properties of objects or parts of objects.</p>
+<section id="dynamic-routing-between-capsules" class="level3">
+<h3 class="anchored" data-anchor-id="dynamic-routing-between-capsules">17.8.1. Dynamic Routing Between Capsules</h3>
+<p>Dynamic routing is a mechanism used in Capsule Networks to iteratively refine the coupling coefficients between capsules in different layers, ensuring that information is routed to the most relevant capsules.</p>
+<ul>
+<li><strong>Routing Algorithm:</strong>
+<ul>
+<li><strong>Initialization:</strong> Initialize the coupling coefficients <span class="math inline">\(c_{ij}\)</span> to uniform values.</li>
+<li><strong>Forward Pass:</strong> Compute the prediction vectors from lower-level capsules to higher-level capsules. <span class="math display">\[
+\hat{u}_{j|i} = W_{ij} u_i
+\]</span> where <span class="math inline">\(u_i\)</span> is the output of a lower-level capsule and <span class="math inline">\(W_{ij}\)</span> is the weight matrix.</li>
+<li><strong>Agreement:</strong> Measure the agreement between the prediction vectors and the output of higher-level capsules. <span class="math display">\[
+a_{ij} = \hat{u}_{j|i} \cdot v_j
+\]</span></li>
+<li><strong>Update Coupling Coefficients:</strong> Update the coupling coefficients based on the agreement. <span class="math display">\[
+c_{ij} = \frac{\exp(a_{ij})}{\sum_k \exp(a_{ik})}
+\]</span></li>
+<li><strong>Final Output:</strong> Compute the output of higher-level capsules as a weighted sum of the prediction vectors. <span class="math display">\[
+v_j = \text{squash}\left(\sum_i c_{ij} \hat{u}_{j|i}\right)
+\]</span></li>
+</ul></li>
+<li><strong>Squashing Function:</strong> Ensures that the length of the output vector is between 0 and 1, representing the probability that a feature is present. <span class="math display">\[
+v_j = \frac{||s_j||^2}{1 + ||s_j||^2} \frac{s_j}{||s_j||}
+\]</span></li>
+</ul>
+</section>
+<section id="capsule-architecture-and-applications" class="level3">
+<h3 class="anchored" data-anchor-id="capsule-architecture-and-applications">17.8.2. Capsule Architecture and Applications</h3>
+<p>Capsule Networks consist of several layers of capsules, each representing different levels of abstraction and capturing various properties of objects.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Primary Capsules:</strong> The first layer of capsules that receives input from convolutional layers and outputs vectors.</li>
+<li><strong>Higher-Level Capsules:</strong> Subsequent layers that receive input from lower-level capsules and capture more complex features.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li><strong>Hierarchical Relationships:</strong> Better capture of spatial and hierarchical relationships in data.</li>
+<li><strong>Robustness to Transformations:</strong> Improved robustness to affine transformations and viewpoint variations.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li><strong>Image Classification:</strong> Enhanced performance on tasks requiring spatial awareness and hierarchical feature extraction.</li>
+<li><strong>Object Detection:</strong> Improved localization and recognition of objects in images.</li>
+</ul></li>
+</ul>
+<p>By understanding these advanced memory and capsule network concepts, researchers and practitioners can design and implement models for a wide range of complex tasks, pushing the boundaries of what is achievable with deep learning.</p>
+</section>
+</section>
+</section>
+<section id="papers" class="level1">
+<h1>Papers</h1>
+</section>
+<section id="convolutional-neural-networks-cnns-1" class="level1">
+<h1>17.1. Convolutional Neural Networks (CNNs)</h1>
+<ul>
+<li><p>Recent advances in convolutional neural networks <a href="https://www.sciencedirect.com/science/article/pii/S0893608017302306">https://www.sciencedirect.com/science/article/pii/S0893608017302306</a></p></li>
+<li><p>A review of convolutional neural network architectures and their optimizations <a href="https://link.springer.com/article/10.1007/s10462-016-9509-6">https://link.springer.com/article/10.1007/s10462-016-9509-6</a></p></li>
+<li><p>Dilation Convolutions for Dense Prediction <a href="https://arxiv.org/abs/1511.07122">https://arxiv.org/abs/1511.07122</a></p></li>
+<li><p>Convolutional Neural Networks for Visual Recognition <a href="https://www.cs.toronto.edu/~frossard/post/cnn_2017/">https://www.cs.toronto.edu/~frossard/post/cnn_2017/</a></p></li>
+<li><p>Deep Residual Learning for Image Recognition <a href="https://arxiv.org/abs/1512.03385">https://arxiv.org/abs/1512.03385</a></p></li>
+<li><p>Network In Network <a href="https://arxiv.org/abs/1312.4400">https://arxiv.org/abs/1312.4400</a></p></li>
+<li><p>Gradient-Based Learning Applied to Document Recognition <a href="http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf">http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf</a></p></li>
+<li><p>ImageNet Classification with Deep Convolutional Neural Networks <a href="https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf">https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf</a></p></li>
+<li><p>Very Deep Convolutional Networks for Large-Scale Image Recognition <a href="https://arxiv.org/abs/1409.1556">https://arxiv.org/abs/1409.1556</a></p></li>
+<li><p>Aggregated Residual Transformations for Deep Neural Networks <a href="https://arxiv.org/abs/1611.05431">https://arxiv.org/abs/1611.05431</a></p></li>
+<li><p>Going Deeper with Convolutions <a href="https://arxiv.org/abs/1409.4842">https://arxiv.org/abs/1409.4842</a></p></li>
+<li><p>Xception: Deep Learning with Depthwise Separable Convolutions <a href="https://arxiv.org/abs/1610.02357">https://arxiv.org/abs/1610.02357</a></p></li>
+<li><p>Densely Connected Convolutional Networks <a href="https://arxiv.org/abs/1608.06993">https://arxiv.org/abs/1608.06993</a></p></li>
+<li><p>EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks <a href="https://arxiv.org/abs/1905.11946">https://arxiv.org/abs/1905.11946</a></p></li>
+<li><p>MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications <a href="https://arxiv.org/abs/1704.04861">https://arxiv.org/abs/1704.04861</a></p></li>
+<li><p>A guide to convolution arithmetic for deep learning <a href="https://arxiv.org/abs/1603.07285">https://arxiv.org/abs/1603.07285</a></p></li>
+<li><p>Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition <a href="https://arxiv.org/abs/1406.4729">https://arxiv.org/abs/1406.4729</a></p></li>
+</ul>
+</section>
+<section id="recurrent-neural-networks-rnns-1" class="level1">
+<h1>17.2. Recurrent Neural Networks (RNNs)</h1>
+<ul>
+<li><p>Learning to forget: Continual prediction with LSTM <a href="https://www.sciencedirect.com/science/article/pii/S0893608004000634">https://www.sciencedirect.com/science/article/pii/S0893608004000634</a></p></li>
+<li><p>A Learning Algorithm for Continually Running Fully Recurrent Neural Networks <a href="https://www.sciencedirect.com/science/article/pii/0893608089900058">https://www.sciencedirect.com/science/article/pii/0893608089900058</a></p></li>
+<li><p>Long Short-Term Memory <a href="https://www.bioinf.jku.at/publications/older/2604.pdf">https://www.bioinf.jku.at/publications/older/2604.pdf</a></p></li>
+<li><p>Understanding LSTM Networks <a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">https://colah.github.io/posts/2015-08-Understanding-LSTMs/</a></p></li>
+<li><p>Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling <a href="https://arxiv.org/abs/1412.3555">https://arxiv.org/abs/1412.3555</a></p></li>
+<li><p>Bidirectional Recurrent Neural Networks <a href="https://ieeexplore.ieee.org/document/650093">https://ieeexplore.ieee.org/document/650093</a></p></li>
+<li><p>Speech recognition with deep recurrent neural networks <a href="https://ieeexplore.ieee.org/document/6692989">https://ieeexplore.ieee.org/document/6692989</a></p></li>
+<li><p>Neural Machine Translation by Jointly Learning to Align and Translate <a href="https://arxiv.org/abs/1409.0473">https://arxiv.org/abs/1409.0473</a></p></li>
+<li><p>Sequence to Sequence Learning with Neural Networks <a href="https://arxiv.org/abs/1409.3215">https://arxiv.org/abs/1409.3215</a></p></li>
+</ul>
+</section>
+<section id="generative-adversarial-networks-gans-1" class="level1">
+<h1>17.3. Generative Adversarial Networks (GANs)</h1>
+<ul>
+<li><p>Generative Adversarial Nets <a href="https://arxiv.org/abs/1406.2661">https://arxiv.org/abs/1406.2661</a></p></li>
+<li><p>Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks <a href="https://arxiv.org/abs/1511.06434">https://arxiv.org/abs/1511.06434</a></p></li>
+<li><p>Conditional Generative Adversarial Nets <a href="https://arxiv.org/abs/1411.1784">https://arxiv.org/abs/1411.1784</a></p></li>
+<li><p>Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks <a href="https://arxiv.org/abs/1703.10593">https://arxiv.org/abs/1703.10593</a></p></li>
+<li><p>Progressive Growing of GANs for Improved Quality, Stability, and Variation <a href="https://arxiv.org/abs/1710.10196">https://arxiv.org/abs/1710.10196</a></p></li>
+<li><p>A Style-Based Generator Architecture for Generative Adversarial Networks <a href="https://arxiv.org/abs/1812.04948">https://arxiv.org/abs/1812.04948</a></p></li>
+<li><p>Analyzing and Improving the Image Quality of StyleGAN <a href="https://arxiv.org/abs/1912.04958">https://arxiv.org/abs/1912.04958</a></p></li>
+<li><p>Wasserstein GAN <a href="https://arxiv.org/abs/1701.07875">https://arxiv.org/abs/1701.07875</a></p></li>
+<li><p>How Well Do GANs Evaluate? <a href="https://arxiv.org/abs/1806.07755">https://arxiv.org/abs/1806.07755</a></p></li>
+</ul>
+</section>
+<section id="variational-autoencoders-vaes-1" class="level1">
+<h1>17.4. Variational Autoencoders (VAEs)</h1>
+<ul>
+<li><p>Auto-Encoding Variational Bayes <a href="https://arxiv.org/abs/1312.6114">https://arxiv.org/abs/1312.6114</a></p></li>
+<li><p>Tutorial on Variational Autoencoders <a href="https://arxiv.org/abs/1606.05908">https://arxiv.org/abs/1606.05908</a></p></li>
+<li><p>VAE Tutorial <a href="https://jaan.io/what-is-variational-autoencoder-vae-tutorial/">https://jaan.io/what-is-variational-autoencoder-vae-tutorial/</a></p></li>
+<li><p>Conditional Variational Autoencoder with Pyro <a href="https://pyro.ai/examples/vae.html">https://pyro.ai/examples/vae.html</a></p></li>
+<li><p>β-VAE: Learning Basic Visual Concepts with a Constrained Variational Framework <a href="https://openreview.net/forum?id=Sy2fzU9gl">https://openreview.net/forum?id=Sy2fzU9gl</a></p></li>
+<li><p>Neural Discrete Representation Learning <a href="https://arxiv.org/abs/1711.00937">https://arxiv.org/abs/1711.00937</a></p></li>
+</ul>
+</section>
+<section id="transformer-architecture-1" class="level1">
+<h1>17.5. Transformer Architecture</h1>
+<ul>
+<li><p>Attention Is All You Need <a href="https://arxiv.org/abs/1706.03762">https://arxiv.org/abs/1706.03762</a></p></li>
+<li><p>BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding <a href="https://arxiv.org/abs/1810.04805">https://arxiv.org/abs/1810.04805</a></p></li>
+<li><p>Transformer-XL: Attentive Language Models Beyond a Fixed-Length Context <a href="https://arxiv.org/abs/1901.02860">https://arxiv.org/abs/1901.02860</a></p></li>
+<li><p>XLNet: Generalized Autoregressive Pretraining for Language Understanding <a href="https://arxiv.org/abs/1906.08237">https://arxiv.org/abs/1906.08237</a></p></li>
+<li><p>Reformer: The Efficient Transformer <a href="https://arxiv.org/abs/2001.04451">https://arxiv.org/abs/2001.04451</a></p></li>
+</ul>
+</section>
+<section id="graph-neural-networks-gnns-1" class="level1">
+<h1>17.6. Graph Neural Networks (GNNs)</h1>
+<ul>
+<li><p>Semi-Supervised Classification with Graph Convolutional Networks <a href="https://arxiv.org/abs/1609.02907">https://arxiv.org/abs/1609.02907</a></p></li>
+<li><p>Inductive Representation Learning on Large Graphs <a href="https://arxiv.org/abs/1706.02216">https://arxiv.org/abs/1706.02216</a></p></li>
+<li><p>Graph Attention Networks <a href="https://arxiv.org/abs/1710.10903">https://arxiv.org/abs/1710.10903</a></p></li>
+<li><p>Neural Message Passing for Quantum Chemistry <a href="https://arxiv.org/abs/1704.01212">https://arxiv.org/abs/1704.01212</a></p></li>
+</ul>
+</section>
+<section id="memory-networks-1" class="level1">
+<h1>17.7. Memory Networks</h1>
+<ul>
+<li><p>End-To-End Memory Networks <a href="https://arxiv.org/abs/1503.08895">https://arxiv.org/abs/1503.08895</a></p></li>
+<li><p>Dynamic Memory Networks for Visual and Textual Question Answering <a href="https://arxiv.org/abs/1603.01417">https://arxiv.org/abs/1603.01417</a></p></li>
+</ul>
+</section>
+<section id="capsule-networks-1" class="level1">
+<h1>17.8. Capsule Networks</h1>
+<ul>
+<li><p>Dynamic Routing Between Capsules <a href="https://arxiv.org/abs/1710.09829">https://arxiv.org/abs/1710.09829</a></p></li>
+<li><p>Matrix Capsules with EM Routing <a href="https://openreview.net/forum?id=HJWLfGWRb">https://openreview.net/forum?id=HJWLfGWRb</a></p></li>
+</ul>
+</section>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

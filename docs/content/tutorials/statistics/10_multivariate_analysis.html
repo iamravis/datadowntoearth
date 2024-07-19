@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>multivariate_analysis – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="chapter-10-multivariate-analysis" class="level1 text-content">
+<h1>Chapter 10: Multivariate Analysis</h1>
+<section id="manova-multivariate-analysis-of-variance" class="level3">
+<h3 class="anchored" data-anchor-id="manova-multivariate-analysis-of-variance">MANOVA (Multivariate Analysis of Variance)</h3>
+<section id="manova-multivariate-analysis-of-variance-1" class="level4">
+<h4 class="anchored" data-anchor-id="manova-multivariate-analysis-of-variance-1">1. MANOVA (Multivariate Analysis of Variance)</h4>
+<p><strong>Question:</strong> How would you use MANOVA to analyze the effect of different ad formats on multiple user engagement metrics on Facebook?</p>
+<p><strong>Answer:</strong> MANOVA assesses whether there are statistically significant differences in multiple dependent variables across groups. Steps: 1. <strong>Define dependent variables</strong>: Identify multiple engagement metrics (e.g., likes, shares, comments).</p>
+<ol start="2" type="1">
+<li><p><strong>Define independent variable</strong>: Identify the factor with groups (e.g., ad formats).</p></li>
+<li><p><strong>Fit MANOVA model</strong>: Assess the combined effect of the independent variable on the dependent variables.</p></li>
+<li><p><strong>Interpret results</strong>: Examine Wilks’ Lambda or other test statistics to determine significance.</p></li>
+</ol>
+<p>Example: For ad formats, MANOVA reveals if there are overall differences in engagement metrics between formats, providing insights into the effectiveness of each format.</p>
+</section>
+</section>
+<section id="canonical-correlation-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="canonical-correlation-analysis">Canonical Correlation Analysis</h3>
+<section id="canonical-correlation-analysis-1" class="level4">
+<h4 class="anchored" data-anchor-id="canonical-correlation-analysis-1">2. Canonical Correlation Analysis</h4>
+<p><strong>Question:</strong> Explain how canonical correlation analysis (CCA) can be used to explore the relationship between user demographics and engagement patterns on Instagram.</p>
+<p><strong>Answer:</strong> CCA analyzes the relationships between two sets of variables. Steps: 1. <strong>Define variable sets</strong>: Identify two sets of variables (e.g., demographics and engagement metrics).</p>
+<ol start="2" type="1">
+<li><p><strong>Compute canonical correlations</strong>: Determine linear combinations of variables in each set that are maximally correlated.</p></li>
+<li><p><strong>Interpret canonical variates</strong>: Analyze the pairs of canonical variates to understand relationships.</p></li>
+</ol>
+<p>Example: For demographics and engagement, CCA identifies how combinations of demographic factors relate to combinations of engagement metrics, revealing complex interactions.</p>
+</section>
+</section>
+<section id="discriminant-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="discriminant-analysis">Discriminant Analysis</h3>
+<section id="linear-discriminant-analysis-lda" class="level4">
+<h4 class="anchored" data-anchor-id="linear-discriminant-analysis-lda">3. Linear Discriminant Analysis (LDA)</h4>
+<p><strong>Question:</strong> How would you use LDA to classify users into engagement levels on Facebook based on their interaction data?</p>
+<p><strong>Answer:</strong> LDA finds linear combinations of features that best separate predefined classes. Steps: 1. <strong>Define classes</strong>: Categorize users into engagement levels (e.g., low, medium, high).</p>
+<ol start="2" type="1">
+<li><p><strong>Fit LDA model</strong>: Estimate the linear discriminants that separate the classes.</p></li>
+<li><p><strong>Classify users</strong>: Use the discriminant functions to classify new users.</p></li>
+</ol>
+<p>Example: For user interaction data, LDA provides a linear boundary to classify users into different engagement levels, enhancing targeted marketing efforts.</p>
+</section>
+<section id="quadratic-discriminant-analysis-qda" class="level4">
+<h4 class="anchored" data-anchor-id="quadratic-discriminant-analysis-qda">4. Quadratic Discriminant Analysis (QDA)</h4>
+<p><strong>Question:</strong> Explain the difference between LDA and QDA and how QDA can be used for classifying users on Instagram.</p>
+<p><strong>Answer:</strong> QDA is similar to LDA but allows for quadratic decision boundaries, making it suitable for non-linear separations. Steps: 1. <strong>Define classes</strong>: Categorize users into classes (e.g., active, inactive).</p>
+<ol start="2" type="1">
+<li><p><strong>Fit QDA model</strong>: Estimate quadratic discriminant functions for each class.</p></li>
+<li><p><strong>Classify users</strong>: Use the quadratic functions to classify new users.</p></li>
+</ol>
+<p>Example: For user data with non-linear separations, QDA provides more flexible boundaries compared to LDA, improving classification accuracy.</p>
+</section>
+</section>
+<section id="factor-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="factor-analysis">Factor Analysis</h3>
+<section id="factor-analysis-1" class="level4">
+<h4 class="anchored" data-anchor-id="factor-analysis-1">5. Factor Analysis</h4>
+<p><strong>Question:</strong> How would you use factor analysis to identify underlying factors influencing user satisfaction on Facebook?</p>
+<p><strong>Answer:</strong> Factor analysis identifies latent variables that explain the correlations among observed variables. Steps: 1. <strong>Collect data</strong>: Gather user satisfaction survey responses. 2. <strong>Extract factors</strong>: Use techniques like principal axis factoring to identify factors. 3. <strong>Rotate factors</strong>: Apply rotation (e.g., varimax) to make factors interpretable. 4. <strong>Interpret factors</strong>: Identify the underlying factors based on factor loadings.</p>
+<p>Example: For user satisfaction, factor analysis reveals latent factors such as content quality, user interface, and community interaction that drive overall satisfaction.</p>
+</section>
+</section>
+<section id="structural-equation-modeling" class="level3">
+<h3 class="anchored" data-anchor-id="structural-equation-modeling">Structural Equation Modeling</h3>
+<section id="structural-equation-modeling-sem" class="level4">
+<h4 class="anchored" data-anchor-id="structural-equation-modeling-sem">6. Structural Equation Modeling (SEM)</h4>
+<p><strong>Question:</strong> Describe how SEM can be used to model the relationships between user behaviors and satisfaction on Instagram.</p>
+<p><strong>Answer:</strong> SEM combines factor analysis and regression to model complex relationships among observed and latent variables. Steps: 1. <strong>Specify model</strong>: Define the hypothesized relationships among variables. 2. <strong>Estimate parameters</strong>: Use software (e.g., AMOS, LISREL) to estimate model parameters. 3. <strong>Assess model fit</strong>: Evaluate fit indices like RMSEA, CFI, and TLI. 4. <strong>Interpret results</strong>: Analyze the direct and indirect effects of behaviors on satisfaction.</p>
+<p>Example: For user behaviors and satisfaction, SEM models how different behaviors (e.g., posting, commenting) influence satisfaction directly and through mediating variables (e.g., engagement).</p>
+</section>
+</section>
+<section id="path-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="path-analysis">Path Analysis</h3>
+<section id="path-analysis-1" class="level4">
+<h4 class="anchored" data-anchor-id="path-analysis-1">7. Path Analysis</h4>
+<p><strong>Question:</strong> How would you use path analysis to understand the direct and indirect effects of marketing efforts on user retention on Facebook?</p>
+<p><strong>Answer:</strong> Path analysis quantifies direct and indirect relationships among variables. Steps: 1. <strong>Specify model</strong>: Define the paths representing hypothesized relationships. 2. <strong>Estimate parameters</strong>: Use regression to estimate path coefficients. 3. <strong>Analyze direct and indirect effects</strong>: Decompose total effects into direct and indirect components.</p>
+<p>Example: For marketing efforts, path analysis reveals how direct marketing actions influence retention and how these effects are mediated by intermediate variables (e.g., engagement).</p>
+</section>
+</section>
+<section id="multidimensional-scaling" class="level3">
+<h3 class="anchored" data-anchor-id="multidimensional-scaling">Multidimensional Scaling</h3>
+<section id="multidimensional-scaling-mds" class="level4">
+<h4 class="anchored" data-anchor-id="multidimensional-scaling-mds">8. Multidimensional Scaling (MDS)</h4>
+<p><strong>Question:</strong> How would you use MDS to visualize the similarity between different user segments on Instagram?</p>
+<p><strong>Answer:</strong> MDS reduces dimensionality to visualize similarities or dissimilarities. Steps: 1. <strong>Calculate distances</strong>: Compute a distance matrix between user segments. 2. <strong>Apply MDS</strong>: Map the distance matrix to a lower-dimensional space. 3. <strong>Visualize</strong>: Create a plot to visualize the segments.</p>
+<p>Example: For user segments, MDS reveals clusters of similar segments based on engagement metrics, aiding in segment analysis and targeted strategies.</p>
+</section>
+</section>
+<section id="correspondence-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="correspondence-analysis">Correspondence Analysis</h3>
+<section id="correspondence-analysis-1" class="level4">
+<h4 class="anchored" data-anchor-id="correspondence-analysis-1">9. Correspondence Analysis</h4>
+<p><strong>Question:</strong> Explain how correspondence analysis can be used to analyze the relationship between user demographics and content preferences on Facebook.</p>
+<p><strong>Answer:</strong> Correspondence analysis visualizes the association between categorical variables. Steps: 1. <strong>Create contingency table</strong>: Cross-tabulate demographics and content preferences. 2. <strong>Perform correspondence analysis</strong>: Decompose the contingency table into principal dimensions. 3. <strong>Interpret biplot</strong>: Visualize the relationships between categories.</p>
+<p>Example: For demographics and content preferences, correspondence analysis reveals how different demographic groups prefer certain content types, providing insights for content targeting.</p>
+</section>
+</section>
+<section id="partial-least-squares-regression" class="level3">
+<h3 class="anchored" data-anchor-id="partial-least-squares-regression">Partial Least Squares Regression</h3>
+<section id="partial-least-squares-regression-plsr" class="level4">
+<h4 class="anchored" data-anchor-id="partial-least-squares-regression-plsr">10. Partial Least Squares Regression (PLSR)</h4>
+<p><strong>Question:</strong> How would you use PLSR to model the relationship between user engagement metrics and ad performance on Instagram?</p>
+<p><strong>Answer:</strong> PLSR models the relationship between two sets of variables by extracting latent factors that maximize covariance. Steps: 1. <strong>Define predictors and responses</strong>: Identify engagement metrics as predictors and ad performance metrics as responses. 2. <strong>Fit PLSR model</strong>: Extract latent variables that maximize covariance. 3. <strong>Interpret components</strong>: Analyze the relationship between latent variables and original variables.</p>
+<p>Example: For engagement and ad performance, PLSR identifies latent factors that explain the relationship, providing insights into which engagement metrics drive ad performance.</p>
+</section>
+</section>
+<section id="multivariate-regression" class="level3">
+<h3 class="anchored" data-anchor-id="multivariate-regression">Multivariate Regression</h3>
+<section id="multivariate-regression-1" class="level4">
+<h4 class="anchored" data-anchor-id="multivariate-regression-1">11. Multivariate Regression</h4>
+<p><strong>Question:</strong> Describe how multivariate regression can be used to predict multiple user engagement metrics on Facebook based on user characteristics.</p>
+<p><strong>Answer:</strong> Multivariate regression models multiple dependent variables simultaneously. Steps: 1. <strong>Define dependent variables</strong>: Identify multiple engagement metrics (e.g., likes, comments). 2. <strong>Define independent variables</strong>: Identify user characteristics (e.g., age, activity level). 3. <strong>Fit model</strong>: Estimate regression coefficients for each dependent variable. 4. <strong>Interpret results</strong>: Analyze the effect of user characteristics on engagement metrics.</p>
+<p>Example: For predicting engagement metrics, multivariate regression reveals how user characteristics influence multiple metrics simultaneously, providing a comprehensive view of engagement drivers.</p>
+</section>
+</section>
+<section id="hotellings-t-squared-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="hotellings-t-squared-distribution">Hotelling’s T-Squared Distribution</h3>
+<section id="hotellings-t-squared-distribution-1" class="level4">
+<h4 class="anchored" data-anchor-id="hotellings-t-squared-distribution-1">12. Hotelling’s T-Squared Distribution</h4>
+<p><strong>Question:</strong> How would you use Hotelling’s T-squared test to compare user engagement levels between two groups on Facebook?</p>
+<p><strong>Answer:</strong> Hotelling’s T-squared test generalizes the t-test for multivariate data. Steps: 1. <strong>Define groups</strong>: Identify the two groups to compare (e.g., users from different regions). 2. <strong>Calculate test statistic</strong>: Compute Hotelling’s T-squared statistic for the multivariate engagement metrics. 3. <strong>Evaluate significance</strong>: Compare the test statistic to the critical value to determine significance.</p>
+<p>Example: For comparing engagement levels, Hotelling’s T-squared test assesses whether the multivariate engagement profiles differ significantly between the two groups.</p>
+</section>
+</section>
+<section id="multivariate-time-series-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="multivariate-time-series-analysis">Multivariate Time Series Analysis</h3>
+<section id="multivariate-time-series-analysis-1" class="level4">
+<h4 class="anchored" data-anchor-id="multivariate-time-series-analysis-1">13. Multivariate Time Series Analysis</h4>
+<p><strong>Question:</strong> How would you use multivariate time series analysis to forecast user engagement on Instagram?</p>
+<p><strong>Answer:</strong> Multivariate time series analysis models the relationships among multiple time series. Steps: 1. <strong>Identify time series</strong>: Collect time series data for multiple engagement metrics. 2. <strong>Fit model</strong>: Use models like VAR (Vector Autoregression) to capture interdependencies. 3. <strong>Forecast</strong>: Generate forecasts for future engagement metrics.</p>
+<p>Example: For forecasting engagement, multivariate time series analysis captures how different engagement metrics evolve over time and influence each other, providing comprehensive predictions.</p>
+</section>
+</section>
+<section id="multivariate-outlier-detection" class="level3">
+<h3 class="anchored" data-anchor-id="multivariate-outlier-detection">Multivariate Outlier Detection</h3>
+<section id="multivariate-outlier-detection-1" class="level4">
+<h4 class="anchored" data-anchor-id="multivariate-outlier-detection-1">14. Multivariate Outlier Detection</h4>
+<p><strong>Question:</strong> Describe how you would detect outliers in multivariate user interaction data on Instagram.</p>
+<p><strong>Answer:</strong> Multivariate outlier detection identifies observations that deviate significantly from the multivariate distribution. Steps: 1. <strong>Standardize data</strong>: Normalize the data to have a mean of zero and a standard deviation of one. 2. <strong>Calculate Mahalanobis distance</strong>: Compute the Mahalanobis distance for each observation. 3. <strong>Identify outliers</strong>: Flag observations with large Mahalanobis distances as outliers.</p>
+<p>Example: For user interaction data, multivariate outlier detection identifies unusual behavior patterns, helping to investigate potential issues or fraudulent activities.</p>
+</section>
+</section>
+<section id="multivariate-normality-tests" class="level3">
+<h3 class="anchored" data-anchor-id="multivariate-normality-tests">Multivariate Normality Tests</h3>
+<section id="multivariate-normality-tests-1" class="level4">
+<h4 class="anchored" data-anchor-id="multivariate-normality-tests-1">15. Multivariate Normality Tests</h4>
+<p><strong>Question:</strong> How would you test for multivariate normality in user engagement metrics on Facebook?</p>
+<p><strong>Answer:</strong> Multivariate normality tests assess whether a dataset follows a multivariate normal distribution. Steps: 1. <strong>Choose test</strong>: Use tests like the Mardia’s test or the Henze-Zirkler test. 2. <strong>Compute test statistic</strong>: Calculate the test statistic based on the engagement metrics. 3. <strong>Evaluate significance</strong>: Compare the test statistic to the critical value to determine normality.</p>
+<p>Example: For engagement metrics, testing for multivariate normality ensures the assumptions of multivariate analysis techniques are met, providing valid results.</p>
+<p>This detailed set of questions and answers, including examples, provides a robust framework to prepare for interviews focusing on multivariate analysis in the context of social media data science roles. Each question is designed to test the understanding and application of various multivariate analysis techniques, critical for analyzing and deriving insights from social media data.</p>
+</section>
+</section>
+</section>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

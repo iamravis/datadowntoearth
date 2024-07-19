@@ -1,0 +1,2175 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>chapter24_computer_vision_advanced_topics – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="text-content">
+<section id="chapter-24.-computer-vision-advanced-topics" class="level2">
+<h2 class="anchored" data-anchor-id="chapter-24.-computer-vision-advanced-topics">Chapter 24. Computer Vision Advanced Topics</h2>
+<p>Advanced topics in computer vision encompass a range of sophisticated techniques and models designed to tackle complex tasks such as object detection, segmentation, and 3D analysis. This chapter delves into the state-of-the-art methodologies in object detection.</p>
+<section id="object-detection" class="level3">
+<h3 class="anchored" data-anchor-id="object-detection">24.1. Object Detection</h3>
+<p>Object detection involves identifying and localizing objects within an image. This task is fundamental for numerous applications, including autonomous driving, surveillance, and image search engines.</p>
+<section id="two-stage-detectors" class="level4">
+<h4 class="anchored" data-anchor-id="two-stage-detectors">24.1.1. Two-stage Detectors</h4>
+<p>Two-stage detectors perform object detection in two stages: region proposal and classification.</p>
+<section id="r-cnn-region-based-convolutional-neural-networks" class="level5">
+<h5 class="anchored" data-anchor-id="r-cnn-region-based-convolutional-neural-networks">24.1.1.1. R-CNN (Region-based Convolutional Neural Networks)</h5>
+<ul>
+<li><strong>Algorithm Overview:</strong>
+<ol type="1">
+<li><strong>Region Proposal:</strong> Generate region proposals using selective search to identify potential object locations.</li>
+<li><strong>Feature Extraction:</strong> Extract features from each region proposal using a pre-trained CNN (e.g., AlexNet).</li>
+<li><strong>Classification and Bounding Box Regression:</strong> Classify each region proposal and refine bounding box coordinates using separate fully connected layers.</li>
+</ol></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>High accuracy due to the use of CNNs for feature extraction.</li>
+<li>Effective for complex and cluttered scenes with multiple objects.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Computationally expensive and slow due to the need to process each region proposal independently.</li>
+<li>Requires a large amount of storage for intermediate features.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Used in early object detection systems and research.</li>
+<li>Applied in scenarios where high accuracy is paramount, and computational resources are ample.</li>
+</ul></li>
+</ul>
+</section>
+<section id="fast-r-cnn" class="level5">
+<h5 class="anchored" data-anchor-id="fast-r-cnn">24.1.1.2. Fast R-CNN</h5>
+<ul>
+<li><strong>Improvements over R-CNN:</strong>
+<ul>
+<li><strong>Single Forward Pass:</strong> Perform a single forward pass over the entire image to extract convolutional feature maps.</li>
+<li><strong>RoI Pooling:</strong> Use Region of Interest (RoI) pooling to extract fixed-size feature maps for each region proposal from the shared feature map.</li>
+<li><strong>End-to-end Training:</strong> Combine classification and bounding box regression in a single network, making the training process more streamlined.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Significantly faster than R-CNN due to shared feature extraction.</li>
+<li>Reduced storage requirements and better memory efficiency.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Still relies on an external region proposal method (e.g., selective search), which can be a bottleneck.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Practical for real-time applications where speed and accuracy need to be balanced.</li>
+<li>Commonly used in surveillance and real-time video analysis.</li>
+</ul></li>
+</ul>
+</section>
+<section id="faster-r-cnn" class="level5">
+<h5 class="anchored" data-anchor-id="faster-r-cnn">24.1.1.3. Faster R-CNN</h5>
+<ul>
+<li><strong>Key Innovation:</strong>
+<ul>
+<li><strong>Region Proposal Network (RPN):</strong> Introduce a fully convolutional network to generate region proposals directly from feature maps, eliminating the need for selective search.</li>
+</ul></li>
+<li><strong>Algorithm Overview:</strong>
+<ol type="1">
+<li><strong>RPN:</strong> Generate region proposals using a small network applied over the convolutional feature map.</li>
+<li><strong>RoI Pooling and Classification:</strong> Apply RoI pooling and classification as in Fast R-CNN.</li>
+</ol></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>End-to-end training and high efficiency due to integrated RPN.</li>
+<li>Improved accuracy and speed compared to Fast R-CNN by generating better region proposals.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Complexity increases due to the integration of the RPN and the detection network.</li>
+<li>Requires significant computational resources for training and inference.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Widely used in autonomous driving for detecting pedestrians, vehicles, and other objects.</li>
+<li>Applied in robotics for real-time object detection and interaction.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="single-stage-detectors" class="level4">
+<h4 class="anchored" data-anchor-id="single-stage-detectors">24.1.2. Single-stage Detectors</h4>
+<p>Single-stage detectors perform object detection in a single pass, predicting bounding boxes and class probabilities directly from the input image.</p>
+<section id="yolo-you-only-look-once" class="level5">
+<h5 class="anchored" data-anchor-id="yolo-you-only-look-once">24.1.2.1. YOLO (You Only Look Once)</h5>
+<ul>
+<li><strong>Algorithm Overview:</strong>
+<ol type="1">
+<li><strong>Grid Division:</strong> Divide the image into an SxS grid.</li>
+<li><strong>Bounding Box Predictions:</strong> Each grid cell predicts a fixed number of bounding boxes and confidence scores.</li>
+<li><strong>Class Prediction:</strong> Each bounding box has associated class probabilities.</li>
+</ol></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Extremely fast and suitable for real-time applications due to its single-pass approach.</li>
+<li>Simple architecture and end-to-end training.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Lower accuracy for small objects and crowded scenes compared to two-stage detectors.</li>
+<li>Struggles with complex and overlapping objects.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Real-time video analysis and surveillance systems.</li>
+<li>Applications requiring low-latency object detection, such as drones and robotics.</li>
+</ul></li>
+</ul>
+</section>
+<section id="ssd-single-shot-detector" class="level5">
+<h5 class="anchored" data-anchor-id="ssd-single-shot-detector">24.1.2.2. SSD (Single Shot Detector)</h5>
+<ul>
+<li><strong>Algorithm Overview:</strong>
+<ol type="1">
+<li><strong>Multi-scale Feature Maps:</strong> Predict bounding boxes and class scores from multiple feature maps of different scales, allowing detection of objects at various sizes.</li>
+<li><strong>Default Boxes:</strong> Use default (anchor) boxes of different aspect ratios for each feature map cell.</li>
+</ol></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Good balance between speed and accuracy.</li>
+<li>Handles objects of various sizes effectively due to multi-scale predictions.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Performance degrades on small objects compared to more complex models.</li>
+<li>May require careful tuning of default boxes and anchor settings.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Mobile and embedded devices where computational resources are limited.</li>
+<li>Real-time detection in applications like augmented reality and mobile robotics.</li>
+</ul></li>
+</ul>
+</section>
+<section id="retinanet" class="level5">
+<h5 class="anchored" data-anchor-id="retinanet">24.1.2.3. RetinaNet</h5>
+<ul>
+<li><strong>Key Innovation:</strong>
+<ul>
+<li><strong>Focal Loss:</strong> Introduce focal loss to address the class imbalance issue by down-weighting easy examples and focusing on hard negatives.</li>
+</ul></li>
+<li><strong>Algorithm Overview:</strong>
+<ol type="1">
+<li><strong>Feature Pyramid Network (FPN):</strong> Use FPN to extract multi-scale features, enhancing the detection of objects at various sizes.</li>
+<li><strong>Bounding Box and Class Prediction:</strong> Predict bounding boxes and class probabilities from each level of the feature pyramid.</li>
+</ol></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>High accuracy due to effective handling of class imbalance.</li>
+<li>Maintains good speed despite complex architecture.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Computationally more intensive than simpler single-stage detectors like YOLO.</li>
+<li>Requires careful tuning of focal loss parameters.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Industrial applications where detecting small and densely packed objects is critical.</li>
+<li>Advanced surveillance systems requiring high accuracy in diverse environments.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="anchor-free-detectors" class="level4">
+<h4 class="anchored" data-anchor-id="anchor-free-detectors">24.1.3. Anchor-free Detectors</h4>
+<p>Anchor-free detectors eliminate the need for predefined anchor boxes, simplifying the detection process.</p>
+<section id="cornernet" class="level5">
+<h5 class="anchored" data-anchor-id="cornernet">24.1.3.1. CornerNet</h5>
+<ul>
+<li><strong>Algorithm Overview:</strong>
+<ul>
+<li>Detects objects as pairs of corners (top-left and bottom-right).</li>
+<li>Uses a corner pooling mechanism to better localize corners, aggregating context from the corner regions.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Avoids issues related to anchor box design and scales.</li>
+<li>High localization accuracy for objects due to precise corner detection.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Can be computationally intensive due to the need for accurate corner detection.</li>
+<li>Challenges in maintaining high speed while ensuring precise corner detection.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Detailed image analysis where high localization accuracy is required.</li>
+<li>Advanced computer vision tasks in research and development.</li>
+</ul></li>
+</ul>
+</section>
+<section id="centernet" class="level5">
+<h5 class="anchored" data-anchor-id="centernet">24.1.3.2. CenterNet</h5>
+<ul>
+<li><strong>Algorithm Overview:</strong>
+<ul>
+<li>Detects objects as center points along with width and height predictions.</li>
+<li>Uses keypoint estimation to identify the center of objects and predict bounding box dimensions.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Simpler and more efficient architecture compared to anchor-based methods.</li>
+<li>High performance on various detection tasks, including multi-person pose estimation and object detection.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Challenges in detecting small objects due to reliance on center points.</li>
+<li>Requires precise keypoint detection, which can be computationally intensive.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Real-time applications requiring fast and accurate object detection.</li>
+<li>Autonomous systems where rapid object detection and localization are critical.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="d-object-detection" class="level4">
+<h4 class="anchored" data-anchor-id="d-object-detection">24.1.4. 3D Object Detection</h4>
+<p>3D object detection involves identifying and localizing objects in 3D space, crucial for applications like autonomous driving and robotics.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>LiDAR-based Detection:</strong> Uses LiDAR point clouds to detect objects in 3D space. LiDAR provides accurate depth information, crucial for precise localization.</li>
+<li><strong>Stereo Vision:</strong> Employs stereo cameras to infer depth and detect objects by comparing images from two perspectives.</li>
+<li><strong>Fusion Methods:</strong> Combine information from multiple sensors (e.g., LiDAR and cameras) to improve accuracy and robustness. Fusion techniques leverage the strengths of each sensor type.</li>
+</ul></li>
+<li><strong>Challenges:</strong>
+<ul>
+<li>High computational complexity and the need for accurate 3D data processing.</li>
+<li>Integrating multi-sensor data effectively and managing data from different modalities.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Provides richer information about the environment, essential for tasks requiring spatial understanding.</li>
+<li>Enhanced accuracy and robustness in dynamic and cluttered environments due to multi-view and multi-sensor approaches.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Requires sophisticated sensor setups and calibration.</li>
+<li>Increased processing power and data handling requirements, making it challenging for real-time applications.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Autonomous driving for detecting and localizing vehicles, pedestrians, and obstacles.</li>
+<li>Robotics for navigating and interacting with complex 3D environments.</li>
+<li>Augmented reality and virtual reality applications that require precise 3D object localization.</li>
+</ul></li>
+</ul>
+<p>By exploring these advanced object detection techniques, researchers and practitioners can develop more robust and efficient computer vision systems, capable of addressing a wide range of real-world challenges. These methodologies enhance the ability to detect, localize, and understand objects in various environments, contributing to advancements in fields such as autonomous driving, surveillance, and interactive systems.</p>
+</section>
+</section>
+<section id="image-segmentation" class="level3">
+<h3 class="anchored" data-anchor-id="image-segmentation">24.2. Image Segmentation</h3>
+<p>Image segmentation is a fundamental task in computer vision that involves partitioning an image into segments or regions, each representing a different object or part of the object. Segmentation tasks are crucial for various applications such as medical imaging, autonomous driving, and scene understanding.</p>
+<section id="semantic-segmentation" class="level4">
+<h4 class="anchored" data-anchor-id="semantic-segmentation">24.2.1. Semantic Segmentation</h4>
+<p>Semantic segmentation assigns a class label to each pixel in the image, classifying regions at the pixel level but not distinguishing between different instances of the same class.</p>
+<section id="fully-convolutional-networks-fcn" class="level5">
+<h5 class="anchored" data-anchor-id="fully-convolutional-networks-fcn">24.2.1.1. Fully Convolutional Networks (FCN)</h5>
+<ul>
+<li><strong>Algorithm Overview:</strong>
+<ul>
+<li><strong>End-to-End Training:</strong> Replace fully connected layers in traditional CNNs with convolutional layers to enable dense prediction of labels for each pixel.</li>
+<li><strong>Upsampling:</strong> Use deconvolution (transposed convolution) layers to upsample the lower-resolution feature maps to the original image size.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Efficient for pixel-level classification and can be trained end-to-end.</li>
+<li>Provides a good baseline for semantic segmentation tasks.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Limited spatial resolution and detail in the segmented output.</li>
+<li>Struggles with fine-grained segmentation of small objects and boundaries.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Early stages of semantic segmentation research.</li>
+<li>Applications requiring basic pixel-level classification, such as simple background-foreground segmentation.</li>
+</ul></li>
+</ul>
+</section>
+<section id="u-net" class="level5">
+<h5 class="anchored" data-anchor-id="u-net">24.2.1.2. U-Net</h5>
+<ul>
+<li><strong>Algorithm Overview:</strong>
+<ul>
+<li><strong>Encoder-Decoder Architecture:</strong> Consists of a contracting path (encoder) and an expansive path (decoder) with skip connections to capture fine details.</li>
+<li><strong>Skip Connections:</strong> Connect corresponding layers in the encoder and decoder to retain spatial information and enhance segmentation accuracy.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Effective for medical image segmentation due to its ability to capture fine details and context.</li>
+<li>Versatile and can be applied to various segmentation tasks.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Can be computationally expensive and require substantial memory.</li>
+<li>Performance can degrade with very large images or datasets.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Medical imaging for segmenting anatomical structures such as organs and tissues.</li>
+<li>Other applications requiring detailed and accurate segmentation, such as satellite image analysis.</li>
+</ul></li>
+</ul>
+</section>
+<section id="deeplab-series" class="level5">
+<h5 class="anchored" data-anchor-id="deeplab-series">24.2.1.3. DeepLab Series</h5>
+<ul>
+<li><strong>Algorithm Overview:</strong>
+<ul>
+<li><strong>Atrous Convolutions:</strong> Use dilated convolutions to increase the receptive field without increasing the number of parameters.</li>
+<li><strong>Atrous Spatial Pyramid Pooling (ASPP):</strong> Apply multiple atrous convolutions with different rates in parallel to capture multi-scale context.</li>
+<li><strong>Conditional Random Fields (CRF):</strong> Post-processing step to refine boundaries and improve segmentation accuracy.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>High accuracy for complex scenes due to multi-scale feature extraction and context capturing.</li>
+<li>Effective in handling objects of various sizes and improving boundary delineation.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Computationally intensive and requires significant processing power.</li>
+<li>Complex architecture may be challenging to implement and optimize.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Autonomous driving for segmenting road scenes, including roads, vehicles, and pedestrians.</li>
+<li>Urban planning and analysis of satellite imagery.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="instance-segmentation" class="level4">
+<h4 class="anchored" data-anchor-id="instance-segmentation">24.2.2. Instance Segmentation</h4>
+<p>Instance segmentation not only classifies each pixel but also distinguishes between different instances of the same class.</p>
+<section id="mask-r-cnn" class="level5">
+<h5 class="anchored" data-anchor-id="mask-r-cnn">24.2.2.1. Mask R-CNN</h5>
+<ul>
+<li><strong>Algorithm Overview:</strong>
+<ul>
+<li><strong>Extension of Faster R-CNN:</strong> Adds a branch for predicting segmentation masks in parallel with the existing branches for bounding box detection and classification.</li>
+<li><strong>RoIAlign:</strong> Introduce RoIAlign to improve mask prediction accuracy by preserving spatial alignment during the pooling process.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>High accuracy for both object detection and instance segmentation tasks.</li>
+<li>Versatile and can be applied to various applications requiring precise instance-level segmentation.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Computationally intensive, requiring substantial processing power and memory.</li>
+<li>Complex architecture and training process.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Medical imaging for segmenting and analyzing individual cells or lesions.</li>
+<li>Detailed scene understanding in autonomous driving and robotics.</li>
+</ul></li>
+</ul>
+</section>
+<section id="yolact" class="level5">
+<h5 class="anchored" data-anchor-id="yolact">24.2.2.2. YOLACT</h5>
+<ul>
+<li><strong>Algorithm Overview:</strong>
+<ul>
+<li><strong>Real-time Instance Segmentation:</strong> Combines high-speed detection with instance segmentation.</li>
+<li><strong>Prototype Masks:</strong> Generates a set of prototype masks and combines them with per-instance mask coefficients to produce the final instance masks.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Fast and efficient, suitable for real-time applications.</li>
+<li>Simpler architecture compared to Mask R-CNN, facilitating easier implementation and training.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Lower accuracy compared to Mask R-CNN for complex and densely packed scenes.</li>
+<li>Challenges in segmenting very small objects or intricate details.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Real-time video analysis and surveillance systems.</li>
+<li>Applications requiring low-latency instance segmentation, such as interactive systems and augmented reality.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="panoptic-segmentation" class="level4">
+<h4 class="anchored" data-anchor-id="panoptic-segmentation">24.2.3. Panoptic Segmentation</h4>
+<p>Panoptic segmentation combines both semantic and instance segmentation into a single framework, providing a complete scene understanding by classifying each pixel and distinguishing between different instances.</p>
+<ul>
+<li><strong>Algorithm Overview:</strong>
+<ul>
+<li><strong>Unified Framework:</strong> Integrates semantic and instance segmentation networks to produce a unified segmentation map.</li>
+<li><strong>Post-processing:</strong> Merge the outputs of both networks to ensure consistency and handle overlaps between instance and semantic segments.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Provides a comprehensive understanding of the scene by combining the strengths of both semantic and instance segmentation.</li>
+<li>Enhances the ability to interpret complex scenes with multiple objects and backgrounds.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Highly complex and computationally demanding.</li>
+<li>Requires careful balancing and merging of semantic and instance segmentation outputs.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Autonomous driving for complete scene understanding, including road layout and object detection.</li>
+<li>Advanced robotics and AI systems requiring detailed environmental perception and interaction.</li>
+</ul></li>
+</ul>
+<p>By exploring these advanced image segmentation techniques, researchers and practitioners can develop more robust and efficient computer vision systems capable of addressing a wide range of real-world challenges. These methodologies enhance the ability to segment, classify, and understand complex scenes, contributing to advancements in fields such as autonomous driving, medical imaging, and interactive systems.</p>
+</section>
+</section>
+<section id="face-recognition-and-verification" class="level3">
+<h3 class="anchored" data-anchor-id="face-recognition-and-verification">24.3. Face Recognition and Verification</h3>
+<p>Face recognition and verification involve identifying and verifying individuals based on their facial features. These tasks are critical in security, authentication, and social media applications.</p>
+<section id="siamese-networks" class="level4">
+<h4 class="anchored" data-anchor-id="siamese-networks">24.3.1. Siamese Networks</h4>
+<p>Siamese networks are a type of neural network designed to identify similarities between two inputs by learning a similarity function.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Twin Networks:</strong> Consist of two identical subnetworks with shared weights.</li>
+<li><strong>Feature Extraction:</strong> Each subnetwork processes one of the input images to extract feature embeddings.</li>
+<li><strong>Similarity Measure:</strong> The embeddings are compared using a distance metric (e.g., Euclidean distance).</li>
+</ul></li>
+<li><strong>Loss Function:</strong>
+<ul>
+<li><strong>Contrastive Loss:</strong> Used to train the network by minimizing the distance between similar pairs and maximizing the distance between dissimilar pairs. <span class="math display">\[
+L(y, D) = y \cdot D^2 + (1 - y) \cdot \max(0, m - D)^2
+\]</span> where ( y ) is the binary label indicating whether the pair is similar or not, ( D ) is the distance between the embeddings, and ( m ) is a margin.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Effective for tasks requiring comparison of two inputs.</li>
+<li>Can be trained with fewer labeled data compared to traditional classification models.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Computationally intensive due to the need to process pairs of images.</li>
+<li>Performance depends heavily on the quality of the feature embeddings.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Face verification (e.g., verifying a person’s identity against a provided image).</li>
+<li>Signature verification and other biometric matching tasks.</li>
+</ul></li>
+</ul>
+</section>
+<section id="triplet-loss" class="level4">
+<h4 class="anchored" data-anchor-id="triplet-loss">24.3.2. Triplet Loss</h4>
+<p>Triplet loss is designed to improve the discriminative power of embeddings by considering three samples: an anchor, a positive example, and a negative example.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Three Inputs:</strong> Involves an anchor image, a positive image (same identity as the anchor), and a negative image (different identity).</li>
+<li><strong>Feature Extraction:</strong> Each input is processed by a shared network to obtain embeddings.</li>
+</ul></li>
+<li><strong>Loss Function:</strong>
+<ul>
+<li><strong>Triplet Loss:</strong> Encourages the anchor to be closer to the positive than to the negative by a margin. <span class="math display">\[
+L(a, p, n) = \max(0, \|f(a) - f(p)\|^2 - \|f(a) - f(n)\|^2 + \alpha)
+\]</span> where ( a ), ( p ), and ( n ) are the anchor, positive, and negative embeddings, and ( ) is the margin.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Improves the separation between different identities in the embedding space.</li>
+<li>Helps in learning more robust and discriminative features.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Requires careful selection of triplets to ensure effective training.</li>
+<li>Computationally intensive due to the need to process triplets of images.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Face recognition and clustering (e.g., grouping images of the same person).</li>
+<li>General metric learning tasks involving similarity comparison.</li>
+</ul></li>
+</ul>
+</section>
+<section id="facenet" class="level4">
+<h4 class="anchored" data-anchor-id="facenet">24.3.3. FaceNet</h4>
+<p>FaceNet is a deep learning model for face recognition and clustering that directly optimizes the embedding space using triplet loss.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Deep Convolutional Network:</strong> Uses a deep CNN to extract high-dimensional feature embeddings from face images.</li>
+<li><strong>Embedding Space:</strong> Embeddings are learned such that the Euclidean distance corresponds to face similarity.</li>
+</ul></li>
+<li><strong>Training:</strong>
+<ul>
+<li><strong>Triplet Loss:</strong> Optimizes the embeddings using triplet loss, ensuring that faces of the same person are closer together than those of different people.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>High accuracy in face recognition and verification tasks.</li>
+<li>Produces compact and discriminative embeddings.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Requires a large and diverse dataset for effective training.</li>
+<li>Computationally expensive, both in terms of training and inference.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Face recognition systems (e.g., unlocking devices, access control).</li>
+<li>Social media for tagging and organizing photos.</li>
+</ul></li>
+</ul>
+</section>
+<section id="deepface" class="level4">
+<h4 class="anchored" data-anchor-id="deepface">24.3.4. DeepFace</h4>
+<p>DeepFace is one of the pioneering models in deep learning-based face recognition, developed by Facebook.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Deep Neural Network:</strong> Utilizes a deep neural network to extract features from face images.</li>
+<li><strong>3D Alignment:</strong> Preprocesses images using a 3D alignment method to normalize the pose, improving robustness to variations in pose and illumination.</li>
+</ul></li>
+<li><strong>Training:</strong>
+<ul>
+<li><strong>Cross-Entropy Loss:</strong> Trains the network using a classification loss, where each identity is treated as a separate class.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>High accuracy and robustness to variations in pose and lighting.</li>
+<li>Large-scale training data improves generalization.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Requires a substantial amount of labeled data for each identity.</li>
+<li>Computationally intensive due to the deep architecture and preprocessing steps.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Social media for automatic tagging and photo organization.</li>
+<li>Security systems for identifying individuals in real-time.</li>
+</ul></li>
+</ul>
+</section>
+<section id="arcface" class="level4">
+<h4 class="anchored" data-anchor-id="arcface">24.3.5. ArcFace</h4>
+<p>ArcFace introduces an improved loss function for training face recognition models, enhancing the discriminative power of the embeddings.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Deep Convolutional Network:</strong> Similar to other face recognition models, uses a deep CNN to extract embeddings.</li>
+<li><strong>Additive Angular Margin Loss:</strong> Introduces an angular margin to the softmax loss to improve inter-class separability and intra-class compactness.</li>
+</ul></li>
+<li><strong>Loss Function:</strong>
+<ul>
+<li><strong>ArcFace Loss:</strong> <span class="math display">\[
+L = -\frac{1}{N} \sum_{i=1}^N \log \frac{e^{s \cdot (\cos(\theta_{y_i} + m))}}{e^{s \cdot (\cos(\theta_{y_i} + m))} + \sum_{j \neq y_i} e^{s \cdot \cos(\theta_j)}}
+\]</span> where ( _{y_i} ) is the angle between the feature vector and the weight vector of the true class, ( m ) is the angular margin, and ( s ) is the scale factor.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Improves the discriminative power of the embeddings, leading to higher accuracy.</li>
+<li>Enhances the robustness to variations in pose, illumination, and expression.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Computationally intensive, requiring significant resources for training and inference.</li>
+<li>The effectiveness of the angular margin depends on careful tuning.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>High-security environments requiring precise face verification (e.g., border control, secure access).</li>
+<li>Consumer electronics for biometric authentication (e.g., smartphones, laptops).</li>
+</ul></li>
+</ul>
+<p>By leveraging these advanced techniques in face recognition and verification, researchers and practitioners can develop highly accurate and robust systems capable of performing in diverse and challenging environments. These methodologies enhance the ability to identify and verify individuals, contributing to advancements in security, social media, and personal device authentication.</p>
+</section>
+</section>
+<section id="d-computer-vision" class="level3">
+<h3 class="anchored" data-anchor-id="d-computer-vision">24.4. 3D Computer Vision</h3>
+<p>3D computer vision involves analyzing and interpreting three-dimensional data to understand and interact with the physical world. This field encompasses various tasks and representations critical for applications in robotics, autonomous driving, augmented reality, and more.</p>
+<section id="d-shape-representation" class="level4">
+<h4 class="anchored" data-anchor-id="d-shape-representation">24.4.1. 3D Shape Representation</h4>
+<p>Representing 3D shapes is fundamental to processing and understanding 3D data. Various representations are used, each with its own advantages and challenges.</p>
+<section id="voxels" class="level5">
+<h5 class="anchored" data-anchor-id="voxels">24.4.1.1. Voxels</h5>
+<ul>
+<li><strong>Definition:</strong>
+<ul>
+<li>Voxels are the 3D equivalent of pixels, representing volumetric elements in a 3D grid.</li>
+<li>Each voxel holds information about the presence or absence of a part of the object in a specific location within the grid.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Simple and intuitive representation for volumetric data.</li>
+<li>Easy to process with 3D convolutional networks.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>High memory and computational requirements, especially for high-resolution grids.</li>
+<li>Inefficient for representing sparse or large-scale scenes.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Medical imaging for representing and analyzing volumetric scans (e.g., MRI, CT).</li>
+<li>3D modeling and reconstruction tasks.</li>
+</ul></li>
+</ul>
+</section>
+<section id="point-clouds" class="level5">
+<h5 class="anchored" data-anchor-id="point-clouds">24.4.1.2. Point Clouds</h5>
+<ul>
+<li><strong>Definition:</strong>
+<ul>
+<li>Point clouds represent 3D shapes as a collection of discrete points in space, each with (x, y, z) coordinates and possibly additional attributes like color or intensity.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Efficient representation for sparse data and large-scale environments.</li>
+<li>Naturally obtained from sensors like LiDAR and depth cameras.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Lack of explicit connectivity information between points.</li>
+<li>Challenging to process with traditional convolutional networks due to irregular structure.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Autonomous driving for environment perception and obstacle detection.</li>
+<li>Robotics for mapping and navigation.</li>
+</ul></li>
+</ul>
+</section>
+<section id="meshes" class="level5">
+<h5 class="anchored" data-anchor-id="meshes">24.4.1.3. Meshes</h5>
+<ul>
+<li><strong>Definition:</strong>
+<ul>
+<li>Meshes represent 3D shapes using vertices, edges, and faces, forming a network of connected polygons (usually triangles).</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Rich representation capturing both geometry and topology of surfaces.</li>
+<li>Efficient for rendering and visualizing detailed surfaces.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Complex structure requiring sophisticated processing techniques.</li>
+<li>Difficult to generate and manipulate compared to simpler representations.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Computer graphics for detailed 3D modeling and animation.</li>
+<li>Medical applications for reconstructing anatomical structures from scans.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="d-convolutions" class="level4">
+<h4 class="anchored" data-anchor-id="d-convolutions">24.4.2. 3D Convolutions</h4>
+<p>3D convolutions extend the concept of 2D convolutions to three dimensions, enabling the processing of volumetric data like voxel grids.</p>
+<ul>
+<li><strong>Algorithm Overview:</strong>
+<ul>
+<li>Apply convolutional kernels in three dimensions to capture spatial patterns in volumetric data.</li>
+<li>Use pooling layers to downsample and capture hierarchical features.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Directly applicable to volumetric data, capturing spatial context in 3D.</li>
+<li>Effective for tasks requiring dense volumetric predictions.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>High computational and memory requirements.</li>
+<li>Inefficient for sparse data like point clouds.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Medical imaging for analyzing 3D scans.</li>
+<li>Volumetric object detection and segmentation.</li>
+</ul></li>
+</ul>
+</section>
+<section id="pointnet-and-pointnet" class="level4">
+<h4 class="anchored" data-anchor-id="pointnet-and-pointnet">24.4.3. PointNet and PointNet++</h4>
+<p>PointNet and PointNet++ are pioneering architectures designed specifically for processing point clouds.</p>
+<ul>
+<li><strong>PointNet:</strong>
+<ul>
+<li><strong>Architecture:</strong> Processes point clouds directly by learning point-wise features and aggregating them using symmetric functions like max-pooling.</li>
+<li><strong>Advantages:</strong> Simple, efficient, and invariant to permutations of points.</li>
+<li><strong>Disadvantages:</strong> Limited ability to capture local structures and fine-grained details.</li>
+</ul></li>
+<li><strong>PointNet++:</strong>
+<ul>
+<li><strong>Improvements:</strong> Extends PointNet by incorporating hierarchical learning of local features, using a nested structure of PointNet applied to local neighborhoods.</li>
+<li><strong>Advantages:</strong> Captures both local and global features, improving performance on complex tasks.</li>
+<li><strong>Disadvantages:</strong> Increased complexity and computational requirements.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>3D object classification and segmentation.</li>
+<li>Scene understanding and reconstruction.</li>
+</ul></li>
+</ul>
+</section>
+<section id="graph-convolutional-networks-for-3d-data" class="level4">
+<h4 class="anchored" data-anchor-id="graph-convolutional-networks-for-3d-data">24.4.4. Graph Convolutional Networks for 3D Data</h4>
+<p>Graph Convolutional Networks (GCNs) extend convolutional operations to non-Euclidean domains like graphs, making them suitable for processing 3D meshes and point clouds.</p>
+<ul>
+<li><strong>Algorithm Overview:</strong>
+<ul>
+<li>Represent 3D data as graphs with vertices and edges.</li>
+<li>Apply graph convolutions to aggregate information from neighboring nodes.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Flexible representation for complex 3D structures.</li>
+<li>Captures both geometric and topological information.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Requires sophisticated graph construction and processing techniques.</li>
+<li>Computationally intensive for large graphs.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Mesh-based object classification and segmentation.</li>
+<li>3D shape analysis and reconstruction.</li>
+</ul></li>
+</ul>
+</section>
+<section id="d-reconstruction" class="level4">
+<h4 class="anchored" data-anchor-id="d-reconstruction">24.4.5. 3D Reconstruction</h4>
+<p>3D reconstruction involves creating a digital 3D model from one or more 2D images or depth maps.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Multi-view Stereo (MVS):</strong> Reconstructs 3D shapes by matching features across multiple 2D images taken from different viewpoints.</li>
+<li><strong>Structure from Motion (SfM):</strong> Estimates 3D structure by analyzing motion between consecutive frames in a video.</li>
+<li><strong>Volumetric Methods:</strong> Uses volumetric representations like voxels to integrate information from multiple views.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Provides detailed 3D models from readily available 2D data.</li>
+<li>Applicable to various scales, from small objects to large scenes.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Computationally intensive, especially for high-resolution reconstructions.</li>
+<li>Sensitive to noise and inaccuracies in input data.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Cultural heritage preservation through 3D digitization of artifacts.</li>
+<li>Virtual and augmented reality for creating immersive environments.</li>
+</ul></li>
+</ul>
+</section>
+<section id="depth-estimation" class="level4">
+<h4 class="anchored" data-anchor-id="depth-estimation">24.4.6. Depth Estimation</h4>
+<p>Depth estimation involves predicting the distance of each pixel in a 2D image from the camera, providing a depth map.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Stereo Vision:</strong> Uses disparity between stereo images to estimate depth.</li>
+<li><strong>Monocular Depth Estimation:</strong> Predicts depth from a single image using deep learning techniques.</li>
+<li><strong>Depth Sensors:</strong> Uses devices like LiDAR and depth cameras to directly measure depth.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Provides critical information for understanding and interacting with 3D environments.</li>
+<li>Enhances capabilities in navigation, manipulation, and scene understanding.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Depth estimation from monocular images can be less accurate and reliable.</li>
+<li>Requires high computational resources for real-time applications.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Autonomous driving for obstacle detection and avoidance.</li>
+<li>Robotics for navigation and manipulation in 3D space.</li>
+<li>Augmented reality for accurately placing virtual objects in the real world.</li>
+</ul></li>
+</ul>
+<p>By exploring these advanced 3D computer vision techniques, researchers and practitioners can develop robust systems capable of understanding and interacting with complex 3D environments. These methodologies enhance the ability to represent, process, and analyze 3D data, contributing to advancements in fields such as robotics, autonomous driving, medical imaging, and virtual reality.</p>
+</section>
+</section>
+<section id="visual-question-answering" class="level3">
+<h3 class="anchored" data-anchor-id="visual-question-answering">24.5. Visual Question Answering</h3>
+<p>Visual Question Answering (VQA) is a challenging task that involves answering questions based on the content of an image. It requires understanding and integrating visual and textual information, making it a crucial intersection of computer vision and natural language processing.</p>
+<section id="image-text-fusion-techniques" class="level4">
+<h4 class="anchored" data-anchor-id="image-text-fusion-techniques">24.5.1. Image-text Fusion Techniques</h4>
+<p>Image-text fusion techniques are essential for combining visual and textual information to generate meaningful answers in VQA tasks.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Concatenation:</strong> Directly concatenate the visual and textual feature vectors before passing them to a fully connected layer for joint processing.</li>
+<li><strong>Element-wise Multiplication/Addiction:</strong> Perform element-wise operations on visual and textual features to combine information.</li>
+<li><strong>Bilinear Pooling:</strong> Use bilinear pooling methods such as Multimodal Compact Bilinear Pooling (MCB) or Block Term Decomposition (BTD) to capture interactions between visual and textual features.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Facilitates effective integration of multimodal information.</li>
+<li>Enhances the model’s ability to understand complex relationships between the image and the question.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Can be computationally intensive, especially for high-dimensional feature vectors.</li>
+<li>Requires careful tuning to balance the contributions of visual and textual features.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Interactive AI systems for visual information retrieval.</li>
+<li>Assistive technologies for visually impaired individuals.</li>
+</ul></li>
+</ul>
+</section>
+<section id="attention-mechanisms-for-vqa" class="level4">
+<h4 class="anchored" data-anchor-id="attention-mechanisms-for-vqa">24.5.2. Attention Mechanisms for VQA</h4>
+<p>Attention mechanisms are crucial for focusing on relevant parts of the image and the question, improving the model’s ability to generate accurate answers.</p>
+<ul>
+<li><strong>Types of Attention:</strong>
+<ul>
+<li><strong>Soft Attention:</strong> Assigns a probability distribution over image regions or words in the question, weighted by their relevance.</li>
+<li><strong>Hard Attention:</strong> Selects a discrete subset of regions or words, typically using reinforcement learning techniques.</li>
+<li><strong>Self-Attention:</strong> Allows the model to focus on different parts of the question or image simultaneously, capturing complex dependencies.</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li><strong>Attention Weights Calculation:</strong> <span class="math display">\[
+\alpha_i = \frac{\exp(e_i)}{\sum_{j} \exp(e_j)}, \quad e_i = \text{score}(h_t, s_i)
+\]</span> where <span class="math inline">\(\alpha_i\)</span> are the attention weights, <span class="math inline">\(e_i\)</span> are the alignment scores, <span class="math inline">\(h_t\)</span> is the hidden state of the decoder, and <span class="math inline">\(s_i\)</span> are the features of the image regions or words.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Enhances the model’s interpretability by highlighting relevant regions or words.</li>
+<li>Improves accuracy by focusing on critical parts of the input.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Computationally expensive, particularly for large images or long questions.</li>
+<li>May require complex tuning of attention mechanisms to achieve optimal performance.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Improving the accuracy and interpretability of VQA systems.</li>
+<li>Enhancing interaction in human-computer interfaces by providing visual explanations.</li>
+</ul></li>
+</ul>
+</section>
+<section id="knowledge-incorporation-in-vqa" class="level4">
+<h4 class="anchored" data-anchor-id="knowledge-incorporation-in-vqa">24.5.3. Knowledge Incorporation in VQA</h4>
+<p>Incorporating external knowledge into VQA systems helps them answer questions that require more than just visual and textual understanding, such as common sense or domain-specific knowledge.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Knowledge Bases:</strong> Integrate structured knowledge bases like WordNet, ConceptNet, or specialized databases to provide additional context.</li>
+<li><strong>Pre-trained Language Models:</strong> Use models like BERT or GPT to embed external knowledge and enhance the contextual understanding of questions and answers.</li>
+<li><strong>Graph Neural Networks (GNNs):</strong> Use GNNs to model relationships between different entities in the knowledge base and integrate this information with visual and textual data.</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li><strong>Knowledge Integration:</strong> Formulate the fusion of visual, textual, and knowledge embeddings as: <span class="math display">\[
+f_{combined} = f_{image} \oplus f_{text} \oplus f_{knowledge}
+\]</span> where <span class="math inline">\(f_{image}\)</span>, <span class="math inline">\(f_{text}\)</span>, and <span class="math inline">\(f_{knowledge}\)</span> are the feature embeddings from the image, text, and external knowledge sources, respectively, and <span class="math inline">\(\oplus\)</span> denotes the fusion operation.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Enhances the model’s ability to answer complex questions requiring external knowledge.</li>
+<li>Improves the generalization capability of VQA systems by providing broader context.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Integration of external knowledge can be computationally intensive.</li>
+<li>Requires careful design to ensure the relevance and accuracy of incorporated knowledge.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Advanced VQA systems for educational tools and digital assistants.</li>
+<li>Domain-specific applications requiring detailed and context-aware answers, such as medical diagnostics or legal research.</li>
+</ul></li>
+</ul>
+<p>By leveraging these advanced techniques in image-text fusion, attention mechanisms, and knowledge incorporation, VQA systems can achieve higher accuracy and better interpretability. These methodologies enhance the ability to understand and respond to complex questions, making VQA a powerful tool in various applications, from assistive technologies to interactive AI systems.</p>
+</section>
+</section>
+<section id="image-generation-and-manipulation" class="level3">
+<h3 class="anchored" data-anchor-id="image-generation-and-manipulation">24.6. Image Generation and Manipulation</h3>
+<p>Image generation and manipulation involve creating new images or altering existing ones using advanced machine learning techniques. These tasks have applications in art, entertainment, image enhancement, and restoration.</p>
+<section id="style-transfer" class="level4">
+<h4 class="anchored" data-anchor-id="style-transfer">24.6.1. Style Transfer</h4>
+<p>Style transfer is the process of modifying an image to adopt the style of another image while retaining its original content.</p>
+<ul>
+<li><strong>Algorithm Overview:</strong>
+<ul>
+<li><strong>Neural Style Transfer:</strong> Uses convolutional neural networks (CNNs) to separate and recombine content and style from two images.</li>
+<li><strong>Content and Style Representations:</strong> Extract content representation from one image and style representation from another using different layers of a pre-trained CNN (e.g., VGG network).</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li><strong>Content Loss:</strong> Measures the difference in content between the generated image and the content image: <span class="math display">\[
+\mathcal{L}_{\text{content}} = \|F_{\text{conv}}^{\text{gen}} - F_{\text{conv}}^{\text{content}}\|^2
+\]</span></li>
+<li><strong>Style Loss:</strong> Measures the difference in style between the generated image and the style image using Gram matrices: <span class="math display">\[
+\mathcal{L}_{\text{style}} = \sum_{l} \|G^l_{\text{gen}} - G^l_{\text{style}}\|^2
+\]</span> where <span class="math inline">\(F_{\text{conv}}\)</span> are the feature maps and <span class="math inline">\(G^l\)</span> are the Gram matrices.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Can produce visually appealing results by combining content and style in a unique way.</li>
+<li>Enables creative applications in art and design.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Computationally intensive, requiring significant processing power for high-quality results.</li>
+<li>May struggle with preserving fine details and complex textures.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Artistic rendering and digital art creation.</li>
+<li>Enhancing photos with artistic styles or textures.</li>
+</ul></li>
+</ul>
+</section>
+<section id="image-to-image-translation" class="level4">
+<h4 class="anchored" data-anchor-id="image-to-image-translation">24.6.2. Image-to-Image Translation</h4>
+<p>Image-to-image translation involves transforming an image from one domain to another while preserving its core content. This can be achieved using generative adversarial networks (GANs).</p>
+<ul>
+<li><strong>Types of Image-to-Image Translation:</strong>
+<ul>
+<li><strong>Pix2Pix:</strong> A conditional GAN framework for supervised image-to-image translation tasks, such as translating sketches to photos.</li>
+<li><strong>CycleGAN:</strong> An unsupervised framework that learns to translate between domains without paired examples, using cycle consistency loss.</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li><strong>Adversarial Loss:</strong> Ensures the generated image is indistinguishable from real images in the target domain: <span class="math display">\[
+\mathcal{L}_{\text{GAN}} = \mathbb{E}_{y}[\log D(y)] + \mathbb{E}_{x}[\log(1 - D(G(x)))]
+\]</span></li>
+<li><strong>Cycle Consistency Loss (CycleGAN):</strong> Ensures the translation cycle (source to target and back to source) is consistent: <span class="math display">\[
+\mathcal{L}_{\text{cycle}} = \|G(F(x)) - x\| + \|F(G(y)) - y\|
+\]</span></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Versatile and can handle a wide range of translation tasks.</li>
+<li>Effective for both supervised and unsupervised translation.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Training GANs can be unstable and requires careful tuning.</li>
+<li>Results may suffer from artifacts or inconsistencies.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Transforming sketches into realistic images.</li>
+<li>Colorizing grayscale images and enhancing image quality.</li>
+</ul></li>
+</ul>
+</section>
+<section id="super-resolution" class="level4">
+<h4 class="anchored" data-anchor-id="super-resolution">24.6.3. Super-Resolution</h4>
+<p>Super-resolution involves enhancing the resolution of an image, generating high-resolution images from low-resolution inputs.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Single Image Super-Resolution (SISR):</strong> Uses deep learning models, such as SRCNN or SRGAN, to upscale images.</li>
+<li><strong>Generative Adversarial Networks (SRGAN):</strong> Applies GANs to produce high-quality, photo-realistic images from low-resolution inputs.</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li><strong>Reconstruction Loss:</strong> Measures the pixel-wise difference between the high-resolution ground truth and the generated image: <span class="math display">\[
+\mathcal{L}_{\text{rec}} = \|I_{\text{HR}} - G(I_{\text{LR}})\|^2
+\]</span></li>
+<li><strong>Adversarial Loss (SRGAN):</strong> Encourages the generated image to be indistinguishable from real high-resolution images: <span class="math display">\[
+\mathcal{L}_{\text{GAN}} = \mathbb{E}_{I_{\text{HR}}}[\log D(I_{\text{HR}})] + \mathbb{E}_{I_{\text{LR}}}[\log(1 - D(G(I_{\text{LR}})))]
+\]</span></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Enhances image quality, making it useful for applications requiring high resolution.</li>
+<li>Generates detailed and sharp images from low-resolution inputs.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Computationally demanding, especially for real-time applications.</li>
+<li>May introduce artifacts if the model fails to generate realistic details.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Medical imaging for enhancing scan resolution.</li>
+<li>Enhancing surveillance footage and satellite imagery.</li>
+</ul></li>
+</ul>
+</section>
+<section id="inpainting" class="level4">
+<h4 class="anchored" data-anchor-id="inpainting">24.6.4. Inpainting</h4>
+<p>Inpainting involves filling in missing or corrupted parts of an image, effectively restoring the image.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Context Encoder:</strong> Uses autoencoders to predict the missing parts of an image based on the surrounding context.</li>
+<li><strong>Partial Convolutions:</strong> Applies convolution operations only on valid (non-missing) regions, dynamically updating the mask during training.</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li><strong>Inpainting Loss:</strong> Combines reconstruction loss and perceptual loss to ensure both pixel accuracy and visual coherence: <span class="math display">\[
+\mathcal{L}_{\text{inpaint}} = \lambda_{\text{rec}} \|I_{\text{GT}} - I_{\text{pred}}\|^2 + \lambda_{\text{perc}} \| \phi(I_{\text{GT}}) - \phi(I_{\text{pred}}) \|
+\]</span> where <span class="math inline">\(I_{\text{GT}}\)</span> is the ground truth image, <span class="math inline">\(I_{\text{pred}}\)</span> is the predicted image, and <span class="math inline">\(\phi\)</span> represents features extracted from a pre-trained network.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Restores damaged images and removes unwanted objects effectively.</li>
+<li>Can handle complex structures and textures with advanced models.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Inpainting large missing regions can be challenging and may produce artifacts.</li>
+<li>Requires significant computational resources for high-quality results.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Restoring old photographs and artworks.</li>
+<li>Removing objects or defects from images for aesthetic enhancement.</li>
+</ul></li>
+</ul>
+<p>By leveraging these advanced techniques in image generation and manipulation, researchers and practitioners can create highly detailed, visually appealing, and contextually accurate images. These methodologies enhance the capability to generate, enhance, and restore images, contributing to advancements in fields such as digital art, medical imaging, and multimedia applications.</p>
+</section>
+</section>
+<section id="video-understanding" class="level3">
+<h3 class="anchored" data-anchor-id="video-understanding">24.7. Video Understanding</h3>
+<p>Video understanding involves analyzing and interpreting the dynamic content in videos, requiring models to handle spatial and temporal information simultaneously. This field is critical for applications in surveillance, sports analysis, video search, and more.</p>
+<section id="action-recognition" class="level4">
+<h4 class="anchored" data-anchor-id="action-recognition">24.7.1. Action Recognition</h4>
+<p>Action recognition aims to identify and classify actions or activities within a video sequence.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>2D CNN + RNN:</strong> Use 2D CNNs to extract spatial features from individual frames and RNNs (e.g., LSTM, GRU) to capture temporal dependencies.</li>
+<li><strong>3D CNNs:</strong> Apply 3D convolutions to process both spatial and temporal dimensions simultaneously, capturing motion and appearance features.</li>
+<li><strong>Two-stream Networks:</strong> Combine RGB frames and optical flow to leverage both appearance and motion information.</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li><strong>3D Convolutional Layer:</strong> <span class="math display">\[
+f_{t+1, i, j} = \sigma \left( \sum_{k=0}^{K-1} \sum_{m=0}^{M-1} \sum_{n=0}^{N-1} W_{k, m, n} \cdot x_{t-k, i+m, j+n} + b \right)
+\]</span> where <span class="math inline">\(W\)</span> is the convolution kernel, <span class="math inline">\(x\)</span> is the input video clip, and <span class="math inline">\(\sigma\)</span> is the activation function.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Effective at capturing both spatial and temporal features.</li>
+<li>Suitable for real-time action recognition with optimized architectures.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Computationally intensive, especially with high-resolution videos.</li>
+<li>Requires large annotated datasets for training.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Surveillance systems for detecting suspicious activities.</li>
+<li>Sports analytics for action classification and player performance analysis.</li>
+</ul></li>
+</ul>
+</section>
+<section id="video-captioning" class="level4">
+<h4 class="anchored" data-anchor-id="video-captioning">24.7.2. Video Captioning</h4>
+<p>Video captioning involves generating descriptive textual summaries for video content, integrating both visual and temporal information.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Encoder-Decoder Framework:</strong> Use CNNs to encode video frames into feature vectors and RNNs to decode these features into descriptive sentences.</li>
+<li><strong>Attention Mechanisms:</strong> Apply attention to focus on relevant frames or regions while generating each word in the caption.</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li><strong>Attention-based Captioning:</strong> <span class="math display">\[
+\alpha_t^i = \frac{\exp(e_t^i)}{\sum_{j=1}^L \exp(e_t^j)}, \quad e_t^i = \text{score}(h_{t-1}, f_i)
+\]</span> <span class="math display">\[
+c_t = \sum_{i=1}^L \alpha_t^i f_i
+\]</span> where <span class="math inline">\(\alpha_t^i\)</span> are the attention weights, <span class="math inline">\(e_t^i\)</span> are the alignment scores, <span class="math inline">\(h_{t-1}\)</span> is the previous hidden state, <span class="math inline">\(f_i\)</span> are the frame features, and <span class="math inline">\(c_t\)</span> is the context vector.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Generates meaningful and contextually accurate descriptions.</li>
+<li>Enhances video accessibility through automated summarization.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Challenging to capture complex interactions and events accurately.</li>
+<li>Requires large datasets with detailed annotations for training.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Video indexing and retrieval for large video databases.</li>
+<li>Assistive technologies for visually impaired users.</li>
+</ul></li>
+</ul>
+</section>
+<section id="video-question-answering" class="level4">
+<h4 class="anchored" data-anchor-id="video-question-answering">24.7.3. Video Question Answering</h4>
+<p>Video question answering (Video QA) involves answering questions about the content of a video, requiring models to understand and reason over temporal and spatial information.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Multimodal Fusion:</strong> Combine visual features from video frames with textual features from the question to generate answers.</li>
+<li><strong>Temporal Attention:</strong> Use attention mechanisms to focus on relevant video segments based on the question context.</li>
+<li><strong>Memory Networks:</strong> Incorporate external memory to store and retrieve information relevant to the question.</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li><strong>Multimodal Fusion:</strong> <span class="math display">\[
+f_{\text{fusion}} = f_{\text{video}} \oplus f_{\text{text}}
+\]</span> where <span class="math inline">\(f_{\text{video}}\)</span> are the video features, <span class="math inline">\(f_{\text{text}}\)</span> are the question features, and <span class="math inline">\(\oplus\)</span> denotes the fusion operation.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Provides a deeper understanding of video content through interactive querying.</li>
+<li>Enhances the capabilities of video search and retrieval systems.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Requires sophisticated models to handle complex reasoning tasks.</li>
+<li>Demands large and diverse datasets for effective training.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Interactive video search engines that allow users to ask questions about video content.</li>
+<li>Educational tools that provide automated answers to questions based on instructional videos.</li>
+</ul></li>
+</ul>
+<p>By leveraging these advanced techniques in video understanding, researchers and practitioners can develop robust systems capable of analyzing and interpreting complex video content. These methodologies enhance the ability to recognize actions, generate descriptive captions, and answer questions about video content, contributing to advancements in fields such as surveillance, sports analytics, and interactive media.</p>
+</section>
+</section>
+<section id="few-shot-and-zero-shot-learning-in-computer-vision" class="level3">
+<h3 class="anchored" data-anchor-id="few-shot-and-zero-shot-learning-in-computer-vision">24.8. Few-shot and Zero-shot Learning in Computer Vision</h3>
+<p>Few-shot and zero-shot learning aim to enable models to recognize new classes with very few or even no training examples by leveraging prior knowledge.</p>
+<section id="few-shot-learning" class="level4">
+<h4 class="anchored" data-anchor-id="few-shot-learning">24.8.1. Few-shot Learning</h4>
+<p>Few-shot learning focuses on training models to generalize from a small number of examples per class.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Meta-learning (Learning to Learn):</strong> Train a meta-learner that can quickly adapt to new tasks using only a few examples. Popular algorithms include MAML (Model-Agnostic Meta-Learning) and Prototypical Networks.</li>
+<li><strong>Siamese Networks:</strong> Use twin networks to measure the similarity between new examples and existing classes, making classification decisions based on these similarities.</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li><strong>Prototypical Networks:</strong> Represent each class by the mean of its support examples in the embedding space and classify query examples based on the nearest prototype: <span class="math display">\[
+c_k = \frac{1}{|S_k|} \sum_{(x_i, y_i) \in S_k} f_\phi(x_i)
+\]</span> where <span class="math inline">\(S_k\)</span> is the set of support examples for class <span class="math inline">\(k\)</span>, and <span class="math inline">\(f_\phi\)</span> is the embedding function.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Reduces the need for large labeled datasets.</li>
+<li>Facilitates rapid learning of new classes.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Performance can be sensitive to the quality and diversity of the few examples provided.</li>
+<li>Requires careful design of the meta-learning process.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Medical imaging for diagnosing rare diseases with limited examples.</li>
+<li>Wildlife monitoring for identifying rare species.</li>
+</ul></li>
+</ul>
+</section>
+<section id="zero-shot-learning" class="level4">
+<h4 class="anchored" data-anchor-id="zero-shot-learning">24.8.2. Zero-shot Learning</h4>
+<p>Zero-shot learning aims to recognize new classes without any training examples by leveraging semantic information such as attributes or word vectors.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Attribute-based Models:</strong> Use human-defined attributes that describe the properties of each class. The model learns to map these attributes to visual features.</li>
+<li><strong>Embedding-based Models:</strong> Use semantic embeddings (e.g., word vectors) to transfer knowledge from seen to unseen classes. Examples include models leveraging Word2Vec or GloVe embeddings.</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li><strong>Compatibility Function:</strong> Learn a compatibility function between visual features and semantic embeddings: <span class="math display">\[
+F(x, y) = \theta^T \phi(x, y)
+\]</span> where <span class="math inline">\(\phi(x, y)\)</span> represents the joint embedding of image <span class="math inline">\(x\)</span> and class <span class="math inline">\(y\)</span>.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Enables recognition of classes with no labeled training data.</li>
+<li>Utilizes semantic knowledge to improve generalization.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Depends heavily on the quality and relevance of the semantic information.</li>
+<li>Can struggle with fine-grained distinctions between classes.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>E-commerce for recognizing new product categories without labeled data.</li>
+<li>Environmental monitoring for identifying new species based on descriptions.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="self-supervised-learning-in-computer-vision" class="level3">
+<h3 class="anchored" data-anchor-id="self-supervised-learning-in-computer-vision">24.9. Self-supervised Learning in Computer Vision</h3>
+<p>Self-supervised learning leverages unlabeled data by creating auxiliary tasks that provide supervisory signals, enabling the model to learn useful representations.</p>
+<section id="pretext-tasks" class="level4">
+<h4 class="anchored" data-anchor-id="pretext-tasks">24.9.1. Pretext Tasks</h4>
+<p>Pretext tasks are designed to predict or classify information inherent to the data itself, creating supervision signals from unlabeled data.</p>
+<ul>
+<li><strong>Common Pretext Tasks:</strong>
+<ul>
+<li><strong>Image Inpainting:</strong> Predict missing parts of an image.</li>
+<li><strong>Colorization:</strong> Predict the color channels from grayscale images.</li>
+<li><strong>Jigsaw Puzzle:</strong> Solve jigsaw puzzles created from image patches.</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li><strong>Image Inpainting Loss:</strong> <span class="math display">\[
+\mathcal{L}_{\text{inpaint}} = \|I_{\text{original}} - I_{\text{predicted}}\|^2
+\]</span> where <span class="math inline">\(I_{\text{original}}\)</span> is the original image and <span class="math inline">\(I_{\text{predicted}}\)</span> is the inpainted image.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Utilizes large amounts of unlabeled data to learn robust features.</li>
+<li>Reduces the dependency on labeled data.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Performance of the downstream task depends on the relevance of the pretext task.</li>
+<li>Requires careful design and selection of pretext tasks.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Pre-training models for various computer vision tasks.</li>
+<li>Enhancing feature extraction for tasks with limited labeled data.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="adversarial-attacks-and-defenses-in-computer-vision" class="level3">
+<h3 class="anchored" data-anchor-id="adversarial-attacks-and-defenses-in-computer-vision">24.10. Adversarial Attacks and Defenses in Computer Vision</h3>
+<p>Adversarial attacks involve deliberately perturbing inputs to fool machine learning models, while defenses aim to make models robust against such perturbations.</p>
+<section id="adversarial-attacks" class="level4">
+<h4 class="anchored" data-anchor-id="adversarial-attacks">24.10.1. Adversarial Attacks</h4>
+<p>Adversarial attacks manipulate inputs to cause a model to make incorrect predictions.</p>
+<ul>
+<li><strong>Types of Attacks:</strong>
+<ul>
+<li><strong>FGSM (Fast Gradient Sign Method):</strong> Perturbs the input image using the gradient of the loss with respect to the input: <span class="math display">\[
+x_{\text{adv}} = x + \epsilon \cdot \text{sign}(\nabla_x J(\theta, x, y))
+\]</span> where <span class="math inline">\(x\)</span> is the original input, <span class="math inline">\(\epsilon\)</span> is the perturbation magnitude, and <span class="math inline">\(J\)</span> is the loss function.</li>
+<li><strong>PGD (Projected Gradient Descent):</strong> Iteratively applies small perturbations and projects the result back to the feasible input space: <span class="math display">\[
+x_{t+1} = \Pi_{\mathcal{B}(x, \epsilon)} (x_t + \alpha \cdot \text{sign}(\nabla_x J(\theta, x_t, y)))
+\]</span></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Reveals vulnerabilities in models that can be exploited.</li>
+<li>Helps in understanding the robustness and limitations of models.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Can be computationally expensive to generate effective attacks.</li>
+<li>May require extensive knowledge of the target model.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Testing the robustness of security-critical systems.</li>
+<li>Developing more robust and resilient machine learning models.</li>
+</ul></li>
+</ul>
+</section>
+<section id="adversarial-defenses" class="level4">
+<h4 class="anchored" data-anchor-id="adversarial-defenses">24.10.2. Adversarial Defenses</h4>
+<p>Adversarial defenses aim to make models robust against adversarial attacks.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Adversarial Training:</strong> Train the model on adversarial examples to improve robustness.</li>
+<li><strong>Defensive Distillation:</strong> Use knowledge distillation to reduce the model’s sensitivity to small perturbations.</li>
+<li><strong>Gradient Masking:</strong> Obfuscate the gradients to make it harder for attackers to generate effective perturbations.</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li><strong>Adversarial Training Loss:</strong> <span class="math display">\[
+\mathcal{L}_{\text{adv}} = \mathbb{E}_{(x,y) \sim \mathcal{D}} \left[ \max_{\delta \in \mathcal{B}(\epsilon)} J(\theta, x + \delta, y) \right]
+\]</span></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Enhances model robustness and security.</li>
+<li>Provides insights into designing more resilient architectures.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Can be computationally expensive and slow to train.</li>
+<li>Some defenses may only be effective against specific types of attacks.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Securing AI systems in critical applications like autonomous driving and medical diagnosis.</li>
+<li>Enhancing the robustness of machine learning models in adversarial environments.</li>
+</ul></li>
+</ul>
+<p>By exploring these advanced topics, researchers and practitioners can develop more resilient, efficient, and generalizable computer vision systems. These methodologies address key challenges in few-shot and zero-shot learning, self-supervised learning, and adversarial robustness, paving the way for innovative applications across various domains.</p>
+</section>
+</section>
+<section id="multimodal-learning" class="level3">
+<h3 class="anchored" data-anchor-id="multimodal-learning">24.11. Multimodal Learning</h3>
+<p>Multimodal learning involves integrating and processing information from multiple modalities, such as vision, language, and audio, to create models that can understand and generate complex, multimodal outputs.</p>
+<section id="vision-and-language-navigation" class="level4">
+<h4 class="anchored" data-anchor-id="vision-and-language-navigation">24.11.1. Vision-and-Language Navigation</h4>
+<p>Vision-and-Language Navigation (VLN) requires an agent to navigate through an environment based on natural language instructions.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Reinforcement Learning (RL):</strong> Train agents using RL to follow instructions and navigate environments by optimizing a reward function.</li>
+<li><strong>Sequence-to-Sequence Models:</strong> Use encoder-decoder architectures to map instructions to sequences of navigation actions.</li>
+<li><strong>Attention Mechanisms:</strong> Employ attention mechanisms to focus on relevant parts of the instruction and the environment.</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li><strong>Policy Learning in RL:</strong> <span class="math display">\[
+\pi_\theta(a_t | s_t) = \text{softmax}(Q_\theta(s_t, a_t))
+\]</span> where <span class="math inline">\(\pi_\theta\)</span> is the policy, <span class="math inline">\(a_t\)</span> is the action at time <span class="math inline">\(t\)</span>, <span class="math inline">\(s_t\)</span> is the state, and <span class="math inline">\(Q_\theta\)</span> is the action-value function.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Integrates visual and textual information for complex tasks.</li>
+<li>Facilitates interactive and adaptive navigation.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Requires large datasets of annotated navigation instructions and environments.</li>
+<li>Can be computationally intensive due to the complexity of the task.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Robotics for household and service robots.</li>
+<li>Virtual assistants and game AI for realistic navigation tasks.</li>
+</ul></li>
+</ul>
+</section>
+<section id="visual-reasoning" class="level4">
+<h4 class="anchored" data-anchor-id="visual-reasoning">24.11.2. Visual Reasoning</h4>
+<p>Visual reasoning involves understanding and reasoning about visual content to answer questions, solve problems, or generate explanations.</p>
+<ul>
+<li><strong>Techniques:</strong>
+<ul>
+<li><strong>Visual Question Answering (VQA):</strong> Use models that combine visual features with natural language processing to answer questions about images.</li>
+<li><strong>Scene Graphs:</strong> Represent images as graphs with objects as nodes and relationships as edges to facilitate reasoning.</li>
+<li><strong>Neural-Symbolic Reasoning:</strong> Combine neural networks with symbolic reasoning systems to enhance interpretability and logical reasoning.</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li><strong>Scene Graph Representation:</strong> <span class="math display">\[
+G = (V, E), \quad V = \{v_i\}_{i=1}^N, \quad E = \{(v_i, v_j, r_{ij})\}
+\]</span> where <span class="math inline">\(V\)</span> is the set of objects and <span class="math inline">\(E\)</span> is the set of relationships.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Enhances model interpretability and reasoning capabilities.</li>
+<li>Facilitates complex problem-solving tasks involving visual and textual information.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Requires extensive training data with detailed annotations.</li>
+<li>Complex architectures can be challenging to train and optimize.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Autonomous systems for understanding and interacting with their environment.</li>
+<li>Educational tools and intelligent tutoring systems.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="efficient-computer-vision-models" class="level3">
+<h3 class="anchored" data-anchor-id="efficient-computer-vision-models">24.12. Efficient Computer Vision Models</h3>
+<p>Efficient computer vision models are designed to deliver high performance while minimizing computational resources, making them suitable for deployment on resource-constrained devices.</p>
+<section id="mobilenet" class="level4">
+<h4 class="anchored" data-anchor-id="mobilenet">24.12.1. MobileNet</h4>
+<p>MobileNet is a family of efficient models designed for mobile and embedded vision applications, using depthwise separable convolutions to reduce computational cost.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Depthwise Separable Convolutions:</strong> Decompose standard convolutions into depthwise and pointwise convolutions, significantly reducing computation.</li>
+<li><strong>Width Multiplier:</strong> Adjust the number of channels in each layer to trade off between accuracy and efficiency.</li>
+<li><strong>Resolution Multiplier:</strong> Adjust the input image resolution to balance between performance and resource usage.</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li><strong>Depthwise Convolution:</strong> <span class="math display">\[
+\text{DWConv}(x) = \sum_{i=1}^{C} (K_i * x_i)
+\]</span></li>
+<li><strong>Pointwise Convolution:</strong> <span class="math display">\[
+\text{PWConv}(x) = \sum_{j=1}^{D} (W_j * x)
+\]</span></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Highly efficient with reduced computational and memory requirements.</li>
+<li>Suitable for real-time applications on mobile devices.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Potential loss of accuracy compared to larger models.</li>
+<li>Requires careful tuning of hyperparameters for optimal performance.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Mobile applications for real-time image and video analysis.</li>
+<li>Embedded systems for surveillance and IoT devices.</li>
+</ul></li>
+</ul>
+</section>
+<section id="efficientnet" class="level4">
+<h4 class="anchored" data-anchor-id="efficientnet">24.12.2. EfficientNet</h4>
+<p>EfficientNet scales up model size by systematically balancing network depth, width, and resolution using a compound scaling method.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Compound Scaling:</strong> Simultaneously scales up the depth, width, and resolution of the network using fixed scaling coefficients: <span class="math display">\[
+\text{depth} = \alpha^k, \quad \text{width} = \beta^k, \quad \text{resolution} = \gamma^k
+\]</span></li>
+<li><strong>Baseline Network:</strong> Starts with a small baseline network and scales it up to achieve higher performance.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Achieves state-of-the-art performance with efficient use of computational resources.</li>
+<li>Provides a systematic approach to scaling neural networks.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Requires careful tuning of scaling coefficients.</li>
+<li>More complex than simple scaling methods, necessitating additional design considerations.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>High-performance computer vision tasks in constrained environments.</li>
+<li>Cloud-based services that require efficient and scalable models.</li>
+</ul></li>
+</ul>
+</section>
+<section id="shufflenet" class="level4">
+<h4 class="anchored" data-anchor-id="shufflenet">24.12.3. ShuffleNet</h4>
+<p>ShuffleNet is designed for mobile and embedded applications, using pointwise group convolutions and channel shuffle operations to reduce computation.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Pointwise Group Convolutions:</strong> Reduce the number of parameters and computational cost by applying convolutions to grouped channels.</li>
+<li><strong>Channel Shuffle:</strong> Reorganize the channels to allow information flow across groups, enhancing feature representation.</li>
+</ul></li>
+<li><strong>Mathematical Formulation:</strong>
+<ul>
+<li><strong>Channel Shuffle:</strong> <span class="math display">\[
+\text{Shuffle}(x) = \text{reshape}(\text{permute}(\text{reshape}(x, (G, -1, H, W)), (1, 2, 0, 3)), (-1, H, W))
+\]</span> where <span class="math inline">\(G\)</span> is the number of groups, and <span class="math inline">\(H\)</span> and <span class="math inline">\(W\)</span> are the height and width of the feature map.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Extremely efficient, suitable for low-power devices.</li>
+<li>Maintains competitive accuracy with significantly lower computational requirements.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Potential complexity in implementation due to group convolutions and channel shuffle operations.</li>
+<li>May require extensive tuning for specific applications.</li>
+</ul></li>
+<li><strong>Applications:</strong>
+<ul>
+<li>Real-time image classification and detection on mobile devices.</li>
+<li>Lightweight models for IoT applications and smart cameras.</li>
+</ul></li>
+</ul>
+<p>By leveraging these efficient computer vision models, researchers and practitioners can develop high-performance applications that run on resource-constrained devices. These methodologies enhance the capability to deploy advanced vision tasks in real-world scenarios, enabling broader accessibility and usability.</p>
+</section>
+</section>
+</section>
+<section id="key-research-papers-in-advanced-computer-vision" class="level1">
+<h1>Key Research Papers in Advanced Computer Vision</h1>
+<ol type="1">
+<li><p>R-CNN (Region-based Convolutional Neural Networks) <a href="https://arxiv.org/abs/1311.2524">https://arxiv.org/abs/1311.2524</a></p></li>
+<li><p>Fast R-CNN <a href="https://arxiv.org/abs/1504.08083">https://arxiv.org/abs/1504.08083</a></p></li>
+<li><p>Faster R-CNN <a href="https://arxiv.org/abs/1506.01497">https://arxiv.org/abs/1506.01497</a></p></li>
+<li><p>YOLO (You Only Look Once) <a href="https://arxiv.org/abs/1506.02640">https://arxiv.org/abs/1506.02640</a></p></li>
+<li><p>SSD (Single Shot Detector) <a href="https://arxiv.org/abs/1512.02325">https://arxiv.org/abs/1512.02325</a></p></li>
+<li><p>RetinaNet <a href="https://arxiv.org/abs/1708.02002">https://arxiv.org/abs/1708.02002</a></p></li>
+<li><p>CornerNet <a href="https://arxiv.org/abs/1808.01244">https://arxiv.org/abs/1808.01244</a></p></li>
+<li><p>CenterNet <a href="https://arxiv.org/abs/1904.07850">https://arxiv.org/abs/1904.07850</a></p></li>
+<li><p>Fully Convolutional Networks (FCN) <a href="https://arxiv.org/abs/1411.4038">https://arxiv.org/abs/1411.4038</a></p></li>
+<li><p>U-Net <a href="https://arxiv.org/abs/1505.04597">https://arxiv.org/abs/1505.04597</a></p></li>
+<li><p>DeepLab Series <a href="https://arxiv.org/abs/1606.00915">https://arxiv.org/abs/1606.00915</a></p></li>
+<li><p>Mask R-CNN <a href="https://arxiv.org/abs/1703.06870">https://arxiv.org/abs/1703.06870</a></p></li>
+<li><p>YOLACT <a href="https://arxiv.org/abs/1904.02689">https://arxiv.org/abs/1904.02689</a></p></li>
+<li><p>Siamese Networks <a href="http://www.cs.toronto.edu/~gkoch/files/msc-thesis.pdf">http://www.cs.toronto.edu/~gkoch/files/msc-thesis.pdf</a></p></li>
+<li><p>FaceNet <a href="https://arxiv.org/abs/1503.03832">https://arxiv.org/abs/1503.03832</a></p></li>
+<li><p>DeepFace <a href="https://research.facebook.com/publications/deepface-closing-the-gap-to-human-level-performance-in-face-verification/">https://research.facebook.com/publications/deepface-closing-the-gap-to-human-level-performance-in-face-verification/</a></p></li>
+<li><p>ArcFace <a href="https://arxiv.org/abs/1801.07698">https://arxiv.org/abs/1801.07698</a></p></li>
+</ol>
+</section>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

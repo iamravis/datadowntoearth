@@ -1,0 +1,3071 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>google_cloud_big_data_and_machine_learning_fundamentals – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<link href="../../../../logo.png" rel="icon" type="image/png">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../../styles.css">
+<link rel="stylesheet" href="../../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title"></h1>
+        </a>     
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../content/blogs/de/gcp/1_google_cloud_big_data_and_machine_learning_fundamentals.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">1. Google Cloud Big Data and Machine Learning Fundamentals</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../content/blogs/de/gcp/2_modernizing_data_lakes_and_data_warehouses_with_google_cloud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Modernizing Data Lakes and Data Warehouses with Google Cloud</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../content/blogs/de/gcp/3_building_batch_data_pipelines_on_google_cloud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Building Batch Data Pipelines on Google Cloud</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../content/blogs/de/gcp/4_building_resilient_streaming_analytics_systems_on_google_cloud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4. Building Resilient Streaming Analytics Systems on Google Cloud</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../content/blogs/de/gcp/5_smart_analytics_machine_learning_and_ai_on_google_cloud.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5. Smart Analytics, Machine Learning, and AI on Google Cloud</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../content/blogs/de/gcp/6_preparing_for_your_professional_data_engineer_journey.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6. Preparing for your Professional Data Engineer Journey</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="text-content">
+<section id="module-1" class="level1">
+<h1>Module 1</h1>
+<section id="welcome-to-the-big-data-and-machine-learning-course" class="level2">
+<h2 class="anchored" data-anchor-id="welcome-to-the-big-data-and-machine-learning-course">Welcome to the Big Data and Machine Learning Course</h2>
+<section id="course-overview" class="level3">
+<h3 class="anchored" data-anchor-id="course-overview">Course Overview</h3>
+<p>In this first section, you’ll explore the Google infrastructure through compute and storage, and see how innovation has enabled big data and machine learning capabilities.</p>
+<ul>
+<li><p><strong>History and Product Categories</strong>: Understand the history of big data and ML products to learn about relevant product categories.</p></li>
+<li><p><strong>Customer Example</strong>: Examine an example of a customer who adopted Google Cloud for their big data and machine learning needs.</p></li>
+<li><p><strong>Hands-on Practice</strong>: Get hands-on practice using big data tools to analyze a public dataset.</p></li>
+</ul>
+</section>
+<section id="google-and-data" class="level3">
+<h3 class="anchored" data-anchor-id="google-and-data">Google and Data</h3>
+<p>Google has been working with data and artificial intelligence since its early days as a company in 1998. In 2008, the Google Cloud Platform was launched to provide secure and flexible cloud computing and storage services.</p>
+</section>
+<section id="google-cloud-infrastructure-layers" class="level3">
+<h3 class="anchored" data-anchor-id="google-cloud-infrastructure-layers">Google Cloud Infrastructure Layers</h3>
+<p>Google Cloud infrastructure can be thought of in three layers:</p>
+<ul>
+<li><p><strong>Base Layer</strong>: Networking and security, laying the foundation to support all of Google’s infrastructure and applications.</p></li>
+<li><p><strong>Middle Layer</strong>: Compute and storage. Google Cloud separates, or decouples, compute and storage so they can scale independently based on need.</p></li>
+<li><p><strong>Top Layer</strong>: Big data and machine learning products. These enable tasks to ingest, store, process, and deliver business insights, data pipelines, and ML models. Thanks to Google Cloud, these tasks can be accomplished without needing to manage and scale the underlying infrastructure.</p></li>
+</ul>
+</section>
+<section id="course-focus" class="level3">
+<h3 class="anchored" data-anchor-id="course-focus">Course Focus</h3>
+<p>In the videos that follow, we’ll focus on the middle layer (compute and storage) and the top layer (big data and machine learning products). Networking and security fall outside the focus of this course. If you’re interested in learning more about these topics, you can explore additional resources at <a href="https://cloud.google.com/training">cloud.google.com/training</a>.</p>
+</section>
+</section>
+<section id="google-cloud-infrastructure" class="level2">
+<h2 class="anchored" data-anchor-id="google-cloud-infrastructure">Google Cloud Infrastructure</h2>
+<section id="geographic-locations" class="level3">
+<h3 class="anchored" data-anchor-id="geographic-locations">Geographic Locations</h3>
+<p>Google Cloud’s infrastructure spans five major geographic locations: North America, South America, Europe, Asia, and Australia.</p>
+</section>
+<section id="importance-of-multiple-service-locations" class="level3">
+<h3 class="anchored" data-anchor-id="importance-of-multiple-service-locations">Importance of Multiple Service Locations</h3>
+<p>Having multiple service locations affects:</p>
+<ul>
+<li><p><strong>Availability</strong>: Ensuring services are up and running.</p></li>
+<li><p><strong>Durability</strong>: Ensuring data is safely stored.</p></li>
+<li><p><strong>Latency</strong>: Measuring the time it takes for a packet of information to travel from its source to its destination.</p></li>
+</ul>
+</section>
+<section id="regions-and-zones" class="level3">
+<h3 class="anchored" data-anchor-id="regions-and-zones">Regions and Zones</h3>
+<ul>
+<li><p><strong>Regions</strong>: Independent geographic areas, each composed of multiple zones. For example, London (europe-west2) is a region with three different zones.</p></li>
+<li><p><strong>Zones</strong>: Areas where Google Cloud resources are deployed. For instance, when you launch a virtual machine using Compute Engine, it runs in the specified zone to ensure resource redundancy.</p></li>
+</ul>
+</section>
+<section id="resource-deployment-levels" class="level3">
+<h3 class="anchored" data-anchor-id="resource-deployment-levels">Resource Deployment Levels</h3>
+<ul>
+<li><p><strong>Zonal Resources</strong>: Operate within a single zone. If a zone becomes unavailable, so do the resources.</p></li>
+<li><p><strong>Regional and Multi-Regional Resources</strong>: Allow specifying geographic locations to run services and resources, which is useful for:</p>
+<ul>
+<li><p>Bringing applications closer to users globally.</p></li>
+<li><p>Providing protection in case of regional issues, such as natural disasters.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="multi-region-configurations" class="level3">
+<h3 class="anchored" data-anchor-id="multi-region-configurations">Multi-Region Configurations</h3>
+<ul>
+<li>Some Google Cloud services, like Spanner, support multi-region configurations. This allows replicating data across multiple zones and regions, enabling low-latency data access from various locations within the configuration (e.g., The Netherlands and Belgium).</li>
+</ul>
+</section>
+<section id="current-infrastructure-stats" class="level3">
+<h3 class="anchored" data-anchor-id="current-infrastructure-stats">Current Infrastructure Stats</h3>
+<ul>
+<li><p><strong>Zones</strong>: 103</p></li>
+<li><p><strong>Regions</strong>: 34</p></li>
+<li><p><strong>Updates</strong>: For the most up-to-date information, visit <a href="https://cloud.google.com/about/locations">cloud.google.com/about/locations</a>.</p></li>
+</ul>
+</section>
+</section>
+<section id="google-cloud-infrastructure-compute-and-storage" class="level2">
+<h2 class="anchored" data-anchor-id="google-cloud-infrastructure-compute-and-storage">Google Cloud Infrastructure: Compute and Storage</h2>
+<section id="introduction" class="level3">
+<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
+<p>Let’s focus on the middle layer of the Google Cloud infrastructure: compute and storage. We’ll begin with compute. Organizations with growing data needs often require substantial compute power to run big data jobs. As organizations design for the future, the need for compute power only grows. Google offers a range of computing services.</p>
+</section>
+<section id="google-compute-services" class="level3">
+<h3 class="anchored" data-anchor-id="google-compute-services">Google Compute Services</h3>
+<section id="compute-engine" class="level4">
+<h4 class="anchored" data-anchor-id="compute-engine">Compute Engine</h4>
+<ul>
+<li><p><strong>Description</strong>: Compute Engine is an IaaS (Infrastructure as a Service) offering that provides virtual compute, storage, and network resources similar to physical data centers.</p></li>
+<li><p><strong>Usage</strong>: Use virtual compute and storage resources as you would manage them locally.</p></li>
+<li><p><strong>Flexibility</strong>: Provides maximum flexibility for managing server instances.</p></li>
+</ul>
+</section>
+<section id="google-kubernetes-engine-gke" class="level4">
+<h4 class="anchored" data-anchor-id="google-kubernetes-engine-gke">Google Kubernetes Engine (GKE)</h4>
+<ul>
+<li><p><strong>Description</strong>: GKE runs containerized applications in a cloud environment rather than on individual virtual machines like Compute Engine.</p></li>
+<li><p><strong>Containers</strong>: Represent code packaged with all its dependencies.</p></li>
+</ul>
+</section>
+<section id="app-engine" class="level4">
+<h4 class="anchored" data-anchor-id="app-engine">App Engine</h4>
+<ul>
+<li><p><strong>Description</strong>: App Engine is a fully managed PaaS (Platform as a Service) offering.</p></li>
+<li><p><strong>Function</strong>: Binds code to libraries that provide infrastructure access, allowing more focus on application logic.</p></li>
+</ul>
+</section>
+<section id="cloud-functions" class="level4">
+<h4 class="anchored" data-anchor-id="cloud-functions">Cloud Functions</h4>
+<ul>
+<li><p><strong>Description</strong>: Executes code in response to events (e.g., a new file uploaded to Cloud Storage).</p></li>
+<li><p><strong>Serverless</strong>: A completely serverless execution environment, meaning no need to install software locally or manage servers.</p></li>
+<li><p><strong>Function as a Service</strong>: Often referred to as functions as a service.</p></li>
+</ul>
+</section>
+<section id="cloud-run" class="level4">
+<h4 class="anchored" data-anchor-id="cloud-run">Cloud Run</h4>
+<ul>
+<li><p><strong>Description</strong>: Cloud Run is a fully managed compute platform that runs requests or event-driven stateless workloads without managing servers.</p></li>
+<li><p><strong>Abstraction</strong>: Abstracts away all infrastructure management, allowing you to focus on writing code.</p></li>
+<li><p><strong>Scalability</strong>: Automatically scales up and down from zero, so you never have to worry about scale configuration.</p></li>
+<li><p><strong>Cost Efficiency</strong>: Charges only for the resources used, avoiding over-provisioned resource costs.</p></li>
+</ul>
+</section>
+</section>
+<section id="google-photos-case-study" class="level3">
+<h3 class="anchored" data-anchor-id="google-photos-case-study">Google Photos Case Study</h3>
+<p>Google Photos leverages Google Cloud’s compute capability for features like automatic video stabilization. This feature processes unstable videos by stabilizing them to minimize movement.</p>
+<ul>
+<li><p><strong>Data Requirements</strong>: Proper data includes the video itself, along with time-series data on the camera’s position, orientation from the gyroscope, and motion from the camera lens.</p></li>
+<li><p><strong>Compute Needs</strong>: A short video can require over a billion data points to feed the ML model for stabilization.</p></li>
+<li><p><strong>Scale</strong>: As of 2020, approximately 28 billion photos and videos were uploaded to Google Photos weekly, with over four trillion photos stored in total.</p></li>
+</ul>
+</section>
+<section id="machine-learning-and-compute-power" class="level3">
+<h3 class="anchored" data-anchor-id="machine-learning-and-compute-power">Machine Learning and Compute Power</h3>
+<p>Training machine learning models require significant compute power. Smartphones are not powerful enough for training sophisticated ML models; hence, Google trains models in a vast network of data centers and deploys smaller trained versions to smartphones and personal computers.</p>
+</section>
+<section id="evolution-of-compute-power" class="level3">
+<h3 class="anchored" data-anchor-id="evolution-of-compute-power">Evolution of Compute Power</h3>
+<ul>
+<li><p><strong>Pre-2012</strong>: AI results tracked closely with Moore’s Law, with computing power doubling every two years.</p></li>
+<li><p><strong>Post-2012</strong>: Computing power required for AI training runs has been doubling approximately every three-and-a-half months.</p></li>
+</ul>
+</section>
+<section id="tensor-processing-units-tpus" class="level3">
+<h3 class="anchored" data-anchor-id="tensor-processing-units-tpus">Tensor Processing Units (TPUs)</h3>
+<p>In response to the growing compute demands, Google introduced Tensor Processing Units (TPUs) in 2016.</p>
+<ul>
+<li><p><strong>TPUs</strong>: Custom-developed application-specific integrated circuits to accelerate machine-learning workloads.</p></li>
+<li><p><strong>Domain-Specific Hardware</strong>: TPUs are faster and more energy-efficient than GPUs and CPUs for AI applications and machine learning.</p></li>
+<li><p><strong>Integration</strong>: Cloud TPUs are integrated across Google products, offering state-of-the-art hardware and supercomputing technology to Google Cloud customers.</p></li>
+</ul>
+</section>
+</section>
+<section id="google-cloud-infrastructure-storage" class="level2">
+<h2 class="anchored" data-anchor-id="google-cloud-infrastructure-storage">Google Cloud Infrastructure: Storage</h2>
+<section id="introduction-1" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-1">Introduction</h3>
+<p>Now that we’ve explored compute and why it’s needed for big data and ML jobs, let’s examine storage. For proper scaling capabilities, compute and storage are decoupled. This is one of the major differences between cloud and desktop computing. With cloud computing, processing limitations aren’t attached to storage disks. Most applications require a database and storage solution of some kind.</p>
+</section>
+<section id="managed-database-and-storage-services" class="level3">
+<h3 class="anchored" data-anchor-id="managed-database-and-storage-services">Managed Database and Storage Services</h3>
+<p>Google Cloud offers fully managed database and storage services, reducing the time and effort needed to store data. These include:</p>
+<ul>
+<li><p><strong>Cloud Storage</strong></p></li>
+<li><p><strong>Bigtable</strong></p></li>
+<li><p><strong>Cloud SQL</strong></p></li>
+<li><p><strong>Spanner</strong></p></li>
+<li><p><strong>Firestore</strong></p></li>
+<li><p><strong>BigQuery</strong></p></li>
+</ul>
+</section>
+<section id="storage-types" class="level3">
+<h3 class="anchored" data-anchor-id="storage-types">Storage Types</h3>
+<p>Choosing the right option to store and process data depends on the data type and business need.</p>
+<section id="unstructured-vs.-structured-data" class="level4">
+<h4 class="anchored" data-anchor-id="unstructured-vs.-structured-data">Unstructured vs.&nbsp;Structured Data</h4>
+<ul>
+<li><p><strong>Unstructured Data</strong>: Information stored in a non-tabular form, such as documents, images, and audio files. Typically suited to Cloud Storage.</p></li>
+<li><p><strong>Structured Data</strong>: Information stored in tables, rows, and columns. Comes in two types: transactional workloads and analytical workloads.</p></li>
+</ul>
+</section>
+</section>
+<section id="cloud-storage" class="level3">
+<h3 class="anchored" data-anchor-id="cloud-storage">Cloud Storage</h3>
+<p>A managed service for storing unstructured data.</p>
+<ul>
+<li><p><strong>Objects</strong>: Immutable pieces of data consisting of files of any format, stored in containers called buckets.</p></li>
+<li><p><strong>Use Cases</strong>: Serving website content, storing data for archival and disaster recovery, and distributing large data objects via Direct Download.</p></li>
+</ul>
+<section id="storage-classes" class="level4">
+<h4 class="anchored" data-anchor-id="storage-classes">Storage Classes</h4>
+<ul>
+<li><p><strong>Standard Storage</strong>: Best for frequently accessed, or “hot,” data. Suitable for data stored for brief periods.</p></li>
+<li><p><strong>Nearline Storage</strong>: Best for infrequently accessed data, such as data backups and long-tail multimedia content. Accessed less than once per month.</p></li>
+<li><p><strong>Coldline Storage</strong>: A low-cost option for storing data that is accessed at most once every 90 days.</p></li>
+<li><p><strong>Archive Storage</strong>: The lowest-cost option for data accessed less than once a year. Ideal for data archiving, online backup, and disaster recovery.</p></li>
+</ul>
+</section>
+</section>
+<section id="structured-data" class="level3">
+<h3 class="anchored" data-anchor-id="structured-data">Structured Data</h3>
+<p>Structured data is stored in tables, rows, and columns and comes in two types: transactional workloads and analytical workloads.</p>
+<section id="transactional-workloads" class="level4">
+<h4 class="anchored" data-anchor-id="transactional-workloads">Transactional Workloads</h4>
+<ul>
+<li><strong>Description</strong>: Stem from Online Transaction Processing (OLTP) systems, requiring fast data inserts and updates to build row-based records. Maintain a system snapshot with standardized queries impacting only a few records.</li>
+</ul>
+</section>
+<section id="analytical-workloads" class="level4">
+<h4 class="anchored" data-anchor-id="analytical-workloads">Analytical Workloads</h4>
+<ul>
+<li><strong>Description</strong>: Stem from Online Analytical Processing (OLAP) systems, requiring the reading of entire datasets with complex queries, such as aggregations.</li>
+</ul>
+</section>
+</section>
+<section id="accessing-data" class="level3">
+<h3 class="anchored" data-anchor-id="accessing-data">Accessing Data</h3>
+<p>Determine whether the data will be accessed using SQL or not.</p>
+<section id="sql-access-for-transactional-data" class="level4">
+<h4 class="anchored" data-anchor-id="sql-access-for-transactional-data">SQL Access for Transactional Data</h4>
+<ul>
+<li><p><strong>Cloud SQL</strong>: Best for local to regional scalability.</p></li>
+<li><p><strong>Spanner</strong>: Best for global scalability of databases.</p></li>
+</ul>
+</section>
+<section id="non-sql-access-for-transactional-data" class="level4">
+<h4 class="anchored" data-anchor-id="non-sql-access-for-transactional-data">Non-SQL Access for Transactional Data</h4>
+<ul>
+<li><strong>Firestore</strong>: A transactional NoSQL, document-oriented database.</li>
+</ul>
+</section>
+<section id="sql-access-for-analytical-workloads" class="level4">
+<h4 class="anchored" data-anchor-id="sql-access-for-analytical-workloads">SQL Access for Analytical Workloads</h4>
+<ul>
+<li><strong>BigQuery</strong>: Google’s data warehouse solution, suitable for analyzing petabyte-scale datasets.</li>
+</ul>
+</section>
+<section id="non-sql-access-for-analytical-workloads" class="level4">
+<h4 class="anchored" data-anchor-id="non-sql-access-for-analytical-workloads">Non-SQL Access for Analytical Workloads</h4>
+<ul>
+<li><strong>Bigtable</strong>: A scalable NoSQL solution for analytical workloads. Ideal for real-time, high-throughput applications requiring millisecond latency.</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="google-cloud-infrastructure-big-data-and-machine-learning-products" class="level2">
+<h2 class="anchored" data-anchor-id="google-cloud-infrastructure-big-data-and-machine-learning-products">Google Cloud Infrastructure: Big Data and Machine Learning Products</h2>
+<section id="introduction-2" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-2">Introduction</h3>
+<p>The final layer of the Google Cloud infrastructure to explore is big data and machine learning products. Understanding the evolution of these products helps address typical big data and ML challenges.</p>
+</section>
+<section id="historical-challenges-and-solutions" class="level3">
+<h3 class="anchored" data-anchor-id="historical-challenges-and-solutions">Historical Challenges and Solutions</h3>
+<section id="early-challenges" class="level4">
+<h4 class="anchored" data-anchor-id="early-challenges">Early Challenges</h4>
+<p>Google faced challenges related to large datasets, fast-changing data, and varied data early on, mostly due to the need to index the World Wide Web. As the internet grew, new data processing methods were required.</p>
+</section>
+<section id="google-file-system-gfs" class="level4">
+<h4 class="anchored" data-anchor-id="google-file-system-gfs">Google File System (GFS)</h4>
+<ul>
+<li><p><strong>Release Year</strong>: 2002</p></li>
+<li><p><strong>Purpose</strong>: Designed to handle data sharing and petabyte storage at scale.</p></li>
+<li><p><strong>Impact</strong>: Served as the foundation for Cloud Storage and the managed storage functionality in BigQuery.</p></li>
+</ul>
+</section>
+<section id="mapreduce" class="level4">
+<h4 class="anchored" data-anchor-id="mapreduce">MapReduce</h4>
+<ul>
+<li><p><strong>Release Year</strong>: 2004</p></li>
+<li><p><strong>Purpose</strong>: Managed large-scale data processing across big clusters of commodity servers.</p></li>
+<li><p><strong>Impact</strong>: Introduced a new style of data processing to address the exploding volume of web content.</p></li>
+</ul>
+</section>
+<section id="bigtable" class="level4">
+<h4 class="anchored" data-anchor-id="bigtable">Bigtable</h4>
+<ul>
+<li><p><strong>Release Year</strong>: 2005</p></li>
+<li><p><strong>Purpose</strong>: A high-performance NoSQL database service for large analytical and operational workloads.</p></li>
+<li><p><strong>Impact</strong>: Solved the challenge of recording and retrieving millions of streaming user actions with high throughput.</p></li>
+</ul>
+</section>
+</section>
+<section id="evolution-of-data-and-ai-products" class="level3">
+<h3 class="anchored" data-anchor-id="evolution-of-data-and-ai-products">Evolution of Data and AI Products</h3>
+<section id="transition-from-mapreduce" class="level4">
+<h4 class="anchored" data-anchor-id="transition-from-mapreduce">Transition from MapReduce</h4>
+<p>From 2008 to 2010, Google started to move away from MapReduce to focus on solutions that allowed developers to focus more on application logic rather than managing infrastructure.</p>
+</section>
+<section id="bigquery" class="level4">
+<h4 class="anchored" data-anchor-id="bigquery">BigQuery</h4>
+<ul>
+<li><p><strong>Release Year</strong>: 2010</p></li>
+<li><p><strong>Description</strong>: A fully-managed, serverless data warehouse enabling scalable analysis over petabytes of data.</p></li>
+<li><p><strong>Features</strong>: Provides storage plus analytics and has built-in machine learning capabilities.</p></li>
+</ul>
+</section>
+<section id="pubsub" class="level4">
+<h4 class="anchored" data-anchor-id="pubsub">Pub/Sub</h4>
+<ul>
+<li><p><strong>Release Year</strong>: 2015</p></li>
+<li><p><strong>Description</strong>: Provides a service for streaming analytics and data integration pipelines.</p></li>
+</ul>
+</section>
+</section>
+<section id="progress-in-ai-and-machine-learning" class="level3">
+<h3 class="anchored" data-anchor-id="progress-in-ai-and-machine-learning">Progress in AI and Machine Learning</h3>
+<section id="tensorflow" class="level4">
+<h4 class="anchored" data-anchor-id="tensorflow">TensorFlow</h4>
+<ul>
+<li><p><strong>Release Year</strong>: 2015</p></li>
+<li><p><strong>Description</strong>: An open-source library for machine learning and artificial intelligence.</p></li>
+</ul>
+</section>
+<section id="transformer" class="level4">
+<h4 class="anchored" data-anchor-id="transformer">Transformer</h4>
+<ul>
+<li><p><strong>Release Year</strong>: 2017</p></li>
+<li><p><strong>Description</strong>: The foundational architecture for modern generative AI models.</p></li>
+</ul>
+</section>
+<section id="vertex-ai" class="level4">
+<h4 class="anchored" data-anchor-id="vertex-ai">Vertex AI</h4>
+<ul>
+<li><p><strong>Release Year</strong>: 2021</p></li>
+<li><p><strong>Description</strong>: A unified AI development platform supporting both predictive AI and generative AI.</p></li>
+</ul>
+</section>
+<section id="gemini-model" class="level4">
+<h4 class="anchored" data-anchor-id="gemini-model">Gemini Model</h4>
+<ul>
+<li><p><strong>Release Year</strong>: 2023</p></li>
+<li><p><strong>Description</strong>: A state-of-the-art large foundation model generating data in multiple modalities like text, image, and video.</p></li>
+</ul>
+</section>
+</section>
+<section id="current-big-data-and-machine-learning-product-line" class="level3">
+<h3 class="anchored" data-anchor-id="current-big-data-and-machine-learning-product-line">Current Big Data and Machine Learning Product Line</h3>
+<p>Thanks to these advancements, Google Cloud’s big data and machine learning product line is now robust. This includes:</p>
+<ul>
+<li><p><strong>Cloud Storage</strong></p></li>
+<li><p><strong>Dataproc</strong></p></li>
+<li><p><strong>Bigtable</strong></p></li>
+<li><p><strong>BigQuery</strong></p></li>
+<li><p><strong>Dataflow</strong></p></li>
+<li><p><strong>Firestore</strong></p></li>
+<li><p><strong>Pub/Sub</strong></p></li>
+<li><p><strong>Looker</strong></p></li>
+<li><p><strong>Spanner</strong></p></li>
+<li><p><strong>AutoML</strong></p></li>
+<li><p><strong>Vertex AI</strong></p></li>
+</ul>
+</section>
+<section id="hands-on-practice" class="level3">
+<h3 class="anchored" data-anchor-id="hands-on-practice">Hands-On Practice</h3>
+<p>These products and services are available through Google Cloud, and you’ll get hands-on practice with some of them as part of this course.</p>
+</section>
+</section>
+<section id="google-cloud-big-data-and-machine-learning-products" class="level2">
+<h2 class="anchored" data-anchor-id="google-cloud-big-data-and-machine-learning-products">Google Cloud Big Data and Machine Learning Products</h2>
+<section id="introduction-3" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-3">Introduction</h3>
+<p>As we explored in the last video, Google offers a range of big data and machine learning products. So, how do you know which is best for your business needs? Let’s look closer at the list of products, which can be divided into four general categories along the data-to-AI workflow: ingestion and process, storage, analytics, and machine learning. Understanding these product categories can help narrow down your choice.</p>
+</section>
+<section id="product-categories" class="level3">
+<h3 class="anchored" data-anchor-id="product-categories">Product Categories</h3>
+<section id="ingestion-and-process" class="level4">
+<h4 class="anchored" data-anchor-id="ingestion-and-process">Ingestion and Process</h4>
+<p>Products used to digest both real-time and batch data. The list includes:</p>
+<ul>
+<li><p><strong>Pub/Sub</strong></p></li>
+<li><p><strong>Dataflow</strong></p></li>
+<li><p><strong>Dataproc</strong></p></li>
+<li><p><strong>Cloud Data Fusion</strong></p></li>
+</ul>
+<p>You’ll explore how Dataflow and Pub/Sub can ingest streaming data later in this course.</p>
+</section>
+<section id="data-storage" class="level4">
+<h4 class="anchored" data-anchor-id="data-storage">Data Storage</h4>
+<p>There are five storage products:</p>
+<ul>
+<li><p><strong>Cloud Storage</strong></p></li>
+<li><p><strong>Cloud SQL</strong></p></li>
+<li><p><strong>Spanner</strong></p></li>
+<li><p><strong>Bigtable</strong></p></li>
+<li><p><strong>Firestore</strong></p></li>
+</ul>
+<p>Cloud SQL and Spanner are relational databases, while Bigtable and Firestore are NoSQL databases.</p>
+</section>
+<section id="analytics" class="level4">
+<h4 class="anchored" data-anchor-id="analytics">Analytics</h4>
+<p>The major analytics tool is BigQuery, a fully managed data warehouse that can be used to analyze data through SQL commands.</p>
+<ul>
+<li><strong>BigQuery</strong></li>
+</ul>
+<p>In addition to BigQuery, you can analyze data and visualize results using Looker and Looker Studio.</p>
+<ul>
+<li><p><strong>Looker</strong></p></li>
+<li><p><strong>Looker Studio</strong></p></li>
+</ul>
+<p>You will explore BigQuery, Looker, and Looker Studio in this course.</p>
+</section>
+<section id="machine-learning" class="level4">
+<h4 class="anchored" data-anchor-id="machine-learning">Machine Learning</h4>
+<p>ML products include both the ML development platform and the AI solutions.</p>
+<section id="ml-development-platform" class="level5">
+<h5 class="anchored" data-anchor-id="ml-development-platform">ML Development Platform</h5>
+<p>The primary product of the ML development platform is Vertex AI, which includes:</p>
+<ul>
+<li><p><strong>AutoML</strong></p></li>
+<li><p><strong>Vertex AI Workbench</strong></p></li>
+<li><p><strong>TensorFlow</strong></p></li>
+</ul>
+</section>
+<section id="ai-solutions" class="level5">
+<h5 class="anchored" data-anchor-id="ai-solutions">AI Solutions</h5>
+<p>Built on the ML development platform, these include state-of-the-art products to meet both horizontal and vertical market needs. These include:</p>
+<ul>
+<li><p><strong>Document AI</strong></p></li>
+<li><p><strong>Contact Center AI</strong></p></li>
+<li><p><strong>Retail Product Discovery</strong></p></li>
+<li><p><strong>Healthcare Data Engine</strong></p></li>
+</ul>
+<p>These products unlock insights that only large amounts of data can provide.</p>
+</section>
+</section>
+</section>
+<section id="conclusion" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
+<p>We’ll explore the machine learning options and workflow together with these products in greater detail later.</p>
+</section>
+</section>
+<section id="leveraging-google-cloud-the-gojek-case-study" class="level2">
+<h2 class="anchored" data-anchor-id="leveraging-google-cloud-the-gojek-case-study">Leveraging Google Cloud: The Gojek Case Study</h2>
+<section id="overview" class="level3">
+<h3 class="anchored" data-anchor-id="overview">Overview</h3>
+<p>With many big data and machine learning product options available, it can be helpful to see an example of how an organization has leveraged Google Cloud to meet their goals. In this video, you’ll learn about a company called Gojek and how they were able to find success through Google Cloud’s data engineering and machine learning offerings.</p>
+</section>
+<section id="background" class="level3">
+<h3 class="anchored" data-anchor-id="background">Background</h3>
+<p>The story starts in Jakarta, Indonesia. Traffic congestion is a fact of life for most Indonesian residents. To minimize delays, many rely heavily on motorcycles, including motorcycle taxis, known as Ojeks, to travel to and from work or personal engagements. Founded in 2010 and headquartered in Jakarta, a company called Gojek started as a call center for Ojek bookings. The organization has leveraged demand for the service to become one of the few unicorns in Southeast Asia. A unicorn is a privately held startup business valued at over one billion US dollars.</p>
+</section>
+<section id="gojeks-growth-and-data-collection" class="level3">
+<h3 class="anchored" data-anchor-id="gojeks-growth-and-data-collection">Gojek’s Growth and Data Collection</h3>
+<p>Since its inception, Gojek has collected data to understand customer behavior. In 2015, Gojek launched a mobile application that bundled ride-hailing, food delivery, and grocery shopping. They hit hyper-growth very quickly. According to the Q2, 2021 Gojek fact sheet: - The Gojek app has been downloaded over 190 million times. - They have two million driver-partners and about 900,000 merchant partners.</p>
+</section>
+<section id="technology-and-data-challenges" class="level3">
+<h3 class="anchored" data-anchor-id="technology-and-data-challenges">Technology and Data Challenges</h3>
+<p>The business has relied heavily on the skills and expertise of the technology team and on selecting the right technologies to grow and to expand into new markets. Gojek chose to run its applications and data in Google Cloud. Gojek’s goal is to match the right driver with the right request as quickly as possible.</p>
+<section id="initial-data-handling" class="level4">
+<h4 class="anchored" data-anchor-id="initial-data-handling">Initial Data Handling</h4>
+<p>In the early days of the app, a driver would be pinged every 10 seconds, which meant six million pings per minute, which turned out to be eight billion pings per day across their driver-partners. They generated around five terabytes of data each day. Leveraging information from this data was vital to meeting their company goals. But Gojek faced challenges along the way.</p>
+</section>
+</section>
+<section id="challenges-and-solutions" class="level3">
+<h3 class="anchored" data-anchor-id="challenges-and-solutions">Challenges and Solutions</h3>
+<section id="challenge-1-data-latency" class="level4">
+<h4 class="anchored" data-anchor-id="challenge-1-data-latency">Challenge 1: Data Latency</h4>
+<p>When they wanted to scale their big data platform, they found that most reports were produced one day later, so they couldn’t identify problems immediately.</p>
+<p><strong>Solution:</strong> To help solve this, Gojek migrated their data pipelines to Google Cloud. The team started using Dataflow for Streaming Data Processing and BigQuery for real-time business insights.</p>
+</section>
+<section id="challenge-2-balancing-driver-supply-and-demand" class="level4">
+<h4 class="anchored" data-anchor-id="challenge-2-balancing-driver-supply-and-demand">Challenge 2: Balancing Driver Supply and Demand</h4>
+<p>Another challenge was quickly determining which location had too many or too few drivers to meet demand.</p>
+<p><strong>Solution:</strong> Gojek was able to use Dataflow to build a streaming event data pipeline. This allowed driver locations to ping Pub/Sub every 30 seconds. Dataflow would process the data. The pipeline would aggregate the supply pings from the drivers against the booking requests. This would connect to Gojek’s notification system to alert drivers where they should go. This process required a system that was able to scale up to handle times of high-throughput and then back down again. Dataflow is able to automatically manage the number of workers processing the pipeline to meet demand.</p>
+</section>
+</section>
+<section id="impact-and-benefits" class="level3">
+<h3 class="anchored" data-anchor-id="impact-and-benefits">Impact and Benefits</h3>
+<p>The Gojek team was able to visualize and identify supply and demand issues. They discovered that the areas with the highest discrepancy between supply and demand came from train stations. Often there were far more booking requests than there were available drivers. Since using Google Cloud’s big data and machine learning products, the Gojek team has been able to actively monitor requests to ensure the drivers are in the areas with the highest demand. This brings faster bookings for riders and more work for the drivers.</p>
+</section>
+</section>
+<section id="end-of-section-review-big-data-and-machine-learning-course" class="level2">
+<h2 class="anchored" data-anchor-id="end-of-section-review-big-data-and-machine-learning-course">End of Section Review: Big Data and Machine Learning Course</h2>
+<section id="review-overview" class="level3">
+<h3 class="anchored" data-anchor-id="review-overview">Review Overview</h3>
+<p>This brings us to the end of the first section of the Big Data and Machine Learning course. Before we move forward, let’s review what we’ve covered so far.</p>
+</section>
+<section id="google-cloud-infrastructure-1" class="level3">
+<h3 class="anchored" data-anchor-id="google-cloud-infrastructure-1">Google Cloud Infrastructure</h3>
+<p>You began by exploring the Google Cloud infrastructure through three different layers:</p>
+<ul>
+<li><p><strong>Base Layer: Networking and Security</strong></p>
+<ul>
+<li>This layer forms the foundation to support all of Google’s infrastructure and applications.</li>
+</ul></li>
+<li><p><strong>Next Layer: Compute and Storage</strong></p>
+<ul>
+<li>Google Cloud decouples compute and storage so they can scale independently based on need.</li>
+</ul></li>
+<li><p><strong>Top Layer: Big Data and Machine Learning Products</strong></p></li>
+</ul>
+</section>
+<section id="history-and-categories-of-big-data-and-ml-technologies" class="level3">
+<h3 class="anchored" data-anchor-id="history-and-categories-of-big-data-and-ml-technologies">History and Categories of Big Data and ML Technologies</h3>
+<p>In the next section, you learned about the history of big data and ML technologies. Then, you explored the four major product categories that support the data to AI workflow:</p>
+<ul>
+<li><p><strong>Ingestion and Process</strong></p></li>
+<li><p><strong>Storage</strong></p></li>
+<li><p><strong>Analytics</strong></p></li>
+<li><p><strong>Machine Learning</strong></p></li>
+</ul>
+</section>
+<section id="case-study-gojek" class="level3">
+<h3 class="anchored" data-anchor-id="case-study-gojek">Case Study: Gojek</h3>
+<p>After that, you saw an example of how Gojek, the Indonesian on-demand multi-service platform and digital payment technology group, leveraged Google Cloud big data and ML products to expand their business.</p>
+</section>
+<section id="hands-on-practice-1" class="level3">
+<h3 class="anchored" data-anchor-id="hands-on-practice-1">Hands-On Practice</h3>
+<p>And finally, you got hands-on practice with BigQuery by analyzing a public dataset.</p>
+</section>
+</section>
+</section>
+<section id="module-2" class="level1">
+<h1>Module 2</h1>
+<section id="introduction-to-section-two-data-engineering-for-streaming-data" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-to-section-two-data-engineering-for-streaming-data">Introduction to Section Two: Data Engineering for Streaming Data</h2>
+<section id="overview-1" class="level3">
+<h3 class="anchored" data-anchor-id="overview-1">Overview</h3>
+<p>In the previous section of this course, you learned about the different layers of the Google Cloud infrastructure, including the categories of big data and machine learning products. In this second section, you’ll explore data engineering for streaming data with the goal of building a real-time data solution with Google Cloud products and services.</p>
+</section>
+<section id="goals" class="level3">
+<h3 class="anchored" data-anchor-id="goals">Goals</h3>
+<p>This includes how to:</p>
+<ul>
+<li><p>Ingest streaming data using Pub/Sub</p></li>
+<li><p>Process the data with Dataflow</p></li>
+<li><p>Visualize the results with Looker and Looker Studio</p></li>
+</ul>
+<p>In between data processing with Dataflow and visualization with Looker or Looker Studio, the data is normally saved and analyzed in a data warehouse such as BigQuery. You will learn the details about BigQuery in a later module.</p>
+</section>
+<section id="upcoming-topics" class="level3">
+<h3 class="anchored" data-anchor-id="upcoming-topics">Upcoming Topics</h3>
+<p>Coming up in this section, you’ll start by examining some of the big data challenges faced by today’s data engineers when setting up and managing pipelines. Next, you’ll learn about message-oriented architecture. This includes ways to capture streaming messages globally, reliably, and at scale so they can be fed into a pipeline.</p>
+<p>From there, you’ll see how to design streaming pipelines with Apache Beam, and then implement them with Dataflow. You’ll explore how to visualize data insights on a dashboard with Looker and Looker Studio. And finally, you’ll get hands-on practice building an end-to-end data pipeline that handles real-time data ingestion with Pub/Sub, processing with Dataflow, and visualization with Looker Studio.</p>
+</section>
+<section id="explanation-of-streaming-data" class="level3">
+<h3 class="anchored" data-anchor-id="explanation-of-streaming-data">Explanation of Streaming Data</h3>
+<p>Before we get too far, let’s take a moment to explain what streaming data is, how it differs from batch processing, and why it’s important.</p>
+<p><strong>Batch Processing</strong> - Batch processing is when the processing and analysis happen on a set of stored data. - Example: Payroll and billing systems that have to be processed on either a weekly or monthly basis.</p>
+<p><strong>Streaming Data</strong> - Streaming data is a flow of data records generated by various data sources. - The processing of streaming data happens as the data flows through a system. - This results in the analysis and reporting of events as they happen. - Example: Fraud detection or intrusion detection.</p>
+<p>Streaming data processing means that the data is analyzed in near real-time and that actions will be taken on the data as quickly as possible. Modern data processing has progressed from legacy batch processing of data toward working with real-time data streams.</p>
+<p><strong>Example</strong> - Streaming music and movies: No longer is it necessary to download an entire movie or album to a local device.</p>
+<p>Data streams are a key part in the world of big data.</p>
+</section>
+</section>
+<section id="challenges-in-building-scalable-and-reliable-data-pipelines" class="level2">
+<h2 class="anchored" data-anchor-id="challenges-in-building-scalable-and-reliable-data-pipelines">Challenges in Building Scalable and Reliable Data Pipelines</h2>
+<section id="introduction-4" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-4">Introduction</h3>
+<p>Building scalable and reliable pipelines is a core responsibility of data engineers. However, in modern organizations, data engineers and data scientists are facing four major challenges, collectively known as the 4Vs. They are variety, volume, velocity, and veracity.</p>
+</section>
+<section id="the-4vs-of-data-engineering" class="level3">
+<h3 class="anchored" data-anchor-id="the-4vs-of-data-engineering">The 4Vs of Data Engineering</h3>
+<p><strong>Variety</strong> - Data could come in from a variety of different sources and in various formats. - Example: Hundreds of thousands of sensors for self-driving cars on roads around the world. The data is returned in various formats, such as number, image, or even audio. - Example: Points of sale data from 1,000 different stores. How do we alert our downstream systems of new transactions in an organized way with no duplicates?</p>
+<p><strong>Volume</strong> - Handle an arbitrary variety of input sources and a volume of data that varies from gigabytes to petabytes. - Challenge: Ensuring pipeline code and infrastructure can scale with changes in data volume without grinding to a halt or crashing.</p>
+<p><strong>Velocity</strong> - Data often needs to be processed in near real-time as soon as it reaches the system. - Challenges: Handling data that arrives late, has bad data in the message, or needs to be transformed mid-flight because it’s streamed into a data warehouse.</p>
+<p><strong>Veracity</strong> - Refers to the data quality. - Because big data involves a multitude of data dimensions resulting from different data types and sources, there’s a possibility that gathered data will come with some inconsistencies and uncertainties. - Challenge: Ensuring data consistency and reliability.</p>
+</section>
+<section id="conclusion-1" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion-1">Conclusion</h3>
+<p>Challenges like these are common considerations for pipeline developers. By the end of this section, the goal is for you to better understand the tools available to help successfully build a streaming data pipeline and avoid these challenges.</p>
+</section>
+</section>
+<section id="data-ingestion-in-data-pipelines" class="level2">
+<h2 class="anchored" data-anchor-id="data-ingestion-in-data-pipelines">Data Ingestion in Data Pipelines</h2>
+<section id="introduction-5" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-5">Introduction</h3>
+<p>One of the early stages in a data pipeline is data ingestion, which is where large amounts of streaming data are received. Data may not always come from a single, structured database. Instead, the data might stream from a thousand, or even a million, different events that are all happening asynchronously. A common example of this is data from IoT (Internet of Things) applications. These can include sensors on taxis that send out location data every 30 seconds or temperature sensors around a data center to help optimize heating and cooling.</p>
+</section>
+<section id="challenges-in-data-ingestion" class="level3">
+<h3 class="anchored" data-anchor-id="challenges-in-data-ingestion">Challenges in Data Ingestion</h3>
+<p>These IoT devices present new challenges to data ingestion, which can be summarized in four points:</p>
+<ul>
+<li><p><strong>Data Variety and Quality</strong></p>
+<ul>
+<li>Data can be streamed from many different methods and devices, many of which might not talk to each other and might be sending bad or delayed data.</li>
+</ul></li>
+<li><p><strong>Distributing Event Messages</strong></p>
+<ul>
+<li>It can be hard to distribute event messages to the right subscribers. Event messages are notifications, and a method is needed to collect the streaming messages that come from IoT sensors and broadcast them to the subscribers as needed.</li>
+</ul></li>
+<li><p><strong>High Volume and Velocity</strong></p>
+<ul>
+<li>Data can arrive quickly and at high volumes. Services must be able to support this.</li>
+</ul></li>
+<li><p><strong>Reliability and Security</strong></p>
+<ul>
+<li>Ensuring services are reliable, secure, and perform as expected.</li>
+</ul></li>
+</ul>
+</section>
+<section id="google-cloud-pubsub" class="level3">
+<h3 class="anchored" data-anchor-id="google-cloud-pubsub">Google Cloud Pub/Sub</h3>
+<p>Google Cloud has a tool to handle distributed message-oriented architectures at scale, and that is Pub/Sub. The name is short for Publisher/Subscriber, or publish messages to subscribers. Pub/Sub is a distributed messaging service that can receive messages from a variety of device streams such as gaming events, IoT devices, and application streams. It ensures at-least-once delivery of received messages to subscribing applications, with no provisioning required. Pub/Sub’s APIs are open, the service is global by default, and it offers end-to-end encryption.</p>
+</section>
+<section id="pubsub-architecture" class="level3">
+<h3 class="anchored" data-anchor-id="pubsub-architecture">Pub/Sub Architecture</h3>
+<p>Let’s explore the end-to-end architecture using Pub/Sub.</p>
+<ul>
+<li><p><strong>Data Ingestion</strong></p>
+<ul>
+<li>Upstream source data comes in from devices all over the globe and is ingested into Pub/Sub, which is the first point of contact within the system.</li>
+</ul></li>
+<li><p><strong>Data Broadcasting</strong></p>
+<ul>
+<li>Pub/Sub reads, stores, broadcasts to any subscribers of this data topic that new messages are available.</li>
+</ul></li>
+<li><p><strong>Data Processing</strong></p>
+<ul>
+<li>As a subscriber of Pub/Sub, Dataflow can ingest and transform those messages in an elastic streaming pipeline and output the results into an analytics data warehouse like BigQuery.</li>
+</ul></li>
+<li><p><strong>Data Visualization and Analysis</strong></p>
+<ul>
+<li>Finally, you can connect a data visualization tool, like Looker, to visualize and monitor the results of a pipeline, or an AI or ML tool such as Vertex AI to explore the data to uncover business insights or help with predictions.</li>
+</ul></li>
+</ul>
+</section>
+<section id="understanding-pubsub-topics" class="level3">
+<h3 class="anchored" data-anchor-id="understanding-pubsub-topics">Understanding Pub/Sub Topics</h3>
+<p>A central element of Pub/Sub is the topic. You can think of a topic like a radio antenna. Whether your radio is playing music or it’s turned off, the antenna itself is always there. If music is being broadcast on a frequency that nobody’s listening to, the stream of music still exists. Similarly, a publisher can send data to a topic that has no subscriber to receive it. Or a subscriber can be waiting for data from a topic that isn’t getting data sent to it, like listening to static from a bad radio frequency. Or you could have a fully operational pipeline where the publisher is sending data to a topic that an application is subscribed to. That means there can be zero, one, or more publishers, and zero, one or more subscribers related to a topic. And they’re completely decoupled, so they’re free to break without affecting their counterparts.</p>
+</section>
+<section id="example-human-resources-topic" class="level3">
+<h3 class="anchored" data-anchor-id="example-human-resources-topic">Example: Human Resources Topic</h3>
+<p>It’s helpful to describe this using an example. Say you’ve got a human resources topic. A new employee joins your company, and several applications across the company need to be updated. Adding a new employee can be an event that generates a notification to the other applications that are subscribed to the topic, and they’ll receive the message about the new employee starting.</p>
+<p>Now, let’s assume that there are two different types of employees: a full-time employee and a contractor. Both sources of employee data could have no knowledge of the other but still publish their events saying “this employee joined” into the Pub/Sub HR topic. After Pub/Sub receives the message, downstream applications like the directory service, facilities system, account provisioning, and badge activation systems can all listen and process their own next steps independent of one another.</p>
+</section>
+<section id="pubsub-benefits" class="level3">
+<h3 class="anchored" data-anchor-id="pubsub-benefits">Pub/Sub Benefits</h3>
+<p>Pub/Sub is a good solution to buffer changes for lightly coupled architectures, like this one, that have many different publishers and subscribers. Pub/Sub supports many different inputs and outputs, and you can even publish a Pub/Sub event from one topic to another. The next task is to get these messages reliably into our data warehouse, and we’ll need a pipeline that can match Pub/Sub’s scale and elasticity to do it.</p>
+</section>
+</section>
+<section id="data-processing-with-dataflow-and-apache-beam" class="level2">
+<h2 class="anchored" data-anchor-id="data-processing-with-dataflow-and-apache-beam">Data Processing with Dataflow and Apache Beam</h2>
+<section id="introduction-6" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-6">Introduction</h3>
+<p>After messages have been captured from the streaming input sources, you need a way to pipe that data into a data warehouse for analysis. This is where Dataflow comes in. Dataflow creates a pipeline to process both streaming data and batch data. “Process” in this case refers to the steps to extract, transform, and load data, or ETL.</p>
+</section>
+<section id="challenges-in-building-data-pipelines" class="level3">
+<h3 class="anchored" data-anchor-id="challenges-in-building-data-pipelines">Challenges in Building Data Pipelines</h3>
+<p>When building a data pipeline, data engineers often encounter challenges related to coding the pipeline design and implementing and serving the pipeline at scale. During the pipeline design phase, there are a few questions to consider:</p>
+<ul>
+<li><p>Will the pipeline code be compatible with both batch and streaming data, or will it need to be refactored?</p></li>
+<li><p>Will the pipeline code software development kit (SDK) being used have all the transformations, mid-flight aggregations, and windowing, and be able to handle late data?</p></li>
+<li><p>Are there existing templates or solutions that should be referenced?</p></li>
+</ul>
+</section>
+<section id="apache-beam" class="level3">
+<h3 class="anchored" data-anchor-id="apache-beam">Apache Beam</h3>
+<p>A popular solution for pipeline design is Apache Beam. It’s an open source, unified programming model to define and execute data processing pipelines, including ETL, batch, and stream processing.</p>
+<ul>
+<li><p><strong>Unified Model</strong></p>
+<ul>
+<li>Apache Beam uses a single programming model for both batch and streaming data.</li>
+</ul></li>
+<li><p><strong>Portability</strong></p>
+<ul>
+<li>It can work on multiple execution environments, like Dataflow and Apache Spark, among others.</li>
+</ul></li>
+<li><p><strong>Extensibility</strong></p>
+<ul>
+<li>It allows you to write and share your own connectors and transformation libraries.</li>
+</ul></li>
+</ul>
+</section>
+<section id="apache-beam-features" class="level3">
+<h3 class="anchored" data-anchor-id="apache-beam-features">Apache Beam Features</h3>
+<p>Apache Beam provides pipeline templates, so you don’t need to build a pipeline from scratch. It supports writing pipelines in Java, Python, or Go.</p>
+<ul>
+<li><p><strong>SDK</strong></p>
+<ul>
+<li>The Apache Beam software development kit (SDK) is a collection of software development tools in one installable package. It provides a variety of libraries for transformations and data connectors to sources and sinks.</li>
+</ul></li>
+<li><p><strong>Model Representation</strong></p>
+<ul>
+<li>Apache Beam creates a model representation from your code that is portable across many runners. Runners pass off your model for execution on a variety of different possible engines, with Dataflow being a popular choice.</li>
+</ul></li>
+</ul>
+</section>
+<section id="dataflow-and-apache-beam-integration" class="level3">
+<h3 class="anchored" data-anchor-id="dataflow-and-apache-beam-integration">Dataflow and Apache Beam Integration</h3>
+<p>Dataflow and Apache Beam work together to facilitate data processing:</p>
+<ul>
+<li><p><strong>Data Ingestion</strong></p>
+<ul>
+<li>Messages captured from streaming input sources are piped into a data warehouse for analysis.</li>
+</ul></li>
+<li><p><strong>ETL Process</strong></p>
+<ul>
+<li>Dataflow processes both streaming and batch data, executing the extract, transform, and load steps.</li>
+</ul></li>
+<li><p><strong>Execution Environment</strong></p>
+<ul>
+<li>Apache Beam’s portability allows the same pipeline code to run on different execution engines, ensuring compatibility and flexibility.</li>
+</ul></li>
+</ul>
+</section>
+<section id="conclusion-2" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion-2">Conclusion</h3>
+<p>By using Apache Beam in conjunction with Dataflow, data engineers can design and implement scalable, reliable data pipelines that handle both batch and streaming data efficiently. This setup allows for seamless data ingestion, processing, and analysis, leveraging the powerful tools provided by Google Cloud.</p>
+</section>
+</section>
+<section id="executing-data-pipelines-with-dataflow" class="level2">
+<h2 class="anchored" data-anchor-id="executing-data-pipelines-with-dataflow">Executing Data Pipelines with Dataflow</h2>
+<section id="introduction-7" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-7">Introduction</h3>
+<p>As covered in the previous video, Apache Beam can be used to create data processing pipelines. The next step is to identify an execution engine to implement those pipelines. When choosing an execution engine for your pipeline code, it might be helpful to consider the following questions:</p>
+<ul>
+<li>How much maintenance overhead is involved?</li>
+<li>Is the infrastructure reliable?</li>
+<li>How is the pipeline scaling handled?</li>
+<li>How can the pipeline be monitored?</li>
+<li>Is the pipeline locked in to a specific service provider?</li>
+</ul>
+</section>
+<section id="dataflow-overview" class="level3">
+<h3 class="anchored" data-anchor-id="dataflow-overview">Dataflow Overview</h3>
+<p>This brings us to Dataflow. Dataflow is a fully managed service for executing Apache Beam pipelines within the Google Cloud ecosystem. Dataflow handles much of the complexity relating to infrastructure setup and maintenance and is built on Google’s infrastructure. This allows for reliable auto scaling to meet data pipeline demands.</p>
+</section>
+<section id="noops-and-serverless-computing" class="level3">
+<h3 class="anchored" data-anchor-id="noops-and-serverless-computing">NoOps and Serverless Computing</h3>
+<p>Dataflow is serverless and NoOps, which means No Operations. But what does that mean exactly? A NoOps environment is one that doesn’t require management from an operations team, because maintenance, monitoring, and scaling are automated. Serverless computing is a cloud computing execution model. This is when Google Cloud, for example, manages infrastructure tasks on behalf of the users. This includes tasks like resource provisioning, performance tuning, and ensuring pipeline reliability. Dataflow means that you can spend more time analyzing the insights from your datasets and less time provisioning resources to ensure that your pipeline will successfully complete its next cycles. It’s designed to be low maintenance.</p>
+</section>
+<section id="dataflow-task-execution" class="level3">
+<h3 class="anchored" data-anchor-id="dataflow-task-execution">Dataflow Task Execution</h3>
+<p>Let’s explore the tasks Dataflow performs when a job is received:</p>
+<ul>
+<li><strong>Optimize Execution Graph</strong>
+<ul>
+<li>It starts by optimizing a pipeline model’s execution graph to remove any inefficiencies.</li>
+</ul></li>
+<li><strong>Schedule Distributed Work</strong>
+<ul>
+<li>It schedules out distributed work to new workers and scales as needed.</li>
+</ul></li>
+<li><strong>Auto-Heal Worker Faults</strong>
+<ul>
+<li>It auto-heals any worker faults.</li>
+</ul></li>
+<li><strong>Rebalance Efforts</strong>
+<ul>
+<li>It automatically rebalances efforts to most efficiently use its workers.</li>
+</ul></li>
+<li><strong>Output Data</strong>
+<ul>
+<li>Finally, it outputs data to produce a result. BigQuery is one of many options that data can be outputted to.</li>
+</ul></li>
+</ul>
+</section>
+<section id="benefits-of-dataflow" class="level3">
+<h3 class="anchored" data-anchor-id="benefits-of-dataflow">Benefits of Dataflow</h3>
+<p>By design, you don’t need to monitor all of the compute and storage resources that Dataflow manages, to fit the demand of a streaming data pipeline. Even experienced Java or Python developers will benefit from using Dataflow templates, which cover common use cases across Google Cloud products. The list of templates is continuously growing.</p>
+</section>
+<section id="dataflow-templates" class="level3">
+<h3 class="anchored" data-anchor-id="dataflow-templates">Dataflow Templates</h3>
+<p>Dataflow templates can be broken down into three categories:</p>
+<ul>
+<li><strong>Streaming Templates</strong>
+<ul>
+<li>For processing continuous, or real-time, data. For example:
+<ul>
+<li>Pub/Sub to BigQuery</li>
+<li>Pub/Sub to Cloud Storage</li>
+<li>Datastream to BigQuery</li>
+<li>Pub/Sub to MongoDB</li>
+</ul></li>
+</ul></li>
+<li><strong>Batch Templates</strong>
+<ul>
+<li>For processing bulk data, or batch load data. For example:
+<ul>
+<li>BigQuery to Cloud Storage</li>
+<li>Bigtable to Cloud Storage</li>
+<li>Cloud Storage to BigQuery</li>
+<li>Cloud Spanner to Cloud Storage</li>
+</ul></li>
+</ul></li>
+<li><strong>Utility Templates</strong>
+<ul>
+<li>Address activities related to bulk compression, deletion, and conversion.</li>
+</ul></li>
+</ul>
+<p>For a complete list of templates, please refer to the reading list.</p>
+</section>
+</section>
+<section id="visualizing-data-with-looker-and-looker-studio" class="level2">
+<h2 class="anchored" data-anchor-id="visualizing-data-with-looker-and-looker-studio">Visualizing Data with Looker and Looker Studio</h2>
+<section id="importance-of-data-visualization" class="level3">
+<h3 class="anchored" data-anchor-id="importance-of-data-visualization">Importance of Data Visualization</h3>
+<p>Telling a good story with data through a dashboard can be critical to the success of a data pipeline because data that is difficult to interpret or draw insights from might be useless. After data is in BigQuery, a lot of skill and effort can still be required to uncover insights. To help create an environment where stakeholders can easily interact with and visualize data, Google Cloud offers two solutions: Looker and Looker Studio.</p>
+</section>
+<section id="looker" class="level3">
+<h3 class="anchored" data-anchor-id="looker">Looker</h3>
+<p>Let’s explore Looker first. Looker supports BigQuery, as well as more than 60 different SQL databases. It allows developers to define a semantic modeling layer on top of databases using Looker Modeling Language (LookML). LookML defines logic and permissions independent from a specific database or a SQL language, which frees a data engineer from interacting with individual databases to focus more on business logic across an organization.</p>
+<ul>
+<li><strong>Web-Based Platform</strong>
+<ul>
+<li>The Looker platform is 100% web-based, making it easy to integrate into existing workflows and share with multiple teams at an organization.</li>
+</ul></li>
+<li><strong>Looker API</strong>
+<ul>
+<li>Looker has an API that can be used to embed Looker reports in other applications.</li>
+</ul></li>
+</ul>
+</section>
+<section id="looker-features" class="level3">
+<h3 class="anchored" data-anchor-id="looker-features">Looker Features</h3>
+<p>Let’s explore some of Looker’s features, starting with dashboards.</p>
+<ul>
+<li><strong>Dashboards</strong>
+<ul>
+<li>Dashboards, like the Business Pulse dashboard, can visualize data in a way that makes insights easy to understand. For example, a sales organization can see figures like the number of new users acquired, monthly sales trends, and year-to-date orders.</li>
+<li>Information like this can help align teams, identify customer frustrations, and uncover lost revenue.</li>
+</ul></li>
+<li><strong>Visualization Options</strong>
+<ul>
+<li>Looker has multiple data visualization options, including area charts, line charts, Sankey diagrams, funnels, and liquid fill gauges.</li>
+</ul></li>
+<li><strong>Dashboard Sharing</strong>
+<ul>
+<li>To share a dashboard with your team, you can schedule delivery through storage services like Google Drive, Slack, or Dropbox.</li>
+</ul></li>
+</ul>
+</section>
+<section id="example-nyc-taxi-metrics-dashboard" class="level3">
+<h3 class="anchored" data-anchor-id="example-nyc-taxi-metrics-dashboard">Example: NYC Taxi Metrics Dashboard</h3>
+<p>Let’s explore another Looker dashboard that monitors key metrics related to New York City taxis over a period of time. This dashboard displays:</p>
+<ul>
+<li>Total revenue</li>
+<li>Total number of passengers</li>
+<li>Total number of rides</li>
+</ul>
+<p>Looker displays this information through a time series to help monitor metrics over time. Looker also lets you plot data on a map to see ride distribution, busy areas, and peak hours. The purpose of these features is to help you draw insights to make business decisions.</p>
+<p>For more training on Looker, please refer to <a href="https://cloud.google.com/training">Google Cloud Training</a>.</p>
+</section>
+<section id="looker-studio" class="level3">
+<h3 class="anchored" data-anchor-id="looker-studio">Looker Studio</h3>
+<p>Now let’s move on to Looker Studio.</p>
+<p>Looker Studio, previously known as Data Studio, offers similar data visualization and reporting capabilities but is more user-friendly for those who may not have a technical background.</p>
+<ul>
+<li><strong>User-Friendly Interface</strong>
+<ul>
+<li>Looker Studio has a drag-and-drop interface, making it accessible for users without extensive coding knowledge.</li>
+</ul></li>
+<li><strong>Real-Time Collaboration</strong>
+<ul>
+<li>It supports real-time collaboration, allowing multiple team members to work on the same report simultaneously.</li>
+</ul></li>
+<li><strong>Customization and Templates</strong>
+<ul>
+<li>Looker Studio offers customizable templates to quickly create reports tailored to specific needs.</li>
+</ul></li>
+</ul>
+</section>
+<section id="conclusion-3" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion-3">Conclusion</h3>
+<p>Both Looker and Looker Studio provide powerful tools for visualizing data, making it easier to draw insights and make informed business decisions. Whether you need the advanced features of Looker or the user-friendly interface of Looker Studio, Google Cloud has a solution to fit your data visualization needs.</p>
+</section>
+</section>
+<section id="visualizing-data-with-looker-studio" class="level2">
+<h2 class="anchored" data-anchor-id="visualizing-data-with-looker-studio">Visualizing Data with Looker Studio</h2>
+<section id="introduction-to-looker-studio" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-to-looker-studio">Introduction to Looker Studio</h3>
+<p>Another popular data visualization tool offered by Google is Looker Studio. Looker Studio is integrated into BigQuery, which makes data visualization possible with just a few clicks. This means that leveraging Looker Studio doesn’t require support from an administrator to establish a data connection, which is a requirement with Looker.</p>
+</section>
+<section id="looker-studio-integrations" class="level3">
+<h3 class="anchored" data-anchor-id="looker-studio-integrations">Looker Studio Integrations</h3>
+<p>Looker Studio dashboards are widely used across many Google products and applications.</p>
+<ul>
+<li><strong>Google Analytics Integration</strong>
+<ul>
+<li>Looker Studio is integrated into Google Analytics to help visualize, in this case, a summary of a marketing website.</li>
+<li>Example: This dashboard visualizes the total number of visitors through a map, compares month-over-month trends, and even displays visitor distribution by age.</li>
+</ul></li>
+<li><strong>Google Cloud Billing Dashboard</strong>
+<ul>
+<li>Another Looker Studio integration is the Google Cloud billing dashboard. You might be familiar with this from your account, and maybe you’ve already used it to monitor spending.</li>
+</ul></li>
+</ul>
+</section>
+<section id="creating-a-looker-studio-dashboard" class="level3">
+<h3 class="anchored" data-anchor-id="creating-a-looker-studio-dashboard">Creating a Looker Studio Dashboard</h3>
+<p>You’ll soon have hands-on practice with Looker Studio, but in preparation for the lab, let’s explore the three steps needed to create a Looker Studio dashboard:</p>
+<ul>
+<li><strong>Step 1: Choose a Template</strong>
+<ul>
+<li>You can start with either a pre-built template or a blank report.</li>
+</ul></li>
+<li><strong>Step 2: Link the Dashboard to a Data Source</strong>
+<ul>
+<li>This might come from BigQuery, a local file, or a Google application like Google Sheets or Google Analytics–or a combination of any of these sources.</li>
+</ul></li>
+<li><strong>Step 3: Explore Your Dashboard</strong>
+<ul>
+<li>Once linked, you can start exploring and customizing your dashboard to fit your needs.</li>
+</ul></li>
+</ul>
+</section>
+<section id="benefits-of-looker-studio" class="level3">
+<h3 class="anchored" data-anchor-id="benefits-of-looker-studio">Benefits of Looker Studio</h3>
+<ul>
+<li><strong>Ease of Use</strong>
+<ul>
+<li>Looker Studio is user-friendly and does not require extensive technical skills to set up and use.</li>
+</ul></li>
+<li><strong>Integration with BigQuery</strong>
+<ul>
+<li>Direct integration with BigQuery simplifies the data visualization process, enabling quick and easy creation of dashboards.</li>
+</ul></li>
+<li><strong>Wide Application</strong>
+<ul>
+<li>Useful across various Google products, making it versatile for different data visualization needs.</li>
+</ul></li>
+</ul>
+</section>
+<section id="conclusion-4" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion-4">Conclusion</h3>
+<p>Looker Studio offers an accessible and powerful tool for creating data visualizations, allowing users to gain insights quickly and effectively. Whether for marketing analytics or monitoring cloud billing, Looker Studio helps transform raw data into meaningful visual representations.</p>
+</section>
+</section>
+</section>
+<section id="module-3" class="level1">
+<h1>Module 3</h1>
+<section id="introduction-to-bigquery" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-to-bigquery">Introduction to BigQuery</h2>
+<section id="overview-2" class="level3">
+<h3 class="anchored" data-anchor-id="overview-2">Overview</h3>
+<p>In the previous section of this course, you explored Dataflow and Pub/Sub, Google Cloud’s solutions to processing streaming data. Now let’s focus your attention on BigQuery. You’ll begin by exploring BigQuery’s two main services, storage and analytics, and then get a demonstration of the BigQuery user interface. After that, you’ll see how BigQuery ML provides a data-to-AI lifecycle all within one place. You’ll also learn about BigQuery ML project phases, as well as key commands. Finally, you’ll get hands-on practice using BigQuery ML to build a custom ML model. Let’s get started.</p>
+</section>
+<section id="what-is-bigquery" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-bigquery">What is BigQuery?</h3>
+<p>BigQuery is a fully managed data warehouse. A data warehouse is a large store containing terabytes and petabytes of data gathered from a wide range of sources within an organization, used to guide management decisions.</p>
+</section>
+<section id="data-warehouse-vs.-data-lake" class="level3">
+<h3 class="anchored" data-anchor-id="data-warehouse-vs.-data-lake">Data Warehouse vs.&nbsp;Data Lake</h3>
+<ul>
+<li><strong>Data Lake</strong>
+<ul>
+<li>A pool of raw, unorganized, and unclassified data with no specified purpose.</li>
+</ul></li>
+<li><strong>Data Warehouse</strong>
+<ul>
+<li>Contains structured and organized data, which can be used for advanced querying.</li>
+</ul></li>
+</ul>
+</section>
+<section id="fully-managed-service" class="level3">
+<h3 class="anchored" data-anchor-id="fully-managed-service">Fully Managed Service</h3>
+<p>Being fully managed means that BigQuery takes care of the underlying infrastructure, so you can focus on using SQL queries to answer business questions without worrying about deployment, scalability, and security.</p>
+</section>
+<section id="key-features-of-bigquery" class="level3">
+<h3 class="anchored" data-anchor-id="key-features-of-bigquery">Key Features of BigQuery</h3>
+<p>BigQuery provides two services in one: storage plus analytics.</p>
+<ul>
+<li><strong>Storage</strong>
+<ul>
+<li>Store petabytes of data. For reference, 1 petabyte is equivalent to 11,000 movies at 4k quality.</li>
+</ul></li>
+<li><strong>Analytics</strong>
+<ul>
+<li>Built-in features like machine learning, geospatial analysis, and business intelligence.</li>
+</ul></li>
+<li><strong>Serverless Solution</strong>
+<ul>
+<li>No need to provision resources or manage servers; focus on using SQL queries to answer questions.</li>
+</ul></li>
+<li><strong>Flexible Pricing</strong>
+<ul>
+<li>Pay-as-you-go pricing model: pay for the number of bytes of data your query processes and for any permanent table storage.</li>
+<li>Flat-rate pricing option: reserved amount of resources for use with a fixed monthly bill.</li>
+</ul></li>
+<li><strong>Data Encryption</strong>
+<ul>
+<li>Data in BigQuery is encrypted at rest by default, protecting data stored on disk or backup media.</li>
+</ul></li>
+<li><strong>Machine Learning Integration</strong>
+<ul>
+<li>Write ML models directly in BigQuery using SQL.</li>
+<li>Seamless integration with Vertex AI for training ML models.</li>
+</ul></li>
+</ul>
+</section>
+<section id="bigquery-architecture" class="level3">
+<h3 class="anchored" data-anchor-id="bigquery-architecture">BigQuery Architecture</h3>
+<p>BigQuery fits into the overall data pipeline architecture as follows:</p>
+<ul>
+<li><strong>Input Data</strong>
+<ul>
+<li>Can be real-time or batch data.</li>
+</ul></li>
+<li><strong>Data Ingestion</strong>
+<ul>
+<li><strong>Streaming Data</strong>: Use Pub/Sub to digest structured or unstructured, high-speed, large-volume data.</li>
+<li><strong>Batch Data</strong>: Upload directly to Cloud Storage.</li>
+</ul></li>
+<li><strong>Data Processing</strong>
+<ul>
+<li>Both pipelines lead to Dataflow to process the data. This involves ETL (extract, transform, load) operations if needed.</li>
+</ul></li>
+<li><strong>BigQuery Storage and Analytics</strong>
+<ul>
+<li>BigQuery sits in the middle, linking data processes using Dataflow and data access through analytics, AI, and ML tools.</li>
+<li>Ingests all processed data after ETL, stores, and analyzes it, and outputs it for further use.</li>
+</ul></li>
+</ul>
+</section>
+<section id="bigquery-outputs" class="level3">
+<h3 class="anchored" data-anchor-id="bigquery-outputs">BigQuery Outputs</h3>
+<p>BigQuery outputs usually feed into two buckets:</p>
+<ul>
+<li><strong>Business Intelligence Tools</strong>
+<ul>
+<li>Business analysts and data analysts can connect to visualization tools like Looker, Looker Studio, Tableau, or other BI tools.</li>
+<li>Query BigQuery datasets directly from Google Sheets, performing operations like pivot tables.</li>
+</ul></li>
+<li><strong>AI/ML Tools</strong>
+<ul>
+<li>Data scientists and machine learning engineers can call data from BigQuery through AutoML or Workbench.</li>
+<li>Part of Vertex AI, Google’s unified ML platform.</li>
+</ul></li>
+</ul>
+</section>
+<section id="conclusion-5" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion-5">Conclusion</h3>
+<p>BigQuery acts as a common staging area for data analytics workloads. When your data is there, business analysts, BI developers, data scientists, and machine learning engineers can access the data for their insights, making BigQuery a crucial component in the data-to-AI lifecycle.</p>
+</section>
+</section>
+<section id="bigquery-storage-and-analytics-services" class="level2">
+<h2 class="anchored" data-anchor-id="bigquery-storage-and-analytics-services">BigQuery: Storage and Analytics Services</h2>
+<section id="introduction-8" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-8">Introduction</h3>
+<p>BigQuery provides two services in one. It’s both a fully-managed storage facility to load and store datasets and also a fast SQL-based analytical engine. The two services are connected by Google’s high-speed internal network. It’s the super-fast network that allows BigQuery to scale both storage and compute independently based on demand.</p>
+</section>
+<section id="bigquery-storage-management" class="level3">
+<h3 class="anchored" data-anchor-id="bigquery-storage-management">BigQuery Storage Management</h3>
+<p>BigQuery manages the storage and metadata for datasets efficiently.</p>
+<ul>
+<li><strong>Data Ingestion Sources</strong>
+<ul>
+<li>Internal data: Data saved directly in BigQuery.</li>
+<li>External data: Data stored in other Google Cloud storage services (e.g., Cloud Storage, Spanner, Cloud SQL).</li>
+<li>Multi-Cloud data: Data stored in multiple Cloud services (e.g., AWS, Azure).</li>
+<li>Public datasets: Available in the public dataset marketplace.</li>
+</ul></li>
+<li><strong>Data Management</strong>
+<ul>
+<li>After the data is stored in BigQuery, it’s fully managed, automatically replicated, backed up, and set to auto-scale.</li>
+<li>BigQuery offers the option to query external data sources, bypassing BigQuery managed storage.</li>
+</ul></li>
+</ul>
+</section>
+<section id="data-loading-patterns" class="level3">
+<h3 class="anchored" data-anchor-id="data-loading-patterns">Data Loading Patterns</h3>
+<p>There are three basic patterns to load data into BigQuery:</p>
+<ul>
+<li><strong>Batch Load</strong>
+<ul>
+<li>Source data is loaded into a BigQuery table in a single batch operation.</li>
+<li>Can be a one-time operation or automated on a schedule.</li>
+<li>Batch load can create a new table or append data to an existing table.</li>
+</ul></li>
+<li><strong>Streaming</strong>
+<ul>
+<li>Smaller batches of data are streamed continuously for near real-time querying.</li>
+</ul></li>
+<li><strong>Generated Data</strong>
+<ul>
+<li>SQL statements are used to insert rows into an existing table or to write the results of a query to a table.</li>
+</ul></li>
+</ul>
+</section>
+<section id="analytics-features-in-bigquery" class="level3">
+<h3 class="anchored" data-anchor-id="analytics-features-in-bigquery">Analytics Features in BigQuery</h3>
+<p>The purpose of BigQuery is not just to save data but to analyze it and help make business decisions.</p>
+<ul>
+<li><strong>Performance</strong>
+<ul>
+<li>BigQuery is optimized for running analytical queries over large datasets.</li>
+<li>It can perform queries on terabytes of data in seconds and petabytes in minutes.</li>
+</ul></li>
+<li><strong>Ad Hoc Analysis</strong>
+<ul>
+<li>Supports ad hoc analysis using standard SQL, the BigQuery SQL dialect.</li>
+</ul></li>
+<li><strong>Geospatial Analytics</strong>
+<ul>
+<li>Uses geography data types and standard SQL geography functions.</li>
+</ul></li>
+<li><strong>Machine Learning</strong>
+<ul>
+<li>Supports building ML models using BigQuery ML.</li>
+</ul></li>
+<li><strong>Business Intelligence Dashboards</strong>
+<ul>
+<li>Supports building rich interactive dashboards using BigQuery BI Engine.</li>
+</ul></li>
+</ul>
+</section>
+<section id="query-execution" class="level3">
+<h3 class="anchored" data-anchor-id="query-execution">Query Execution</h3>
+<ul>
+<li><strong>Interactive Queries</strong>
+<ul>
+<li>By default, BigQuery runs interactive queries, which are executed as needed.</li>
+</ul></li>
+<li><strong>Batch Queries</strong>
+<ul>
+<li>Queries are queued on your behalf and start when idle resources are available, usually within a few minutes.</li>
+</ul></li>
+</ul>
+</section>
+<section id="conclusion-6" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion-6">Conclusion</h3>
+<p>BigQuery is a powerful tool for storing and analyzing large datasets efficiently. Up next, you’ll see a demonstration in BigQuery. Please note that you might notice a slightly different user interface.</p>
+</section>
+</section>
+<section id="bigquerys-capabilities-for-machine-learning" class="level2">
+<h2 class="anchored" data-anchor-id="bigquerys-capabilities-for-machine-learning">BigQuery’s Capabilities for Machine Learning</h2>
+<section id="introduction-9" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-9">Introduction</h3>
+<p>Although BigQuery started out solely as a data warehouse, over time it has evolved to provide features that support the data to AI lifecycle. In this section of the course, we’ll explore BigQuery’s capabilities for building machine learning models in the ML project phases and walk you through the key ML commands in SQL.</p>
+</section>
+<section id="traditional-ml-workflow-challenges" class="level3">
+<h3 class="anchored" data-anchor-id="traditional-ml-workflow-challenges">Traditional ML Workflow Challenges</h3>
+<p>If you’ve worked with ML models before, you know that building and training them can be very time-intensive. Typically, you must first export data from your data store into an IDE, such as Jupyter Notebook or Google Colab. Then, you transform the data and perform feature engineering steps before feeding it into a training model. Finally, you need to build the model in TensorFlow or a similar library and train it locally on a computer or a virtual machine. To improve the model performance, this process needs to be repeated, often making it very time-consuming.</p>
+</section>
+<section id="simplified-ml-with-bigquery" class="level3">
+<h3 class="anchored" data-anchor-id="simplified-ml-with-bigquery">Simplified ML with BigQuery</h3>
+<p>Now, you can create and execute machine learning models on your structured datasets in BigQuery in just a few minutes using SQL queries.</p>
+<section id="steps-to-build-a-model" class="level4">
+<h4 class="anchored" data-anchor-id="steps-to-build-a-model">Steps to Build a Model</h4>
+<ul>
+<li><strong>Step 1</strong>: Create a model with a SQL statement.</li>
+<li><strong>Step 2</strong>: Write a SQL prediction query and invoke <code>ml.PREDICT</code>.</li>
+</ul>
+<p>With these steps, you now have a model and can view the results. Additional steps might include activities like evaluating the model, but if you know basic SQL, you can implement ML, which is pretty cool.</p>
+</section>
+</section>
+<section id="hyperparameter-tuning" class="level3">
+<h3 class="anchored" data-anchor-id="hyperparameter-tuning">Hyperparameter Tuning</h3>
+<p>BigQuery ML was designed to be simple, like building a model in two steps. That simplicity extends to defining the machine learning hyperparameters, which let you tune the model to achieve the best training result. Hyperparameters are the settings applied to a model before the training starts, like a learning rate. With BigQuery ML, you can either manually control the hyperparameters or start with a default hyperparameter setting and then use automatic tuning.</p>
+</section>
+<section id="choosing-the-right-model-type" class="level3">
+<h3 class="anchored" data-anchor-id="choosing-the-right-model-type">Choosing the Right Model Type</h3>
+<p>When using a structured dataset in BigQuery ML, you need to choose the appropriate model type. This depends on your business goal and the datasets. BigQuery supports both supervised and unsupervised models.</p>
+<ul>
+<li><strong>Supervised Models</strong>
+<ul>
+<li>Task-driven and identify a goal.</li>
+<li>Examples:
+<ul>
+<li>Logistic Regression: Classify data, e.g., whether an email is spam.</li>
+<li>Linear Regression: Predict a number, e.g., shoe sales for the next three months.</li>
+</ul></li>
+</ul></li>
+<li><strong>Unsupervised Models</strong>
+<ul>
+<li>Data-driven and identify patterns.</li>
+<li>Example:
+<ul>
+<li>Cluster Analysis: Grouping random photos of flowers into categories.</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="model-categories" class="level3">
+<h3 class="anchored" data-anchor-id="model-categories">Model Categories</h3>
+<p>Once you have your problem outlined, it’s time to decide on the best model. Categories include classification and regression models. There are also other model options to choose from along with ML Ops.</p>
+<ul>
+<li><strong>Classification Models</strong>
+<ul>
+<li>Example: Logistic Regression.</li>
+</ul></li>
+<li><strong>Regression Models</strong>
+<ul>
+<li>Example: Linear Regression.</li>
+</ul></li>
+</ul>
+<p>We recommend starting with these options and using the results to benchmark against more complex models such as DNN (Deep Neural Networks), which may take more time and computing resources to train and deploy.</p>
+</section>
+<section id="ml-ops-in-bigquery-ml" class="level3">
+<h3 class="anchored" data-anchor-id="ml-ops-in-bigquery-ml">ML Ops in BigQuery ML</h3>
+<p>In addition to providing different types of machine learning models, BigQuery ML supports features to deploy, monitor, and manage the ML production environment called ML Ops (Machine Learning Operations).</p>
+<ul>
+<li><strong>ML Ops Features</strong>
+<ul>
+<li>Importing TensorFlow models for batch prediction.</li>
+<li>Exporting models from BigQuery ML for online prediction.</li>
+<li>Hyperparameter tuning using Cloud AI Vizier.</li>
+</ul></li>
+</ul>
+<p>We’ll explore ML Ops in more detail later in this course.</p>
+</section>
+</section>
+<section id="predicting-customer-lifetime-value-with-bigquery-ml" class="level2">
+<h2 class="anchored" data-anchor-id="predicting-customer-lifetime-value-with-bigquery-ml">Predicting Customer Lifetime Value with BigQuery ML</h2>
+<section id="introduction-10" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-10">Introduction</h3>
+<p>Now that you’re familiar with the types of ML models available to choose from, high-quality data must be used to teach the models what they need to learn. The best way to learn the key concepts of machine learning on structured datasets is through an example. In this scenario, we’ll predict customer lifetime value (LTV) with a model.</p>
+</section>
+<section id="what-is-customer-lifetime-value" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-customer-lifetime-value">What is Customer Lifetime Value?</h3>
+<p>Lifetime value, or LTV, is a common metric in marketing used to estimate how much revenue or profit you can expect from a customer given their history and customers with similar patterns. The goal is to identify high-value customers and bring them to our store with special promotions and incentives.</p>
+</section>
+<section id="example-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="example-dataset">Example Dataset</h3>
+<p>We’ll use a Google Analytics ecommerce dataset from Google’s own merchandise store that sells branded items like t-shirts and jackets. The dataset includes fields such as:</p>
+<ul>
+<li>Customer lifetime pageviews</li>
+<li>Total visits</li>
+<li>Average time spent on the site</li>
+<li>Total revenue brought in</li>
+<li>Ecommerce transactions on the site</li>
+</ul>
+</section>
+<section id="machine-learning-concepts" class="level3">
+<h3 class="anchored" data-anchor-id="machine-learning-concepts">Machine Learning Concepts</h3>
+<p>In machine learning, we feed in columns of data and let the model figure out the relationship to best predict the label. Some columns might not be useful in predicting the outcome, and we’ll see how to determine this later.</p>
+</section>
+<section id="data-preparation" class="level3">
+<h3 class="anchored" data-anchor-id="data-preparation">Data Preparation</h3>
+<p>To keep this example simple, we’re only using seven records, but tens of thousands of records are needed to train a model effectively. Before feeding the data into the model, we need to define our data and columns in the language that data scientists and ML professionals use.</p>
+<ul>
+<li><p><strong>Example/Observation/Instance</strong>: A record or row in the dataset.</p></li>
+<li><p><strong>Label</strong>: The correct answer from historical data, used to train the model to predict future data.</p></li>
+</ul>
+</section>
+<section id="label-types" class="level3">
+<h3 class="anchored" data-anchor-id="label-types">Label Types</h3>
+<p>Depending on what you want to predict, a label can be:</p>
+<ul>
+<li><p><strong>Numeric Variable</strong>: Requires a linear regression model.</p></li>
+<li><p><strong>Categorical Variable</strong>: Requires a logistic regression model.</p></li>
+</ul>
+<p>For example, predicting future revenue based on historical spending patterns would use a linear regression model. Predicting whether a customer is a high-value customer (yes/no) would use a logistic regression model.</p>
+</section>
+<section id="features" class="level3">
+<h3 class="anchored" data-anchor-id="features">Features</h3>
+<p>The other data columns in the dataset are called features, or potential features. Each column of data is like an ingredient you can use from the kitchen pantry. However, using too many ingredients can ruin a dish. Understanding the quality of the data in each column and working with teams to get more features or more history is often the hardest part of any ML project.</p>
+</section>
+<section id="feature-engineering" class="level3">
+<h3 class="anchored" data-anchor-id="feature-engineering">Feature Engineering</h3>
+<p>Feature engineering involves combining or transforming feature columns. If you’ve ever created calculated fields in SQL, you’ve already executed the basics of feature engineering. BigQuery ML automates many aspects of feature engineering, such as one-hot encoding categorical values (converting categorical data to numeric data).</p>
+</section>
+<section id="model-training-and-prediction" class="level3">
+<h3 class="anchored" data-anchor-id="model-training-and-prediction">Model Training and Prediction</h3>
+<p>BigQuery ML automatically splits the dataset into training data and evaluation data. Here are the steps:</p>
+<ol type="1">
+<li><strong>Train the Model</strong>: Using known historical data.</li>
+<li><strong>Evaluate the Model</strong>: Assess performance and make adjustments if necessary.</li>
+<li><strong>Predict on Future Data</strong>: Use the trained model to make predictions on new data without labels.</li>
+</ol>
+</section>
+<section id="conclusion-7" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion-7">Conclusion</h3>
+<p>With BigQuery ML, creating and executing machine learning models on structured datasets is simplified to just a few SQL queries. This enables faster and more efficient prediction of key metrics such as customer lifetime value, empowering better decision-making for marketing and promotions.</p>
+</section>
+</section>
+<section id="key-phases-of-a-machine-learning-project" class="level2">
+<h2 class="anchored" data-anchor-id="key-phases-of-a-machine-learning-project">Key Phases of a Machine Learning Project</h2>
+<section id="phase-1-data-extraction-transformation-and-loading-etl" class="level3">
+<h3 class="anchored" data-anchor-id="phase-1-data-extraction-transformation-and-loading-etl">Phase 1: Data Extraction, Transformation, and Loading (ETL)</h3>
+<ul>
+<li><p><strong>Extract</strong>: Gather data from various sources.</p></li>
+<li><p><strong>Transform</strong>: Clean and format the data.</p></li>
+<li><p><strong>Load</strong>: Move data into BigQuery.</p>
+<ul>
+<li><p>If already using other Google products (e.g., YouTube), use easy connectors to get data into BigQuery.</p></li>
+<li><p>Enrich existing data warehouse with other data sources using SQL joins.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="phase-2-feature-selection-and-preprocessing" class="level3">
+<h3 class="anchored" data-anchor-id="phase-2-feature-selection-and-preprocessing">Phase 2: Feature Selection and Preprocessing</h3>
+<ul>
+<li><p><strong>Select Features</strong>: Identify relevant features for the model.</p></li>
+<li><p><strong>Preprocess Features</strong>: Prepare data for training.</p>
+<ul>
+<li><p>Use SQL to create the training dataset.</p></li>
+<li><p>BigQuery ML handles some preprocessing, such as one-hot encoding.</p></li>
+<li><p><strong>One-Hot Encoding</strong>: Converts categorical data into numeric data required by the training model.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="phase-3-model-creation" class="level3">
+<h3 class="anchored" data-anchor-id="phase-3-model-creation">Phase 3: Model Creation</h3>
+<ul>
+<li><p><strong>Create Model in BigQuery</strong>:</p>
+<ul>
+<li><p>Use the <code>CREATE MODEL</code> command.</p></li>
+<li><p>Specify the model name and type.</p></li>
+<li><p>Pass the SQL query with the training dataset.</p></li>
+<li><p>Execute the query to create the model.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="phase-4-model-evaluation" class="level3">
+<h3 class="anchored" data-anchor-id="phase-4-model-evaluation">Phase 4: Model Evaluation</h3>
+<ul>
+<li><p><strong>Evaluate Model Performance</strong>:</p>
+<ul>
+<li><p>Execute <code>ML.EVALUATE</code> query on the trained model.</p></li>
+<li><p>Analyze loss metrics:</p>
+<ul>
+<li><p><strong>Root Mean Squared Error (RMSE)</strong>: For forecasting models.</p></li>
+<li><p><strong>Area Under the Curve (AUC)</strong>, <strong>Accuracy</strong>, <strong>Precision</strong>, and <strong>Recall</strong>: For classification models.</p></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="phase-5-making-predictions" class="level3">
+<h3 class="anchored" data-anchor-id="phase-5-making-predictions">Phase 5: Making Predictions</h3>
+<ul>
+<li><p><strong>Use Model to Make Predictions</strong>:</p>
+<ul>
+<li><p>Invoke <code>ML.PREDICT</code> command on the trained model.</p></li>
+<li><p>Obtain predictions and model’s confidence in those predictions.</p></li>
+<li><p>Results include a label field with <code>predicted</code> added to the field name, representing the model’s prediction for that label.</p></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="key-commands-of-bigquery-ml" class="level2">
+<h2 class="anchored" data-anchor-id="key-commands-of-bigquery-ml">Key Commands of BigQuery ML</h2>
+<p>Now that you’re familiar with the key phases of an ML project, let’s explore some of the key commands of BigQuery ML.</p>
+<section id="model-creation" class="level3">
+<h3 class="anchored" data-anchor-id="model-creation">Model Creation</h3>
+<ul>
+<li><p><strong>CREATE MODEL Command</strong>: Create a model with the <code>CREATE MODEL</code> command.</p></li>
+<li><p><strong>CREATE OR REPLACE MODEL Command</strong>: Overwrite an existing model using the <code>CREATE OR REPLACE MODEL</code> command.</p></li>
+<li><p><strong>Model Options</strong>: Models have various options you can specify, with the model type being the most important and the only required option.</p></li>
+</ul>
+</section>
+<section id="inspecting-model-weights" class="level3">
+<h3 class="anchored" data-anchor-id="inspecting-model-weights">Inspecting Model Weights</h3>
+<ul>
+<li><p><strong>ML.WEIGHTS Command</strong>: Inspect what the model learned with the <code>ML.WEIGHTS</code> command, filtering on an input column.</p>
+<ul>
+<li><p>The output of <code>ML.WEIGHTS</code> is a numerical value for each feature, ranging from -1 to 1.</p></li>
+<li><p>A value closer to zero indicates the feature is not important for the prediction.</p></li>
+<li><p>A value closer to -1 or 1 indicates the feature is more important for predicting the result.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="evaluating-model-performance" class="level3">
+<h3 class="anchored" data-anchor-id="evaluating-model-performance">Evaluating Model Performance</h3>
+<ul>
+<li><p><strong>ML.EVALUATE Command</strong>: Evaluate the model’s performance using the <code>ML.EVALUATE</code> command against a trained model.</p>
+<ul>
+<li>Different performance metrics are provided depending on the model type.</li>
+</ul></li>
+</ul>
+</section>
+<section id="making-predictions" class="level3">
+<h3 class="anchored" data-anchor-id="making-predictions">Making Predictions</h3>
+<ul>
+<li><strong>ML.PREDICT Command</strong>: Make batch predictions with the <code>ML.PREDICT</code> command on a trained model, passing through the dataset you want to make predictions on.</li>
+</ul>
+</section>
+<section id="consolidated-list-of-bigquery-ml-commands-for-supervised-models" class="level3">
+<h3 class="anchored" data-anchor-id="consolidated-list-of-bigquery-ml-commands-for-supervised-models">Consolidated List of BigQuery ML Commands for Supervised Models</h3>
+<ol type="1">
+<li><p><strong>Label Field</strong>: In BigQuery ML, you need a field in your training dataset titled <code>label</code>, or specify which field(s) are your labels using the <code>input_label_columns</code> in your model options.</p></li>
+<li><p><strong>Model Features</strong>: Your model features are the data columns part of your <code>SELECT</code> statement after your <code>CREATE MODEL</code> statement.</p></li>
+<li><p><strong>ML.FEATURE_INFO Command</strong>: After a model is trained, use the <code>ML.FEATURE_INFO</code> command to get statistics and metrics about the columns for additional analysis.</p></li>
+<li><p><strong>Model Object</strong>: This is an object created in BigQuery that resides in your BigQuery dataset.</p>
+<ul>
+<li><p>You can train many different models, which will all be objects stored under your BigQuery dataset, similar to your tables and views.</p></li>
+<li><p>Model objects can display information such as when it was last updated or how many training runs it completed.</p></li>
+</ul></li>
+<li><p><strong>Creating a New Model</strong>: Create a new model by writing <code>CREATE MODEL</code>, choosing a type, and passing in a training dataset.</p>
+<ul>
+<li><p>If predicting on a numeric field (e.g., next year’s sales), consider using linear regression for forecasting.</p></li>
+<li><p>For a discrete class (e.g., high, medium, low, or spam/not spam), consider using logistic regression for classification.</p></li>
+</ul></li>
+<li><p><strong>ML.TRAINING_INFO Command</strong>: View training progress with the <code>ML.TRAINING_INFO</code> command while the model is running and after it is complete.</p></li>
+<li><p><strong>ML.WEIGHTS Command</strong>: Inspect weights to see what the model learned about the importance of each feature as it relates to the label being predicted.</p></li>
+<li><p><strong>ML.EVALUATE Command</strong>: Use <code>ML.EVALUATE</code> to see how well the model performed against its evaluation dataset.</p></li>
+<li><p><strong>ML.PREDICT Command</strong>: Get predictions by writing <code>ML.PREDICT</code> and referencing your model name and prediction dataset.</p></li>
+</ol>
+</section>
+</section>
+<section id="review-of-building-custom-machine-learning-models-with-bigquery-ml" class="level2">
+<h2 class="anchored" data-anchor-id="review-of-building-custom-machine-learning-models-with-bigquery-ml">Review of Building Custom Machine Learning Models with BigQuery ML</h2>
+<p>Well done on completing another lab! Hopefully, you now feel more comfortable building custom machine learning models with BigQuery ML. Let’s review what we explored in this section of the course.</p>
+<section id="overview-of-bigquery" class="level3">
+<h3 class="anchored" data-anchor-id="overview-of-bigquery">Overview of BigQuery</h3>
+<p>Our focus was on BigQuery, the data warehouse that provides two services in one:</p>
+<ul>
+<li><p><strong>Fully-Managed Storage</strong>: A facility for datasets.</p></li>
+<li><p><strong>Fast SQL-Based Analytical Engine</strong>: Allows for efficient data analysis.</p></li>
+</ul>
+<p>BigQuery sits between data processes and data uses, serving as a common staging area. It ingests and processes data and outputs it to BI tools such as Looker and Looker Studio, and ML tools such as Vertex AI.</p>
+</section>
+<section id="data-access" class="level3">
+<h3 class="anchored" data-anchor-id="data-access">Data Access</h3>
+<p>Once data is in BigQuery, various professionals can be granted access for their own insights:</p>
+<ul>
+<li><p><strong>Business Analysts</strong></p></li>
+<li><p><strong>BI Developers</strong></p></li>
+<li><p><strong>Data Scientists</strong></p></li>
+<li><p><strong>Machine Learning Engineers</strong></p></li>
+</ul>
+</section>
+<section id="machine-learning-features-in-bigquery" class="level3">
+<h3 class="anchored" data-anchor-id="machine-learning-features-in-bigquery">Machine Learning Features in BigQuery</h3>
+<p>In addition to traditional data warehouses, BigQuery offers machine learning features. This enables direct building of ML models within BigQuery in five key phases.</p>
+<section id="phase-1-data-extraction-transformation-and-loading-etl-1" class="level4">
+<h4 class="anchored" data-anchor-id="phase-1-data-extraction-transformation-and-loading-etl-1">Phase 1: Data Extraction, Transformation, and Loading (ETL)</h4>
+<ul>
+<li><p>Extract data from various sources.</p></li>
+<li><p>Transform the data to clean and format it.</p></li>
+<li><p>Load the data into BigQuery if it isn’t there already.</p></li>
+</ul>
+</section>
+<section id="phase-2-feature-selection-and-preprocessing-1" class="level4">
+<h4 class="anchored" data-anchor-id="phase-2-feature-selection-and-preprocessing-1">Phase 2: Feature Selection and Preprocessing</h4>
+<ul>
+<li><p>Select relevant features for the model.</p></li>
+<li><p>Preprocess features using SQL to create the training dataset.</p></li>
+</ul>
+</section>
+<section id="phase-3-model-creation-1" class="level4">
+<h4 class="anchored" data-anchor-id="phase-3-model-creation-1">Phase 3: Model Creation</h4>
+<ul>
+<li>Create the ML model inside BigQuery using SQL commands.</li>
+</ul>
+</section>
+<section id="phase-4-model-evaluation-1" class="level4">
+<h4 class="anchored" data-anchor-id="phase-4-model-evaluation-1">Phase 4: Model Evaluation</h4>
+<ul>
+<li>After training the model, execute an <code>ML.EVALUATE</code> query to evaluate its performance on the evaluation dataset.</li>
+</ul>
+</section>
+<section id="phase-5-making-predictions-1" class="level4">
+<h4 class="anchored" data-anchor-id="phase-5-making-predictions-1">Phase 5: Making Predictions</h4>
+<ul>
+<li>When satisfied with the model’s performance, use it to make predictions by invoking the <code>ML.PREDICT</code> command.</li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+<section id="module-4" class="level1">
+<h1>Module 4</h1>
+<section id="transition-to-machine-learning" class="level2">
+<h2 class="anchored" data-anchor-id="transition-to-machine-learning">Transition to Machine Learning</h2>
+<p>In previous sections of this course, you learned about many data engineering tools available from Google Cloud. Now let’s switch our focus to machine learning. In this section, we’ll explore the different options Google Cloud offers for building machine learning models. Additionally, we will explain how a product called Vertex AI can help solve machine learning challenges.</p>
+<section id="why-trust-google-for-ai-and-machine-learning" class="level3">
+<h3 class="anchored" data-anchor-id="why-trust-google-for-ai-and-machine-learning">Why Trust Google for AI and Machine Learning?</h3>
+<p>Google is an AI-first company, recognized as a leader across industries due to its contributions to artificial intelligence and machine learning.</p>
+<ul>
+<li><strong>Industry Recognition</strong>:
+<ul>
+<li>In 2022, Google was recognized as a leader in the Gartner Magic Quadrant for Cloud AI Developer services.</li>
+<li>Google has also received numerous industry awards and recognition in recent years.</li>
+</ul></li>
+<li><strong>Experience</strong>:
+<ul>
+<li>Google has implemented artificial intelligence for over ten years in many of its critical products, systems, and services.</li>
+</ul></li>
+</ul>
+</section>
+<section id="examples-of-ai-in-google-products" class="level3">
+<h3 class="anchored" data-anchor-id="examples-of-ai-in-google-products">Examples of AI in Google Products</h3>
+<ul>
+<li><strong>Gmail Smart Reply</strong>: Automatically suggests responses to received messages using AI technology known as natural language processing.</li>
+</ul>
+</section>
+<section id="goals-of-googles-ai-technologies" class="level3">
+<h3 class="anchored" data-anchor-id="goals-of-googles-ai-technologies">Goals of Google’s AI Technologies</h3>
+<p>The goal of these technologies is not for exclusive use to only benefit Google customers but to enable every company to become an AI company. This is achieved by reducing the challenges of AI model creation to only the steps that require human judgment or creativity.</p>
+<ul>
+<li><strong>Travel and Hospitality</strong>:
+<ul>
+<li>AI and ML can improve aircraft scheduling.</li>
+<li>Provide customers with dynamic pricing options.</li>
+</ul></li>
+<li><strong>Retail Sector</strong>:
+<ul>
+<li>Leverage predictive inventory planning with AI and ML.</li>
+</ul></li>
+</ul>
+</section>
+<section id="reflect-on-ai-and-ml-solutions" class="level3">
+<h3 class="anchored" data-anchor-id="reflect-on-ai-and-ml-solutions">Reflect on AI and ML Solutions</h3>
+<p>Consider the potential solutions AI and ML can provide. What are the problems in your business that artificial intelligence and machine learning might help you solve? Take a moment to think about this question before continuing to the next video.</p>
+</section>
+</section>
+<section id="google-clouds-options-for-building-machine-learning-models" class="level2">
+<h2 class="anchored" data-anchor-id="google-clouds-options-for-building-machine-learning-models">Google Cloud’s Options for Building Machine Learning Models</h2>
+<p>Google Cloud offers four options for building machine learning models. Let’s explore each option and how they fit different scenarios.</p>
+<section id="bigquery-ml" class="level3">
+<h3 class="anchored" data-anchor-id="bigquery-ml">1. BigQuery ML</h3>
+<p>BigQuery ML is a tool for using SQL queries to create and execute machine learning models in BigQuery.</p>
+<ul>
+<li><p><strong>Data Compatibility</strong>: Ideal if you already have your data in BigQuery.</p></li>
+<li><p><strong>Model Suitability</strong>: Best for problems that fit predefined ML models.</p></li>
+<li><p><strong>Expertise Required</strong>: Requires understanding of SQL.</p></li>
+</ul>
+</section>
+<section id="pre-built-apis" class="level3">
+<h3 class="anchored" data-anchor-id="pre-built-apis">2. Pre-Built APIs</h3>
+<p>Pre-built APIs allow you to leverage machine-learning models that have already been built and trained by Google.</p>
+<ul>
+<li><p><strong>No Training Data Needed</strong>: Ideal if you lack sufficient training data or ML expertise in-house.</p></li>
+<li><p><strong>Ease of Use</strong>: User-friendly with low ML and coding expertise requirements.</p></li>
+<li><p><strong>Common Tasks</strong>: Best for common perceptual tasks like vision, video, and natural language.</p></li>
+</ul>
+</section>
+<section id="automl" class="level3">
+<h3 class="anchored" data-anchor-id="automl">3. AutoML</h3>
+<p>AutoML is a no-code solution for building ML models on Vertex AI through a point-and-click interface.</p>
+<ul>
+<li><p><strong>Minimal Coding</strong>: Great for developers and data scientists who want to build custom models without extensive coding.</p></li>
+<li><p><strong>Focus on Business Problems</strong>: Allows focus on business problems instead of underlying model architecture and ML provisioning.</p></li>
+</ul>
+</section>
+<section id="custom-training" class="level3">
+<h3 class="anchored" data-anchor-id="custom-training">4. Custom Training</h3>
+<p>Custom training allows you to code your own machine learning environment, training, and deployment.</p>
+<ul>
+<li><p><strong>Full Control</strong>: Provides flexibility and full control over the ML pipeline.</p></li>
+<li><p><strong>Expertise Required</strong>: Highest requirement for ML and coding expertise.</p></li>
+</ul>
+</section>
+<section id="comparison-of-the-four-options" class="level3">
+<h3 class="anchored" data-anchor-id="comparison-of-the-four-options">Comparison of the Four Options</h3>
+<section id="data-type-support" class="level4">
+<h4 class="anchored" data-anchor-id="data-type-support">Data Type Support</h4>
+<ul>
+<li><p><strong>BigQuery ML</strong>: Only supports tabular data.</p></li>
+<li><p><strong>Pre-Built APIs, AutoML, and Custom Training</strong>: Support tabular, image, text, and video data.</p></li>
+</ul>
+</section>
+<section id="training-data-size" class="level4">
+<h4 class="anchored" data-anchor-id="training-data-size">Training Data Size</h4>
+<ul>
+<li><p><strong>Pre-Built APIs</strong>: Don’t require any training data.</p></li>
+<li><p><strong>BigQuery ML and Custom Training</strong>: Require a large amount of data.</p></li>
+</ul>
+</section>
+<section id="machine-learning-and-coding-expertise" class="level4">
+<h4 class="anchored" data-anchor-id="machine-learning-and-coding-expertise">Machine Learning and Coding Expertise</h4>
+<ul>
+<li><p><strong>Pre-Built APIs and AutoML</strong>: Low requirements, user-friendly.</p></li>
+<li><p><strong>BigQuery ML</strong>: Requires SQL knowledge.</p></li>
+<li><p><strong>Custom Training</strong>: Highest requirement for ML and coding expertise.</p></li>
+</ul>
+</section>
+<section id="hyperparameter-tuning-1" class="level4">
+<h4 class="anchored" data-anchor-id="hyperparameter-tuning-1">Hyperparameter Tuning</h4>
+<ul>
+<li><p><strong>Pre-Built APIs and AutoML</strong>: Can’t tune hyperparameters.</p></li>
+<li><p><strong>BigQuery ML and Custom Training</strong>: Can experiment with hyperparameters.</p></li>
+</ul>
+</section>
+<section id="time-to-train-the-model" class="level4">
+<h4 class="anchored" data-anchor-id="time-to-train-the-model">Time to Train the Model</h4>
+<ul>
+<li><p><strong>Pre-Built APIs</strong>: No training time needed (use pre-built models).</p></li>
+<li><p><strong>BigQuery ML, AutoML, Custom Training</strong>: Training time depends on the project, with custom training typically taking the longest.</p></li>
+</ul>
+</section>
+</section>
+<section id="selecting-the-best-option" class="level3">
+<h3 class="anchored" data-anchor-id="selecting-the-best-option">Selecting the Best Option</h3>
+<ul>
+<li><p><strong>BigQuery ML</strong>: Ideal if your team is familiar with SQL and your data is in BigQuery.</p></li>
+<li><p><strong>Pre-Built APIs</strong>: Best if your team has little ML experience and needs ready-to-use models for common tasks.</p></li>
+<li><p><strong>AutoML</strong>: Suitable for those who want to build custom models with minimal coding.</p></li>
+<li><p><strong>Custom Training</strong>: Best for teams that require full control over the ML workflow.</p></li>
+</ul>
+</section>
+<section id="whats-next" class="level3">
+<h3 class="anchored" data-anchor-id="whats-next">What’s Next?</h3>
+<p>We’ve already explored BigQuery ML. In the following videos, we will explore the other three options in more detail.</p>
+</section>
+</section>
+<section id="importance-of-high-quality-training-data" class="level2">
+<h2 class="anchored" data-anchor-id="importance-of-high-quality-training-data">Importance of High-Quality Training Data</h2>
+<p>Good machine learning models require lots of high-quality training data. Aim for hundreds of thousands of records to train a custom model. If you don’t have that kind of data, pre-built APIs are a great place to start.</p>
+<section id="benefits-of-pre-built-apis" class="level3">
+<h3 class="anchored" data-anchor-id="benefits-of-pre-built-apis">Benefits of Pre-Built APIs</h3>
+<p>Pre-built APIs are offered as services and can act as building blocks to create the application you want without the expense or complexity of creating your own models.</p>
+<ul>
+<li><p><strong>Time and Effort Savings</strong>: Save the time and effort of building, curating, and training a new dataset.</p></li>
+<li><p><strong>Jump to Predictions</strong>: Allows you to quickly start making predictions.</p></li>
+</ul>
+</section>
+<section id="examples-of-pre-built-apis" class="level3">
+<h3 class="anchored" data-anchor-id="examples-of-pre-built-apis">Examples of Pre-Built APIs</h3>
+<ol type="1">
+<li><p><strong>Speech-to-Text API</strong>: Converts audio to text for data processing.</p></li>
+<li><p><strong>Cloud Natural Language API</strong>: Recognizes parts of speech called entities and sentiment.</p></li>
+<li><p><strong>Cloud Translation API</strong>: Converts text from one language to another.</p></li>
+<li><p><strong>Text-to-Speech API</strong>: Converts text into high-quality voice audio.</p></li>
+<li><p><strong>Vision API</strong>: Works with and recognizes content in static images.</p></li>
+<li><p><strong>Video Intelligence API</strong>: Recognizes motion and action in video.</p></li>
+</ol>
+</section>
+<section id="training-and-datasets" class="level3">
+<h3 class="anchored" data-anchor-id="training-and-datasets">Training and Datasets</h3>
+<p>Google has already done extensive work to train these models using Google datasets:</p>
+<ul>
+<li><p><strong>Vision API</strong>: Based on Google’s image datasets.</p></li>
+<li><p><strong>Speech-to-Text API</strong>: Trained on YouTube captions.</p></li>
+<li><p><strong>Translation API</strong>: Built on Google’s neural machine translation technology.</p></li>
+</ul>
+<p>The effectiveness of a model depends on the amount of data available for training. Google, with its vast amount of images, text, and ML researchers, ensures its pre-built models are well-trained, reducing the workload for you.</p>
+</section>
+<section id="experimenting-with-pre-built-apis" class="level3">
+<h3 class="anchored" data-anchor-id="experimenting-with-pre-built-apis">Experimenting with Pre-Built APIs</h3>
+<p>You can try out the Vision API in a browser:</p>
+<ol type="1">
+<li><p><strong>Navigate to</strong>: <a href="https://cloud.google.com/vision">cloud.google.com/vision</a> in Chrome.</p></li>
+<li><p><strong>Scroll Down</strong>: Find the option to try the API by uploading an image.</p></li>
+</ol>
+<p>Each of the ML APIs can be experimented with in a browser. When you’re ready to build a production model, you’ll need to pass a JSON object request to the API and parse the response it returns.</p>
+</section>
+</section>
+<section id="understanding-automl" class="level2">
+<h2 class="anchored" data-anchor-id="understanding-automl">Understanding AutoML</h2>
+<p>To understand AutoML, short for automated machine learning, let’s briefly look at how it was built. Training and deploying ML models can be extremely time-consuming because you need to repeatedly add new data and features, try different models, and tune parameters to achieve the best results.</p>
+<section id="the-origins-of-automl" class="level3">
+<h3 class="anchored" data-anchor-id="the-origins-of-automl">The Origins of AutoML</h3>
+<p>AutoML was first announced in January of 2018 to automate machine learning pipelines and save data scientists from manual work, such as tuning hyperparameters and comparing multiple models.</p>
+<section id="key-technologies-behind-automl" class="level4">
+<h4 class="anchored" data-anchor-id="key-technologies-behind-automl">Key Technologies Behind AutoML</h4>
+<ol type="1">
+<li><strong>Transfer Learning</strong>:
+<ul>
+<li>Builds a knowledge base in the field, similar to gathering books to create a library.</li>
+<li>Lets people with smaller datasets or less computational power achieve state-of-the-art results by using pre-trained models on similar, larger datasets.</li>
+<li>Models can reach higher accuracy with less data and computation time.</li>
+</ul></li>
+<li><strong>Neural Architecture Search</strong>:
+<ul>
+<li>Finds the optimal model for the relevant project, akin to finding the best book in a library for learning.</li>
+<li>AutoML trains and evaluates multiple models, comparing them to choose the best one.</li>
+<li>Produces an ensemble of ML models and selects the best performer.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="benefits-of-automl" class="level3">
+<h3 class="anchored" data-anchor-id="benefits-of-automl">Benefits of AutoML</h3>
+<ul>
+<li><p><strong>No-Code Solution</strong>: Enables training high-quality custom machine learning models with minimal effort and little ML expertise required.</p></li>
+<li><p><strong>Focus on Business Problems</strong>: Allows data scientists to concentrate on defining business problems and improving model results.</p></li>
+<li><p><strong>Rapid Prototyping</strong>: Useful for quickly prototyping models and exploring new datasets before investing in development.</p></li>
+</ul>
+</section>
+<section id="how-automl-works" class="level3">
+<h3 class="anchored" data-anchor-id="how-automl-works">How AutoML Works</h3>
+<p>AutoML supports four types of data: image, tabular, text, and video. For each data type, AutoML addresses different types of problems, called objectives.</p>
+<section id="getting-started-with-automl" class="level4">
+<h4 class="anchored" data-anchor-id="getting-started-with-automl">Getting Started with AutoML</h4>
+<ol type="1">
+<li><p><strong>Upload Your Data</strong>: Data can come from Cloud Storage, BigQuery, or a local machine.</p></li>
+<li><p><strong>Define Problems</strong>: Inform AutoML of the problems you want to solve.</p></li>
+</ol>
+</section>
+<section id="objectives-for-each-data-type" class="level4">
+<h4 class="anchored" data-anchor-id="objectives-for-each-data-type">Objectives for Each Data Type</h4>
+<ul>
+<li><strong>Image Data</strong>:
+<ul>
+<li><strong>Classification Model</strong>: Analyzes image data to return content categories.
+<ul>
+<li>Example: Classify images as containing a dog or not, or by dog breed.</li>
+</ul></li>
+<li><strong>Object Detection Model</strong>: Analyzes image data to return annotations with labels and bounding box locations.
+<ul>
+<li>Example: Find the location of dogs in images.</li>
+</ul></li>
+</ul></li>
+<li><strong>Tabular Data</strong>:
+<ul>
+<li><strong>Regression Model</strong>: Analyzes tabular data to return numeric values.
+<ul>
+<li>Example: Estimate a house’s value based on factors like location and size.</li>
+</ul></li>
+<li><strong>Classification Model</strong>: Analyzes tabular data to return categories.
+<ul>
+<li>Example: Classify land into high, median, and low potential for commercial real estate.</li>
+</ul></li>
+<li><strong>Forecasting Model</strong>: Uses time-dependent data to predict future numeric values.
+<ul>
+<li>Example: Predict the housing market using historical and economic data.</li>
+</ul></li>
+</ul></li>
+<li><strong>Text Data</strong>:
+<ul>
+<li><strong>Classification Model</strong>: Analyzes text data to return categories.
+<ul>
+<li>Example: Classify customer questions to redirect them to appropriate departments.</li>
+</ul></li>
+<li><strong>Entity Extraction Model</strong>: Inspects text data for known entities and labels them.
+<ul>
+<li>Example: Label social media posts with entities like time and location.</li>
+</ul></li>
+<li><strong>Sentiment Analysis Model</strong>: Identifies the emotional opinion in text data.
+<ul>
+<li>Example: Determine if a writer’s comment is positive, negative, or neutral.</li>
+</ul></li>
+</ul></li>
+<li><strong>Video Data</strong>:
+<ul>
+<li><strong>Classification Model</strong>: Analyzes video data to return categorized shots and segments.
+<ul>
+<li>Example: Identify sports in video clips, like soccer or basketball.</li>
+</ul></li>
+<li><strong>Object Tracking Model</strong>: Analyzes video data to detect and track objects.
+<ul>
+<li>Example: Track the ball in soccer game videos.</li>
+</ul></li>
+<li><strong>Action Recognition Model</strong>: Analyzes video data to identify action moments.
+<ul>
+<li>Example: Identify soccer goals or golf swings.</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="combining-data-types-and-objectives" class="level3">
+<h3 class="anchored" data-anchor-id="combining-data-types-and-objectives">Combining Data Types and Objectives</h3>
+<p>In practice, you may need to combine multiple data types and objectives to solve complex business problems. AutoML is a powerful tool that can assist across various data types and objectives, making it versatile for different applications.</p>
+</section>
+</section>
+<section id="custom-training-with-vertex-ai" class="level2">
+<h2 class="anchored" data-anchor-id="custom-training-with-vertex-ai">Custom Training with Vertex AI</h2>
+<p>We’ve explored the options Google Cloud provides to build machine learning models using BigQuery ML, Pre-built APIs, and AutoML. Now let’s take a look at the last option: custom training.</p>
+<section id="custom-training-overview" class="level3">
+<h3 class="anchored" data-anchor-id="custom-training-overview">Custom Training Overview</h3>
+<p>If you want to code your machine learning model, you can use this option by building a custom training solution with Vertex AI Workbench. Workbench is a single development environment for the entire data science workflow, from exploring to training and deploying a machine learning model with code.</p>
+</section>
+<section id="setting-up-your-environment" class="level3">
+<h3 class="anchored" data-anchor-id="setting-up-your-environment">Setting Up Your Environment</h3>
+<p>Before any coding begins, you need to determine the environment for your ML training code. There are two options: a pre-built container or a custom container.</p>
+<section id="pre-built-containers" class="level4">
+<h4 class="anchored" data-anchor-id="pre-built-containers">Pre-Built Containers</h4>
+<ul>
+<li><p><strong>Analogy</strong>: Think of a container as a kitchen.</p></li>
+<li><p><strong>Pre-Built Container</strong>: Represents a fully furnished kitchen with cabinets and appliances, which represent the dependencies. It includes all the cookware, which represents the libraries you need to make a meal.</p></li>
+<li><p><strong>Use Case</strong>: If your ML training needs a platform like TensorFlow, PyTorch, Scikit-learn, or XGBoost, and Python code to work with the platform, a pre-built container is probably your best solution.</p></li>
+</ul>
+</section>
+<section id="custom-containers" class="level4">
+<h4 class="anchored" data-anchor-id="custom-containers">Custom Containers</h4>
+<ul>
+<li><p><strong>Analogy</strong>: An empty room with no cabinets, appliances, or cookware.</p></li>
+<li><p><strong>Custom Container</strong>: You define the exact tools you need to complete the job.</p></li>
+<li><p><strong>Use Case</strong>: When you need a highly customized environment tailored specifically to your project requirements.</p></li>
+</ul>
+</section>
+</section>
+<section id="summary" class="level3">
+<h3 class="anchored" data-anchor-id="summary">Summary</h3>
+<ul>
+<li><p><strong>BigQuery ML</strong>: Use SQL queries to create and execute ML models in BigQuery.</p></li>
+<li><p><strong>Pre-Built APIs</strong>: Leverage machine-learning models already built and trained by Google for common perceptual tasks.</p></li>
+<li><p><strong>AutoML</strong>: A no-code solution to build custom ML models through a point-and-click interface.</p></li>
+<li><p><strong>Custom Training</strong>: Code your own ML models with Vertex AI Workbench, using either pre-built or custom containers depending on your project needs.</p></li>
+</ul>
+</section>
+</section>
+<section id="googles-investment-in-big-data-and-ai" class="level2">
+<h2 class="anchored" data-anchor-id="googles-investment-in-big-data-and-ai">Google’s Investment in Big Data and AI</h2>
+<p>For years, Google has invested time and resources into developing big data and AI. Google has developed key technologies and products from Scikit-learn as a Google Summer Coding project back in 2007 to Vertex AI today. As an AI-first company, Google has applied AI technologies to many of its products and services like Gmail, Google Maps, Google Photos, and Google Translate.</p>
+<section id="challenges-in-developing-ai-technologies" class="level3">
+<h3 class="anchored" data-anchor-id="challenges-in-developing-ai-technologies">Challenges in Developing AI Technologies</h3>
+<p>Developing these technologies doesn’t come without challenges, especially when it involves developing machine learning models and putting them into production.</p>
+<section id="traditional-challenges" class="level4">
+<h4 class="anchored" data-anchor-id="traditional-challenges">Traditional Challenges</h4>
+<ol type="1">
+<li><p><strong>Handling Large Quantities of Data</strong>: Determining how to manage and process vast amounts of data.</p></li>
+<li><p><strong>Selecting the Right ML Model</strong>: Choosing and training the appropriate machine learning model for the data.</p></li>
+<li><p><strong>Harnessing Computing Power</strong>: Acquiring the necessary computational resources to train models.</p></li>
+<li><p><strong>Getting ML Models into Production</strong>: Ensuring scalability, monitoring, and continuous integration and continuous delivery (CI/CD).</p>
+<ul>
+<li>Many enterprise ML projects fail to get past the pilot phase, with only half making it according to Gartner.</li>
+</ul></li>
+<li><p><strong>Ease of Use</strong>: Many tools require advanced coding skills, distracting data scientists from model configuration.</p></li>
+<li><p><strong>Unified Workflow</strong>: Difficulty in finding and using different tools in a cohesive workflow.</p></li>
+</ol>
+</section>
+</section>
+<section id="vertex-ai-googles-solution" class="level3">
+<h3 class="anchored" data-anchor-id="vertex-ai-googles-solution">Vertex AI: Google’s Solution</h3>
+<p>Google’s solution to many of the production and ease-of-use challenges is Vertex AI. This unified platform brings all the components of the machine learning ecosystem and workflow together.</p>
+<section id="what-does-a-unified-platform-mean" class="level4">
+<h4 class="anchored" data-anchor-id="what-does-a-unified-platform-mean">What Does a Unified Platform Mean?</h4>
+<p>In the case of Vertex AI, a unified platform means having one digital experience to create, deploy, and manage models over time and at scale.</p>
+<ol type="1">
+<li><strong>Data Readiness Stage</strong>:
+<ul>
+<li>Users can upload data from Cloud Storage, BigQuery, or a local machine.</li>
+</ul></li>
+<li><strong>Feature Engineering Stage</strong>:
+<ul>
+<li>Users can create features (processed data for the model) and share them using the feature store.</li>
+</ul></li>
+<li><strong>Training and Hyperparameter Tuning</strong>:
+<ul>
+<li>Users can experiment with different models and adjust hyperparameters once the data is ready.</li>
+</ul></li>
+<li><strong>Deployment and Model Monitoring</strong>:
+<ul>
+<li>Users can set up pipelines to transform models into production, automatically monitor, and perform continuous improvements.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="building-models-with-vertex-ai" class="level3">
+<h3 class="anchored" data-anchor-id="building-models-with-vertex-ai">Building Models with Vertex AI</h3>
+<p>Vertex AI allows users to build machine learning models using:</p>
+<ul>
+<li><p><strong>AutoML</strong>: A no-code solution that enables data scientists to spend more time turning business problems into ML solutions.</p></li>
+<li><p><strong>Custom Training</strong>: A code-based solution that provides full control over the development environment and process.</p></li>
+</ul>
+</section>
+<section id="benefits-of-a-unified-platform" class="level3">
+<h3 class="anchored" data-anchor-id="benefits-of-a-unified-platform">Benefits of a Unified Platform</h3>
+<p>Being able to perform a wide range of tasks in one unified platform has many benefits, summarized with four Ss:</p>
+<ol type="1">
+<li><strong>Seamless</strong>:
+<ul>
+<li>Provides a smooth user experience from uploading and preparing data to model training and production.</li>
+</ul></li>
+<li><strong>Scalable</strong>:
+<ul>
+<li>Vertex AI’s ML operations (MLOps) help monitor and manage ML production, scaling storage and computing power automatically.</li>
+</ul></li>
+<li><strong>Sustainable</strong>:
+<ul>
+<li>Artifacts and features created using Vertex AI can be reused and shared.</li>
+</ul></li>
+<li><strong>Speedy</strong>:
+<ul>
+<li>Vertex AI produces models with 80% fewer lines of code compared to competitors.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="google-clouds-artificial-intelligence-solution-portfolio" class="level2">
+<h2 class="anchored" data-anchor-id="google-clouds-artificial-intelligence-solution-portfolio">Google Cloud’s Artificial Intelligence Solution Portfolio</h2>
+<p>Now that you’ve explored the four different options available to create machine learning models with Google Cloud, let’s take a few minutes to explore Google Cloud’s artificial intelligence solution portfolio. It can be visualized with three layers.</p>
+<section id="three-layers-of-google-clouds-ai-solution-portfolio" class="level3">
+<h3 class="anchored" data-anchor-id="three-layers-of-google-clouds-ai-solution-portfolio">Three Layers of Google Cloud’s AI Solution Portfolio</h3>
+<section id="bottom-layer-ai-foundation" class="level4">
+<h4 class="anchored" data-anchor-id="bottom-layer-ai-foundation">Bottom Layer: AI Foundation</h4>
+<ul>
+<li><strong>Infrastructure and Data</strong>: The foundational layer includes the robust Google Cloud infrastructure and extensive datasets.</li>
+</ul>
+</section>
+<section id="middle-layer-ai-development-platform" class="level4">
+<h4 class="anchored" data-anchor-id="middle-layer-ai-development-platform">Middle Layer: AI Development Platform</h4>
+<ul>
+<li><strong>Machine Learning Options</strong>:
+<ul>
+<li><strong>AutoML</strong>: A no-code solution offered through Vertex AI.</li>
+<li><strong>Custom Training</strong>: A code-based solution also offered through Vertex AI.</li>
+<li><strong>Pre-Built APIs</strong>: Ready-to-use models for common perceptual tasks.</li>
+<li><strong>BigQuery ML</strong>: Use SQL queries to create and execute ML models within BigQuery.</li>
+</ul></li>
+</ul>
+</section>
+<section id="top-layer-ai-solutions" class="level4">
+<h4 class="anchored" data-anchor-id="top-layer-ai-solutions">Top Layer: AI Solutions</h4>
+<p>There are two groups within the AI solutions layer: horizontal solutions and industry solutions.</p>
+</section>
+</section>
+<section id="horizontal-solutions" class="level3">
+<h3 class="anchored" data-anchor-id="horizontal-solutions">Horizontal Solutions</h3>
+<p>Horizontal solutions usually apply to any industry aiming to solve common problems. Examples include:</p>
+<ul>
+<li><strong>Document AI</strong>:
+<ul>
+<li>Utilizes computer vision and optical character recognition (OCR), along with natural language processing (NLP).</li>
+<li>Extracts information from documents to increase the speed and accuracy of document processing.</li>
+<li>Helps organizations make better decisions faster while reducing costs.</li>
+</ul></li>
+<li><strong>Contact Center AI (CCAI)</strong>:
+<ul>
+<li>Improves customer service in contact centers through artificial intelligence.</li>
+<li>Automates simple interactions and assists human agents.</li>
+<li>Unlocks caller insights and provides information to answer customer questions.</li>
+</ul></li>
+</ul>
+</section>
+<section id="industry-solutions" class="level3">
+<h3 class="anchored" data-anchor-id="industry-solutions">Industry Solutions</h3>
+<p>Industry solutions are tailored to specific industries. Examples include:</p>
+<ul>
+<li><strong>Retail Product Discovery</strong>:
+<ul>
+<li>Enables retailers to provide Google-quality search and recommendations on their own digital properties.</li>
+<li>Helps increase conversions and reduce search abandonment.</li>
+</ul></li>
+<li><strong>Google Cloud Healthcare Data Engine</strong>:
+<ul>
+<li>Generates healthcare insights and analytics with an end-to-end solution.</li>
+</ul></li>
+<li><strong>Lending DocAI</strong>:
+<ul>
+<li>Transforms the home loan experience for borrowers and lenders by automating mortgage document processing.</li>
+</ul></li>
+</ul>
+</section>
+<section id="learn-more" class="level3">
+<h3 class="anchored" data-anchor-id="learn-more">Learn More</h3>
+<p>You can learn more about Google Cloud’s growing list of AI solutions at <a href="https://cloud.google.com/solutions/ai">cloud.google.com/solutions/ai</a>.</p>
+</section>
+</section>
+<section id="recap-of-google-clouds-machine-learning-solutions" class="level2">
+<h2 class="anchored" data-anchor-id="recap-of-google-clouds-machine-learning-solutions">Recap of Google Cloud’s Machine Learning Solutions</h2>
+<p>We’ve covered a lot of information in this section of the course. Let’s do a quick recap.</p>
+<section id="googles-ai-first-history" class="level3">
+<h3 class="anchored" data-anchor-id="googles-ai-first-history">Google’s AI-First History</h3>
+<p>We started by exploring Google’s history as an AI-first company. Google has applied AI technologies to many of its products and services, continually advancing its capabilities in the field.</p>
+</section>
+<section id="four-options-to-build-machine-learning-models" class="level3">
+<h3 class="anchored" data-anchor-id="four-options-to-build-machine-learning-models">Four Options to Build Machine Learning Models</h3>
+<p>Next, we looked at the four options Google Cloud offers to build machine learning models:</p>
+<ol type="1">
+<li><strong>BigQuery ML</strong>:
+<ul>
+<li>Use SQL queries to create and execute ML models within BigQuery.</li>
+<li>Ideal for data engineers, data scientists, and data analysts familiar with SQL and already working with data in BigQuery.</li>
+</ul></li>
+<li><strong>Pre-Built APIs</strong>:
+<ul>
+<li>Ready-to-use models for common perceptual tasks such as vision, video, and natural language.</li>
+<li>Best for business users or developers with little ML experience, as they require no ML expertise or model development effort.</li>
+</ul></li>
+<li><strong>AutoML</strong>:
+<ul>
+<li>A no-code solution to build custom ML models.</li>
+<li>Suitable for developers and data scientists who want to build custom models with their own training data while spending minimal time coding.</li>
+</ul></li>
+<li><strong>Custom Training</strong>:
+<ul>
+<li>Code-based solution for full control over the ML workflow.</li>
+<li>Ideal for ML engineers and data scientists who need to train and serve custom models with code on Vertex Workbench.</li>
+</ul></li>
+</ol>
+</section>
+<section id="introduction-to-vertex-ai" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-to-vertex-ai">Introduction to Vertex AI</h3>
+<p>We introduced Vertex AI, which combines the functionality of AutoML (codeless) and custom training (code-based) to solve production and ease-of-use problems.</p>
+</section>
+<section id="selecting-the-best-ml-option" class="level3">
+<h3 class="anchored" data-anchor-id="selecting-the-best-ml-option">Selecting the Best ML Option</h3>
+<p>Choosing the best ML option depends on your business needs and ML expertise:</p>
+<ul>
+<li><p><strong>BigQuery ML</strong>: For those familiar with SQL and with data in BigQuery.</p></li>
+<li><p><strong>Pre-Built APIs</strong>: For business users or developers with little ML experience, addressing common perceptual tasks.</p></li>
+<li><p><strong>AutoML</strong>: For developers and data scientists wanting to build custom models with minimal coding.</p></li>
+<li><p><strong>Custom Training</strong>: For ML engineers and data scientists needing full control over the ML workflow.</p></li>
+</ul>
+</section>
+<section id="pre-built-and-custom-containers" class="level3">
+<h3 class="anchored" data-anchor-id="pre-built-and-custom-containers">Pre-Built and Custom Containers</h3>
+<p>Using Vertex AI Workbench, you can leverage pre-built containers for popular ML libraries like TensorFlow and PyTorch or build a custom container from scratch.</p>
+</section>
+<section id="google-cloud-ai-solutions" class="level3">
+<h3 class="anchored" data-anchor-id="google-cloud-ai-solutions">Google Cloud AI Solutions</h3>
+<p>Finally, we introduced Google Cloud AI solutions. These solutions are built on top of the four ML development options to meet both horizontal and vertical market needs.</p>
+<ul>
+<li><p><strong>Horizontal Solutions</strong>: Apply to various industries for common problems (e.g., Document AI, CCAI).</p></li>
+<li><p><strong>Vertical Solutions</strong>: Tailored to specific industries (e.g., Retail Product Discovery, Google Cloud Healthcare Data Engine, Lending DocAI).</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="module-5" class="level1">
+<h1>Module 5</h1>
+<section id="machine-learning-workflow-with-vertex-ai" class="level2">
+<h2 class="anchored" data-anchor-id="machine-learning-workflow-with-vertex-ai">Machine Learning Workflow with Vertex AI</h2>
+<p>In the previous section of this course, you explored the machine learning options available on Google Cloud. Now let’s switch our focus to the machine learning workflow with Vertex AI. From data preparation to model training and finally model deployment, Vertex AI, Google’s AI platform, provides developers and data scientists one unified environment to build custom ML models. This process is similar to serving food in a restaurant, starting with preparing raw ingredients through to serving dishes to a table.</p>
+<p>Later in the section, you’ll get hands-on practice building a machine learning model end-to-end using AutoML on Vertex AI. But before we get into the details, let’s look at the basic differences between machine learning and traditional programming.</p>
+<section id="traditional-programming-vs.-machine-learning" class="level3">
+<h3 class="anchored" data-anchor-id="traditional-programming-vs.-machine-learning">Traditional Programming vs.&nbsp;Machine Learning</h3>
+<ul>
+<li><strong>Traditional Programming</strong>:
+<ul>
+<li>Data + Rules (Algorithms) = Answers</li>
+<li>A computer follows the algorithms set up by a human.</li>
+</ul></li>
+<li><strong>Machine Learning</strong>:
+<ul>
+<li>Data + Answers (Labels) = Model</li>
+<li>Instead of explicitly programming algorithms, you provide the machine with data and the expected outcomes. The machine then learns to solve the problem on its own.</li>
+</ul></li>
+</ul>
+<section id="example" class="level4">
+<h4 class="anchored" data-anchor-id="example">Example:</h4>
+<p>Instead of telling a machine how to do addition, you give it pairs of numbers and their sums (e.g., 1+1=2, 2+2=4) and ask it to figure out the pattern.</p>
+</section>
+</section>
+<section id="key-stages-in-the-machine-learning-process" class="level3">
+<h3 class="anchored" data-anchor-id="key-stages-in-the-machine-learning-process">Key Stages in the Machine Learning Process</h3>
+<section id="data-preparation-1" class="level4">
+<h4 class="anchored" data-anchor-id="data-preparation-1">1. Data Preparation</h4>
+<ul>
+<li><p><strong>Data Uploading</strong>: Collecting and storing the data required for training.</p></li>
+<li><p><strong>Feature Engineering</strong>: Transforming raw data into features that better represent the underlying problem to the predictive models.</p>
+<ul>
+<li><strong>Data Types</strong>:
+<ul>
+<li><strong>Structured Data</strong>: Numbers and text in tables.</li>
+<li><strong>Unstructured Data</strong>: Images, videos, etc.</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="model-training" class="level4">
+<h4 class="anchored" data-anchor-id="model-training">2. Model Training</h4>
+<ul>
+<li><p><strong>Iterative Process</strong>: Involves training and evaluation cycles to improve the model.</p></li>
+<li><p><strong>Training</strong>: The model learns patterns from the data.</p></li>
+<li><p><strong>Evaluation</strong>: The model’s performance is assessed to refine it further.</p></li>
+</ul>
+</section>
+<section id="model-serving" class="level4">
+<h4 class="anchored" data-anchor-id="model-serving">3. Model Serving</h4>
+<ul>
+<li><p><strong>Deployment</strong>: The trained model is deployed to make predictions on new data.</p></li>
+<li><p><strong>Monitoring and Management</strong>: Ensuring the model performs well in production and making necessary adjustments.</p></li>
+</ul>
+</section>
+</section>
+<section id="machine-learning-workflow-comparison-to-a-restaurant" class="level3">
+<h3 class="anchored" data-anchor-id="machine-learning-workflow-comparison-to-a-restaurant">Machine Learning Workflow Comparison to a Restaurant</h3>
+<ul>
+<li><p><strong>Data Preparation</strong>: Preparing raw ingredients.</p></li>
+<li><p><strong>Model Training</strong>: Experimenting with different recipes.</p></li>
+<li><p><strong>Model Serving</strong>: Finalizing the menu and serving the meal to customers.</p></li>
+</ul>
+</section>
+<section id="iterative-nature-of-ml-workflow" class="level3">
+<h3 class="anchored" data-anchor-id="iterative-nature-of-ml-workflow">Iterative Nature of ML Workflow</h3>
+<p>The machine learning workflow isn’t linear; it’s iterative. For example:</p>
+<ul>
+<li>During model training, you may need to return to the raw data to generate more useful features.</li>
+<li>When monitoring the model during serving, you might find data drifting or a drop in accuracy, prompting you to adjust the model parameters.</li>
+</ul>
+</section>
+<section id="vertex-ai-support-for-ml-workflow" class="level3">
+<h3 class="anchored" data-anchor-id="vertex-ai-support-for-ml-workflow">Vertex AI Support for ML Workflow</h3>
+<p>Vertex AI provides two options to build machine learning models:</p>
+<ol type="1">
+<li><strong>AutoML</strong>: A codeless solution.</li>
+<li><strong>Custom Training</strong>: A code-based solution.</li>
+</ol>
+</section>
+<section id="features-of-vertex-ai" class="level3">
+<h3 class="anchored" data-anchor-id="features-of-vertex-ai">Features of Vertex AI</h3>
+<ul>
+<li><p><strong>Feature Store</strong>: Centralized repository for organizing, storing, and serving features for training models.</p></li>
+<li><p><strong>Vizier</strong>: Helps tune hyperparameters in complex machine learning models.</p></li>
+<li><p><strong>Explainable AI</strong>: Helps interpret training performance and model behaviors.</p></li>
+<li><p><strong>Pipelines</strong>: Automate and monitor the ML production line.</p></li>
+</ul>
+</section>
+<section id="summary-1" class="level3">
+<h3 class="anchored" data-anchor-id="summary-1">Summary</h3>
+<p>Vertex AI supports the entire machine learning workflow, providing a seamless, scalable, sustainable, and speedy environment for building and deploying machine learning models. In the following lessons, you’ll get hands-on practice with these tools and learn how to leverage them for your ML projects.</p>
+</section>
+</section>
+<section id="automl-workflow-with-vertex-ai" class="level2">
+<h2 class="anchored" data-anchor-id="automl-workflow-with-vertex-ai">AutoML Workflow with Vertex AI</h2>
+<p>Let’s look closer at an AutoML workflow. The first stage of the AutoML workflow is data preparation. During this stage, you must upload data and then prepare the data for model training with feature engineering.</p>
+<section id="data-preparation-2" class="level3">
+<h3 class="anchored" data-anchor-id="data-preparation-2">Data Preparation</h3>
+<section id="uploading-data" class="level4">
+<h4 class="anchored" data-anchor-id="uploading-data">1. Uploading Data</h4>
+<p>When you upload a dataset in the Vertex AI user interface, you’ll need to:</p>
+<ul>
+<li><p><strong>Provide a Meaningful Name</strong>: Name the data for easy identification.</p></li>
+<li><p><strong>Select the Data Type and Objective</strong>: AutoML supports four types of data: image, tabular, text, and video.</p>
+<ul>
+<li><strong>Steps</strong>:
+<ul>
+<li><strong>Check Data Requirements</strong>: Refer to the resources section of this course for detailed requirements.</li>
+<li><strong>Add Labels to the Data</strong>: Labels are training targets (e.g., tagging images as “cat” or “dog”).
+<ul>
+<li><strong>Manual Labeling</strong>: Add labels manually.</li>
+<li><strong>Google’s Paid Label Service</strong>: Use human labelers via the Vertex console for accurate labeling.</li>
+</ul></li>
+<li><strong>Upload the Data</strong>: Data can be uploaded from a local source, BigQuery, or Cloud Storage.</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="feature-engineering-1" class="level4">
+<h4 class="anchored" data-anchor-id="feature-engineering-1">2. Feature Engineering</h4>
+<p>After uploading your data, the next step is to prepare it for model training with feature engineering.</p>
+<ul>
+<li><p><strong>Analogy</strong>: Imagine you’re in the kitchen preparing a meal. Your data is like your ingredients (carrots, onions, tomatoes). Before cooking, you need to peel, chop, and rinse these ingredients. Similarly, in feature engineering, data must be processed before the model starts training.</p></li>
+<li><p><strong>Feature Definition</strong>: A feature is a factor that contributes to the prediction. It’s an independent variable in statistics or a column in a table.</p></li>
+<li><p><strong>Feature Store</strong>:</p>
+<ul>
+<li><strong>Purpose</strong>: A centralized repository to organize, store, and serve machine learning features.</li>
+<li><strong>Functionality</strong>: Aggregates features from different sources and updates them, making them available from a central repository.</li>
+<li><strong>Usage</strong>: Engineers can use features from the Feature Store dictionary to build datasets.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="benefits-of-vertex-ai-feature-store" class="level3">
+<h3 class="anchored" data-anchor-id="benefits-of-vertex-ai-feature-store">Benefits of Vertex AI Feature Store</h3>
+<ol type="1">
+<li><strong>Shareable Features</strong>:
+<ul>
+<li><strong>Consistency</strong>: Managed and served from a central repository, maintaining consistency across your organization.</li>
+</ul></li>
+<li><strong>Reusable Features</strong>:
+<ul>
+<li><strong>Efficiency</strong>: Saves time and reduces duplicative efforts, especially for high-value features.</li>
+</ul></li>
+<li><strong>Scalable Features</strong>:
+<ul>
+<li><strong>Performance</strong>: Automatically scales to provide low-latency serving, allowing focus on developing the logic to create features without worrying about deployment.</li>
+</ul></li>
+<li><strong>Ease of Use</strong>:
+<ul>
+<li><strong>User Interface</strong>: Feature Store is built on an easy-to-navigate user interface.</li>
+</ul></li>
+</ol>
+</section>
+<section id="summary-2" class="level3">
+<h3 class="anchored" data-anchor-id="summary-2">Summary</h3>
+<p>In this section, we’ve explored the first stage of the AutoML workflow: data preparation. This involves uploading data, adding labels, and preparing data with feature engineering. Vertex AI’s Feature Store aids in organizing, storing, and serving features, providing a seamless, reusable, scalable, and user-friendly solution.</p>
+</section>
+</section>
+<section id="model-training-and-evaluation-with-vertex-ai-automl" class="level2">
+<h2 class="anchored" data-anchor-id="model-training-and-evaluation-with-vertex-ai-automl">Model Training and Evaluation with Vertex AI AutoML</h2>
+<p>Now that our data is ready, which, if we return to the cooking analogy is our ingredients, it’s time to train the model. This is like experimenting with some recipes. This stage involves two steps: model training, which would be like cooking the recipe, and model evaluation, which is when we taste how good the meal is. This process might be iterative.</p>
+<section id="clarifying-ai-and-machine-learning" class="level3">
+<h3 class="anchored" data-anchor-id="clarifying-ai-and-machine-learning">Clarifying AI and Machine Learning</h3>
+<p>Before diving into model training and evaluation, let’s clarify two important terms: artificial intelligence and machine learning.</p>
+<ul>
+<li><p><strong>Artificial Intelligence (AI)</strong>: An umbrella term for anything related to computers mimicking human intelligence. For example, an online word processor’s spell check feature or robots performing human actions.</p></li>
+<li><p><strong>Machine Learning (ML)</strong>: A subset of AI that includes supervised and unsupervised learning. It involves training models on data to make predictions or identify patterns.</p>
+<ul>
+<li><strong>Deep Learning</strong>: A subset of ML that adds layers between input data and output results, allowing for deeper learning.</li>
+</ul></li>
+</ul>
+</section>
+<section id="supervised-vs.-unsupervised-learning" class="level3">
+<h3 class="anchored" data-anchor-id="supervised-vs.-unsupervised-learning">Supervised vs.&nbsp;Unsupervised Learning</h3>
+<ul>
+<li><p><strong>Supervised Learning</strong>: Task-driven, goal-oriented learning where each data point has a label or answer.</p>
+<ul>
+<li><p><strong>Classification</strong>: Predicts a categorical variable (e.g., distinguishing between cats and dogs in images).</p></li>
+<li><p><strong>Regression</strong>: Predicts a continuous number (e.g., predicting future sales trends based on past sales).</p></li>
+</ul></li>
+<li><p><strong>Unsupervised Learning</strong>: Data-driven learning that identifies patterns without labeled data.</p>
+<ul>
+<li><p><strong>Clustering</strong>: Groups data points with similar characteristics into clusters (e.g., customer segmentation based on demographics).</p></li>
+<li><p><strong>Association</strong>: Identifies relationships between data points (e.g., product correlations for store promotions).</p></li>
+<li><p><strong>Dimensionality Reduction</strong>: Reduces the number of features in a dataset to improve model efficiency (e.g., combining customer characteristics for an insurance quote).</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="model-training-and-hyperparameters" class="level3">
+<h3 class="anchored" data-anchor-id="model-training-and-hyperparameters">Model Training and Hyperparameters</h3>
+<p>Although Google Cloud provides four machine learning options, AutoML and pre-built APIs do not require you to specify a machine learning model. Instead, you define your objective, such as text translation or image detection, and Google selects the best model to meet your goal.</p>
+<ul>
+<li><p><strong>BigQuery ML and Custom Training</strong>: You need to specify which model to train your data on and assign hyperparameters.</p>
+<ul>
+<li><strong>Hyperparameters</strong>: User-defined knobs that guide the machine learning process (e.g., learning rate, which controls how fast the machine learns).</li>
+</ul></li>
+</ul>
+</section>
+<section id="automl-and-hyperparameter-tuning" class="level3">
+<h3 class="anchored" data-anchor-id="automl-and-hyperparameter-tuning">AutoML and Hyperparameter Tuning</h3>
+<p>With AutoML, you don’t need to worry about adjusting hyperparameter knobs because the tuning happens automatically on the backend. This is largely done by a neural architecture search, which finds the best-fit model by comparing performance against thousands of other models.</p>
+</section>
+<section id="summary-3" class="level3">
+<h3 class="anchored" data-anchor-id="summary-3">Summary</h3>
+<ul>
+<li><p><strong>Data Preparation</strong>: Like preparing ingredients for a meal.</p></li>
+<li><p><strong>Model Training</strong>: Like cooking the recipe.</p></li>
+<li><p><strong>Model Evaluation</strong>: Like tasting the meal to see how good it is.</p></li>
+</ul>
+<p>By using AutoML, you can focus on defining your business objectives while Google Cloud handles the complexity of model selection and hyperparameter tuning. In the next sections, you will get hands-on practice building a machine learning model end-to-end using AutoML on Vertex AI.</p>
+</section>
+</section>
+<section id="model-evaluation-with-vertex-ai-automl" class="level2">
+<h2 class="anchored" data-anchor-id="model-evaluation-with-vertex-ai-automl">Model Evaluation with Vertex AI AutoML</h2>
+<p>While we are experimenting with a recipe, we need to keep tasting it constantly to make sure it meets our expectations. This is the model evaluation portion of the model training stage. Vertex AI provides extensive evaluation metrics to help determine a model’s performance.</p>
+<section id="evaluation-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="evaluation-metrics">Evaluation Metrics</h3>
+<p>There are two sets of measurements used in model evaluation:</p>
+<ol type="1">
+<li><p><strong>Confusion Matrix-Based Metrics</strong>: Includes recall and precision.</p></li>
+<li><p><strong>Feature Importance</strong>: We’ll explore this later in the section.</p></li>
+</ol>
+</section>
+<section id="confusion-matrix" class="level3">
+<h3 class="anchored" data-anchor-id="confusion-matrix">Confusion Matrix</h3>
+<p>A confusion matrix is a performance measurement for machine learning classification problems. It’s a table with combinations of predicted and actual values. For simplicity, consider a binary classification (e.g., cat and not cat).</p>
+<section id="confusion-matrix-components" class="level4">
+<h4 class="anchored" data-anchor-id="confusion-matrix-components">Confusion Matrix Components</h4>
+<ul>
+<li><p><strong>True Positive (TP)</strong>: The model predicted positive, and it is true (e.g., predicted cat, and it is a cat).</p></li>
+<li><p><strong>True Negative (TN)</strong>: The model predicted negative, and it is true (e.g., predicted not cat, and it isn’t a cat).</p></li>
+<li><p><strong>False Positive (FP)</strong>: The model predicted positive, and it is false (Type 1 Error) (e.g., predicted cat, but it isn’t a cat).</p></li>
+<li><p><strong>False Negative (FN)</strong>: The model predicted negative, and it is false (Type 2 Error) (e.g., predicted not cat, but it is a cat).</p></li>
+</ul>
+</section>
+</section>
+<section id="key-metrics-recall-and-precision" class="level3">
+<h3 class="anchored" data-anchor-id="key-metrics-recall-and-precision">Key Metrics: Recall and Precision</h3>
+<p>These metrics help evaluate the effectiveness of the model.</p>
+<ul>
+<li><p><strong>Recall</strong>: Measures the proportion of actual positives correctly identified. <span class="math display">\[
+  \text{Recall} = \frac{\text{True Positives (TP)}}{\text{True Positives (TP)} + \text{False Negatives (FN)}}
+  \]</span></p></li>
+<li><p><strong>Precision</strong>: Measures the proportion of predicted positives that are actually positive. <span class="math display">\[
+  \text{Precision} = \frac{\text{True Positives (TP)}}{\text{True Positives (TP)} + \text{False Positives (FP)}}
+  \]</span></p></li>
+</ul>
+</section>
+<section id="example-fishing-net-analogy" class="level3">
+<h3 class="anchored" data-anchor-id="example-fishing-net-analogy">Example: Fishing Net Analogy</h3>
+<p>Imagine you’re fishing with a net:</p>
+<ul>
+<li><strong>Wide Net</strong>:
+<ul>
+<li><p>Caught 80 fish and 80 rocks.</p></li>
+<li><p><strong>Recall</strong>: 80% (80 fish out of 100 total fish in the lake).</p></li>
+<li><p><strong>Precision</strong>: 50% (80 fish out of 160 total catches).</p></li>
+</ul></li>
+<li><strong>Smaller Net</strong>:
+<ul>
+<li><p>Caught 20 fish and 0 rocks.</p></li>
+<li><p><strong>Recall</strong>: 20% (20 out of 100 fish collected).</p></li>
+<li><p><strong>Precision</strong>: 100% (20 out of 20 total catches).</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="trade-off-between-precision-and-recall" class="level3">
+<h3 class="anchored" data-anchor-id="trade-off-between-precision-and-recall">Trade-Off Between Precision and Recall</h3>
+<p>Depending on the use case, you may need to optimize for one metric over the other.</p>
+<ul>
+<li><p><strong>High Recall</strong>: Catch as many positives as possible (e.g., Gmail catching spam emails).</p></li>
+<li><p><strong>High Precision</strong>: Only catch definite positives (e.g., avoiding blocking non-spam emails).</p></li>
+</ul>
+</section>
+<section id="visualization-in-vertex-ai" class="level3">
+<h3 class="anchored" data-anchor-id="visualization-in-vertex-ai">Visualization in Vertex AI</h3>
+<p>Vertex AI visualizes the precision and recall curve, allowing adjustments based on the problem being solved. You’ll get to practice adjusting precision and recall in the AutoML lab.</p>
+</section>
+<section id="feature-importance" class="level3">
+<h3 class="anchored" data-anchor-id="feature-importance">Feature Importance</h3>
+<p>In addition to confusion matrix metrics, feature importance is another useful measurement.</p>
+<ul>
+<li><strong>Feature Importance in Vertex AI</strong>: Displayed through a bar chart to illustrate each feature’s contribution to the prediction.
+<ul>
+<li><p><strong>Longer Bar</strong>: Indicates greater importance.</p></li>
+<li><p><strong>Helps Decide</strong>: Which features to include in the ML model.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="explainable-ai" class="level3">
+<h3 class="anchored" data-anchor-id="explainable-ai">Explainable AI</h3>
+<p>Feature importance is part of Vertex AI’s comprehensive machine learning functionality called Explainable AI. Explainable AI includes tools and frameworks to help understand and interpret predictions made by machine learning models.</p>
+</section>
+<section id="summary-4" class="level3">
+<h3 class="anchored" data-anchor-id="summary-4">Summary</h3>
+<p>In this section, we explored model evaluation using Vertex AI AutoML, focusing on confusion matrix-based metrics like recall and precision, and the concept of feature importance. These tools help ensure that your machine learning model meets performance expectations and provides valuable insights into model behavior.</p>
+</section>
+</section>
+<section id="model-serving-with-vertex-ai-automl" class="level2">
+<h2 class="anchored" data-anchor-id="model-serving-with-vertex-ai-automl">Model Serving with Vertex AI AutoML</h2>
+<p>The recipes are ready and now it’s time to serve the meal. This represents the final stage of the machine learning workflow: model serving. Model serving consists of two steps: model deployment and model monitoring.</p>
+<section id="model-deployment" class="level3">
+<h3 class="anchored" data-anchor-id="model-deployment">Model Deployment</h3>
+<p>Model deployment is like serving the meal to a hungry customer. It involves implementing the trained model to make predictions on new data.</p>
+<section id="deployment-options" class="level4">
+<h4 class="anchored" data-anchor-id="deployment-options">Deployment Options</h4>
+<ol type="1">
+<li><p><strong>Deploy to an Endpoint</strong>:</p>
+<ul>
+<li><p>Best for immediate results with low latency (e.g., instant recommendations based on a user’s browsing habits).</p></li>
+<li><p>A model must be deployed to an endpoint before it can serve real-time predictions.</p></li>
+</ul></li>
+<li><p><strong>Batch Prediction</strong>:</p>
+<ul>
+<li><p>Best when no immediate response is required and accumulated data should be processed in a single request.</p></li>
+<li><p>Example: Sending out new ads every other week based on user behavior and market trends.</p></li>
+</ul></li>
+<li><p><strong>Offline Prediction</strong>:</p>
+<ul>
+<li><p>Best when the model should be deployed in a specific environment off the cloud.</p></li>
+<li><p>This option will be practiced in the lab.</p></li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="model-monitoring" class="level3">
+<h3 class="anchored" data-anchor-id="model-monitoring">Model Monitoring</h3>
+<p>Model monitoring is like checking with the waitstaff to ensure that the restaurant is operating efficiently. It involves keeping track of the model’s performance and making adjustments as needed.</p>
+<section id="mlops-machine-learning-operations" class="level4">
+<h4 class="anchored" data-anchor-id="mlops-machine-learning-operations">MLOps (Machine Learning Operations)</h4>
+<p>MLOps combines machine learning development with operations, applying similar principles from DevOps to machine learning models. MLOps aims to solve production challenges related to machine learning by building and operating an integrated ML system in production. This involves:</p>
+<ul>
+<li><p><strong>Automation and Monitoring</strong>: Advocating for these at each step of the ML system construction.</p></li>
+<li><p><strong>Continuous Integration, Training, and Delivery</strong>: Enabling these processes to ensure the ML system remains up-to-date and functional.</p></li>
+</ul>
+</section>
+</section>
+<section id="tools-and-best-practices" class="level3">
+<h3 class="anchored" data-anchor-id="tools-and-best-practices">Tools and Best Practices</h3>
+<ul>
+<li><p><strong>Vertex AI Pipelines</strong>:</p>
+<ul>
+<li><p>Automates, monitors, and governs ML systems by orchestrating the workflow in a serverless manner.</p></li>
+<li><p>Functions like a production control room, displaying production data and triggering warnings if something goes wrong based on predefined thresholds.</p></li>
+</ul></li>
+<li><p><strong>Vertex AI Workbench</strong>:</p>
+<ul>
+<li><p>A Notebook tool that allows you to define your own pipeline.</p></li>
+<li><p>Uses prebuilt pipeline components, so you primarily need to specify how the pipeline is put together using these components as building blocks.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="summary-5" class="level3">
+<h3 class="anchored" data-anchor-id="summary-5">Summary</h3>
+<p>With the final two steps, model deployment and model monitoring, we complete our exploration of the machine learning workflow. The restaurant is open and operating smoothly. Bon appétit!</p>
+</section>
+<section id="recap" class="level3">
+<h3 class="anchored" data-anchor-id="recap">Recap</h3>
+<ul>
+<li><p><strong>Model Deployment</strong>: Implementing the model to make predictions.</p>
+<ul>
+<li>Options: Endpoint, Batch, Offline.</li>
+</ul></li>
+<li><p><strong>Model Monitoring</strong>: Keeping track of the model’s performance and making necessary adjustments.</p>
+<ul>
+<li>Tools: Vertex AI Pipelines, Vertex AI Workbench.</li>
+</ul></li>
+</ul>
+</section>
+<section id="conclusion-8" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion-8">Conclusion</h3>
+<p>This section covered the entire machine learning workflow using Vertex AI AutoML, from data preparation to model training, evaluation, deployment, and monitoring. With these steps, you can ensure your machine learning models are effectively trained, deployed, and maintained.</p>
+</section>
+</section>
+</section>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>chapter26_self_supervised_learning – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="text-content">
+<section id="chapter-26.-self-supervised-learning" class="level3">
+<h3 class="anchored" data-anchor-id="chapter-26.-self-supervised-learning">Chapter 26. Self-supervised Learning</h3>
+<p>Self-supervised learning is a type of unsupervised learning where the data itself provides the supervision. This approach leverages the inherent structure in the data to generate labels, enabling the model to learn useful representations without requiring labeled data. These representations can be used for various downstream tasks, such as classification, detection, and segmentation.</p>
+<section id="pretext-tasks-in-computer-vision" class="level4">
+<h4 class="anchored" data-anchor-id="pretext-tasks-in-computer-vision">26.1. Pretext Tasks in Computer Vision</h4>
+<p>Pretext tasks are artificially created tasks that help a model learn useful representations of the data. These tasks do not require manually labeled data, as the labels can be derived from the data itself. The goal is to design tasks that encourage the model to learn features that are beneficial for downstream applications.</p>
+</section>
+<section id="rotation-prediction" class="level4">
+<h4 class="anchored" data-anchor-id="rotation-prediction">26.1.1. Rotation Prediction</h4>
+<p><strong>Rotation prediction</strong> involves training a model to predict the rotation applied to an image. By learning to recognize different rotations, the model gains a better understanding of the visual features in the image.</p>
+<ul>
+<li><strong>Task Definition:</strong> The model is given an image and a rotation (0°, 90°, 180°, 270°) applied to it, and it must predict the rotation angle.</li>
+<li><strong>Learning Objective:</strong> By learning to predict the rotation, the model captures the spatial structure and orientation of objects within the image. This helps the model understand shapes, edges, and other spatial features.</li>
+<li><strong>Advantages:</strong> Simple to implement and effective in learning spatial features. It can be easily applied to any dataset without needing manual annotation.</li>
+<li><strong>Disadvantages:</strong> May not capture fine-grained features specific to certain tasks. The task might be too simple for complex datasets, potentially leading to underfitting.</li>
+</ul>
+<p><strong>Example:</strong> Consider an image dataset where each image is rotated by one of the four possible angles. The model is trained to classify the rotation angle of each image. This task forces the model to learn the orientation and spatial arrangement of objects within the images.</p>
+</section>
+<section id="jigsaw-puzzles" class="level4">
+<h4 class="anchored" data-anchor-id="jigsaw-puzzles">26.1.2. Jigsaw Puzzles</h4>
+<p><strong>Jigsaw puzzles</strong> involve training a model to solve shuffled pieces of an image. This task helps the model understand the spatial relationships and context within the image.</p>
+<ul>
+<li><strong>Task Definition:</strong> An image is divided into a grid of patches, which are then shuffled. The model must predict the correct arrangement of the patches.</li>
+<li><strong>Learning Objective:</strong> By solving the jigsaw puzzle, the model learns to capture the global context and relationships between different parts of the image. This encourages the model to learn both local features (within patches) and global features (across patches).</li>
+<li><strong>Advantages:</strong> Encourages the model to learn both local and global features. This task is versatile and can be adjusted in difficulty by changing the number of patches.</li>
+<li><strong>Disadvantages:</strong> Requires careful design to balance difficulty and learning efficiency. If the task is too difficult, the model may struggle to learn; if too easy, it may not learn useful features.</li>
+</ul>
+<p><strong>Example:</strong> An image is divided into a 3x3 grid, resulting in 9 patches. These patches are shuffled, and the model is trained to predict the correct position of each patch. This helps the model learn the spatial dependencies and context within the image.</p>
+</section>
+<section id="colorization" class="level4">
+<h4 class="anchored" data-anchor-id="colorization">26.1.3. Colorization</h4>
+<p><strong>Colorization</strong> involves training a model to predict the color version of a grayscale image. This task helps the model learn to recognize objects and their context within the image.</p>
+<ul>
+<li><strong>Task Definition:</strong> The model is given a grayscale image and must predict the corresponding color image.</li>
+<li><strong>Learning Objective:</strong> By learning to colorize images, the model captures the semantic information and color distributions within the image. It learns to associate grayscale patterns with specific colors, which requires understanding the content and context of the image.</li>
+<li><strong>Advantages:</strong> Effective in learning semantic features and object recognition. Colorization can produce visually meaningful results that are easy to interpret.</li>
+<li><strong>Disadvantages:</strong> Can be challenging to produce realistic colorizations, especially for complex scenes. The model may struggle with ambiguous cases where multiple colorizations are possible.</li>
+</ul>
+<p><strong>Example:</strong> The model is trained on a dataset of grayscale images with their corresponding color versions. The objective is to minimize the difference between the predicted color image and the ground truth color image, encouraging the model to learn semantic content and object boundaries.</p>
+</section>
+<section id="inpainting" class="level4">
+<h4 class="anchored" data-anchor-id="inpainting">26.1.4. Inpainting</h4>
+<p><strong>Inpainting</strong> involves training a model to fill in missing parts of an image. This task helps the model understand the context and structure of the image.</p>
+<ul>
+<li><strong>Task Definition:</strong> Portions of an image are masked, and the model must predict the missing pixels to reconstruct the complete image.</li>
+<li><strong>Learning Objective:</strong> By learning to inpaint, the model captures the context and relationships between visible and missing parts of the image. It learns to infer missing information based on the surrounding context, which requires understanding the structure and content of the image.</li>
+<li><strong>Advantages:</strong> Effective in learning contextual and structural features. Inpainting tasks can be easily adjusted in difficulty by varying the size and shape of the masked regions.</li>
+<li><strong>Disadvantages:</strong> May struggle with complex scenes and large missing areas. The model may produce blurry or unrealistic completions if the task is too difficult.</li>
+</ul>
+<p><strong>Example:</strong> Random patches of an image are masked out, and the model is trained to predict the missing pixels. This forces the model to understand the context and structure of the image, learning to generate plausible completions.</p>
+</section>
+</section>
+<section id="summary" class="level3">
+<h3 class="anchored" data-anchor-id="summary">Summary</h3>
+<p>By leveraging these pretext tasks, self-supervised learning in computer vision can produce robust models that learn useful representations without requiring labeled data. These representations can then be fine-tuned for various downstream tasks, such as object detection, segmentation, and classification. The key to effective self-supervised learning lies in designing pretext tasks that encourage the model to learn generalizable and transferable features.</p>
+</section>
+<section id="contrastive-learning" class="level3">
+<h3 class="anchored" data-anchor-id="contrastive-learning">26.2. Contrastive Learning</h3>
+<p>Contrastive learning is a self-supervised learning approach that aims to learn representations by comparing positive pairs (similar examples) and negative pairs (dissimilar examples). The objective is to minimize the distance between representations of similar examples while maximizing the distance between representations of dissimilar examples.</p>
+<section id="simclr" class="level4">
+<h4 class="anchored" data-anchor-id="simclr">26.2.1. SimCLR</h4>
+<p><strong>SimCLR</strong> (Simple Framework for Contrastive Learning of Visual Representations) is a contrastive learning framework that uses a large batch size and extensive data augmentation to learn effective representations.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Data Augmentation:</strong> Each image is augmented twice to create two different views (positive pair) of the same image.</li>
+<li><strong>Encoder Network:</strong> A deep neural network (e.g., ResNet) is used to extract features from the augmented images.</li>
+<li><strong>Projection Head:</strong> A small neural network (MLP) maps the features to a space where the contrastive loss is applied.</li>
+</ul></li>
+<li><strong>Learning Objective:</strong>
+<ul>
+<li><strong>Contrastive Loss:</strong> The loss function encourages the model to bring the representations of positive pairs closer and push the representations of negative pairs apart. <span class="math display">\[
+\ell_{i,j} = -\log \frac{\exp(\text{sim}(\mathbf{z}_i, \mathbf{z}_j)/\tau)}{\sum_{k=1}^{2N} \mathbb{1}_{[k \neq i]} \exp(\text{sim}(\mathbf{z}_i, \mathbf{z}_k)/\tau)}
+\]</span> where <span class="math inline">\(\text{sim}(\mathbf{z}_i, \mathbf{z}_j)\)</span> is the cosine similarity between two vectors, <span class="math inline">\(\tau\)</span> is a temperature parameter, and <span class="math inline">\(N\)</span> is the batch size.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Effective in learning high-quality representations.</li>
+<li>Simple architecture and easy to implement.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Requires a large batch size, which can be computationally expensive.</li>
+</ul></li>
+</ul>
+</section>
+<section id="moco-momentum-contrast" class="level4">
+<h4 class="anchored" data-anchor-id="moco-momentum-contrast">26.2.2. MoCo (Momentum Contrast)</h4>
+<p><strong>MoCo</strong> (Momentum Contrast) is a contrastive learning framework that uses a momentum encoder to maintain a large and consistent dictionary of feature representations for contrastive learning.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Momentum Encoder:</strong> A slow-moving average of the encoder network ensures consistent representations over time.</li>
+<li><strong>Queue:</strong> A queue stores a large number of negative samples, providing a rich set of negative examples for contrastive learning.</li>
+</ul></li>
+<li><strong>Learning Objective:</strong>
+<ul>
+<li><strong>Contrastive Loss:</strong> Similar to SimCLR, but with a dynamically updated dictionary of negative samples. <span class="math display">\[
+\ell_{q,k^+} = -\log \frac{\exp(\text{sim}(\mathbf{q}, \mathbf{k}^+)/\tau)}{\sum_{k \in \mathcal{K}} \exp(\text{sim}(\mathbf{q}, \mathbf{k})/\tau)}
+\]</span> where <span class="math inline">\(\mathbf{q}\)</span> is the query, <span class="math inline">\(\mathbf{k}^+\)</span> is the positive key, <span class="math inline">\(\mathcal{K}\)</span> is the set of negative keys, and <span class="math inline">\(\tau\)</span> is a temperature parameter.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Maintains a large and consistent set of negative samples.</li>
+<li>Efficient memory usage with a dynamic queue.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>More complex architecture due to the momentum encoder and queue mechanism.</li>
+</ul></li>
+</ul>
+</section>
+<section id="byol-bootstrap-your-own-latent" class="level4">
+<h4 class="anchored" data-anchor-id="byol-bootstrap-your-own-latent">26.2.3. BYOL (Bootstrap Your Own Latent)</h4>
+<p><strong>BYOL</strong> (Bootstrap Your Own Latent) is a contrastive learning framework that does not rely on negative pairs. Instead, it uses a target network to generate positive pairs and a predictor network to match these pairs.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Target Network:</strong> A fixed target network generates positive pairs.</li>
+<li><strong>Online Network:</strong> An online network with an encoder and a predictor.</li>
+<li><strong>Predictor:</strong> A small neural network (MLP) that maps the online network’s output to the target network’s output space.</li>
+</ul></li>
+<li><strong>Learning Objective:</strong>
+<ul>
+<li><strong>Loss Function:</strong> The loss encourages the predictor to match the representations of the online network with those of the target network. <span class="math display">\[
+\ell = \|\mathbf{q} - \text{stopgrad}(\mathbf{z}')\|_2^2
+\]</span> where <span class="math inline">\(\mathbf{q}\)</span> is the online network’s output, and <span class="math inline">\(\mathbf{z}'\)</span> is the target network’s output.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Does not require negative pairs.</li>
+<li>Simplifies training and improves stability.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Theoretical understanding is less mature compared to other methods.</li>
+</ul></li>
+</ul>
+</section>
+<section id="swav-swapping-assignments-between-views" class="level4">
+<h4 class="anchored" data-anchor-id="swav-swapping-assignments-between-views">26.2.4. SwAV (Swapping Assignments between Views)</h4>
+<p><strong>SwAV</strong> (Swapping Assignments between Views) is a contrastive learning framework that clusters data and swaps cluster assignments between different augmented views of the same image.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Multi-crop Augmentation:</strong> Multiple views of an image are generated with different augmentations.</li>
+<li><strong>Clustering:</strong> The model learns to assign cluster prototypes to the different views.</li>
+<li><strong>Swapped Prediction:</strong> The model predicts the cluster assignments of one view based on the features of another view.</li>
+</ul></li>
+<li><strong>Learning Objective:</strong>
+<ul>
+<li><strong>Swapped Prediction Loss:</strong> The loss encourages the model to predict the cluster assignment of one view using the representation of another view. <span class="math display">\[
+\ell = \sum_{i \in \{1,2\}} \sum_{k=1}^{K} -q_k \log p_{k,i}
+\]</span> where <span class="math inline">\(q_k\)</span> is the cluster assignment probability for view 1, and <span class="math inline">\(p_{k,i}\)</span> is the predicted probability for view 2.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Effective in learning discriminative features without negative pairs.</li>
+<li>Efficient use of multi-crop augmentation.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Requires careful tuning of clustering parameters.</li>
+</ul></li>
+</ul>
+<p>By leveraging contrastive learning methods such as SimCLR, MoCo, BYOL, and SwAV, self-supervised learning can produce high-quality representations that are useful for various downstream tasks, enabling robust and effective learning from unlabeled data.</p>
+</section>
+</section>
+<section id="masked-language-modeling" class="level3">
+<h3 class="anchored" data-anchor-id="masked-language-modeling">26.3. Masked Language Modeling</h3>
+<p>Masked Language Modeling (MLM) is a self-supervised learning technique primarily used in natural language processing (NLP). It involves masking certain words in a sentence and training a model to predict these masked words based on the context provided by the other words in the sentence. This approach enables the model to learn contextual word representations that are useful for a variety of downstream NLP tasks.</p>
+<section id="bert-and-its-variants" class="level4">
+<h4 class="anchored" data-anchor-id="bert-and-its-variants">26.3.1. BERT and its Variants</h4>
+<p><strong>BERT</strong> (Bidirectional Encoder Representations from Transformers) is one of the most influential models based on masked language modeling. It is designed to pre-train deep bidirectional representations by jointly conditioning on both left and right context in all layers.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Transformer Encoder:</strong> BERT uses the transformer architecture, specifically the encoder part, which processes input tokens with self-attention mechanisms.</li>
+<li><strong>Token, Segment, and Position Embeddings:</strong> BERT uses these embeddings to capture different types of information about the input tokens.</li>
+</ul></li>
+<li><strong>Training Objective:</strong>
+<ul>
+<li><p><strong>Masked Language Modeling (MLM):</strong> Randomly masks 15% of the tokens in the input and trains the model to predict these masked tokens. <span class="math display">\[
+\mathcal{L}_{MLM} = -\sum_{i \in \text{masked tokens}} \log P(t_i | \text{context})
+\]</span></p></li>
+<li><p><strong>Next Sentence Prediction (NSP):</strong> BERT also includes a next sentence prediction task to improve the model’s understanding of sentence relationships. <span class="math display">\[
+\mathcal{L}_{NSP} = -\log P(\text{IsNext} | \text{context}) - \log P(\text{NotNext} | \text{context})
+\]</span></p></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Captures bidirectional context, improving performance on various NLP tasks.</li>
+<li>Pre-trained models can be fine-tuned on specific tasks with relatively small datasets.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Computationally expensive due to the large number of parameters.</li>
+<li>Requires extensive training data and resources.</li>
+</ul></li>
+</ul>
+<p><strong>Variants of BERT:</strong></p>
+<ul>
+<li><strong>RoBERTa (Robustly Optimized BERT Pre-training Approach):</strong>
+<ul>
+<li><strong>Improvements Over BERT:</strong> Removes the NSP task and trains with more data, larger batch sizes, and longer sequences.</li>
+<li><strong>Objective:</strong> Focuses solely on the MLM task but with dynamic masking (different masks applied each epoch).</li>
+<li><strong>Performance:</strong> Achieves better performance than BERT on several benchmarks due to more robust training.</li>
+</ul></li>
+<li><strong>ALBERT (A Lite BERT for Self-supervised Learning of Language Representations):</strong>
+<ul>
+<li><strong>Parameter Reduction:</strong> Uses factorized embedding parameterization and cross-layer parameter sharing to reduce the number of parameters.</li>
+<li><strong>Objective:</strong> Introduces sentence-order prediction (SOP) instead of NSP to improve inter-sentence coherence understanding.</li>
+<li><strong>Efficiency:</strong> More efficient in terms of memory and computation while maintaining performance.</li>
+</ul></li>
+</ul>
+</section>
+<section id="roberta" class="level4">
+<h4 class="anchored" data-anchor-id="roberta">26.3.2. RoBERTa</h4>
+<p><strong>RoBERTa</strong> (Robustly Optimized BERT Pre-training Approach) builds on BERT with several optimizations to improve performance.</p>
+<ul>
+<li><strong>Key Improvements:</strong>
+<ul>
+<li><strong>Larger Batch Sizes and Learning Rate:</strong> Utilizes larger batch sizes and a higher learning rate during pre-training.</li>
+<li><strong>Dynamic Masking:</strong> Applies different masks to the input tokens in each training epoch, enhancing the diversity of training examples.</li>
+<li><strong>Increased Training Data:</strong> Trained on significantly more data, including additional datasets not used in the original BERT.</li>
+</ul></li>
+<li><strong>Training Objective:</strong>
+<ul>
+<li><strong>Masked Language Modeling (MLM):</strong> Similar to BERT but without the NSP task. Focuses on predicting masked tokens with a more extensive training regime.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Enhanced performance on various benchmarks due to optimized training.</li>
+<li>Avoids the complexity of the NSP task, focusing entirely on MLM.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Requires more computational resources for training due to larger datasets and batch sizes.</li>
+</ul></li>
+</ul>
+</section>
+<section id="albert" class="level4">
+<h4 class="anchored" data-anchor-id="albert">26.3.3. ALBERT</h4>
+<p><strong>ALBERT</strong> (A Lite BERT for Self-supervised Learning of Language Representations) is designed to reduce the model size while maintaining or improving performance.</p>
+<ul>
+<li><strong>Key Innovations:</strong>
+<ul>
+<li><strong>Factorized Embedding Parameterization:</strong> Separates the size of hidden layers from the size of vocabulary embeddings, reducing the number of parameters.</li>
+<li><strong>Cross-layer Parameter Sharing:</strong> Shares parameters across layers, significantly reducing the total number of parameters.</li>
+<li><strong>Sentence-order Prediction (SOP):</strong> Replaces the NSP task with SOP, which predicts the order of two consecutive segments, improving inter-sentence coherence understanding.</li>
+</ul></li>
+<li><strong>Training Objective:</strong>
+<ul>
+<li><strong>Masked Language Modeling (MLM):</strong> Similar to BERT.</li>
+<li><strong>Sentence-order Prediction (SOP):</strong> Introduces a new task to predict the order of two segments from the same document. <span class="math display">\[
+\mathcal{L}_{SOP} = -\log P(\text{IsOrderCorrect} | \text{context})
+\]</span></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Significantly fewer parameters than BERT, making it more memory and computation efficient.</li>
+<li>Maintains or improves performance on various NLP benchmarks.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Complexity in implementing parameter sharing and factorized embeddings.</li>
+</ul></li>
+</ul>
+<p>By leveraging the principles of masked language modeling, models like BERT, RoBERTa, and ALBERT have advanced the field of NLP, providing powerful tools for a wide range of language understanding tasks. These models can be fine-tuned for specific applications, enabling robust performance with relatively small amounts of labeled data.</p>
+</section>
+</section>
+<section id="self-supervised-vision-transformers" class="level3">
+<h3 class="anchored" data-anchor-id="self-supervised-vision-transformers">26.4. Self-supervised Vision Transformers</h3>
+<p>Vision Transformers (ViTs) have recently gained popularity as an effective architecture for computer vision tasks. Self-supervised learning with ViTs leverages large amounts of unlabeled data to learn useful representations, which can be fine-tuned for various downstream tasks.</p>
+<section id="vit-vision-transformer" class="level4">
+<h4 class="anchored" data-anchor-id="vit-vision-transformer">26.4.1. ViT (Vision Transformer)</h4>
+<p><strong>ViT</strong> (Vision Transformer) applies the transformer architecture, traditionally used in NLP, to image data. It processes images as sequences of patches, treating them similarly to word tokens in text.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Patch Embeddings:</strong> An image is divided into fixed-size patches, and each patch is linearly embedded into a vector.</li>
+<li><strong>Transformer Encoder:</strong> These patch embeddings are passed through a standard transformer encoder, consisting of multi-head self-attention layers and feed-forward networks.</li>
+<li><strong>Positional Embeddings:</strong> Positional information is added to the patch embeddings to retain spatial structure.</li>
+</ul></li>
+<li><strong>Self-supervised Learning Objective:</strong>
+<ul>
+<li><strong>Masked Patch Prediction:</strong> Similar to masked language modeling, certain patches are masked, and the model is trained to predict the masked patches based on the context provided by the other patches.</li>
+<li><strong>Contrastive Learning:</strong> Alternatively, contrastive learning techniques can be used where the model learns to distinguish between different augmentations of the same image.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Captures long-range dependencies and contextual information more effectively than CNNs.</li>
+<li>Scales well with larger datasets and model sizes.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Requires a large amount of data and computational resources for training.</li>
+<li>May struggle with small datasets due to lack of inductive biases present in CNNs.</li>
+</ul></li>
+</ul>
+</section>
+<section id="deit-data-efficient-image-transformers" class="level4">
+<h4 class="anchored" data-anchor-id="deit-data-efficient-image-transformers">26.4.2. DeiT (Data-efficient Image Transformers)</h4>
+<p><strong>DeiT</strong> (Data-efficient Image Transformers) is designed to improve the training efficiency of Vision Transformers, making them more data-efficient and accessible.</p>
+<ul>
+<li><strong>Key Improvements:</strong>
+<ul>
+<li><strong>Teacher-student Training:</strong> Uses a distillation approach where a teacher model (typically a CNN) provides additional supervision to the student ViT model.</li>
+<li><strong>Augmentation Techniques:</strong> Leverages advanced data augmentation strategies such as RandAugment and Mixup to enhance the diversity of training examples.</li>
+<li><strong>Distillation Token:</strong> Introduces an additional token that interacts with the image patches, learning from both the image data and the teacher’s output.</li>
+</ul></li>
+<li><strong>Self-supervised Learning Objective:</strong>
+<ul>
+<li><strong>Distillation Loss:</strong> Combines the standard classification loss with a distillation loss that aligns the student’s predictions with the teacher’s output. <span class="math display">\[
+\mathcal{L}_{\text{DeiT}} = \mathcal{L}_{\text{classification}} + \lambda \mathcal{L}_{\text{distillation}}
+\]</span> where <span class="math inline">\(\lambda\)</span> controls the weight of the distillation loss.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>More data-efficient, requiring less labeled data compared to standard ViTs.</li>
+<li>Achieves competitive performance with fewer training resources.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Still requires a powerful teacher model for effective distillation.</li>
+<li>Complex training setup involving distillation.</li>
+</ul></li>
+</ul>
+</section>
+<section id="dino-self-distillation-with-no-labels" class="level4">
+<h4 class="anchored" data-anchor-id="dino-self-distillation-with-no-labels">26.4.3. DINO (Self-Distillation with No Labels)</h4>
+<p><strong>DINO</strong> (Self-Distillation with No Labels) is a self-supervised learning framework for Vision Transformers that leverages a teacher-student setup without requiring labeled data.</p>
+<ul>
+<li><strong>Key Concepts:</strong>
+<ul>
+<li><strong>Self-Distillation:</strong> Uses two networks (teacher and student) where the teacher provides soft labels for the student. The teacher is an exponential moving average of the student, ensuring stable target predictions.</li>
+<li><strong>Multi-crop Strategy:</strong> Uses multiple crops of the same image at different scales and enforces consistency between the student’s output for these crops and the teacher’s output.</li>
+</ul></li>
+<li><strong>Self-supervised Learning Objective:</strong>
+<ul>
+<li><strong>Cross-Entropy Loss:</strong> Encourages the student model to produce similar outputs as the teacher model for different augmented views of the same image. <span class="math display">\[
+\mathcal{L}_{\text{DINO}} = -\sum_{i=1}^{N} \sum_{c=1}^{C} q_i^c \log p_i^c
+\]</span> where <span class="math inline">\(q_i^c\)</span> is the probability distribution from the teacher and <span class="math inline">\(p_i^c\)</span> is the probability distribution from the student for the <span class="math inline">\(i\)</span>-th crop and <span class="math inline">\(c\)</span>-th class.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Does not require labeled data, making it highly scalable.</li>
+<li>Produces robust and transferable representations for various downstream tasks.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Requires careful tuning of hyperparameters to stabilize training.</li>
+<li>Computationally intensive due to the multi-crop strategy and teacher-student updates.</li>
+</ul></li>
+</ul>
+<p>By employing self-supervised learning techniques such as those used in ViT, DeiT, and DINO, Vision Transformers can learn powerful and transferable representations from large amounts of unlabeled data. These representations can then be fine-tuned for specific downstream tasks, achieving state-of-the-art performance in various computer vision applications.</p>
+</section>
+</section>
+<section id="self-supervised-learning-in-graph-neural-networks" class="level3">
+<h3 class="anchored" data-anchor-id="self-supervised-learning-in-graph-neural-networks">26.5. Self-supervised Learning in Graph Neural Networks</h3>
+<p>Graph Neural Networks (GNNs) are designed to work with graph-structured data, capturing the relationships between nodes and their features. Self-supervised learning in GNNs leverages the structure and properties of the graph to create pretext tasks that help the model learn useful representations without requiring labeled data.</p>
+<section id="key-concepts-in-self-supervised-learning-for-gnns" class="level4">
+<h4 class="anchored" data-anchor-id="key-concepts-in-self-supervised-learning-for-gnns">Key Concepts in Self-supervised Learning for GNNs</h4>
+<ul>
+<li><strong>Node Representations:</strong> Learning embeddings for each node that capture its features and neighborhood information.</li>
+<li><strong>Edge Representations:</strong> Learning embeddings that represent the relationships between nodes.</li>
+<li><strong>Graph-level Representations:</strong> Learning an overall representation for the entire graph, useful for tasks like graph classification.</li>
+</ul>
+</section>
+<section id="pretext-tasks-for-self-supervised-gnns" class="level4">
+<h4 class="anchored" data-anchor-id="pretext-tasks-for-self-supervised-gnns">26.5.1. Pretext Tasks for Self-supervised GNNs</h4>
+<p>Self-supervised learning in GNNs typically involves creating pretext tasks that utilize the graph’s structure and properties to generate labels. These tasks help the model learn representations that can be transferred to downstream tasks.</p>
+<p><strong>1. Node-Level Tasks</strong></p>
+<ul>
+<li><strong>Node Attribute Masking:</strong> Randomly masks the attributes of nodes and trains the GNN to predict the masked attributes based on the node’s neighborhood.
+<ul>
+<li><strong>Objective:</strong> To learn node features and neighborhood dependencies. <span class="math display">\[
+\mathcal{L}_{\text{node}} = \sum_{i \in \text{masked nodes}} \| \hat{\mathbf{x}}_i - \mathbf{x}_i \|_2^2
+\]</span></li>
+</ul></li>
+<li><strong>Context Prediction:</strong> Predicts the context or subgraph around a given node.
+<ul>
+<li><strong>Objective:</strong> To capture the local structure and relationships in the graph. <span class="math display">\[
+\mathcal{L}_{\text{context}} = -\log P(\mathbf{c} | \mathbf{h}_v)
+\]</span> where <span class="math inline">\(\mathbf{c}\)</span> is the context and <span class="math inline">\(\mathbf{h}_v\)</span> is the node embedding.</li>
+</ul></li>
+</ul>
+<p><strong>2. Edge-Level Tasks</strong></p>
+<ul>
+<li><strong>Edge Prediction:</strong> Predicts the existence of edges between nodes, useful for link prediction tasks.
+<ul>
+<li><strong>Objective:</strong> To learn edge representations and relationships between nodes. <span class="math display">\[
+\mathcal{L}_{\text{edge}} = -\sum_{(u,v) \in E} \log P(\text{edge}(u, v)) + \sum_{(u,v) \notin E} \log (1 - P(\text{edge}(u, v)))
+\]</span></li>
+</ul></li>
+</ul>
+<p><strong>3. Graph-Level Tasks</strong></p>
+<ul>
+<li><strong>Graph Classification Pretext Task:</strong> Learns to classify graphs based on structural properties or subgraph patterns.
+<ul>
+<li><strong>Objective:</strong> To capture global graph features and overall structure. <span class="math display">\[
+\mathcal{L}_{\text{graph}} = \sum_{G \in \mathcal{G}} \mathcal{L}_{\text{classification}}(G)
+\]</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="examples-of-self-supervised-learning-methods-in-gnns" class="level4">
+<h4 class="anchored" data-anchor-id="examples-of-self-supervised-learning-methods-in-gnns">Examples of Self-supervised Learning Methods in GNNs</h4>
+<p><strong>1. GraphSAGE (Graph Sample and Aggregation)</strong> - <strong>Architecture:</strong> Uses a sampling approach to aggregate features from a node’s local neighborhood. - <strong>Self-supervised Objective:</strong> Can be combined with unsupervised objectives such as random walks or node context prediction.</p>
+<p><strong>2. DGI (Deep Graph Infomax)</strong> - <strong>Architecture:</strong> Maximizes mutual information between node representations and a global graph representation. - <strong>Self-supervised Objective:</strong> Uses a discriminator to distinguish between real node representations and negative samples. <span class="math display">\[
+  \mathcal{L}_{\text{DGI}} = \mathbb{E}[\log D(\mathbf{h}_v, \mathbf{h}_G)] + \mathbb{E}[\log (1 - D(\mathbf{h}_{v'}, \mathbf{h}_G))]
+  \]</span></p>
+<p><strong>3. Graph Contrastive Learning (GraphCL)</strong> - <strong>Architecture:</strong> Uses contrastive learning by creating multiple augmented views of the graph. - <strong>Self-supervised Objective:</strong> Maximizes agreement between the representations of different augmented views of the same graph. <span class="math display">\[
+  \mathcal{L}_{\text{GraphCL}} = -\sum_{i} \log \frac{\exp(\text{sim}(\mathbf{z}_i, \mathbf{z}_j)/\tau)}{\sum_{k} \exp(\text{sim}(\mathbf{z}_i, \mathbf{z}_k)/\tau)}
+  \]</span></p>
+</section>
+<section id="advantages-and-disadvantages" class="level4">
+<h4 class="anchored" data-anchor-id="advantages-and-disadvantages">Advantages and Disadvantages</h4>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li><strong>Generalization:</strong> Learns transferable representations that can be used for various downstream tasks.</li>
+<li><strong>Efficiency:</strong> Reduces the need for labeled data, which is often scarce in graph-based domains.</li>
+<li><strong>Scalability:</strong> Can handle large graphs by leveraging sampling and efficient aggregation methods.</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+<li><strong>Complexity:</strong> Requires careful design of pretext tasks and augmentations.</li>
+<li><strong>Computational Resources:</strong> Can be computationally intensive, especially for large graphs and complex models.</li>
+</ul>
+<p>By leveraging self-supervised learning techniques, GNNs can learn powerful and transferable representations from graph-structured data, enabling robust performance on a wide range of tasks such as node classification, link prediction, and graph classification.</p>
+</section>
+</section>
+<section id="self-supervised-learning-for-speech-recognition" class="level3">
+<h3 class="anchored" data-anchor-id="self-supervised-learning-for-speech-recognition">26.6. Self-supervised Learning for Speech Recognition</h3>
+<p>Self-supervised learning for speech recognition involves training models to learn useful representations of speech data without requiring labeled transcripts. These representations can then be fine-tuned for various downstream tasks such as automatic speech recognition (ASR), speaker identification, and emotion recognition.</p>
+<section id="key-concepts-in-self-supervised-learning-for-speech" class="level4">
+<h4 class="anchored" data-anchor-id="key-concepts-in-self-supervised-learning-for-speech">Key Concepts in Self-supervised Learning for Speech</h4>
+<ul>
+<li><strong>Acoustic Features:</strong> Learning representations that capture the important aspects of speech signals, such as phonetic content, speaker identity, and emotional tone.</li>
+<li><strong>Temporal Dependencies:</strong> Capturing the sequential nature of speech, where each frame or segment depends on the preceding and following segments.</li>
+</ul>
+</section>
+<section id="contrastive-predictive-coding-cpc" class="level4">
+<h4 class="anchored" data-anchor-id="contrastive-predictive-coding-cpc">26.6.1. Contrastive Predictive Coding (CPC)</h4>
+<p><strong>Contrastive Predictive Coding (CPC)</strong> is a framework that learns representations by predicting future frames in the speech signal. It maximizes the mutual information between past and future observations.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Encoder:</strong> Processes input speech frames into a sequence of latent representations.</li>
+<li><strong>Autoregressive Model:</strong> Predicts future latent representations based on past representations.</li>
+</ul></li>
+<li><strong>Learning Objective:</strong>
+<ul>
+<li><strong>Contrastive Loss:</strong> The loss function encourages the model to distinguish between the true future frame and negative samples. <span class="math display">\[
+\mathcal{L}_{\text{CPC}} = -\sum_{t} \log \frac{\exp(\text{sim}(\mathbf{z}_t, \mathbf{c}_{t+k}))}{\sum_{i} \exp(\text{sim}(\mathbf{z}_t, \mathbf{c}_{i}))}
+\]</span> where <span class="math inline">\(\mathbf{z}_t\)</span> is the latent representation at time <span class="math inline">\(t\)</span>, <span class="math inline">\(\mathbf{c}_{t+k}\)</span> is the context vector for the future frame <span class="math inline">\(t+k\)</span>, and <span class="math inline">\(\text{sim}\)</span> denotes similarity.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Effective in learning useful representations from raw audio.</li>
+<li>Captures long-term dependencies in speech.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Requires a large number of negative samples for effective training.</li>
+<li>Computationally intensive due to the need for contrastive loss calculation.</li>
+</ul></li>
+</ul>
+</section>
+<section id="wav2vec" class="level4">
+<h4 class="anchored" data-anchor-id="wav2vec">26.6.2. Wav2Vec</h4>
+<p><strong>Wav2Vec</strong> is a self-supervised learning framework that learns speech representations by predicting future frames in the audio signal.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Encoder:</strong> Converts raw audio waveform into a sequence of latent representations.</li>
+<li><strong>Context Network:</strong> Aggregates latent representations to capture contextual information over time.</li>
+</ul></li>
+<li><strong>Learning Objective:</strong>
+<ul>
+<li><strong>Contrastive Loss:</strong> Similar to CPC, the loss function encourages the model to correctly predict the future latent representations from a set of negative samples. <span class="math display">\[
+\mathcal{L}_{\text{wav2vec}} = -\sum_{t} \log \frac{\exp(\text{sim}(\mathbf{z}_t, \mathbf{c}_{t+k}))}{\sum_{i} \exp(\text{sim}(\mathbf{z}_t, \mathbf{c}_{i}))}
+\]</span></li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Directly processes raw audio, eliminating the need for handcrafted features.</li>
+<li>Captures rich representations useful for downstream speech tasks.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Requires significant computational resources for training.</li>
+<li>The model complexity can make it challenging to deploy in resource-constrained environments.</li>
+</ul></li>
+</ul>
+</section>
+<section id="hubert-hidden-unit-bert" class="level4">
+<h4 class="anchored" data-anchor-id="hubert-hidden-unit-bert">26.6.3. Hubert (Hidden-unit BERT)</h4>
+<p><strong>HuBERT</strong> (Hidden-unit BERT) extends the BERT model to speech data, using masked prediction tasks to learn useful representations from audio.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Encoder:</strong> Transforms raw audio into hidden-unit representations.</li>
+<li><strong>Masked Prediction:</strong> Masks portions of the audio sequence and predicts the hidden-unit representations of the masked portions.</li>
+</ul></li>
+<li><strong>Learning Objective:</strong>
+<ul>
+<li><strong>Masked Prediction Loss:</strong> Similar to masked language modeling, the loss function encourages the model to accurately predict the masked frames. <span class="math display">\[
+\mathcal{L}_{\text{HuBERT}} = -\sum_{t \in \text{masked}} \log P(\mathbf{h}_t | \mathbf{h}_{\text{context}})
+\]</span> where <span class="math inline">\(\mathbf{h}_t\)</span> is the hidden representation at time <span class="math inline">\(t\)</span>, and <span class="math inline">\(\mathbf{h}_{\text{context}}\)</span> represents the context from unmasked frames.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Learns contextual representations that capture both local and global information in speech.</li>
+<li>Effective for a wide range of speech processing tasks.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Requires extensive training data to achieve optimal performance.</li>
+<li>Masking strategy and prediction can be complex to implement.</li>
+</ul></li>
+</ul>
+</section>
+<section id="tera-transformer-encoder-representations-from-audio" class="level4">
+<h4 class="anchored" data-anchor-id="tera-transformer-encoder-representations-from-audio">26.6.4. TERA (Transformer Encoder Representations from Audio)</h4>
+<p><strong>TERA</strong> is a self-supervised learning approach that uses a transformer architecture to learn speech representations by reconstructing masked audio segments.</p>
+<ul>
+<li><strong>Architecture:</strong>
+<ul>
+<li><strong>Transformer Encoder:</strong> Processes the audio sequence, allowing the model to capture long-range dependencies and complex patterns.</li>
+<li><strong>Masked Prediction:</strong> Portions of the audio sequence are masked, and the model is trained to reconstruct these masked segments.</li>
+</ul></li>
+<li><strong>Learning Objective:</strong>
+<ul>
+<li><strong>Reconstruction Loss:</strong> The loss function encourages the model to accurately reconstruct the masked segments based on the surrounding context. <span class="math display">\[
+\mathcal{L}_{\text{TERA}} = \sum_{t \in \text{masked}} \| \hat{\mathbf{x}}_t - \mathbf{x}_t \|_2^2
+\]</span> where <span class="math inline">\(\hat{\mathbf{x}}_t\)</span> is the predicted audio frame, and <span class="math inline">\(\mathbf{x}_t\)</span> is the ground truth audio frame.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Effective in learning detailed and nuanced representations from raw audio.</li>
+<li>Captures both short-term and long-term dependencies in speech.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Training can be computationally expensive due to the transformer architecture.</li>
+<li>Requires careful design of masking strategies to ensure effective learning.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="summary-1" class="level3">
+<h3 class="anchored" data-anchor-id="summary-1">Summary</h3>
+<p>Self-supervised learning techniques for speech recognition, such as CPC, Wav2Vec, HuBERT, and TERA, enable the learning of robust and transferable speech representations without requiring labeled data. These representations can then be fine-tuned for various downstream tasks, enhancing the performance of speech recognition systems and other speech-related applications.</p>
+</section>
+<section id="self-supervised-learning-in-reinforcement-learning" class="level3">
+<h3 class="anchored" data-anchor-id="self-supervised-learning-in-reinforcement-learning">26.7. Self-supervised Learning in Reinforcement Learning</h3>
+<p>Self-supervised learning in reinforcement learning (RL) leverages intrinsic rewards and auxiliary tasks to learn useful representations and policies without relying solely on extrinsic rewards from the environment. This approach helps agents learn more efficiently, especially in environments where extrinsic rewards are sparse or delayed.</p>
+<section id="key-concepts-in-self-supervised-learning-for-rl" class="level4">
+<h4 class="anchored" data-anchor-id="key-concepts-in-self-supervised-learning-for-rl">Key Concepts in Self-supervised Learning for RL</h4>
+<ul>
+<li><strong>Intrinsic Rewards:</strong> Rewards generated from the agent’s own actions and experiences, encouraging exploration and curiosity.</li>
+<li><strong>Auxiliary Tasks:</strong> Additional tasks that the agent learns simultaneously with the main RL task, helping to improve the representations and policies.</li>
+</ul>
+</section>
+<section id="intrinsic-motivation" class="level4">
+<h4 class="anchored" data-anchor-id="intrinsic-motivation">26.7.1. Intrinsic Motivation</h4>
+<p>Intrinsic motivation involves creating internal rewards that drive the agent to explore the environment and learn diverse behaviors.</p>
+<p><strong>1. Curiosity-driven Exploration</strong></p>
+<ul>
+<li><strong>Curiosity-driven exploration</strong> incentivizes the agent to explore novel states and actions by rewarding it for encountering new or unexpected outcomes.
+<ul>
+<li><strong>Learning Objective:</strong> <span class="math display">\[
+\mathcal{R}_{\text{intrinsic}} = \|\phi(s') - \hat{\phi}(s')\|_2
+\]</span> where <span class="math inline">\(\phi(s')\)</span> is the predicted state representation and <span class="math inline">\(\hat{\phi}(s')\)</span> is the actual state representation after taking an action.</li>
+<li><strong>Advantages:</strong> Encourages thorough exploration, leading to better coverage of the state space.</li>
+<li><strong>Disadvantages:</strong> Can result in excessive exploration if not balanced with extrinsic rewards.</li>
+</ul></li>
+</ul>
+<p><strong>2. Predictive Models</strong></p>
+<ul>
+<li><strong>Predictive models</strong> incentivize the agent to learn to predict future states or rewards, providing a learning signal even in the absence of extrinsic rewards.
+<ul>
+<li><strong>Learning Objective:</strong> <span class="math display">\[
+\mathcal{L}_{\text{prediction}} = \|\hat{s}_{t+k} - s_{t+k}\|_2
+\]</span> where <span class="math inline">\(\hat{s}_{t+k}\)</span> is the predicted future state and <span class="math inline">\(s_{t+k}\)</span> is the actual future state.</li>
+<li><strong>Advantages:</strong> Helps the agent build a model of the environment, improving planning and decision-making.</li>
+<li><strong>Disadvantages:</strong> Requires careful design of the prediction tasks to ensure they are informative and useful.</li>
+</ul></li>
+</ul>
+</section>
+<section id="auxiliary-tasks" class="level4">
+<h4 class="anchored" data-anchor-id="auxiliary-tasks">26.7.2. Auxiliary Tasks</h4>
+<p>Auxiliary tasks are additional learning objectives that the agent pursues alongside the main RL task, enhancing the learned representations and policies.</p>
+<p><strong>1. Reward Prediction</strong></p>
+<ul>
+<li><strong>Reward prediction</strong> involves training the agent to predict the immediate rewards it will receive for taking actions in different states.
+<ul>
+<li><strong>Learning Objective:</strong> <span class="math display">\[
+\mathcal{L}_{\text{reward}} = \|\hat{r}_t - r_t\|_2
+\]</span> where <span class="math inline">\(\hat{r}_t\)</span> is the predicted reward and <span class="math inline">\(r_t\)</span> is the actual reward.</li>
+<li><strong>Advantages:</strong> Provides a dense learning signal, even when extrinsic rewards are sparse.</li>
+<li><strong>Disadvantages:</strong> Can be challenging to predict rewards accurately in complex environments.</li>
+</ul></li>
+</ul>
+<p><strong>2. Forward and Inverse Dynamics</strong></p>
+<ul>
+<li><strong>Forward dynamics:</strong> The agent learns to predict the next state given the current state and action.
+<ul>
+<li><strong>Learning Objective:</strong> <span class="math display">\[
+\mathcal{L}_{\text{forward}} = \|\hat{s}_{t+1} - s_{t+1}\|_2
+\]</span> where <span class="math inline">\(\hat{s}_{t+1}\)</span> is the predicted next state and <span class="math inline">\(s_{t+1}\)</span> is the actual next state.</li>
+</ul></li>
+<li><strong>Inverse dynamics:</strong> The agent learns to predict the action taken given the current and next states.
+<ul>
+<li><strong>Learning Objective:</strong> <span class="math display">\[
+\mathcal{L}_{\text{inverse}} = \|\hat{a}_t - a_t\|_2
+\]</span> where <span class="math inline">\(\hat{a}_t\)</span> is the predicted action and <span class="math inline">\(a_t\)</span> is the actual action.</li>
+</ul></li>
+<li><strong>Advantages:</strong> Enhances the agent’s understanding of the environment’s dynamics, improving its ability to plan and control.</li>
+<li><strong>Disadvantages:</strong> Requires additional computational resources to train the auxiliary models.</li>
+</ul>
+</section>
+<section id="self-supervised-policy-learning" class="level4">
+<h4 class="anchored" data-anchor-id="self-supervised-policy-learning">26.7.3. Self-supervised Policy Learning</h4>
+<p>Self-supervised policy learning involves using self-generated signals to improve the agent’s policy without relying exclusively on external rewards.</p>
+<p><strong>1. Policy Distillation</strong></p>
+<ul>
+<li><strong>Policy distillation</strong> involves training a student policy to match the behavior of a teacher policy, which can be a more complex or ensemble policy.
+<ul>
+<li><strong>Learning Objective:</strong> <span class="math display">\[
+\mathcal{L}_{\text{distill}} = \|\pi_{\text{student}}(a|s) - \pi_{\text{teacher}}(a|s)\|_2
+\]</span> where <span class="math inline">\(\pi_{\text{student}}\)</span> is the student policy and <span class="math inline">\(\pi_{\text{teacher}}\)</span> is the teacher policy.</li>
+</ul></li>
+<li><strong>Advantages:</strong> Simplifies complex policies into more efficient and deployable forms.</li>
+<li><strong>Disadvantages:</strong> Relies on the availability of a high-quality teacher policy.</li>
+</ul>
+<p><strong>2. Self-play</strong></p>
+<ul>
+<li><strong>Self-play</strong> involves training agents by having them compete or cooperate with copies of themselves, generating rich learning experiences.
+<ul>
+<li><strong>Learning Objective:</strong> <span class="math display">\[
+\mathcal{L}_{\text{self-play}} = \sum_{t} \mathcal{R}_t
+\]</span> where <span class="math inline">\(\mathcal{R}_t\)</span> is the reward obtained during self-play interactions.</li>
+</ul></li>
+<li><strong>Advantages:</strong> Generates diverse and challenging scenarios, leading to robust policies.</li>
+<li><strong>Disadvantages:</strong> Can result in overfitting to self-play strategies if not carefully managed.</li>
+</ul>
+</section>
+</section>
+<section id="summary-2" class="level3">
+<h3 class="anchored" data-anchor-id="summary-2">Summary</h3>
+<p>Self-supervised learning techniques in reinforcement learning, such as intrinsic motivation, auxiliary tasks, and self-supervised policy learning, enable agents to learn robust and generalizable policies without relying solely on extrinsic rewards. These techniques enhance exploration, improve representation learning, and provide dense learning signals, leading to more efficient and effective reinforcement learning.</p>
+</section>
+<section id="multi-modal-self-supervised-learning" class="level3">
+<h3 class="anchored" data-anchor-id="multi-modal-self-supervised-learning">26.8. Multi-modal Self-supervised Learning</h3>
+<p>Multi-modal self-supervised learning involves training models to leverage multiple types of data (modalities) such as text, images, audio, and video. By aligning and integrating these diverse sources of information, models can learn richer and more generalizable representations.</p>
+<section id="key-concepts-in-multi-modal-self-supervised-learning" class="level4">
+<h4 class="anchored" data-anchor-id="key-concepts-in-multi-modal-self-supervised-learning">Key Concepts in Multi-modal Self-supervised Learning</h4>
+<ul>
+<li><strong>Modalities:</strong> Different types of data, such as text, images, audio, and video.</li>
+<li><strong>Alignment:</strong> Learning to associate information from different modalities that refer to the same content.</li>
+<li><strong>Fusion:</strong> Combining features from different modalities to form a unified representation.</li>
+</ul>
+</section>
+<section id="cross-modal-contrastive-learning" class="level4">
+<h4 class="anchored" data-anchor-id="cross-modal-contrastive-learning">26.8.1. Cross-modal Contrastive Learning</h4>
+<p>Cross-modal contrastive learning leverages the relationships between different modalities to learn robust representations. The goal is to bring representations from different modalities closer when they refer to the same content and push them apart when they refer to different content.</p>
+<p><strong>Example Techniques:</strong></p>
+<ul>
+<li><strong>CLIP (Contrastive Language-Image Pre-training):</strong>
+<ul>
+<li><strong>Architecture:</strong> Uses a dual-encoder setup where one encoder processes images and the other processes text. The encoders are trained to maximize the similarity between representations of corresponding image-text pairs.</li>
+<li><strong>Learning Objective:</strong> <span class="math display">\[
+\mathcal{L}_{\text{contrastive}} = -\sum_{i} \log \frac{\exp(\text{sim}(\mathbf{z}_i, \mathbf{t}_i)/\tau)}{\sum_{j} \exp(\text{sim}(\mathbf{z}_i, \mathbf{t}_j)/\tau)}
+\]</span> where <span class="math inline">\(\mathbf{z}_i\)</span> and <span class="math inline">\(\mathbf{t}_i\)</span> are the image and text representations, respectively, and <span class="math inline">\(\tau\)</span> is a temperature parameter.</li>
+</ul></li>
+<li><strong>Advantages:</strong> Learns powerful representations that generalize across different modalities.</li>
+<li><strong>Disadvantages:</strong> Requires large and diverse datasets to capture the wide variability across modalities.</li>
+</ul>
+</section>
+<section id="multi-modal-masked-modeling" class="level4">
+<h4 class="anchored" data-anchor-id="multi-modal-masked-modeling">26.8.2. Multi-modal Masked Modeling</h4>
+<p>Multi-modal masked modeling extends the masked language modeling approach to multiple modalities. The idea is to mask parts of the input from one modality and train the model to predict the masked parts using information from the other modalities.</p>
+<p><strong>Example Techniques:</strong></p>
+<ul>
+<li><strong>VideoBERT:</strong>
+<ul>
+<li><strong>Architecture:</strong> Uses a transformer model to process video frames and associated text (e.g., subtitles). Masks some tokens in the text and some frames in the video, and the model is trained to predict the masked content.</li>
+<li><strong>Learning Objective:</strong> <span class="math display">\[
+\mathcal{L}_{\text{masked}} = -\sum_{i \in \text{masked}} \log P(x_i | \text{context})
+\]</span> where <span class="math inline">\(x_i\)</span> represents the masked tokens or frames.</li>
+</ul></li>
+<li><strong>Advantages:</strong> Captures the contextual relationships between different modalities.</li>
+<li><strong>Disadvantages:</strong> Computationally intensive due to the need for processing high-dimensional video data.</li>
+</ul>
+</section>
+<section id="multi-modal-autoencoders" class="level4">
+<h4 class="anchored" data-anchor-id="multi-modal-autoencoders">26.8.3. Multi-modal Autoencoders</h4>
+<p>Multi-modal autoencoders learn to reconstruct the input data from compressed latent representations, often integrating information from multiple modalities to enhance the reconstruction quality.</p>
+<p><strong>Example Techniques:</strong></p>
+<ul>
+<li><strong>Multimodal Variational Autoencoders (MVAE):</strong>
+<ul>
+<li><strong>Architecture:</strong> Extends the traditional variational autoencoder to handle multiple modalities. Encoders for each modality map inputs to a shared latent space, and decoders reconstruct the inputs from the latent space.</li>
+<li><strong>Learning Objective:</strong> <span class="math display">\[
+\mathcal{L}_{\text{MVAE}} = \mathbb{E}_{q(\mathbf{z}|\mathbf{x})} [\log p(\mathbf{x}|\mathbf{z})] - D_{\text{KL}}(q(\mathbf{z}|\mathbf{x}) || p(\mathbf{z}))
+\]</span> where <span class="math inline">\(\mathbf{z}\)</span> is the latent variable, <span class="math inline">\(\mathbf{x}\)</span> is the input data, and <span class="math inline">\(D_{\text{KL}}\)</span> is the Kullback-Leibler divergence.</li>
+</ul></li>
+<li><strong>Advantages:</strong> Provides a unified representation that integrates information from multiple modalities.</li>
+<li><strong>Disadvantages:</strong> Training can be challenging due to the complexity of modeling multiple modalities simultaneously.</li>
+</ul>
+</section>
+<section id="self-supervised-learning-with-auxiliary-tasks" class="level4">
+<h4 class="anchored" data-anchor-id="self-supervised-learning-with-auxiliary-tasks">26.8.4. Self-supervised Learning with Auxiliary Tasks</h4>
+<p>Auxiliary tasks leverage multi-modal data to create additional objectives that help the model learn better representations.</p>
+<p><strong>Example Techniques:</strong></p>
+<ul>
+<li><strong>Cross-modal Retrieval:</strong>
+<ul>
+<li><strong>Task:</strong> Train the model to retrieve matching items across modalities, such as finding the correct caption for an image or the correct video for a piece of audio.</li>
+<li><strong>Learning Objective:</strong> <span class="math display">\[
+\mathcal{L}_{\text{retrieval}} = -\sum_{i} \log \frac{\exp(\text{sim}(\mathbf{z}_i, \mathbf{m}_i)/\tau)}{\sum_{j} \exp(\text{sim}(\mathbf{z}_i, \mathbf{m}_j)/\tau)}
+\]</span> where <span class="math inline">\(\mathbf{m}_i\)</span> is the multi-modal representation.</li>
+</ul></li>
+<li><strong>Advantages:</strong> Enhances the model’s ability to understand and relate different modalities.</li>
+<li><strong>Disadvantages:</strong> Requires careful design of retrieval tasks to ensure meaningful learning.</li>
+</ul>
+</section>
+</section>
+<section id="summary-3" class="level3">
+<h3 class="anchored" data-anchor-id="summary-3">Summary</h3>
+<p>Multi-modal self-supervised learning techniques, such as cross-modal contrastive learning, multi-modal masked modeling, multi-modal autoencoders, and auxiliary tasks, enable models to leverage the rich information available across different modalities. These techniques help in learning robust and generalizable representations that can be fine-tuned for a variety of downstream tasks, enhancing the model’s performance in multi-modal contexts.</p>
+</section>
+<section id="self-supervised-few-shot-learning" class="level3">
+<h3 class="anchored" data-anchor-id="self-supervised-few-shot-learning">26.9. Self-supervised Few-shot Learning</h3>
+<p>Few-shot learning aims to train models that can generalize to new tasks with only a few examples. Self-supervised learning techniques enhance few-shot learning by leveraging large amounts of unlabeled data to learn representations that are robust and transferable to new tasks with limited labeled data.</p>
+<section id="key-concepts-in-self-supervised-few-shot-learning" class="level4">
+<h4 class="anchored" data-anchor-id="key-concepts-in-self-supervised-few-shot-learning">Key Concepts in Self-supervised Few-shot Learning</h4>
+<ul>
+<li><strong>Meta-learning:</strong> Learning to learn, where the model is trained on a variety of tasks so it can quickly adapt to new tasks with few examples.</li>
+<li><strong>Task Distribution:</strong> A distribution of tasks used to train the model, ensuring it can generalize across a wide range of scenarios.</li>
+<li><strong>Self-supervised Pretraining:</strong> Using self-supervised learning to pretrain the model on a large corpus of unlabeled data, providing a strong initialization for few-shot adaptation.</li>
+</ul>
+</section>
+<section id="meta-learning-with-self-supervision" class="level4">
+<h4 class="anchored" data-anchor-id="meta-learning-with-self-supervision">26.9.1. Meta-learning with Self-supervision</h4>
+<p>Meta-learning frameworks can be enhanced with self-supervised objectives to improve their ability to learn from few examples.</p>
+<p><strong>Example Techniques:</strong></p>
+<ul>
+<li><strong>Model-Agnostic Meta-Learning (MAML) with Self-supervised Pretraining:</strong>
+<ul>
+<li><strong>Architecture:</strong> Combines MAML, a meta-learning approach, with self-supervised pretraining to initialize the model parameters.</li>
+<li><strong>Learning Objective:</strong> <span class="math display">\[
+\mathcal{L}_{\text{meta}} = \sum_{\mathcal{T}_i \sim p(\mathcal{T})} \mathcal{L}_{\mathcal{T}_i} (f_{\theta - \alpha \nabla_{\theta} \mathcal{L}_{\mathcal{T}_i} (f_{\theta})})
+\]</span> where <span class="math inline">\(\mathcal{T}_i\)</span> are tasks sampled from the task distribution <span class="math inline">\(p(\mathcal{T})\)</span>, and <span class="math inline">\(\alpha\)</span> is the learning rate for task-specific updates.</li>
+</ul></li>
+<li><strong>Advantages:</strong> Enhances the model’s ability to quickly adapt to new tasks with few examples.</li>
+<li><strong>Disadvantages:</strong> Computationally intensive due to the inner-loop optimization in MAML.</li>
+</ul>
+</section>
+<section id="self-supervised-representation-learning-for-few-shot-tasks" class="level4">
+<h4 class="anchored" data-anchor-id="self-supervised-representation-learning-for-few-shot-tasks">26.9.2. Self-supervised Representation Learning for Few-shot Tasks</h4>
+<p>Self-supervised representation learning involves training a model on self-supervised tasks to learn general-purpose features that can be fine-tuned on few-shot tasks.</p>
+<p><strong>Example Techniques:</strong></p>
+<ul>
+<li><strong>Contrastive Learning for Few-shot Learning:</strong>
+<ul>
+<li><strong>Architecture:</strong> Uses contrastive learning to pretrain a model on a large corpus of unlabeled data, learning to distinguish between different instances.</li>
+<li><strong>Learning Objective:</strong> <span class="math display">\[
+\mathcal{L}_{\text{contrastive}} = -\sum_{i} \log \frac{\exp(\text{sim}(\mathbf{z}_i, \mathbf{z}_i^+)/\tau)}{\sum_{j} \exp(\text{sim}(\mathbf{z}_i, \mathbf{z}_j^-)/\tau)}
+\]</span> where <span class="math inline">\(\mathbf{z}_i\)</span> and <span class="math inline">\(\mathbf{z}_i^+\)</span> are the representations of positive pairs, and <span class="math inline">\(\mathbf{z}_j^-\)</span> are negative pairs.</li>
+</ul></li>
+<li><strong>Advantages:</strong> Learns robust and transferable features that generalize well to new tasks.</li>
+<li><strong>Disadvantages:</strong> Requires careful tuning of the contrastive loss and negative sampling strategy.</li>
+</ul>
+</section>
+<section id="prototypical-networks-with-self-supervised-pretraining" class="level4">
+<h4 class="anchored" data-anchor-id="prototypical-networks-with-self-supervised-pretraining">26.9.3. Prototypical Networks with Self-supervised Pretraining</h4>
+<p>Prototypical networks learn a metric space where classification can be performed by computing distances to prototype representations of each class.</p>
+<p><strong>Example Techniques:</strong></p>
+<ul>
+<li><strong>Prototypical Networks with Self-supervised Pretraining:</strong>
+<ul>
+<li><strong>Architecture:</strong> Pretrains a network using self-supervised tasks such as rotation prediction or jigsaw puzzles, and then fine-tunes it using few-shot learning tasks.</li>
+<li><strong>Learning Objective:</strong> <span class="math display">\[
+\mathcal{L}_{\text{proto}} = \sum_{i} \|\mathbf{z}_i - \mathbf{c}_{y_i}\|_2^2
+\]</span> where <span class="math inline">\(\mathbf{c}_{y_i}\)</span> is the prototype of class <span class="math inline">\(y_i\)</span>, and <span class="math inline">\(\mathbf{z}_i\)</span> is the representation of input <span class="math inline">\(i\)</span>.</li>
+</ul></li>
+<li><strong>Advantages:</strong> Efficiently learns a metric space for few-shot classification.</li>
+<li><strong>Disadvantages:</strong> May require task-specific fine-tuning to achieve optimal performance.</li>
+</ul>
+</section>
+<section id="self-supervised-task-adaptation" class="level4">
+<h4 class="anchored" data-anchor-id="self-supervised-task-adaptation">26.9.4. Self-supervised Task Adaptation</h4>
+<p>Self-supervised task adaptation involves using self-supervised objectives to adapt the model to new tasks during few-shot learning.</p>
+<p><strong>Example Techniques:</strong></p>
+<ul>
+<li><strong>Self-supervised Task Adaptation:</strong>
+<ul>
+<li><strong>Architecture:</strong> Adapts the model to new tasks by incorporating self-supervised objectives such as masked prediction or contrastive learning during the few-shot adaptation phase.</li>
+<li><strong>Learning Objective:</strong> <span class="math display">\[
+\mathcal{L}_{\text{task}} = \mathcal{L}_{\text{few-shot}} + \lambda \mathcal{L}_{\text{self-supervised}}
+\]</span> where <span class="math inline">\(\mathcal{L}_{\text{few-shot}}\)</span> is the few-shot task loss, and <span class="math inline">\(\mathcal{L}_{\text{self-supervised}}\)</span> is the self-supervised loss.</li>
+</ul></li>
+<li><strong>Advantages:</strong> Enhances the model’s ability to adapt to new tasks with few labeled examples.</li>
+<li><strong>Disadvantages:</strong> Requires careful balancing of the self-supervised and few-shot learning objectives.</li>
+</ul>
+</section>
+</section>
+<section id="summary-4" class="level3">
+<h3 class="anchored" data-anchor-id="summary-4">Summary</h3>
+<p>Self-supervised few-shot learning techniques, such as meta-learning with self-supervised pretraining, contrastive learning, prototypical networks, and self-supervised task adaptation, enable models to effectively generalize to new tasks with limited labeled data. By leveraging large amounts of unlabeled data to learn robust and transferable representations, these techniques enhance the performance and efficiency of few-shot learning models.</p>
+</section>
+<section id="theoretical-aspects-of-self-supervised-learning" class="level3">
+<h3 class="anchored" data-anchor-id="theoretical-aspects-of-self-supervised-learning">26.10. Theoretical Aspects of Self-supervised Learning</h3>
+<p>Self-supervised learning (SSL) involves leveraging the structure inherent in unlabeled data to generate supervisory signals. This chapter delves into the theoretical foundations of SSL, exploring why it works, how it can be formally understood and analyzed, and what implications it has for advancing machine learning research.</p>
+<section id="key-theoretical-concepts" class="level4">
+<h4 class="anchored" data-anchor-id="key-theoretical-concepts">Key Theoretical Concepts</h4>
+<ul>
+<li><strong>Data Distribution:</strong> The statistical properties of the data and how self-supervised tasks can exploit these properties to learn useful representations.</li>
+<li><strong>Mutual Information:</strong> A measure of the amount of information one variable contains about another, crucial for understanding the relationships captured by self-supervised methods.</li>
+<li><strong>Generalization:</strong> The ability of self-supervised representations to generalize to unseen tasks and data.</li>
+<li><strong>Inductive Biases:</strong> The assumptions incorporated into the learning algorithm that guide the learning process.</li>
+</ul>
+</section>
+<section id="data-distribution-and-structure" class="level4">
+<h4 class="anchored" data-anchor-id="data-distribution-and-structure">26.10.1. Data Distribution and Structure</h4>
+<p>Self-supervised learning relies on the assumption that the data contains intrinsic structures that can be exploited to learn meaningful representations. These structures are often captured through specific pretext tasks.</p>
+<p><strong>Data Manifolds:</strong></p>
+<ul>
+<li><strong>Theory:</strong> High-dimensional data often lie on lower-dimensional manifolds. SSL methods aim to learn representations that respect these manifolds, effectively reducing the dimensionality while preserving essential features.</li>
+<li><strong>Applications:</strong> For instance, in image data, the pixel values do not vary independently but form complex structures and patterns (manifolds) that SSL methods can exploit.</li>
+</ul>
+<p><strong>Neighborhood Preservation:</strong></p>
+<ul>
+<li><strong>Theory:</strong> Many SSL methods, especially those based on contrastive learning, aim to preserve local neighborhoods in the learned representation space. This means that points close to each other in the original space should remain close in the representation space.</li>
+<li><strong>Applications:</strong> Techniques like t-SNE and UMAP for visualizing high-dimensional data can be seen as neighborhood-preserving methods that can also inspire SSL algorithms.</li>
+</ul>
+<p><strong>Formal Definitions:</strong></p>
+<ul>
+<li><strong>Data Manifold Hypothesis:</strong> The hypothesis that high-dimensional data can be approximated by a lower-dimensional manifold <span class="math inline">\(\mathcal{M}\)</span> embedded in the high-dimensional space.</li>
+<li><strong>Mathematical Formulation:</strong> If <span class="math inline">\(\mathbf{x} \in \mathcal{M} \subset \mathbb{R}^D\)</span> and <span class="math inline">\(f: \mathbb{R}^D \rightarrow \mathbb{R}^d\)</span> (with <span class="math inline">\(d \ll D\)</span>), then <span class="math inline">\(f\)</span> should approximate the manifold structure such that <span class="math inline">\(f(\mathbf{x}) \approx \mathcal{M}\)</span>.</li>
+</ul>
+</section>
+<section id="mutual-information" class="level4">
+<h4 class="anchored" data-anchor-id="mutual-information">26.10.2. Mutual Information</h4>
+<p>Mutual information (MI) is a fundamental concept in SSL, measuring the amount of information shared between different views or parts of the data.</p>
+<p><strong>Maximizing Mutual Information:</strong></p>
+<ul>
+<li><strong>Theory:</strong> Many SSL methods aim to maximize the mutual information between different views of the data (e.g., different augmentations of the same image). This helps in learning representations that capture the underlying structure of the data.</li>
+<li><strong>Applications:</strong> In contrastive learning, the goal is to maximize the mutual information between positive pairs (e.g., different views of the same image) while minimizing it for negative pairs (e.g., different images).</li>
+</ul>
+<p><strong>Mathematical Formulation:</strong></p>
+<ul>
+<li><strong>Mutual Information:</strong> For two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, <span class="math display">\[
+I(X; Y) = \int \int p(x, y) \log \frac{p(x, y)}{p(x)p(y)} \, dx \, dy
+\]</span> where <span class="math inline">\(p(x, y)\)</span> is the joint probability distribution of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, and <span class="math inline">\(p(x)\)</span> and <span class="math inline">\(p(y)\)</span> are their marginal distributions.</li>
+<li><strong>Contrastive Learning Objective:</strong> To maximize <span class="math inline">\(I(X; Y)\)</span> in practice, a lower-bound approximation such as the InfoNCE loss is often used: <span class="math display">\[
+\mathcal{L}_{\text{contrastive}} = -\sum_{i} \log \frac{\exp(\text{sim}(\mathbf{z}_i, \mathbf{z}_i^+)/\tau)}{\sum_{j} \exp(\text{sim}(\mathbf{z}_i, \mathbf{z}_j^-)/\tau)}
+\]</span> where <span class="math inline">\(\text{sim}(\cdot, \cdot)\)</span> denotes similarity (e.g., cosine similarity) between vectors, <span class="math inline">\(\tau\)</span> is a temperature parameter, <span class="math inline">\(\mathbf{z}_i\)</span> and <span class="math inline">\(\mathbf{z}_i^+\)</span> are positive pairs, and <span class="math inline">\(\mathbf{z}_j^-\)</span> are negative pairs.</li>
+</ul>
+<p><strong>Theoretical Insights:</strong></p>
+<ul>
+<li><strong>Data Processing Inequality:</strong> This principle states that any processing of the data cannot increase mutual information. Formally, if <span class="math inline">\(X \rightarrow Y \rightarrow Z\)</span>, then <span class="math inline">\(I(X; Z) \leq I(X; Y)\)</span>. This is important for understanding the limits of how much information can be captured by SSL methods.</li>
+<li><strong>Mutual Information Maximization:</strong> By maximizing mutual information between different views, SSL methods ensure that the learned representations capture as much relevant information as possible.</li>
+</ul>
+</section>
+<section id="generalization" class="level4">
+<h4 class="anchored" data-anchor-id="generalization">26.10.3. Generalization</h4>
+<p>Generalization in SSL involves the ability of the learned representations to perform well on new, unseen tasks. Theoretical analysis often focuses on the following:</p>
+<p><strong>Key Factors:</strong></p>
+<ul>
+<li><strong>Representation Learning:</strong> SSL methods aim to learn representations that capture essential features of the data, facilitating transfer to new tasks.</li>
+<li><strong>Task Transferability:</strong> The degree to which a representation learned on one task (e.g., image rotation prediction) can be transferred to another task (e.g., object classification).</li>
+</ul>
+<p><strong>Theoretical Bounds:</strong></p>
+<ul>
+<li><strong>Generalization Bounds:</strong> Theoretical bounds on generalization performance can be derived based on the properties of the SSL method and the data distribution. <span class="math display">\[
+\mathbb{E}[L(f)] \leq \hat{L}(f) + \mathcal{O}\left(\sqrt{\frac{\log(1/\delta)}{2n}}\right)
+\]</span> where <span class="math inline">\(\mathbb{E}[L(f)]\)</span> is the expected loss, <span class="math inline">\(\hat{L}(f)\)</span> is the empirical loss, and <span class="math inline">\(n\)</span> is the number of samples.</li>
+</ul>
+<p><strong>PAC-Bayesian Theory:</strong></p>
+<ul>
+<li><strong>PAC-Bayesian Bounds:</strong> Provide a framework for analyzing the generalization performance of SSL methods by considering the trade-off between the complexity of the learned representations and their fit to the data. <span class="math display">\[
+\mathbb{E}[L(f)] \leq \hat{L}(f) + \frac{\text{KL}(Q \| P) + \log(\frac{2\sqrt{n}}{\delta})}{\sqrt{2n}}
+\]</span> where <span class="math inline">\(\text{KL}(Q \| P)\)</span> is the Kullback-Leibler divergence between the posterior distribution <span class="math inline">\(Q\)</span> and the prior distribution <span class="math inline">\(P\)</span>.</li>
+</ul>
+</section>
+<section id="inductive-biases" class="level4">
+<h4 class="anchored" data-anchor-id="inductive-biases">26.10.4. Inductive Biases</h4>
+<p>Inductive biases are assumptions built into the learning algorithm to guide the learning process. In SSL, these biases often come from the choice of pretext tasks and network architectures.</p>
+<p><strong>Example Biases:</strong></p>
+<ul>
+<li><strong>Spatial Coherence:</strong> Many SSL methods for images assume that nearby pixels or patches are related (e.g., jigsaw puzzles, inpainting).</li>
+<li><strong>Temporal Consistency:</strong> In speech and video data, SSL methods assume temporal consistency, leveraging the sequential nature of the data (e.g., future frame prediction in CPC).</li>
+</ul>
+<p><strong>Formal Definitions:</strong></p>
+<ul>
+<li><strong>Inductive Bias:</strong> Any set of assumptions that a learning algorithm uses to predict outputs given inputs that it has not encountered before.</li>
+<li><strong>Role in SSL:</strong> Inductive biases in SSL help the model leverage the structure of the data to learn more effectively. For example, the assumption that nearby patches in an image are likely to be similar helps models learn spatial coherence.</li>
+</ul>
+</section>
+<section id="theoretical-guarantees" class="level4">
+<h4 class="anchored" data-anchor-id="theoretical-guarantees">26.10.5. Theoretical Guarantees</h4>
+<p>Certain SSL methods come with theoretical guarantees, providing bounds on their performance and convergence.</p>
+<p><strong>Example Techniques:</strong></p>
+<ul>
+<li><strong>Contrastive Learning:</strong> Provides guarantees on representation quality by linking mutual information maximization to the quality of learned features.</li>
+<li><strong>Information Bottleneck:</strong> The Information Bottleneck (IB) principle can be applied to SSL to ensure that the learned representations capture relevant information while discarding noise. <span class="math display">\[
+\mathcal{L}_{\text{IB}} = I(X; Z) - \beta I(Z; Y)
+\]</span> where <span class="math inline">\(Z\)</span> is the learned representation, <span class="math inline">\(X\)</span> is the input, and <span class="math inline">\(Y\)</span> is the target.</li>
+</ul>
+<p><strong>Convergence Analysis:</strong></p>
+<ul>
+<li><strong>Theoretical Convergence:</strong> Studies on the convergence of SSL methods aim to provide conditions under which these methods are guaranteed to converge to a good solution.</li>
+<li><strong>Example Result:</strong> For contrastive learning, under certain conditions, it can be shown that the optimization problem will converge to a representation that maximizes mutual information.</li>
+</ul>
+</section>
+</section>
+<section id="summary-5" class="level3">
+<h3 class="anchored" data-anchor-id="summary-5">Summary</h3>
+<p>The theoretical aspects of self-supervised learning provide a foundation for understanding why SSL methods work and how they can be improved. By analyzing data distribution, mutual information, generalization, inductive biases, and theoretical guarantees, researchers can develop more effective and efficient self-supervised learning algorithms. These insights help in designing pretext tasks and architectures that lead to robust and transferable representations, advancing the field of machine learning.</p>
+</section>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>chapter9_ensemble_methods – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:description" content="">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="chapter-9.-ensemble-methods" class="level1 text-content">
+<h1>Chapter 9. Ensemble Methods</h1>
+<p>Ensemble methods are techniques that combine multiple machine learning models to improve performance, robustness, and generalization. By aggregating the predictions of multiple models, ensemble methods often achieve better results than individual models.</p>
+<section id="bagging-and-random-forests" class="level2">
+<h2 class="anchored" data-anchor-id="bagging-and-random-forests">9.1. Bagging and Random Forests</h2>
+<p>Bagging (Bootstrap Aggregating) is an ensemble method that improves the stability and accuracy of machine learning algorithms by training multiple models on different subsets of the data and averaging their predictions.</p>
+<ul>
+<li><p><strong>Bagging Steps:</strong></p>
+<ol type="1">
+<li><strong>Generate multiple bootstrap samples</strong> from the original dataset:
+<ul>
+<li>A bootstrap sample is created by randomly selecting data points with replacement from the original dataset.</li>
+</ul></li>
+<li><strong>Train a base model</strong> on each bootstrap sample:
+<ul>
+<li>This could be any base model such as a decision tree, a regression model, etc.</li>
+</ul></li>
+<li><strong>Aggregate the predictions</strong> of all base models:
+<ul>
+<li>For regression: average the predictions.</li>
+<li>For classification: majority voting to decide the final class.</li>
+</ul></li>
+</ol></li>
+<li><p><strong>Advantages:</strong> Reduces variance and helps prevent overfitting. Particularly useful for high-variance models like decision trees.</p></li>
+<li><p><strong>Disadvantages:</strong> Can be computationally expensive due to training multiple models. The interpretability of the final model can be lower compared to a single model.</p></li>
+</ul>
+<section id="random-forests" class="level3">
+<h3 class="anchored" data-anchor-id="random-forests">9.1.1. Random Forests</h3>
+<p>Random Forests are an extension of bagging that further decorrelates the individual trees by randomly selecting a subset of features for each split.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><p><strong>Generate bootstrap samples</strong> from the original dataset.</p></li>
+<li><p><strong>Train a decision tree</strong> on each sample, but at each split, consider only a random subset of features:</p>
+<ul>
+<li>This introduces additional randomness into the model, making the trees less correlated and improving generalization.</li>
+</ul></li>
+<li><p><strong>Aggregate the predictions</strong> of all trees:</p>
+<ul>
+<li>For regression: average the predictions.</li>
+<li>For classification: majority voting.</li>
+</ul></li>
+</ol></li>
+<li><p><strong>Example:</strong> Used for classification and regression tasks, Random Forests are robust to overfitting and perform well on a wide range of problems.</p></li>
+<li><p><strong>Advantages:</strong> Improves predictive accuracy by reducing overfitting. Handles high-dimensional data well and provides feature importance metrics.</p></li>
+<li><p><strong>Disadvantages:</strong> Can be computationally expensive and may require more memory. Interpretability can be lower compared to single decision trees.</p></li>
+</ul>
+</section>
+<section id="extra-trees" class="level3">
+<h3 class="anchored" data-anchor-id="extra-trees">9.1.3. Extra Trees</h3>
+<p>Extra Trees (Extremely Randomized Trees) is another ensemble method similar to Random Forests but with more randomization. Extra Trees create splits by selecting random thresholds for each feature, rather than optimizing the split.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><p><strong>Generate multiple subsets</strong> from the original dataset (not necessarily bootstrap samples).</p></li>
+<li><p><strong>Train a decision tree</strong> on each subset, selecting splits randomly:</p>
+<ul>
+<li>Splits are chosen by randomly selecting both the feature and the threshold for the split.</li>
+</ul></li>
+<li><p><strong>Aggregate the predictions</strong> of all trees:</p>
+<ul>
+<li>For regression: average the predictions.</li>
+<li>For classification: majority voting.</li>
+</ul></li>
+</ol></li>
+<li><p><strong>Advantages:</strong> Faster to train than Random Forests since the splits are chosen randomly. Reduces variance by introducing more randomness.</p></li>
+<li><p><strong>Disadvantages:</strong> May require more trees to achieve the same accuracy as Random Forests. Potentially higher variance if not enough trees are used.</p></li>
+</ul>
+</section>
+<section id="feature-importance-in-random-forests" class="level3">
+<h3 class="anchored" data-anchor-id="feature-importance-in-random-forests">9.1.4. Feature Importance in Random Forests</h3>
+<p>Feature importance in Random Forests helps identify which features are most predictive of the target variable. Random Forests provide two main types of feature importance:</p>
+<ul>
+<li><p><strong>Mean Decrease Impurity (MDI):</strong> Measures the total decrease in node impurity (e.g., Gini impurity) brought by a feature across all trees in the forest.</p>
+<ul>
+<li><p><strong>Steps to Calculate:</strong></p>
+<ol type="1">
+<li><p><strong>For each tree,</strong> record the decrease in impurity for each feature at every split.</p></li>
+<li><p><strong>Aggregate the decreases</strong> for each feature across all trees.</p></li>
+<li><p><strong>Normalize</strong> the importance scores to sum to 1.</p></li>
+</ol></li>
+<li><p><strong>Advantages:</strong> Provides a straightforward measure of feature importance based on the splits in the trees.</p></li>
+<li><p><strong>Disadvantages:</strong> Can be biased towards features with more levels or continuous variables.</p></li>
+</ul></li>
+<li><p><strong>Mean Decrease Accuracy (MDA):</strong> Measures the decrease in model accuracy when the values of a feature are randomly permuted.</p>
+<ul>
+<li><p><strong>Steps to Calculate:</strong></p>
+<ol type="1">
+<li><p><strong>Train the Random Forest</strong> on the original dataset.</p></li>
+<li><p><strong>Evaluate the accuracy</strong> on the test set.</p></li>
+<li><p><strong>Permute the values</strong> of a feature and re-evaluate the accuracy.</p></li>
+<li><p><strong>Compute the decrease</strong> in accuracy caused by the permutation.</p></li>
+</ol></li>
+<li><p><strong>Advantages:</strong> Provides an unbiased measure of feature importance by evaluating the impact on model performance.</p></li>
+<li><p><strong>Disadvantages:</strong> Computationally expensive since it requires re-evaluating the model multiple times.</p></li>
+</ul></li>
+<li><p><strong>Example:</strong> Used to rank features by importance, which can inform feature selection and model interpretation.</p></li>
+</ul>
+</section>
+<section id="out-of-bag-oob-error-estimation" class="level3">
+<h3 class="anchored" data-anchor-id="out-of-bag-oob-error-estimation">9.1.5. Out-of-Bag (OOB) Error Estimation</h3>
+<p>Out-of-Bag (OOB) error estimation provides an unbiased estimate of model performance using the data not included in each bootstrap sample. It is a built-in cross-validation method for bagging and Random Forests.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><p><strong>For each bootstrap sample,</strong> record the instances that are not included (OOB samples).</p></li>
+<li><p><strong>Train the model</strong> on the bootstrap sample.</p></li>
+<li><p><strong>Predict the OOB samples</strong> using the trained model.</p></li>
+<li><p><strong>Aggregate the predictions</strong> for each OOB sample and compute the error rate.</p></li>
+</ol></li>
+<li><p><strong>Example:</strong> Used to estimate the generalization error of Random Forests without the need for separate cross-validation.</p></li>
+<li><p><strong>Advantages:</strong> Provides an unbiased estimate of model performance. Reduces the need for a separate validation set, saving data for training.</p></li>
+<li><p><strong>Disadvantages:</strong> May not work well with very small datasets where the number of OOB samples per tree is too small for reliable estimation.</p></li>
+</ul>
+</section>
+</section>
+<section id="boosting" class="level2">
+<h2 class="anchored" data-anchor-id="boosting">9.2. Boosting</h2>
+<p>Boosting is an ensemble technique that combines weak learners into a strong learner in an iterative manner. Each new model is trained to correct the errors made by the previous models.</p>
+<section id="adaboost" class="level3">
+<h3 class="anchored" data-anchor-id="adaboost">9.2.1. AdaBoost</h3>
+<p>AdaBoost (Adaptive Boosting) is one of the first boosting algorithms developed to improve the performance of binary classifiers.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><p><strong>Initialize weights</strong> for all training instances equally.</p></li>
+<li><p><strong>Train a weak learner</strong> on the weighted training set.</p></li>
+<li><p><strong>Evaluate the weak learner</strong> and increase the weights of misclassified instances.</p></li>
+<li><p><strong>Train the next weak learner</strong> on the updated weights.</p></li>
+<li><p><strong>Repeat steps 2-4</strong> for a specified number of iterations or until a stopping criterion is met.</p></li>
+<li><p><strong>Aggregate the weak learners</strong> to form a strong classifier.</p></li>
+</ol></li>
+</ul>
+<section id="adaboost.m1-for-classification" class="level4">
+<h4 class="anchored" data-anchor-id="adaboost.m1-for-classification">9.2.1.1. AdaBoost.M1 for Classification</h4>
+<p>AdaBoost.M1 is a version of AdaBoost used for binary classification problems.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><p><strong>Initialize weights</strong> <span class="math inline">\(w_i = \frac{1}{n}\)</span> for <span class="math inline">\(i = 1, \ldots, n\)</span> where <span class="math inline">\(n\)</span> is the number of training instances.</p></li>
+<li><p><strong>For each iteration <span class="math inline">\(t\)</span></strong>:</p>
+<ul>
+<li>Train a weak classifier <span class="math inline">\(h_t\)</span>.</li>
+<li>Calculate the error rate <span class="math inline">\(\epsilon_t\)</span>: <span class="math display">\[
+\epsilon_t = \sum_{i=1}^{n} w_i \mathbb{I}(h_t(x_i) \neq y_i)
+\]</span></li>
+<li>Calculate the classifier weight <span class="math inline">\(\alpha_t\)</span>: <span class="math display">\[
+\alpha_t = \frac{1}{2} \log \left( \frac{1 - \epsilon_t}{\epsilon_t} \right)
+\]</span></li>
+<li>Update the weights: <span class="math display">\[
+w_i = w_i \exp (\alpha_t \mathbb{I}(h_t(x_i) \neq y_i))
+\]</span> Normalize the weights so that <span class="math inline">\(\sum_{i=1}^{n} w_i = 1\)</span>.</li>
+</ul></li>
+<li><p><strong>Final classifier</strong>: <span class="math display">\[
+H(x) = \text{sign} \left( \sum_{t=1}^{T} \alpha_t h_t(x) \right)
+\]</span></p></li>
+</ol></li>
+<li><p><strong>Example:</strong> Used for binary classification tasks like spam detection, where individual weak classifiers (e.g., decision stumps) are combined to form a strong classifier.</p></li>
+</ul>
+</section>
+<section id="adaboost.r2-for-regression" class="level4">
+<h4 class="anchored" data-anchor-id="adaboost.r2-for-regression">9.2.1.2. AdaBoost.R2 for Regression</h4>
+<p>AdaBoost.R2 extends AdaBoost to regression problems by focusing on minimizing prediction error.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><p><strong>Initialize weights</strong> for all training instances equally.</p></li>
+<li><p><strong>For each iteration <span class="math inline">\(t\)</span></strong>:</p>
+<ul>
+<li>Train a weak regressor <span class="math inline">\(h_t\)</span>.</li>
+<li>Calculate the error <span class="math inline">\(e_i\)</span> for each instance: <span class="math display">\[
+e_i = |y_i - h_t(x_i)|
+\]</span></li>
+<li>Calculate the weighted error <span class="math inline">\(\epsilon_t\)</span>: <span class="math display">\[
+\epsilon_t = \sum_{i=1}^{n} w_i e_i
+\]</span></li>
+<li>Calculate the regressor weight <span class="math inline">\(\alpha_t\)</span>: <span class="math display">\[
+\alpha_t = \frac{1}{2} \log \left( \frac{1 - \epsilon_t}{\epsilon_t} \right)
+\]</span></li>
+<li>Update the weights: <span class="math display">\[
+w_i = w_i \exp (\alpha_t e_i)
+\]</span> Normalize the weights so that <span class="math inline">\(\sum_{i=1}^{n} w_i = 1\)</span>.</li>
+</ul></li>
+<li><p><strong>Final regressor</strong>: <span class="math display">\[
+H(x) = \sum_{t=1}^{T} \alpha_t h_t(x)
+\]</span></p></li>
+</ol></li>
+<li><p><strong>Example:</strong> Used for regression tasks like predicting house prices, where weak regressors are combined to improve prediction accuracy.</p></li>
+</ul>
+</section>
+</section>
+<section id="gradient-boosting" class="level3">
+<h3 class="anchored" data-anchor-id="gradient-boosting">9.2.2. Gradient Boosting</h3>
+<p>Gradient Boosting builds models sequentially, each model correcting the errors of its predecessor by fitting to the residual errors of the previous models.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><p><strong>Initialize the model</strong> with a constant value.</p></li>
+<li><p><strong>For each iteration <span class="math inline">\(t\)</span></strong>:</p>
+<ul>
+<li>Compute the pseudo-residuals <span class="math inline">\(r_{i}^{(t)}\)</span>.</li>
+<li>Train a weak learner <span class="math inline">\(h_t\)</span> on the pseudo-residuals.</li>
+<li>Update the model: <span class="math display">\[
+F_{t}(x) = F_{t-1}(x) + \nu h_t(x)
+\]</span> where <span class="math inline">\(\nu\)</span> is the learning rate.</li>
+</ul></li>
+<li><p><strong>Final model</strong>: <span class="math display">\[
+F(x) = \sum_{t=1}^{T} \nu h_t(x)
+\]</span></p></li>
+</ol></li>
+</ul>
+<section id="gradient-boosting-decision-trees-gbdt" class="level4">
+<h4 class="anchored" data-anchor-id="gradient-boosting-decision-trees-gbdt">9.2.2.1. Gradient Boosting Decision Trees (GBDT)</h4>
+<p>GBDT is a popular implementation of Gradient Boosting where the weak learners are decision trees.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><p><strong>Initialize the model</strong> with a constant value, typically the mean of the target variable for regression or the log-odds for classification.</p></li>
+<li><p><strong>For each iteration <span class="math inline">\(t\)</span></strong>:</p>
+<ul>
+<li>Compute the negative gradient (pseudo-residuals).</li>
+<li>Train a decision tree <span class="math inline">\(h_t\)</span> on the pseudo-residuals.</li>
+<li>Update the model: <span class="math display">\[
+F_{t}(x) = F_{t-1}(x) + \nu h_t(x)
+\]</span></li>
+</ul></li>
+</ol></li>
+<li><p><strong>Example:</strong> Used in various applications such as web search ranking, financial forecasting, and predictive maintenance.</p></li>
+</ul>
+</section>
+<section id="stochastic-gradient-boosting" class="level4">
+<h4 class="anchored" data-anchor-id="stochastic-gradient-boosting">9.2.2.2. Stochastic Gradient Boosting</h4>
+<p>Stochastic Gradient Boosting introduces randomness by sampling a subset of the training data for each iteration.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><p><strong>Initialize the model</strong> with a constant value.</p></li>
+<li><p><strong>For each iteration <span class="math inline">\(t\)</span></strong>:</p>
+<ul>
+<li>Sample a random subset of the training data.</li>
+<li>Compute the pseudo-residuals.</li>
+<li>Train a weak learner on the pseudo-residuals.</li>
+<li>Update the model: <span class="math display">\[
+F_{t}(x) = F_{t-1}(x) + \nu h_t(x)
+\]</span></li>
+</ul></li>
+</ol></li>
+<li><p><strong>Advantages:</strong> Reduces overfitting and improves generalization by introducing randomness.</p></li>
+<li><p><strong>Example:</strong> Used in large-scale machine learning problems where full-batch training is computationally expensive.</p></li>
+</ul>
+</section>
+</section>
+<section id="xgboost" class="level3">
+<h3 class="anchored" data-anchor-id="xgboost">9.2.3. XGBoost</h3>
+<p>XGBoost (Extreme Gradient Boosting) is an optimized implementation of Gradient Boosting designed for speed and performance.</p>
+<ul>
+<li><p><strong>Key Features:</strong></p>
+<ul>
+<li><p><strong>Regularization:</strong> Adds L1 and L2 regularization to control model complexity and prevent overfitting.</p></li>
+<li><p><strong>Handling Missing Values:</strong> Automatically learns the best way to handle missing data during training.</p></li>
+<li><p><strong>Built-in Cross-Validation:</strong> Supports efficient cross-validation for hyperparameter tuning.</p></li>
+</ul></li>
+</ul>
+<section id="regularized-boosting" class="level4">
+<h4 class="anchored" data-anchor-id="regularized-boosting">9.2.3.1. Regularized Boosting</h4>
+<p>XGBoost adds regularization terms to the objective function to penalize model complexity.</p>
+<ul>
+<li><p><strong>Objective Function:</strong> <span class="math display">\[
+\mathcal{L}(\theta) = \sum_{i=1}^{n} l(y_i, \hat{y}_i) + \sum_{k=1}^{K} \Omega(f_k)
+\]</span> where <span class="math inline">\(\Omega(f_k) = \gamma T + \frac{1}{2} \lambda ||w||^2\)</span>.</p></li>
+<li><p><strong>Advantages:</strong> Helps prevent overfitting and improves model generalization.</p></li>
+</ul>
+</section>
+<section id="handling-missing-values" class="level4">
+<h4 class="anchored" data-anchor-id="handling-missing-values">9.2.3.2. Handling Missing Values</h4>
+<p>XGBoost can handle missing values by automatically learning the best direction to handle them in the trees.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><p><strong>Identify missing values</strong> during training.</p></li>
+<li><p><strong>Optimize split directions</strong> for missing values in the decision trees.</p></li>
+</ol></li>
+<li><p><strong>Advantages:</strong> Simplifies data preprocessing and improves model robustness to missing data.</p></li>
+</ul>
+</section>
+<section id="built-in-cross-validation" class="level4">
+<h4 class="anchored" data-anchor-id="built-in-cross-validation">9.2.3.3. Built-in Cross-Validation</h4>
+<p>XGBoost supports efficient cross-validation for hyperparameter tuning using the <code>cv</code> method.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><p><strong>Specify the model parameters and dataset.</strong></p></li>
+<li><p><strong>Use the <code>cv</code> method</strong> to perform cross-validation.</p></li>
+<li><p><strong>Evaluate the performance</strong> and select the best hyperparameters.</p></li>
+</ol></li>
+<li><p><strong>Advantages:</strong> Streamlines the model tuning process and ensures robust performance evaluation.</p></li>
+</ul>
+</section>
+</section>
+<section id="lightgbm" class="level3">
+<h3 class="anchored" data-anchor-id="lightgbm">9.2.4. LightGBM</h3>
+<p>LightGBM (Light Gradient Boosting Machine) is an efficient implementation of Gradient Boosting designed for high performance and scalability.</p>
+<ul>
+<li><p><strong>Key Features:</strong></p>
+<ul>
+<li><p><strong>Gradient-based One-Side Sampling (GOSS):</strong> Focuses on instances with larger gradients to reduce the number of data points needed for training.</p></li>
+<li><p><strong>Exclusive Feature Bundling (EFB):</strong> Bundles mutually exclusive features to reduce the number of features and speed up training.</p></li>
+</ul></li>
+</ul>
+<section id="gradient-based-one-side-sampling-goss" class="level4">
+<h4 class="anchored" data-anchor-id="gradient-based-one-side-sampling-goss">9.2.4.1. Gradient-based One-Side Sampling (GOSS)</h4>
+<p>GOSS selectively retains instances with large gradients and randomly samples instances with small gradients.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><p><strong>Compute the gradients</strong> for all instances.</p></li>
+<li><p><strong>Retain a subset</strong> of instances with large gradients.</p></li>
+<li><p><strong>Randomly sample</strong> instances with small gradients.</p></li>
+<li><p><strong>Train the model</strong> on the selected instances.</p></li>
+</ol></li>
+<li><p><strong>Advantages:</strong> Reduces the computational cost and improves training speed.</p></li>
+</ul>
+</section>
+<section id="exclusive-feature-bundling-efb" class="level4">
+<h4 class="anchored" data-anchor-id="exclusive-feature-bundling-efb">9.2.4.2. Exclusive Feature Bundling (EFB)</h4>
+<p>EFB bundles mutually exclusive features to reduce the number of features and speed up training.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><p><strong>Identify mutually exclusive features</strong> in the dataset.</p></li>
+<li><p><strong>Bundle the features</strong> into a single feature.</p></li>
+<li><p><strong>Train the model</strong> on the bundled features.</p></li>
+</ol></li>
+<li><p><strong>Advantages:</strong> Reduces the number of features, leading to faster training and reduced memory usage.</p></li>
+</ul>
+</section>
+</section>
+<section id="catboost" class="level3">
+<h3 class="anchored" data-anchor-id="catboost">9.2.5. CatBoost</h3>
+<p>CatBoost (Categorical Boosting) is a Gradient Boosting library that handles categorical features efficiently.</p>
+<ul>
+<li><p><strong>Key Features:</strong></p>
+<ul>
+<li><p><strong>Ordered Boosting:</strong> Prevents target leakage by training on a random permutation of the data.</p></li>
+<li><p><strong>Symmetric Trees:</strong> Uses symmetric trees to improve training and inference speed.</p></li>
+<li><p><strong>Handling Categorical Features:</strong> Efficiently processes categorical features without extensive preprocessing.</p></li>
+</ul></li>
+</ul>
+<section id="ordered-boosting" class="level4">
+<h4 class="anchored" data-anchor-id="ordered-boosting">9.2.5.1. Ordered Boosting</h4>
+<p>Ordered Boosting trains models on a random permutation of the data to prevent target leakage.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><p><strong>Randomly permute</strong> the training data.</p></li>
+<li><p><strong>Train the model</strong> on the permuted data.</p></li>
+</ol></li>
+<li><p><strong>Advantages:</strong> Prevents target leakage and improves model generalization.</p></li>
+</ul>
+</section>
+<section id="symmetric-trees" class="level4">
+<h4 class="anchored" data-anchor-id="symmetric-trees">9.2.5.2. Symmetric Trees</h4>
+<p>CatBoost uses symmetric trees, where the structure of the tree is the same for all splits.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><p><strong>Build symmetric trees</strong> during training.</p></li>
+<li><p><strong>Use the same tree structure</strong> for all splits.</p></li>
+</ol></li>
+<li><p><strong>Advantages:</strong> Improves training and inference speed by maintaining a consistent tree structure.</p></li>
+</ul>
+</section>
+<section id="handling-categorical-features" class="level4">
+<h4 class="anchored" data-anchor-id="handling-categorical-features">9.2.5.3. Handling Categorical Features</h4>
+<p>CatBoost efficiently processes categorical features without extensive preprocessing.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><p><strong>Encode categorical features</strong> using CatBoost’s encoding scheme.</p></li>
+<li><p><strong>Train the model</strong> on the encoded features.</p></li>
+</ol></li>
+<li><p><strong>Advantages:</strong> Simplifies data preprocessing and improves model performance on datasets with many categorical features.</p></li>
+</ul>
+<p>By understanding and applying these boosting methods, you can significantly enhance the performance and robustness of your machine learning models, leveraging the strengths of multiple algorithms to achieve better results.</p>
+</section>
+</section>
+</section>
+<section id="stacking-and-blending" class="level2">
+<h2 class="anchored" data-anchor-id="stacking-and-blending">9.3. Stacking and Blending</h2>
+<p>Stacking and blending are advanced ensemble techniques that combine the predictions of multiple base models (often called “level-0” models) using a secondary model (called a “meta-learner” or “level-1” model). These methods aim to leverage the strengths of different models to improve overall predictive performance.</p>
+<section id="basic-stacking-concepts" class="level3">
+<h3 class="anchored" data-anchor-id="basic-stacking-concepts">9.3.1. Basic Stacking Concepts</h3>
+<ul>
+<li><p><strong>Stacking:</strong> Involves training multiple base models and then using their predictions as inputs to a meta-learner, which makes the final prediction.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><strong>Train multiple base models</strong> (level-0 models) on the training data.</li>
+<li><strong>Generate predictions</strong> from each base model on a holdout set (or via cross-validation).</li>
+<li><strong>Train a meta-learner</strong> (level-1 model) on the predictions from the base models.</li>
+<li><strong>Combine the predictions</strong> of the base models using the meta-learner to make the final prediction.</li>
+</ol></li>
+<li><p><strong>Example:</strong> Use a decision tree, a support vector machine, and a k-nearest neighbors classifier as base models, and a logistic regression model as the meta-learner.</p></li>
+<li><p><strong>Advantages:</strong> Can capture complex relationships by combining diverse models. Often leads to improved predictive performance.</p></li>
+<li><p><strong>Disadvantages:</strong> Computationally expensive due to the need to train multiple models. Risk of overfitting if not carefully implemented.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="multi-level-stacking" class="level3">
+<h3 class="anchored" data-anchor-id="multi-level-stacking">9.3.2. Multi-level Stacking</h3>
+<ul>
+<li><p><strong>Multi-level Stacking:</strong> Extends basic stacking by adding more layers of models, where each layer uses the predictions of the previous layer as inputs.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><strong>First Layer:</strong> Train multiple base models on the original training data.</li>
+<li><strong>Second Layer:</strong> Use the predictions from the first layer as inputs to a new set of models.</li>
+<li><strong>Subsequent Layers:</strong> Continue stacking additional layers as needed, each time using the predictions from the previous layer.</li>
+<li><strong>Final Layer:</strong> Train a meta-learner on the predictions from the last layer to make the final prediction.</li>
+</ol></li>
+<li><p><strong>Example:</strong> First layer with decision trees and linear models, second layer with more complex models like gradient boosting, and a final layer with a neural network as the meta-learner.</p></li>
+<li><p><strong>Advantages:</strong> Can model very complex relationships by increasing the depth of the stacking architecture.</p></li>
+<li><p><strong>Disadvantages:</strong> Highly computationally intensive. Increased risk of overfitting if too many layers are used without proper regularization.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="feature-weighted-linear-stacking" class="level3">
+<h3 class="anchored" data-anchor-id="feature-weighted-linear-stacking">9.3.3. Feature-weighted Linear Stacking</h3>
+<ul>
+<li><p><strong>Feature-weighted Linear Stacking:</strong> Enhances basic stacking by assigning weights to the predictions of base models based on the importance of the features used in those models.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><strong>Train multiple base models</strong> on the training data.</li>
+<li><strong>Generate predictions</strong> from each base model on a holdout set.</li>
+<li><strong>Calculate feature importance</strong> for each base model.</li>
+<li><strong>Assign weights</strong> to the predictions of each base model based on their feature importance.</li>
+<li><strong>Train a meta-learner</strong> using the weighted predictions.</li>
+</ol></li>
+<li><p><strong>Example:</strong> If a random forest model identifies certain features as highly important, the predictions from this model might be given more weight in the meta-learner compared to a model that does not use those features effectively.</p></li>
+<li><p><strong>Advantages:</strong> Takes into account the relevance of different features, potentially improving the robustness and accuracy of the final predictions.</p></li>
+<li><p><strong>Disadvantages:</strong> More complex to implement and interpret. Requires accurate calculation of feature importance.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="blending-techniques" class="level3">
+<h3 class="anchored" data-anchor-id="blending-techniques">9.3.4. Blending Techniques</h3>
+<ul>
+<li><p><strong>Blending:</strong> Similar to stacking but typically uses a simple holdout validation set rather than cross-validation to generate predictions for the meta-learner.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><strong>Split the training data</strong> into two parts: a training set and a holdout set.</li>
+<li><strong>Train multiple base models</strong> on the training set.</li>
+<li><strong>Generate predictions</strong> from each base model on the holdout set.</li>
+<li><strong>Train a meta-learner</strong> on the predictions from the holdout set.</li>
+<li><strong>Combine the predictions</strong> of the base models using the meta-learner to make the final prediction.</li>
+</ol></li>
+<li><p><strong>Example:</strong> Train base models on 80% of the data and generate predictions on the remaining 20% holdout set. Use these predictions to train the meta-learner.</p></li>
+<li><p><strong>Advantages:</strong> Simpler and faster to implement than stacking, as it avoids the need for cross-validation.</p></li>
+<li><p><strong>Disadvantages:</strong> The performance of the meta-learner depends heavily on the chosen holdout set. May not be as robust as stacking if the holdout set is not representative.</p></li>
+</ul></li>
+</ul>
+<p>By understanding and implementing stacking and blending techniques, you can leverage the strengths of multiple models to improve predictive performance, capturing more complex relationships and reducing the risk of overfitting.</p>
+</section>
+</section>
+<section id="voting-classifiers-and-regressors" class="level2">
+<h2 class="anchored" data-anchor-id="voting-classifiers-and-regressors">9.4. Voting Classifiers and Regressors</h2>
+<p>Voting classifiers and regressors are ensemble techniques that combine the predictions of multiple models to make a final decision or prediction. This method leverages the strengths of different models by aggregating their outputs.</p>
+<section id="hard-voting" class="level3">
+<h3 class="anchored" data-anchor-id="hard-voting">9.4.1. Hard Voting</h3>
+<ul>
+<li><p><strong>Hard Voting:</strong> Involves taking the majority vote from multiple classifiers to make a final prediction in classification tasks. Each model contributes one vote, and the class with the most votes is the final prediction.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><strong>Train multiple classifiers</strong> on the same training dataset.</li>
+<li><strong>Make predictions</strong> using each classifier on the test data.</li>
+<li><strong>Count the votes</strong> for each class label.</li>
+<li><strong>Choose the class</strong> with the most votes as the final prediction.</li>
+</ol></li>
+<li><p><strong>Example:</strong> Using decision trees, support vector machines, and k-nearest neighbors classifiers to vote on the class label for each instance.</p></li>
+<li><p><strong>Advantages:</strong> Simple to implement and interpret. Works well when individual classifiers have comparable performance.</p></li>
+<li><p><strong>Disadvantages:</strong> Can be less effective if one classifier is significantly better than the others or if the classifiers are highly correlated.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="soft-voting" class="level3">
+<h3 class="anchored" data-anchor-id="soft-voting">9.4.2. Soft Voting</h3>
+<ul>
+<li><p><strong>Soft Voting:</strong> Involves averaging the predicted probabilities (or confidence scores) of multiple classifiers and choosing the class with the highest average probability.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><strong>Train multiple classifiers</strong> on the same training dataset.</li>
+<li><strong>Make probability predictions</strong> using each classifier on the test data.</li>
+<li><strong>Average the predicted probabilities</strong> for each class.</li>
+<li><strong>Choose the class</strong> with the highest average probability as the final prediction.</li>
+</ol></li>
+<li><p><strong>Example:</strong> Using logistic regression, random forest, and neural network classifiers to predict class probabilities and averaging these probabilities to make a final prediction.</p></li>
+<li><p><strong>Advantages:</strong> Takes into account the confidence of each classifier, often leading to better performance than hard voting. More robust to individual classifier errors.</p></li>
+<li><p><strong>Disadvantages:</strong> Requires classifiers that can output probability estimates. More complex to implement and interpret.</p></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="ensemble-diversity" class="level2">
+<h2 class="anchored" data-anchor-id="ensemble-diversity">9.5. Ensemble Diversity</h2>
+<p>Ensemble diversity refers to the difference in predictions among the base models in an ensemble. High diversity is crucial for ensemble methods to be effective, as it ensures that the models make different errors, which can be averaged out.</p>
+<section id="measures-of-diversity" class="level3">
+<h3 class="anchored" data-anchor-id="measures-of-diversity">9.5.1. Measures of Diversity</h3>
+<ul>
+<li><p><strong>Measures of Diversity:</strong> Quantitative metrics to assess how different the models in an ensemble are from each other.</p>
+<ul>
+<li><p><strong>Q-statistic:</strong> Measures the correlation between the predictions of two classifiers. Lower values indicate higher diversity. <span class="math display">\[
+Q = \frac{N_{11}N_{00} - N_{01}N_{10}}{N_{11}N_{00} + N_{01}N_{10}}
+\]</span> where <span class="math inline">\(N_{11}\)</span> is the number of instances both classifiers are correct, <span class="math inline">\(N_{00}\)</span> is the number of instances both are incorrect, <span class="math inline">\(N_{01}\)</span> and <span class="math inline">\(N_{10}\)</span> are the counts of one being correct and the other incorrect.</p></li>
+<li><p><strong>Correlation Coefficient:</strong> Measures the linear correlation between the predictions of two classifiers. <span class="math display">\[
+\rho = \frac{\sum (p_i - \bar{p})(q_i - \bar{q})}{\sqrt{\sum (p_i - \bar{p})^2 \sum (q_i - \bar{q})^2}}
+\]</span></p></li>
+<li><p><strong>Disagreement Measure:</strong> The proportion of instances where the classifiers disagree. <span class="math display">\[
+D = \frac{N_{01} + N_{10}}{N}
+\]</span></p></li>
+</ul></li>
+</ul>
+</section>
+<section id="methods-for-promoting-diversity" class="level3">
+<h3 class="anchored" data-anchor-id="methods-for-promoting-diversity">9.5.2. Methods for Promoting Diversity</h3>
+<ul>
+<li><p><strong>Methods for Promoting Diversity:</strong> Techniques to ensure that base models in an ensemble make different errors, increasing the effectiveness of the ensemble.</p>
+<ul>
+<li><p><strong>Bagging:</strong> Generates different training datasets by sampling with replacement.</p></li>
+<li><p><strong>Boosting:</strong> Sequentially trains models, each focusing on the errors of the previous one.</p></li>
+<li><p><strong>Random Subspace Method:</strong> Trains each model on a different random subset of the features.</p></li>
+<li><p><strong>Different Algorithms:</strong> Combines models from different algorithmic families (e.g., decision trees, neural networks, SVMs).</p></li>
+<li><p><strong>Parameter Tuning:</strong> Uses different hyperparameters for the same algorithm to train different models.</p></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="ensemble-pruning" class="level2">
+<h2 class="anchored" data-anchor-id="ensemble-pruning">9.6. Ensemble Pruning</h2>
+<p>Ensemble pruning involves selecting a subset of models from an ensemble to reduce complexity and improve performance.</p>
+<section id="ranking-based-pruning" class="level3">
+<h3 class="anchored" data-anchor-id="ranking-based-pruning">9.6.1. Ranking-based Pruning</h3>
+<ul>
+<li><p><strong>Ranking-based Pruning:</strong> Ranks the base models based on their individual performance and selects the top-performing models.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><strong>Evaluate each base model</strong> on a validation set.</li>
+<li><strong>Rank the models</strong> based on their performance metrics (e.g., accuracy, F1-score).</li>
+<li><strong>Select the top-k models</strong> to form the pruned ensemble.</li>
+</ol></li>
+<li><p><strong>Example:</strong> From an ensemble of 100 decision trees, select the top 10 trees with the highest accuracy on the validation set.</p></li>
+<li><p><strong>Advantages:</strong> Simple and intuitive. Reduces ensemble size and computational cost.</p></li>
+<li><p><strong>Disadvantages:</strong> May not consider the diversity among models, potentially leading to suboptimal ensembles.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="optimization-based-pruning" class="level3">
+<h3 class="anchored" data-anchor-id="optimization-based-pruning">9.6.2. Optimization-based Pruning</h3>
+<ul>
+<li><p><strong>Optimization-based Pruning:</strong> Uses optimization techniques to select the best subset of models that maximize ensemble performance.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><strong>Formulate an optimization problem</strong> where the objective is to maximize ensemble performance (e.g., accuracy, F1-score).</li>
+<li><strong>Apply optimization algorithms</strong> (e.g., genetic algorithms, integer programming) to find the best subset of models.</li>
+<li><strong>Select the models</strong> that form the optimal ensemble.</li>
+</ol></li>
+<li><p><strong>Example:</strong> Use a genetic algorithm to search for the best subset of models from an ensemble of neural networks.</p></li>
+<li><p><strong>Advantages:</strong> Considers both model performance and diversity. Can lead to better-performing ensembles.</p></li>
+<li><p><strong>Disadvantages:</strong> Computationally expensive. Requires careful formulation of the optimization problem.</p></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="online-ensemble-learning" class="level2">
+<h2 class="anchored" data-anchor-id="online-ensemble-learning">9.7. Online Ensemble Learning</h2>
+<p>Online ensemble learning involves training and updating an ensemble of models incrementally as new data arrives, making it suitable for real-time applications.</p>
+<ul>
+<li><p><strong>Steps:</strong></p>
+<ol type="1">
+<li><strong>Initialize the ensemble</strong> with a set of base models.</li>
+<li><strong>Train the ensemble</strong> on an initial batch of data.</li>
+<li><strong>For each new data instance</strong>:
+<ul>
+<li><strong>Update each base model</strong> using the new data.</li>
+<li><strong>Aggregate the predictions</strong> from the updated models.</li>
+<li><strong>Adjust the ensemble weights</strong> based on the performance of each model on the new data.</li>
+</ul></li>
+<li><strong>Evaluate the ensemble’s performance</strong> periodically to ensure it adapts well to new data.</li>
+</ol></li>
+<li><p><strong>Example:</strong> Use online ensemble learning for real-time stock price prediction, where the models are continuously updated with new market data.</p></li>
+<li><p><strong>Advantages:</strong> Suitable for non-stationary environments where data distribution changes over time. Can handle large streams of data efficiently.</p></li>
+<li><p><strong>Disadvantages:</strong> Requires efficient algorithms for updating models. Performance can degrade if the ensemble does not adapt quickly to changing data patterns.</p></li>
+</ul>
+<p>By understanding and implementing these advanced ensemble techniques, you can build robust and accurate models that leverage the strengths of multiple algorithms and adapt to various data scenarios.</p>
+</section>
+</section>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

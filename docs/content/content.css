@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
+
+:root {
+  --primary-color: #333;
+  --secondary-color: #666;
+  --accent-color: #0066cc;
+  --background-color: #f9f9f9;
+  --max-width: 900px;
+}
+
+body {
+  font-family: "Fira Code", monospace;
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--primary-color);
+  background-color: var(--background-color);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+.topic-title, .article-title, .article-subtitle, .read-time {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.topic-title {
+  font-size: 36px;
+  color: var(--accent-color);
+  border-bottom: 2px solid var(--accent-color);
+  padding-bottom: 10px;
+  font-weight: 600;
+}
+
+.article-title {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.article-subtitle {
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--secondary-color);
+}
+
+.read-time {
+  font-size: 14px;
+  color: var(--secondary-color);
+  font-style: italic;
+}
+
+.image-container {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.full-width-image {
+  width: 100%;
+  max-width: var(--max-width);
+  height: auto;
+  display: block;
+  margin: 30px auto;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 4px;
+}
+
+.text-content {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 30px auto;
+  font-size: 16px;
+  line-height: 1.8;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.text-content h1, .text-content h2, .text-content h3, .text-content h4, .text-content h5, .text-content h6 {
+  color: var(--primary-color);
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+}
+
+.text-content h1 { font-size: 32px; }
+.text-content h2 { font-size: 30px; }
+.text-content h3 { font-size: 28px; }
+.text-content h4 { font-size: 20px; }
+.text-content h5, .text-content h6 {
+  font-size: 18px;
+  font-style: italic;
+}
+
+.quarto-listing table {
+  font-size: 14px;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.quarto-listing table th {
+  font-weight: 600;
+  background-color: var(--accent-color);
+  color: black;
+  padding: 18px;
+  text-align: left;
+
+}
+
+.quarto-listing table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.quarto-listing table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.listing-title {
+  font-size: 18px;
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.listing-title:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+code, pre {
+  font-weight: 500;
+  font-size: 0.9em;
+}
+
+@media (max-width: 768px) {
+  body { font-size: 14px; }
+  .topic-title { font-size: 28px; }
+  .article-title { font-size: 36px; }
+  .article-subtitle { font-size: 20px; }
+  .text-content h1 { font-size: 28px; }
+  .text-content h2 { font-size: 24px; }
+  .text-content h3 { font-size: 20px; }
+  .text-content h4, .text-content h5, .text-content h6 { font-size: 18px; }
+}
