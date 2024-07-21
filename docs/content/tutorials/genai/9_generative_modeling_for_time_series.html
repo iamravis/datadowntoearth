@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>generative_modeling_for_time_series – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:description" content="">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="chapter-9-generative-modeling-for-time-series" class="level1 text-content">
+<h1>Chapter 9: Generative Modeling For Time Series</h1>
+<p>Generative modeling for time series involves creating synthetic sequences that preserve the temporal dependencies and statistical properties of the original data. This is particularly challenging due to the sequential nature of time series data and the complex dependencies between time steps.</p>
+<section id="modeling-temporal-dependencies" class="level2">
+<h2 class="anchored" data-anchor-id="modeling-temporal-dependencies">Modeling Temporal Dependencies</h2>
+<p>Time series data is characterized by temporal dependencies, where the value at a given time step depends on previous values. Capturing these dependencies is crucial for generating realistic synthetic time series data.</p>
+<section id="autoregressive-models" class="level3">
+<h3 class="anchored" data-anchor-id="autoregressive-models">Autoregressive Models</h3>
+<p>Autoregressive (AR) models are a class of models that predict the value at the next time step based on a linear combination of previous values:</p>
+<p><span class="math display">\[
+x_t = \phi_1 x_{t-1} + \phi_2 x_{t-2} + ... + \phi_p x_{t-p} + \epsilon_t
+\]</span></p>
+<p>Where <span class="math inline">\(\phi_1, \phi_2, ..., \phi_p\)</span> are the autoregressive coefficients, <span class="math inline">\(p\)</span> is the order of the model, and <span class="math inline">\(\epsilon_t\)</span> is white noise.</p>
+</section>
+<section id="recurrent-neural-networks-rnns" class="level3">
+<h3 class="anchored" data-anchor-id="recurrent-neural-networks-rnns">Recurrent Neural Networks (RNNs)</h3>
+<p>RNNs are a class of neural networks designed to handle sequential data by maintaining a hidden state that captures information from previous time steps:</p>
+<p><span class="math display">\[
+h_t = \sigma(W_h h_{t-1} + W_x x_t + b)
+\]</span></p>
+<p>Where <span class="math inline">\(h_t\)</span> is the hidden state at time <span class="math inline">\(t\)</span>, <span class="math inline">\(x_t\)</span> is the input at time <span class="math inline">\(t\)</span>, <span class="math inline">\(W_h\)</span> and <span class="math inline">\(W_x\)</span> are weight matrices, <span class="math inline">\(b\)</span> is a bias term, and <span class="math inline">\(\sigma\)</span> is an activation function.</p>
+</section>
+<section id="long-short-term-memory-lstm" class="level3">
+<h3 class="anchored" data-anchor-id="long-short-term-memory-lstm">Long Short-Term Memory (LSTM)</h3>
+<p>LSTMs are a type of RNN designed to address the vanishing gradient problem by introducing gating mechanisms:</p>
+<ol type="1">
+<li><p><strong>Forget Gate</strong>: Decides what information to discard from the cell state.</p>
+<p><span class="math display">\[
+f_t = \sigma(W_f [h_{t-1}, x_t] + b_f)
+\]</span></p></li>
+<li><p><strong>Input Gate</strong>: Decides what new information to store in the cell state.</p>
+<p><span class="math display">\[
+i_t = \sigma(W_i [h_{t-1}, x_t] + b_i)
+\]</span></p>
+<p><span class="math display">\[
+\tilde{C}_t = \tanh(W_C [h_{t-1}, x_t] + b_C)
+\]</span></p></li>
+<li><p><strong>Cell State Update</strong>: Updates the cell state.</p>
+<p><span class="math display">\[
+C_t = f_t * C_{t-1} + i_t * \tilde{C}_t
+\]</span></p></li>
+<li><p><strong>Output Gate</strong>: Decides what information to output.</p>
+<p><span class="math display">\[
+o_t = \sigma(W_o [h_{t-1}, x_t] + b_o)
+\]</span></p>
+<p><span class="math display">\[
+h_t = o_t * \tanh(C_t)
+\]</span></p></li>
+</ol>
+</section>
+</section>
+<section id="generative-adversarial-networks-for-time-series" class="level2">
+<h2 class="anchored" data-anchor-id="generative-adversarial-networks-for-time-series">Generative Adversarial Networks for Time Series</h2>
+<p>GANs have been adapted for time series data generation, addressing challenges such as temporal dependencies and mode collapse.</p>
+<section id="timegan" class="level3">
+<h3 class="anchored" data-anchor-id="timegan">TimeGAN</h3>
+<p>TimeGAN combines the flexibility of GANs with the control of supervised learning to generate realistic time series data.</p>
+<p>Key features: 1. <strong>Embedding Network</strong>: Maps time series data to a lower-dimensional latent space.</p>
+<p><span class="math display">\[
+   h_t = \text{Encoder}(x_t)
+   \]</span></p>
+<ol start="2" type="1">
+<li><p><strong>Generator and Discriminator</strong>: Operate in the latent space to generate and evaluate synthetic sequences.</p>
+<p><span class="math display">\[
+G(z) = \text{Decoder}(z)
+\]</span></p>
+<p><span class="math display">\[
+D(x) = \text{Discriminator}(x)
+\]</span></p></li>
+<li><p><strong>Supervised Loss</strong>: Encourages the generator to capture temporal dependencies by using a stepwise supervised loss.</p>
+<p><span class="math display">\[
+\mathcal{L}_{sup} = \sum_{t=1}^T \text{MSE}(x_t, \hat{x}_t)
+\]</span></p></li>
+<li><p><strong>Adversarial Loss</strong>: Ensures the generated sequences are indistinguishable from real sequences.</p>
+<p><span class="math display">\[
+\mathcal{L}_{GAN} = \mathbb{E}[\log D(x)] + \mathbb{E}[\log(1 - D(G(z)))]
+\]</span></p></li>
+</ol>
+<p>The full objective is:</p>
+<p><span class="math display">\[
+\mathcal{L} = \mathcal{L}_{GAN} + \lambda \mathcal{L}_{sup}
+\]</span></p>
+<p>Where <span class="math inline">\(\lambda\)</span> controls the importance of the supervised loss.</p>
+</section>
+<section id="tgan-temporal-gan" class="level3">
+<h3 class="anchored" data-anchor-id="tgan-temporal-gan">TGAN (Temporal GAN)</h3>
+<p>TGAN is designed to generate realistic time series data by capturing temporal dependencies.</p>
+<p>Key features: 1. <strong>Temporal Generator</strong>: Uses an LSTM-like architecture to generate sequences of latent variables.</p>
+<p><span class="math display">\[
+   z_t = \text{LSTM}(z_{t-1}, h_{t-1})
+   \]</span></p>
+<ol start="2" type="1">
+<li><p><strong>Image Generator</strong>: Generates each frame from the corresponding latent variable.</p>
+<p><span class="math display">\[
+x_t = G(z_t)
+\]</span></p></li>
+<li><p><strong>Spatial and Temporal Discriminators</strong>: Ensure the generated frames are coherent both spatially and temporally.</p>
+<p><span class="math display">\[
+D_{spatial}(x_t), \quad D_{temporal}(x_{1:T})
+\]</span></p></li>
+</ol>
+<p>The objective function includes spatial GAN loss and temporal GAN loss:</p>
+<p><span class="math display">\[
+\mathcal{L}_{GAN}^{spatial} = \mathbb{E}[\log D_{spatial}(x_t)] + \mathbb{E}[\log(1 - D_{spatial}(G(z_t)))]
+\]</span></p>
+<p><span class="math display">\[
+\mathcal{L}_{GAN}^{temporal} = \mathbb{E}[\log D_{temporal}(x_{1:T})] + \mathbb{E}[\log(1 - D_{temporal}(G(z_{1:T})))]
+\]</span></p>
+<p>The full objective is:</p>
+<p><span class="math display">\[
+\mathcal{L} = \mathcal{L}_{GAN}^{spatial} + \lambda \mathcal{L}_{GAN}^{temporal}
+\]</span></p>
+<p>Where <span class="math inline">\(\lambda\)</span> controls the importance of the temporal GAN loss.</p>
+</section>
+</section>
+<section id="forecasting-and-anomaly-detection" class="level2">
+<h2 class="anchored" data-anchor-id="forecasting-and-anomaly-detection">Forecasting and Anomaly Detection</h2>
+<p>Generative models for time series can be used for forecasting future values and detecting anomalies.</p>
+<section id="forecasting" class="level3">
+<h3 class="anchored" data-anchor-id="forecasting">Forecasting</h3>
+<p>Forecasting involves predicting future values based on historical data. Generative models can be used to generate multiple possible future scenarios, providing a distribution of potential outcomes.</p>
+<ol type="1">
+<li><p><strong>Autoregressive Models</strong>: Predict future values based on past values.</p>
+<p><span class="math display">\[
+\hat{x}_{t+1} = f(x_t, x_{t-1}, ..., x_{t-p})
+\]</span></p></li>
+<li><p><strong>RNNs and LSTMs</strong>: Use hidden states to capture temporal dependencies and predict future values.</p>
+<p><span class="math display">\[
+\hat{x}_{t+1} = \text{LSTM}(x_t, h_{t-1})
+\]</span></p></li>
+<li><p><strong>GAN-based Models</strong>: Generate multiple future sequences and select the most likely ones.</p>
+<p><span class="math display">\[
+\hat{x}_{t+1:T} = G(z, x_{1:t})
+\]</span></p></li>
+</ol>
+</section>
+<section id="anomaly-detection" class="level3">
+<h3 class="anchored" data-anchor-id="anomaly-detection">Anomaly Detection</h3>
+<p>Anomaly detection involves identifying unusual patterns in time series data. Generative models can be used to generate normal sequences and detect deviations from these sequences.</p>
+<ol type="1">
+<li><p><strong>Reconstruction Error</strong>: Measure the difference between the real and generated sequences.</p>
+<p><span class="math display">\[
+\text{Anomaly Score} = ||x_{1:T} - \hat{x}_{1:T}||_2
+\]</span></p></li>
+<li><p><strong>Probability-based Methods</strong>: Use the likelihood of the observed sequence under the generative model.</p>
+<p><span class="math display">\[
+\text{Anomaly Score} = -\log P(x_{1:T})
+\]</span></p></li>
+</ol>
+</section>
+</section>
+<section id="techniques-for-handling-irregularly-sampled-time-series" class="level2">
+<h2 class="anchored" data-anchor-id="techniques-for-handling-irregularly-sampled-time-series">Techniques for Handling Irregularly Sampled Time Series</h2>
+<p>Time series data is often irregularly sampled, with varying intervals between observations. Handling this irregularity is crucial for accurate modeling.</p>
+<section id="interpolation" class="level3">
+<h3 class="anchored" data-anchor-id="interpolation">Interpolation</h3>
+<p>Interpolation involves estimating the values at missing time points. Common methods include:</p>
+<ol type="1">
+<li><p><strong>Linear Interpolation</strong>: Estimate missing values using a linear function.</p>
+<p><span class="math display">\[
+x_t = x_{t-1} + \frac{t - t_{prev}}{t_{next} - t_{prev}} (x_{t_{next}} - x_{t_{prev}})
+\]</span></p></li>
+<li><p><strong>Spline Interpolation</strong>: Use spline functions to estimate missing values.</p></li>
+</ol>
+</section>
+<section id="time-aware-rnns" class="level3">
+<h3 class="anchored" data-anchor-id="time-aware-rnns">Time-Aware RNNs</h3>
+<p>Time-aware RNNs incorporate the time intervals between observations into the model.</p>
+<ol type="1">
+<li><p><strong>Time Decay</strong>: Apply a decay function to the hidden state based on the time interval.</p>
+<p><span class="math display">\[
+h_t = \sigma(W_h h_{t-1} e^{-\Delta t / \tau} + W_x x_t + b)
+\]</span></p></li>
+<li><p><strong>Temporal Attention</strong>: Use attention mechanisms to weigh the importance of past observations based on the time intervals.</p>
+<p><span class="math display">\[
+\alpha_{ij} = \frac{\exp(e_{ij})}{\sum_k \exp(e_{ik})}
+\]</span></p>
+<p><span class="math display">\[
+e_{ij} = f(h_i, h_j, \Delta t_{ij})
+\]</span></p></li>
+</ol>
+</section>
+<section id="gaussian-processes" class="level3">
+<h3 class="anchored" data-anchor-id="gaussian-processes">Gaussian Processes</h3>
+<p>Gaussian Processes (GPs) are a non-parametric method that can handle irregularly sampled data by modeling the covariance structure.</p>
+<ol type="1">
+<li><p><strong>Covariance Function</strong>: Define a covariance function that captures the temporal dependencies.</p>
+<p><span class="math display">\[
+k(t_i, t_j) = \sigma_f^2 \exp\left(-\frac{(t_i - t_j)^2}{2l^2}\right)
+\]</span></p></li>
+<li><p><strong>Prediction</strong>: Use the GP model to predict values at missing time points and estimate uncertainty.</p></li>
+</ol>
+<p>These techniques enable the effective handling of irregularly sampled time series data, ensuring accurate modeling and generation of synthetic sequences.</p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Generative modeling for time series involves capturing the temporal dependencies and statistical properties of sequential data. Techniques such as RNNs, LSTMs, and GANs have been adapted to handle the unique challenges of time series data. Applications include forecasting future values, detecting anomalies, and generating synthetic sequences for data augmentation. Handling irregularly sampled time series data is crucial for accurate modeling, and techniques such as interpolation, time-aware RNNs, and Gaussian Processes provide effective solutions. As the field continues to evolve, these methods promise to provide valuable tools for a wide range of applications in time series analysis.</p>
+</section>
+</section>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>diffusion_models – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:description" content="">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="chapter-13-diffusion-models" class="level1 text-content">
+<h1>Chapter 13: Diffusion Models</h1>
+<p>Diffusion models are a class of generative models that have gained significant attention in recent years due to their ability to produce high-quality samples across various domains, including images, audio, and text. These models are based on the principle of gradually adding noise to data and then learning to reverse this process.</p>
+<section id="denoising-diffusion-probabilistic-models-ddpms" class="level2">
+<h2 class="anchored" data-anchor-id="denoising-diffusion-probabilistic-models-ddpms">1. Denoising Diffusion Probabilistic Models (DDPMs)</h2>
+<p>DDPMs are the foundation of many modern diffusion models. They work by gradually adding noise to data and then learning to reverse this process.</p>
+<section id="forward-process" class="level3">
+<h3 class="anchored" data-anchor-id="forward-process">1.1 Forward Process</h3>
+<p>The forward process, also known as the diffusion process, gradually adds Gaussian noise to the data over T steps:</p>
+<p><span class="math display">\[
+q(x_t | x_{t-1}) = \mathcal{N}(x_t; \sqrt{1 - \beta_t} x_{t-1}, \beta_t I)
+\]</span></p>
+<p>Where: - <span class="math inline">\(x_t\)</span> is the noisy version of the data at step t - <span class="math inline">\(\beta_t\)</span> is the noise schedule, typically increasing from <span class="math inline">\(\beta_1\)</span> to <span class="math inline">\(\beta_T\)</span> - <span class="math inline">\(\mathcal{N}(\mu, \sigma^2)\)</span> denotes a Gaussian distribution with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span></p>
+<section id="noise-schedules" class="level4">
+<h4 class="anchored" data-anchor-id="noise-schedules">1.1.1 Noise Schedules</h4>
+<p>Different noise schedules have been proposed:</p>
+<ol type="1">
+<li>Linear schedule: <span class="math inline">\(\beta_t = \beta_1 + (\beta_T - \beta_1) \frac{t-1}{T-1}\)</span></li>
+<li>Cosine schedule: <span class="math inline">\(\beta_t = 1 - \frac{\cos(\frac{\pi t}{2T})}{\cos(\frac{\pi (t-1)}{2T})}\)</span></li>
+<li>Sigmoid schedule: <span class="math inline">\(\beta_t = \beta_1 + (\beta_T - \beta_1) \text{sigmoid}(\frac{t-1}{T-1})\)</span></li>
+</ol>
+</section>
+<section id="reparameterization-trick" class="level4">
+<h4 class="anchored" data-anchor-id="reparameterization-trick">1.1.2 Reparameterization Trick</h4>
+<p>The forward process can be reparameterized as:</p>
+<p><span class="math display">\[
+x_t = \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1-\bar{\alpha}_t}\epsilon
+\]</span></p>
+<p>Where <span class="math inline">\(\bar{\alpha}_t = \prod_{s=1}^t (1 - \beta_s)\)</span> and <span class="math inline">\(\epsilon \sim \mathcal{N}(0, I)\)</span></p>
+</section>
+</section>
+<section id="reverse-process" class="level3">
+<h3 class="anchored" data-anchor-id="reverse-process">1.2 Reverse Process</h3>
+<p>The reverse process, also known as the denoising process, aims to gradually remove the noise:</p>
+<p><span class="math display">\[
+p_\theta(x_{t-1} | x_t) = \mathcal{N}(x_{t-1}; \mu_\theta(x_t, t), \Sigma_\theta(x_t, t))
+\]</span></p>
+<section id="parameterization-of-the-reverse-process" class="level4">
+<h4 class="anchored" data-anchor-id="parameterization-of-the-reverse-process">1.2.1 Parameterization of the Reverse Process</h4>
+<p>In practice, instead of directly predicting <span class="math inline">\(\mu_\theta\)</span> and <span class="math inline">\(\Sigma_\theta\)</span>, most models predict the noise <span class="math inline">\(\epsilon_\theta\)</span>:</p>
+<p><span class="math display">\[
+\epsilon_\theta(x_t, t) \approx \epsilon
+\]</span></p>
+<p>The mean of the reverse process can then be computed as:</p>
+<p><span class="math display">\[
+\mu_\theta(x_t, t) = \frac{1}{\sqrt{1-\beta_t}}(x_t - \frac{\beta_t}{\sqrt{1-\bar{\alpha}_t}}\epsilon_\theta(x_t, t))
+\]</span></p>
+</section>
+<section id="variance-prediction" class="level4">
+<h4 class="anchored" data-anchor-id="variance-prediction">1.2.2 Variance Prediction</h4>
+<p>Some models also predict the variance:</p>
+<p><span class="math display">\[
+\Sigma_\theta(x_t, t) = \exp(v_\theta(x_t, t)) \cdot \tilde{\beta}_t
+\]</span></p>
+<p>Where <span class="math inline">\(\tilde{\beta}_t\)</span> is a fixed or learned base variance.</p>
+</section>
+</section>
+<section id="training-objective" class="level3">
+<h3 class="anchored" data-anchor-id="training-objective">1.3 Training Objective</h3>
+<p>The model is trained to minimize the negative log-likelihood:</p>
+<p><span class="math display">\[
+L = \mathbb{E}_{q(x_0)}[-\log p_\theta(x_0)]
+\]</span></p>
+<section id="variational-lower-bound" class="level4">
+<h4 class="anchored" data-anchor-id="variational-lower-bound">1.3.1 Variational Lower Bound</h4>
+<p>This is typically approximated using a variational lower bound:</p>
+<p><span class="math display">\[
+L = \mathbb{E}_{q(x_{0:T})}[\log \frac{q(x_{1:T}|x_0)}{p_\theta(x_{0:T})}]
+\]</span></p>
+</section>
+<section id="simplified-objective" class="level4">
+<h4 class="anchored" data-anchor-id="simplified-objective">1.3.2 Simplified Objective</h4>
+<p>In practice, this is often further simplified to a reweighted objective:</p>
+<p><span class="math display">\[
+L_{\text{simple}} = \mathbb{E}_{t, x_0, \epsilon}[||\epsilon - \epsilon_\theta(x_t, t)||^2]
+\]</span></p>
+</section>
+<section id="importance-sampling" class="level4">
+<h4 class="anchored" data-anchor-id="importance-sampling">1.3.3 Importance Sampling</h4>
+<p>Some works propose using importance sampling to improve the training objective:</p>
+<p><span class="math display">\[
+L_{\text{IS}} = \mathbb{E}_{t, x_0, \epsilon}[w(t)||\epsilon - \epsilon_\theta(x_t, t)||^2]
+\]</span></p>
+<p>Where <span class="math inline">\(w(t)\)</span> is an importance weight.</p>
+</section>
+</section>
+</section>
+<section id="sampling-from-diffusion-models" class="level2">
+<h2 class="anchored" data-anchor-id="sampling-from-diffusion-models">2. Sampling from Diffusion Models</h2>
+<section id="ddpm-denoising-diffusion-probabilistic-models" class="level3">
+<h3 class="anchored" data-anchor-id="ddpm-denoising-diffusion-probabilistic-models">2.1 DDPM (Denoising Diffusion Probabilistic Models)</h3>
+<p>DDPM sampling follows the reverse process:</p>
+<ol type="1">
+<li>Sample <span class="math inline">\(x_T \sim \mathcal{N}(0, I)\)</span></li>
+<li>For t = T to 1: <span class="math display">\[
+x_{t-1} = \frac{1}{\sqrt{1 - \beta_t}}(x_t - \frac{\beta_t}{\sqrt{1 - \bar{\beta_t}}}\epsilon_\theta(x_t, t)) + \sigma_t z
+\]</span> Where <span class="math inline">\(z \sim \mathcal{N}(0, I)\)</span> and <span class="math inline">\(\sigma_t^2 = \beta_t\)</span></li>
+</ol>
+<section id="ancestral-sampling" class="level4">
+<h4 class="anchored" data-anchor-id="ancestral-sampling">2.1.1 Ancestral Sampling</h4>
+<p>Ancestral sampling is the standard approach used in DDPMs:</p>
+<p><span class="math display">\[
+x_{t-1} \sim p_\theta(x_{t-1}|x_t)
+\]</span></p>
+</section>
+<section id="truncated-sampling" class="level4">
+<h4 class="anchored" data-anchor-id="truncated-sampling">2.1.2 Truncated Sampling</h4>
+<p>To speed up sampling, some methods propose truncating the sampling process:</p>
+<p><span class="math display">\[
+x_{T'} \sim q(x_{T'}|x_0), \quad T' &lt; T
+\]</span></p>
+</section>
+</section>
+<section id="ddim-denoising-diffusion-implicit-models" class="level3">
+<h3 class="anchored" data-anchor-id="ddim-denoising-diffusion-implicit-models">2.2 DDIM (Denoising Diffusion Implicit Models)</h3>
+<p>DDIM introduces a non-Markovian sampling process that allows for faster sampling:</p>
+<p><span class="math display">\[
+x_{t-1} = \sqrt{\bar{\alpha}_{t-1}} \left(\frac{x_t - \sqrt{1 - \bar{\alpha}_t}\epsilon_\theta(x_t, t)}{\sqrt{\bar{\alpha}_t}}\right) + \sqrt{1 - \bar{\alpha}_{t-1} - \sigma_t^2}\epsilon_\theta(x_t, t) + \sigma_t \epsilon
+\]</span></p>
+<section id="deterministic-sampling" class="level4">
+<h4 class="anchored" data-anchor-id="deterministic-sampling">2.2.1 Deterministic Sampling</h4>
+<p>DDIM allows for deterministic sampling when <span class="math inline">\(\sigma_t = 0\)</span>:</p>
+<p><span class="math display">\[
+x_{t-1} = \sqrt{\bar{\alpha}_{t-1}} \left(\frac{x_t - \sqrt{1 - \bar{\alpha}_t}\epsilon_\theta(x_t, t)}{\sqrt{\bar{\alpha}_t}}\right) + \sqrt{1 - \bar{\alpha}_{t-1}}\epsilon_\theta(x_t, t)
+\]</span></p>
+</section>
+<section id="stochastic-sampling" class="level4">
+<h4 class="anchored" data-anchor-id="stochastic-sampling">2.2.2 Stochastic Sampling</h4>
+<p>Stochastic sampling in DDIM is achieved by setting <span class="math inline">\(\sigma_t &gt; 0\)</span>:</p>
+<p><span class="math display">\[
+\sigma_t^2 = \eta \cdot \tilde{\beta}_t
+\]</span></p>
+<p>Where <span class="math inline">\(\eta \in [0, 1]\)</span> controls the level of stochasticity.</p>
+</section>
+</section>
+</section>
+<section id="applications-in-image-generation" class="level2">
+<h2 class="anchored" data-anchor-id="applications-in-image-generation">3. Applications in Image Generation</h2>
+<section id="latent-diffusion" class="level3">
+<h3 class="anchored" data-anchor-id="latent-diffusion">3.1 Latent Diffusion</h3>
+<p>Latent Diffusion models apply diffusion in a compressed latent space:</p>
+<ol type="1">
+<li>Train an autoencoder to compress images to a latent space: <span class="math display">\[
+z = E(x), \quad \hat{x} = D(z)
+\]</span></li>
+<li>Apply diffusion in this latent space: <span class="math display">\[
+q(z_t | z_{t-1}) = \mathcal{N}(z_t; \sqrt{1 - \beta_t} z_{t-1}, \beta_t I)
+\]</span></li>
+<li>Use the decoder to generate high-resolution images: <span class="math display">\[
+x = D(z_0)
+\]</span></li>
+</ol>
+<section id="perceptual-compression" class="level4">
+<h4 class="anchored" data-anchor-id="perceptual-compression">3.1.1 Perceptual Compression</h4>
+<p>The autoencoder is often trained with a perceptual loss:</p>
+<p><span class="math display">\[
+L_{\text{AE}} = ||x - \hat{x}||_2^2 + \lambda L_{\text{perceptual}}(x, \hat{x})
+\]</span></p>
+</section>
+<section id="cross-attention-conditioning" class="level4">
+<h4 class="anchored" data-anchor-id="cross-attention-conditioning">3.1.2 Cross-Attention Conditioning</h4>
+<p>For conditional generation, cross-attention layers are added to the U-Net:</p>
+<p><span class="math display">\[
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+\]</span></p>
+<p>Where <span class="math inline">\(Q\)</span> is derived from the latent representation and <span class="math inline">\(K, V\)</span> are derived from the conditioning information.</p>
+</section>
+</section>
+<section id="imagen" class="level3">
+<h3 class="anchored" data-anchor-id="imagen">3.2 Imagen</h3>
+<p>Imagen is a text-to-image diffusion model that uses:</p>
+<ol type="1">
+<li>A large language model (e.g., T5-XXL) for text understanding: <span class="math display">\[
+e = LM(text)
+\]</span></li>
+<li>A cascade of diffusion models for image generation at increasing resolutions: <span class="math display">\[
+x_1 = DM_1(e), \quad x_2 = DM_2(x_1, e), \quad x_3 = DM_3(x_2, e)
+\]</span></li>
+</ol>
+<section id="classifier-free-guidance" class="level4">
+<h4 class="anchored" data-anchor-id="classifier-free-guidance">3.2.1 Classifier-Free Guidance</h4>
+<p>Imagen uses classifier-free guidance for better text-image alignment:</p>
+<p><span class="math display">\[
+\epsilon_\theta(x_t, t, e) = (1 + w) \epsilon_\theta(x_t, t, e) - w \epsilon_\theta(x_t, t)
+\]</span></p>
+</section>
+<section id="dynamic-thresholding" class="level4">
+<h4 class="anchored" data-anchor-id="dynamic-thresholding">3.2.2 Dynamic Thresholding</h4>
+<p>To improve sample quality, Imagen employs dynamic thresholding:</p>
+<p><span class="math display">\[
+x_t = \text{clip}(x_t, -s \cdot \text{percentile}(|x_t|, p), s \cdot \text{percentile}(|x_t|, p))
+\]</span></p>
+<p>Where <span class="math inline">\(s\)</span> and <span class="math inline">\(p\)</span> are hyperparameters.</p>
+</section>
+</section>
+</section>
+<section id="diffusion-models-for-audio-and-text-generation" class="level2">
+<h2 class="anchored" data-anchor-id="diffusion-models-for-audio-and-text-generation">4. Diffusion Models for Audio and Text Generation</h2>
+<section id="audio-generation" class="level3">
+<h3 class="anchored" data-anchor-id="audio-generation">4.1 Audio Generation</h3>
+<p>Diffusion models for audio often work in the spectrogram domain:</p>
+<ol type="1">
+<li>Convert audio to spectrograms: <span class="math display">\[
+S = STFT(audio)
+\]</span></li>
+<li>Apply diffusion to the spectrograms: <span class="math display">\[
+q(S_t | S_{t-1}) = \mathcal{N}(S_t; \sqrt{1 - \beta_t} S_{t-1}, \beta_t I)
+\]</span></li>
+<li>Convert generated spectrograms back to audio: <span class="math display">\[
+audio = iSTFT(S_0)
+\]</span></li>
+</ol>
+<section id="mel-spectrogram-diffusion" class="level4">
+<h4 class="anchored" data-anchor-id="mel-spectrogram-diffusion">4.1.1 Mel-Spectrogram Diffusion</h4>
+<p>Some models operate on mel-spectrograms for better perceptual quality:</p>
+<p><span class="math display">\[
+M = Mel(S)
+\]</span></p>
+</section>
+<section id="vocoder-integration" class="level4">
+<h4 class="anchored" data-anchor-id="vocoder-integration">4.1.2 Vocoder Integration</h4>
+<p>To improve audio quality, some models integrate neural vocoders:</p>
+<p><span class="math display">\[
+audio = Vocoder(S_0)
+\]</span></p>
+</section>
+</section>
+<section id="text-generation" class="level3">
+<h3 class="anchored" data-anchor-id="text-generation">4.2 Text Generation</h3>
+<p>Diffusion models for text generation typically operate in a continuous embedding space:</p>
+<ol type="1">
+<li>Map discrete tokens to a continuous space: <span class="math display">\[
+e = Embedding(tokens)
+\]</span></li>
+<li>Apply diffusion in this continuous space: <span class="math display">\[
+q(e_t | e_{t-1}) = \mathcal{N}(e_t; \sqrt{1 - \beta_t} e_{t-1}, \beta_t I)
+\]</span></li>
+<li>Map generated continuous vectors back to discrete tokens: <span class="math display">\[
+tokens = argmax(Linear(e_0))
+\]</span></li>
+</ol>
+<section id="multinomial-diffusion" class="level4">
+<h4 class="anchored" data-anchor-id="multinomial-diffusion">4.2.1 Multinomial Diffusion</h4>
+<p>Multinomial diffusion directly models discrete token sequences:</p>
+<p><span class="math display">\[
+q(x_t | x_{t-1}) = (1 - \beta_t) I + \beta_t \frac{11^T - I}{K - 1}
+\]</span></p>
+</section>
+<section id="continuous-relaxation" class="level4">
+<h4 class="anchored" data-anchor-id="continuous-relaxation">4.2.2 Continuous Relaxation</h4>
+<p>Some methods use continuous relaxations of discrete distributions:</p>
+<p><span class="math display">\[
+x_t = \text{GumbelSoftmax}(logits, \tau)
+\]</span></p>
+<p>Where <span class="math inline">\(\tau\)</span> is a temperature parameter.</p>
+</section>
+</section>
+</section>
+<section id="techniques-for-improving-diffusion-models" class="level2">
+<h2 class="anchored" data-anchor-id="techniques-for-improving-diffusion-models">5. Techniques for Improving Diffusion Models</h2>
+<section id="progressive-growing" class="level3">
+<h3 class="anchored" data-anchor-id="progressive-growing">5.1 Progressive Growing</h3>
+<p>Progressive growing involves training the model on increasingly higher resolutions:</p>
+<ol type="1">
+<li>Start with low-resolution data: <span class="math display">\[
+x_{low} = Downsample(x)
+\]</span></li>
+<li>Gradually increase the resolution during training: <span class="math display">\[
+x_{mid} = Upsample(x_{low})
+\]</span></li>
+<li>Add new layers to the model as the resolution increases: <span class="math display">\[
+\epsilon_\theta(x_t, t) = [\epsilon_{\theta_{low}}(x_t, t); \epsilon_{\theta_{mid}}(x_t, t); \epsilon_{\theta_{high}}(x_t, t)]
+\]</span></li>
+</ol>
+<section id="resolution-dependent-noise-schedules" class="level4">
+<h4 class="anchored" data-anchor-id="resolution-dependent-noise-schedules">5.1.1 Resolution-Dependent Noise Schedules</h4>
+<p>Some methods use different noise schedules for different resolutions:</p>
+<p><span class="math display">\[
+\beta_t^{(r)} = f_r(\beta_t)
+\]</span></p>
+<p>Where <span class="math inline">\(r\)</span> is the resolution level.</p>
+</section>
+<section id="adaptive-layer-normalization" class="level4">
+<h4 class="anchored" data-anchor-id="adaptive-layer-normalization">5.1.2 Adaptive Layer Normalization</h4>
+<p>To handle multi-scale generation, adaptive layer normalization can be used:</p>
+<p><span class="math display">\[
+\text{AdaLN}(h, r) = \gamma_r \cdot \text{LN}(h) + \beta_r
+\]</span></p>
+<p>Where <span class="math inline">\(\gamma_r\)</span> and <span class="math inline">\(\beta_r\)</span> are learned parameters for each resolution level.</p>
+</section>
+</section>
+<section id="classifier-guidance" class="level3">
+<h3 class="anchored" data-anchor-id="classifier-guidance">5.2 Classifier Guidance</h3>
+<p>Classifier guidance uses a pre-trained classifier to steer the generation process:</p>
+<p><span class="math display">\[
+\nabla_x \log p_\theta(x) = \nabla_x \log p_\theta(x | y) + \nabla_x \log p(y)
+\]</span></p>
+<section id="classifier-free-guidance-1" class="level4">
+<h4 class="anchored" data-anchor-id="classifier-free-guidance-1">5.2.1 Classifier-Free Guidance</h4>
+<p>Classifier-free guidance extends this idea without requiring an explicit classifier:</p>
+<p><span class="math display">\[
+\epsilon_\theta(x_t, t, y) = (1 + w) \epsilon_\theta(x_t, t, y) - w \epsilon_\theta(x_t, t)
+\]</span></p>
+</section>
+<section id="guided-diffusion" class="level4">
+<h4 class="anchored" data-anchor-id="guided-diffusion">5.2.2 Guided Diffusion</h4>
+<p>Guided diffusion incorporates classifier guidance into the sampling process:</p>
+<p><span class="math display">\[
+x_{t-1} = \mu_\theta(x_t, t) + \sigma_t (\epsilon_\theta(x_t, t) + s \nabla_x \log p(y|x_t))
+\]</span></p>
+</section>
+</section>
+</section>
+<section id="recent-advancements-and-future-directions" class="level2">
+<h2 class="anchored" data-anchor-id="recent-advancements-and-future-directions">6. Recent Advancements and Future Directions</h2>
+<section id="consistency-models" class="level3">
+<h3 class="anchored" data-anchor-id="consistency-models">6.1 Consistency Models</h3>
+<p>Consistency models propose a new framework for training diffusion models that allows for fast sampling:</p>
+<p><span class="math display">\[
+f_\theta(x_t, t) = x_0 + \sqrt{1 - \bar{\alpha}_t} \epsilon_\theta(x_t, t)
+\]</span></p>
+<section id="consistency-training" class="level4">
+<h4 class="anchored" data-anchor-id="consistency-training">6.1.1 Consistency Training</h4>
+<p>The consistency model is trained to satisfy:</p>
+<p><span class="math display">\[
+f_\theta(x_t, t) \approx f_\theta(x_s, s) \quad \forall t, s
+\]</span></p>
+</section>
+<section id="one-step-sampling" class="level4">
+<h4 class="anchored" data-anchor-id="one-step-sampling">6.1.2 One-Step Sampling</h4>
+<p>Consistency models enable one-step sampling:</p>
+<p><span class="math display">\[
+x_0 = f_\theta(x_T, T)
+\]</span></p>
+</section>
+</section>
+<section id="section" class="level3">
+<h3 class="anchored" data-anchor-id="section">6.2</h3>
+</section>
+</section>
+</section>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

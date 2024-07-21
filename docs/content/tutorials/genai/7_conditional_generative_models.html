@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>conditional_generative_models – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:description" content="">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="chapter-7-conditional-generative-models" class="level1 text-content">
+<h1>Chapter 7: Conditional Generative Models</h1>
+<p>Conditional generative models allow us to control the generation process by providing additional input or context. This enables more targeted and versatile generation across various domains such as images, text, and video.</p>
+<section id="controlling-the-generation-process" class="level2">
+<h2 class="anchored" data-anchor-id="controlling-the-generation-process">Controlling the Generation Process</h2>
+<p>The key idea in conditional generation is to modify the generative model to incorporate additional information. This is typically done by conditioning both the generator and discriminator (in GANs) or the encoder and decoder (in VAEs) on some extra input <span class="math inline">\(c\)</span>.</p>
+<section id="general-formulation" class="level3">
+<h3 class="anchored" data-anchor-id="general-formulation">General Formulation</h3>
+<p>For a GAN, the objective function becomes:</p>
+<p><span class="math display">\[
+\min_G \max_D V(D, G) = \mathbb{E}_{x \sim p_{data}(x)}[\log D(x|c)] + \mathbb{E}_{z \sim p_z(z)}[\log(1 - D(G(z|c)))]
+\]</span></p>
+<p>For a VAE, the objective function becomes:</p>
+<p><span class="math display">\[
+\mathcal{L}(\theta, \phi; x, c) = -\mathbb{E}_{q_\phi(z|x,c)}[\log p_\theta(x|z,c)] + D_{KL}(q_\phi(z|x,c) || p(z|c))
+\]</span></p>
+<p>Where <span class="math inline">\(c\)</span> is the conditioning information, which could be class labels, attributes, or even other modalities of data.</p>
+</section>
+</section>
+<section id="conditional-gans-and-vaes" class="level2">
+<h2 class="anchored" data-anchor-id="conditional-gans-and-vaes">Conditional GANs and VAEs</h2>
+<section id="conditional-gans-cgans" class="level3">
+<h3 class="anchored" data-anchor-id="conditional-gans-cgans">Conditional GANs (cGANs)</h3>
+<p>In cGANs, both the generator and discriminator are conditioned on extra information:</p>
+<ol type="1">
+<li><strong>Generator</strong>: <span class="math inline">\(G(z, c) \rightarrow x\)</span></li>
+<li><strong>Discriminator</strong>: <span class="math inline">\(D(x, c) \rightarrow [0, 1]\)</span></li>
+</ol>
+<p>The conditioning information <span class="math inline">\(c\)</span> is typically concatenated with the noise vector <span class="math inline">\(z\)</span> for the generator, and with the input <span class="math inline">\(x\)</span> for the discriminator. This allows the generator to produce outputs that are influenced by the conditioning information, and the discriminator to evaluate the outputs in the context of this information.</p>
+</section>
+<section id="conditional-vaes-cvaes" class="level3">
+<h3 class="anchored" data-anchor-id="conditional-vaes-cvaes">Conditional VAEs (cVAEs)</h3>
+<p>In cVAEs, the encoder, decoder, and prior are all conditioned on extra information:</p>
+<ol type="1">
+<li><strong>Encoder</strong>: <span class="math inline">\(q_\phi(z|x, c)\)</span></li>
+<li><strong>Decoder</strong>: <span class="math inline">\(p_\theta(x|z, c)\)</span></li>
+<li><strong>Prior</strong>: <span class="math inline">\(p(z|c)\)</span></li>
+</ol>
+<p>The conditioning information is typically concatenated with the input for the encoder and with the latent variable for the decoder. This allows the VAE to learn a latent representation that is influenced by the conditioning information.</p>
+</section>
+</section>
+<section id="image-to-image-translation" class="level2">
+<h2 class="anchored" data-anchor-id="image-to-image-translation">Image-to-Image Translation</h2>
+<p>Image-to-image translation involves transforming an input image from one domain to another.</p>
+<section id="pix2pix" class="level3">
+<h3 class="anchored" data-anchor-id="pix2pix">pix2pix</h3>
+<p>pix2pix is a conditional GAN-based model for paired image-to-image translation. It learns a mapping from input images to output images using paired training data.</p>
+<p>Key features: 1. <strong>Generator</strong>: Uses a U-Net architecture, which includes skip connections between corresponding layers in the encoder and decoder. This helps preserve spatial information. 2. <strong>Discriminator</strong>: Uses a PatchGAN architecture, which classifies each patch of the image as real or fake. This encourages the generator to produce realistic local details.</p>
+<p>The objective function combines adversarial loss with L1 loss:</p>
+<p><span class="math display">\[
+\mathcal{L}_{GAN}(G, D) = \mathbb{E}_{x, y}[\log D(x, y)] + \mathbb{E}_{x, z}[\log(1 - D(x, G(z, x)))]
+\]</span></p>
+<p><span class="math display">\[
+\mathcal{L}_{L1}(G) = \mathbb{E}_{x, y, z}[||y - G(z, x)||_1]
+\]</span></p>
+<p>The full objective is:</p>
+<p><span class="math display">\[
+\mathcal{L} = \mathcal{L}_{GAN}(G, D) + \lambda \mathcal{L}_{L1}(G)
+\]</span></p>
+<p>Where <span class="math inline">\(\lambda\)</span> is a hyperparameter that controls the trade-off between the adversarial loss and the L1 loss.</p>
+</section>
+<section id="cyclegan" class="level3">
+<h3 class="anchored" data-anchor-id="cyclegan">CycleGAN</h3>
+<p>CycleGAN enables unpaired image-to-image translation by introducing cycle consistency loss. This allows the model to learn mappings between domains without paired training data.</p>
+<p>Key features: 1. <strong>Two Generators</strong>: <span class="math inline">\(G: X \rightarrow Y\)</span> and <span class="math inline">\(F: Y \rightarrow X\)</span> 2. <strong>Two Discriminators</strong>: <span class="math inline">\(D_X\)</span> and <span class="math inline">\(D_Y\)</span></p>
+<p>The cycle consistency loss ensures that translating an image to the other domain and back results in the original image:</p>
+<p><span class="math display">\[
+\mathcal{L}_{cyc}(G, F) = \mathbb{E}_{x \sim p_{data}(x)}[||F(G(x)) - x||_1] + \mathbb{E}_{y \sim p_{data}(y)}[||G(F(y)) - y||_1]
+\]</span></p>
+<p>The full objective is:</p>
+<p><span class="math display">\[
+\mathcal{L}(G, F, D_X, D_Y) = \mathcal{L}_{GAN}(G, D_Y, X, Y) + \mathcal{L}_{GAN}(F, D_X, Y, X) + \lambda \mathcal{L}_{cyc}(G, F)
+\]</span></p>
+<p>Where <span class="math inline">\(\mathcal{L}_{GAN}\)</span> represents the adversarial loss for each generator-discriminator pair, and <span class="math inline">\(\lambda\)</span> controls the importance of the cycle consistency loss.</p>
+</section>
+<section id="unit-unsupervised-image-to-image-translation" class="level3">
+<h3 class="anchored" data-anchor-id="unit-unsupervised-image-to-image-translation">UNIT (UNsupervised Image-to-image Translation)</h3>
+<p>UNIT combines VAEs and GANs for unsupervised image-to-image translation. It assumes a shared latent space between the two domains.</p>
+<p>Key features: 1. <strong>Shared Latent Space</strong>: Assumes that images from both domains can be mapped to a common latent space. 2. <strong>Two VAE-GAN Hybrid Models</strong>: One for each domain, consisting of an encoder, decoder, and discriminator.</p>
+<p>The objective includes reconstruction loss, adversarial loss, and cycle consistency loss in the latent space:</p>
+<p><span class="math display">\[
+\mathcal{L}_{UNIT} = \mathcal{L}_{VAE-GAN}(X) + \mathcal{L}_{VAE-GAN}(Y) + \lambda \mathcal{L}_{cyc}(G, F)
+\]</span></p>
+<p>Where <span class="math inline">\(\mathcal{L}_{VAE-GAN}\)</span> includes the VAE loss and the GAN loss for each domain.</p>
+</section>
+</section>
+<section id="text-to-image-generation" class="level2">
+<h2 class="anchored" data-anchor-id="text-to-image-generation">Text-to-Image Generation</h2>
+<p>Text-to-image generation involves creating images based on textual descriptions.</p>
+<section id="attngan" class="level3">
+<h3 class="anchored" data-anchor-id="attngan">AttnGAN</h3>
+<p>AttnGAN uses attention mechanisms to refine image generation based on fine-grained word features.</p>
+<p>Key components: 1. <strong>Text Encoder</strong>: Uses a bi-directional LSTM to encode text into word-level features. 2. <strong>Attentional Generative Network</strong>: Multiple generators with attention modules that focus on relevant words for different parts of the image. 3. <strong>Deep Attentional Multimodal Similarity Model (DAMSM)</strong>: Ensures that generated images match the textual descriptions.</p>
+<p>The objective function combines adversarial loss with DAMSM loss:</p>
+<p><span class="math display">\[
+\mathcal{L}_{GAN} = \mathbb{E}_{x, y}[\log D(y)] + \mathbb{E}_{x, z}[\log(1 - D(G(z, x)))]
+\]</span></p>
+<p><span class="math display">\[
+\mathcal{L}_{DAMSM} = \mathbb{E}_{x, y}[\text{similarity}(x, y)]
+\]</span></p>
+<p>The full objective is:</p>
+<p><span class="math display">\[
+\mathcal{L} = \mathcal{L}_{GAN} + \lambda \mathcal{L}_{DAMSM}
+\]</span></p>
+<p>Where <span class="math inline">\(\lambda\)</span> controls the importance of the DAMSM loss.</p>
+</section>
+<section id="stackgan" class="level3">
+<h3 class="anchored" data-anchor-id="stackgan">StackGAN</h3>
+<p>StackGAN uses a two-stage process to generate high-resolution images from text descriptions.</p>
+<p>Key features: 1. <strong>Stage-I GAN</strong>: Generates low-resolution images from text descriptions. 2. <strong>Stage-II GAN</strong>: Refines and generates high-resolution images from the low-resolution images and text descriptions. 3. <strong>Conditioning Augmentation</strong>: Samples latent variables from a Gaussian distribution to introduce variability.</p>
+<p>The objective for each stage includes adversarial loss and conditioning augmentation loss:</p>
+<p><span class="math display">\[
+\mathcal{L}_{GAN} = \mathbb{E}_{x, y}[\log D(y)] + \mathbb{E}_{x, z}[\log(1 - D(G(z, x)))]
+\]</span></p>
+<p><span class="math display">\[
+\mathcal{L}_{CA} = \mathbb{E}_{x, y}[\text{KL}(q_\phi(z|x) || p(z))]
+\]</span></p>
+<p>The full objective for each stage is:</p>
+<p><span class="math display">\[
+\mathcal{L} = \mathcal{L}_{GAN} + \lambda \mathcal{L}_{CA}
+\]</span></p>
+<p>Where <span class="math inline">\(\lambda\)</span> controls the importance of the conditioning augmentation loss.</p>
+</section>
+</section>
+<section id="video-generation" class="level2">
+<h2 class="anchored" data-anchor-id="video-generation">Video Generation</h2>
+<p>Video generation involves creating sequences of coherent frames, often conditioned on some initial input.</p>
+<section id="mocogan-motion-and-content-decomposed-gan" class="level3">
+<h3 class="anchored" data-anchor-id="mocogan-motion-and-content-decomposed-gan">MoCoGAN (Motion and Content Decomposed GAN)</h3>
+<p>MoCoGAN decomposes motion and content to generate videos.</p>
+<p>Key components: 1. <strong>Content Generator</strong>: Generates static content that remains consistent across frames. 2. <strong>Motion Generator</strong>: Generates temporal dynamics that vary across frames. 3. <strong>Video Discriminator and Image Discriminator</strong>: Ensure the generated video is coherent and realistic.</p>
+<p>The objective function includes video GAN loss, image GAN loss, and reconstruction loss:</p>
+<p><span class="math display">\[
+\mathcal{L}_{GAN}^{video} = \mathbb{E}_{v}[\log D_{video}(v)] + \mathbb{E}_{z}[\log(1 - D_{video}(G_{video}(z)))]
+\]</span></p>
+<p><span class="math display">\[
+\mathcal{L}_{GAN}^{image} = \mathbb{E}_{i}[\log D_{image}(i)] + \mathbb{E}_{z}[\log(1 - D_{image}(G_{image}(z)))]
+\]</span></p>
+<p><span class="math display">\[
+\mathcal{L}_{reconstruction} = \mathbb{E}_{v, z}[||v - G_{reconstruction}(z)||_1]
+\]</span></p>
+<p>The full objective is:</p>
+<p><span class="math display">\[
+\mathcal{L} = \mathcal{L}_{GAN}^{video} + \lambda_1 \mathcal{L}_{GAN}^{image} + \lambda_2 \mathcal{L}_{reconstruction}
+\]</span></p>
+<p>Where <span class="math inline">\(\lambda_1\)</span> and <span class="math inline">\(\lambda_2\)</span> control the importance of the image GAN loss and reconstruction loss, respectively.</p>
+</section>
+<section id="tgan-temporal-generative-adversarial-nets" class="level3">
+<h3 class="anchored" data-anchor-id="tgan-temporal-generative-adversarial-nets">TGAN (Temporal Generative Adversarial Nets)</h3>
+<p>TGAN uses a temporal generator to create coherent video sequences.</p>
+<p>Key features: 1. <strong>Temporal Generator</strong>: LSTM-like architecture that generates a sequence of latent variables. 2. <strong>Image Generator</strong>: Generates each frame from the corresponding latent variable. 3. <strong>Spatial and Temporal Discriminators</strong>: Ensure the generated frames are coherent both spatially and temporally.</p>
+<p>The objective function includes spatial GAN loss and temporal GAN loss:</p>
+<p><span class="math display">\[
+\mathcal{L}_{GAN}^{spatial} = \mathbb{E}_{i}[\log D_{spatial}(i)] + \mathbb{E}_{z}[\log(1 - D_{spatial}(G_{image}(z)))]
+\]</span></p>
+<p><span class="math display">\[
+\mathcal{L}_{GAN}^{temporal} = \mathbb{E}_{v}[\log D_{temporal}(v)] + \mathbb{E}_{z}[\log(1 - D_{temporal}(G_{video}(z)))]
+\]</span></p>
+<p>The full objective is:</p>
+<p><span class="math display">\[
+\mathcal{L} = \mathcal{L}_{GAN}^{spatial} + \lambda \mathcal{L}_{GAN}^{temporal}
+\]</span></p>
+<p>Where <span class="math inline">\(\lambda\)</span> controls the importance of the temporal GAN loss.</p>
+<p>These conditional generative models enable more controlled and diverse generation across various domains, opening up possibilities for numerous applications in computer vision, natural language processing, and multimedia generation.</p>
+</section>
+</section>
+</section>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

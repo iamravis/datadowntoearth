@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>generative_modeling_for_audio_and_music – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:description" content="">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="chapter-12-generative-modeling-for-audio-and-music" class="level1 text-content">
+<h1>Chapter 12: Generative Modeling For Audio And Music</h1>
+<p>Generative modeling for audio and music involves creating synthetic audio signals, music, and speech that maintain the statistical properties and temporal structure of real-world audio. This field has applications in music composition, sound design, speech synthesis, and audio enhancement.</p>
+<section id="modeling-audio-signals-and-waveforms" class="level2">
+<h2 class="anchored" data-anchor-id="modeling-audio-signals-and-waveforms">Modeling Audio Signals and Waveforms</h2>
+<p>Audio signals are typically represented as time-series data, with amplitudes varying over time. The challenge in modeling audio is capturing both the short-term and long-term dependencies in the signal.</p>
+<section id="time-domain-representation" class="level3">
+<h3 class="anchored" data-anchor-id="time-domain-representation">Time-Domain Representation</h3>
+<p>In the time domain, an audio signal <span class="math inline">\(x(t)\)</span> is represented as a function of time:</p>
+<p><span class="math display">\[
+x(t) = A(t) \sin(2\pi f t + \phi(t))
+\]</span></p>
+<p>Where <span class="math inline">\(A(t)\)</span> is the time-varying amplitude, <span class="math inline">\(f\)</span> is the frequency, and <span class="math inline">\(\phi(t)\)</span> is the phase.</p>
+</section>
+<section id="frequency-domain-representation" class="level3">
+<h3 class="anchored" data-anchor-id="frequency-domain-representation">Frequency-Domain Representation</h3>
+<p>The frequency-domain representation is obtained using the Fourier Transform:</p>
+<p><span class="math display">\[
+X(f) = \int_{-\infty}^{\infty} x(t) e^{-j2\pi ft} dt
+\]</span></p>
+<p>This representation captures the frequency components of the signal but loses temporal information.</p>
+</section>
+<section id="time-frequency-representations" class="level3">
+<h3 class="anchored" data-anchor-id="time-frequency-representations">Time-Frequency Representations</h3>
+<p>Time-frequency representations, such as the Short-Time Fourier Transform (STFT), capture both temporal and spectral information:</p>
+<p><span class="math display">\[
+STFT\{x(t)\}(\tau, f) = \int_{-\infty}^{\infty} x(t) w(t-\tau) e^{-j2\pi ft} dt
+\]</span></p>
+<p>Where <span class="math inline">\(w(t)\)</span> is a window function. The STFT provides a spectrogram, which is a 2D representation of the signal’s frequency content over time.</p>
+</section>
+<section id="wavelet-transform" class="level3">
+<h3 class="anchored" data-anchor-id="wavelet-transform">Wavelet Transform</h3>
+<p>The Wavelet Transform provides a multi-resolution analysis of the signal, capturing both high and low-frequency components at different scales:</p>
+<p><span class="math display">\[
+W_x(a, b) = \int_{-\infty}^{\infty} x(t) \psi^* \left( \frac{t - b}{a} \right) dt
+\]</span></p>
+<p>Where <span class="math inline">\(\psi(t)\)</span> is the mother wavelet, <span class="math inline">\(a\)</span> is the scale parameter, and <span class="math inline">\(b\)</span> is the translation parameter.</p>
+</section>
+</section>
+<section id="generative-adversarial-networks-for-music-generation" class="level2">
+<h2 class="anchored" data-anchor-id="generative-adversarial-networks-for-music-generation">Generative Adversarial Networks for Music Generation</h2>
+<p>GANs have been adapted for music generation, addressing challenges such as temporal coherence and multi-track generation.</p>
+<section id="midinet" class="level3">
+<h3 class="anchored" data-anchor-id="midinet">MidiNet</h3>
+<p>MidiNet is a GAN-based model for generating symbolic music representations (MIDI).</p>
+<section id="key-features" class="level4">
+<h4 class="anchored" data-anchor-id="key-features">Key Features:</h4>
+<ol type="1">
+<li><strong>Convolutional Architecture</strong>: Both the generator and discriminator use convolutional layers to process the MIDI-like representations.</li>
+<li><strong>Conditional Generation</strong>: The generator is conditioned on chords or melodies to produce coherent musical pieces.</li>
+</ol>
+</section>
+<section id="generator" class="level4">
+<h4 class="anchored" data-anchor-id="generator">Generator:</h4>
+<p>The generator takes a latent vector <span class="math inline">\(z\)</span> and conditioning information <span class="math inline">\(c\)</span> to produce a MIDI-like representation:</p>
+<p><span class="math display">\[
+G(z, c) = M, \quad M \in \{0, 1\}^{T \times P}
+\]</span></p>
+<p>Where <span class="math inline">\(T\)</span> is the number of time steps and <span class="math inline">\(P\)</span> is the number of pitches.</p>
+</section>
+<section id="discriminator" class="level4">
+<h4 class="anchored" data-anchor-id="discriminator">Discriminator:</h4>
+<p>The discriminator evaluates the authenticity of the generated music:</p>
+<p><span class="math display">\[
+D(M, c) \in [0, 1]
+\]</span></p>
+</section>
+</section>
+<section id="musegan" class="level3">
+<h3 class="anchored" data-anchor-id="musegan">MuseGAN</h3>
+<p>MuseGAN extends the GAN framework to generate multi-track music.</p>
+<section id="key-features-1" class="level4">
+<h4 class="anchored" data-anchor-id="key-features-1">Key Features:</h4>
+<ol type="1">
+<li><strong>Multi-Stream Architecture</strong>: Separate streams for different instrument tracks, allowing for polyphonic music generation.</li>
+<li><strong>Temporal Structure Modeling</strong>: Uses binary-valued piano-rolls to represent the presence or absence of notes.</li>
+</ol>
+</section>
+<section id="generator-1" class="level4">
+<h4 class="anchored" data-anchor-id="generator-1">Generator:</h4>
+<p>The generator consists of multiple sub-generators, one for each track:</p>
+<p><span class="math display">\[
+G_i(z_i, c) = M_i, \quad i = 1, ..., N
+\]</span></p>
+<p>Where <span class="math inline">\(N\)</span> is the number of tracks.</p>
+<p>The full multi-track music is generated as:</p>
+<p><span class="math display">\[
+M = [M_1, M_2, ..., M_N]
+\]</span></p>
+</section>
+<section id="discriminator-1" class="level4">
+<h4 class="anchored" data-anchor-id="discriminator-1">Discriminator:</h4>
+<p>The discriminator evaluates the multi-track music:</p>
+<p><span class="math display">\[
+D(M, c) \in [0, 1]
+\]</span></p>
+</section>
+</section>
+</section>
+<section id="autoregressive-models-for-audio-synthesis" class="level2">
+<h2 class="anchored" data-anchor-id="autoregressive-models-for-audio-synthesis">Autoregressive Models for Audio Synthesis</h2>
+<p>Autoregressive models generate audio samples sequentially, conditioning each sample on previous samples.</p>
+<section id="wavenet" class="level3">
+<h3 class="anchored" data-anchor-id="wavenet">WaveNet</h3>
+<p>WaveNet is a deep neural network for generating raw audio waveforms.</p>
+<section id="key-features-2" class="level4">
+<h4 class="anchored" data-anchor-id="key-features-2">Key Features:</h4>
+<ol type="1">
+<li><strong>Dilated Causal Convolutions</strong>: Allow the model to have a large receptive field, capturing long-term dependencies without increasing the number of parameters significantly.</li>
+<li><strong>Probabilistic Output</strong>: Predicts the probability distribution of the next sample given previous samples.</li>
+</ol>
+</section>
+<section id="model-architecture" class="level4">
+<h4 class="anchored" data-anchor-id="model-architecture">Model Architecture:</h4>
+<p>The WaveNet model predicts the probability distribution of the next sample <span class="math inline">\(x_t\)</span> given all previous samples:</p>
+<p><span class="math display">\[
+p(x_t | x_1, ..., x_{t-1}) = f_\theta(x_{t-1}, ..., x_{t-R})
+\]</span></p>
+<p>Where <span class="math inline">\(R\)</span> is the receptive field size and <span class="math inline">\(f_\theta\)</span> is a neural network with parameters <span class="math inline">\(\theta\)</span>.</p>
+<p>The joint probability of a waveform is factorized as:</p>
+<p><span class="math display">\[
+p(x) = \prod_{t=1}^T p(x_t | x_1, ..., x_{t-1})
+\]</span></p>
+</section>
+<section id="training" class="level4">
+<h4 class="anchored" data-anchor-id="training">Training:</h4>
+<p>WaveNet is trained to maximize the likelihood of the training data:</p>
+<p><span class="math display">\[
+\mathcal{L}(\theta) = \sum_{t=1}^T \log p(x_t | x_1, ..., x_{t-1}; \theta)
+\]</span></p>
+</section>
+</section>
+<section id="tacotron" class="level3">
+<h3 class="anchored" data-anchor-id="tacotron">Tacotron</h3>
+<p>Tacotron is an end-to-end text-to-speech synthesis model that converts text to speech.</p>
+<section id="key-components" class="level4">
+<h4 class="anchored" data-anchor-id="key-components">Key Components:</h4>
+<ol type="1">
+<li><strong>Encoder</strong>: Converts input text into a sequence of hidden states.</li>
+<li><strong>Attention Mechanism</strong>: Aligns the text sequence with the audio sequence.</li>
+<li><strong>Decoder</strong>: Generates mel-spectrogram frames from the aligned text sequence.</li>
+<li><strong>Post-Processing Net</strong>: Converts mel-spectrograms to waveforms.</li>
+</ol>
+</section>
+<section id="attention-mechanism" class="level4">
+<h4 class="anchored" data-anchor-id="attention-mechanism">Attention Mechanism:</h4>
+<p>The attention mechanism computes alignment probabilities between the encoder states and the decoder states:</p>
+<p><span class="math display">\[
+\alpha_{i,j} = \text{softmax}(e_{i,j})
+\]</span></p>
+<p><span class="math display">\[
+e_{i,j} = v^T \tanh(W h_j + V s_i + b)
+\]</span></p>
+<p>Where <span class="math inline">\(h_j\)</span> is the encoder state, <span class="math inline">\(s_i\)</span> is the decoder state, and <span class="math inline">\(W\)</span>, <span class="math inline">\(V\)</span>, <span class="math inline">\(v\)</span>, and <span class="math inline">\(b\)</span> are learnable parameters.</p>
+</section>
+<section id="training-1" class="level4">
+<h4 class="anchored" data-anchor-id="training-1">Training:</h4>
+<p>Tacotron is trained to minimize the mean squared error between the predicted and target mel-spectrogram frames:</p>
+<p><span class="math display">\[
+\mathcal{L}(\theta) = \sum_{i=1}^N ||y_i - \hat{y}_i||_2^2
+\]</span></p>
+<p>Where <span class="math inline">\(y_i\)</span> is the target mel-spectrogram frame and <span class="math inline">\(\hat{y}_i\)</span> is the predicted frame.</p>
+</section>
+</section>
+</section>
+<section id="text-to-speech-and-speech-enhancement" class="level2">
+<h2 class="anchored" data-anchor-id="text-to-speech-and-speech-enhancement">Text-to-Speech and Speech Enhancement</h2>
+<p>Text-to-Speech (TTS) systems convert written text into spoken audio, while speech enhancement aims to improve the quality of speech signals.</p>
+<section id="text-to-speech" class="level3">
+<h3 class="anchored" data-anchor-id="text-to-speech">Text-to-Speech</h3>
+<p>Modern TTS systems often use neural networks to map text to speech. The process typically involves:</p>
+<ol type="1">
+<li><strong>Text Analysis</strong>: Convert text to phonemes or other linguistic features.</li>
+<li><strong>Acoustic Model</strong>: Map linguistic features to acoustic features (e.g., mel-spectrograms).</li>
+<li><strong>Vocoder</strong>: Convert acoustic features to waveforms.</li>
+</ol>
+<section id="acoustic-model" class="level4">
+<h4 class="anchored" data-anchor-id="acoustic-model">Acoustic Model:</h4>
+<p>The acoustic model can be formulated as:</p>
+<p><span class="math display">\[
+y = f_\theta(x)
+\]</span></p>
+<p>Where <span class="math inline">\(x\)</span> is the input text (or linguistic features) and <span class="math inline">\(y\)</span> is the output acoustic features.</p>
+</section>
+<section id="vocoder" class="level4">
+<h4 class="anchored" data-anchor-id="vocoder">Vocoder:</h4>
+<p>The vocoder converts the acoustic features to waveforms. Common vocoders include Griffin-Lim, WaveNet, and WaveGlow.</p>
+</section>
+</section>
+<section id="speech-enhancement" class="level3">
+<h3 class="anchored" data-anchor-id="speech-enhancement">Speech Enhancement</h3>
+<p>Speech enhancement techniques aim to improve the quality of speech signals by reducing noise and other distortions.</p>
+<section id="denoising-autoencoders" class="level4">
+<h4 class="anchored" data-anchor-id="denoising-autoencoders">Denoising Autoencoders:</h4>
+<p>A denoising autoencoder is trained to reconstruct clean speech from noisy input:</p>
+<p><span class="math display">\[
+\hat{s} = f_\theta(x)
+\]</span></p>
+<p>Where <span class="math inline">\(x\)</span> is the noisy input signal and <span class="math inline">\(\hat{s}\)</span> is the estimated clean speech signal.</p>
+</section>
+<section id="spectral-subtraction" class="level4">
+<h4 class="anchored" data-anchor-id="spectral-subtraction">Spectral Subtraction:</h4>
+<p>Spectral subtraction estimates the noise spectrum and subtracts it from the noisy speech spectrum:</p>
+<p><span class="math display">\[
+\hat{S}(f) = X(f) - \hat{N}(f)
+\]</span></p>
+<p>Where <span class="math inline">\(X(f)\)</span> is the noisy speech spectrum and <span class="math inline">\(\hat{N}(f)\)</span> is the estimated noise spectrum.</p>
+</section>
+</section>
+</section>
+<section id="techniques-for-handling-long-range-dependencies-and-structure-in-music" class="level2">
+<h2 class="anchored" data-anchor-id="techniques-for-handling-long-range-dependencies-and-structure-in-music">Techniques for Handling Long-Range Dependencies and Structure in Music</h2>
+<p>Capturing long-range dependencies and structural elements in music is crucial for generating coherent and musically meaningful compositions.</p>
+<section id="hierarchical-models" class="level3">
+<h3 class="anchored" data-anchor-id="hierarchical-models">Hierarchical Models</h3>
+<p>Hierarchical models capture music structure at different time scales:</p>
+<ol type="1">
+<li><strong>Bar-Level Structure</strong>: Captures the structure within a single bar.</li>
+<li><strong>Phrase-Level Structure</strong>: Captures the structure across multiple bars.</li>
+<li><strong>Section-Level Structure</strong>: Captures the structure across multiple phrases.</li>
+</ol>
+<p>A hierarchical model can be formulated as:</p>
+<p><span class="math display">\[
+p(x) = p(x_{section}) \prod_i p(x_{phrase_i} | x_{section}) \prod_j p(x_{bar_j} | x_{phrase_i}) \prod_k p(x_{note_k} | x_{bar_j})
+\]</span></p>
+</section>
+<section id="attention-mechanisms" class="level3">
+<h3 class="anchored" data-anchor-id="attention-mechanisms">Attention Mechanisms</h3>
+<p>Attention mechanisms allow models to focus on relevant parts of the input when generating each output. In music generation, this can help capture long-range dependencies:</p>
+<p><span class="math display">\[
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+\]</span></p>
+<p>Where <span class="math inline">\(Q\)</span>, <span class="math inline">\(K\)</span>, and <span class="math inline">\(V\)</span> are query, key, and value matrices derived from the input.</p>
+</section>
+<section id="memory-networks" class="level3">
+<h3 class="anchored" data-anchor-id="memory-networks">Memory Networks</h3>
+<p>Memory networks augment neural networks with an external memory that can be read from and written to. This allows the model to store and retrieve information over long time spans:</p>
+<p><span class="math display">\[
+m_t = \text{Update}(m_{t-1}, x_t)
+\]</span></p>
+<p><span class="math display">\[
+r_t = \text{Read}(m_t, q_t)
+\]</span></p>
+<p>Where <span class="math inline">\(m_t\)</span> is the memory state, <span class="math inline">\(x_t\)</span> is the input, <span class="math inline">\(q_t\)</span> is a query, and <span class="math inline">\(r_t\)</span> is the retrieved information.</p>
+</section>
+<section id="transformer-based-models" class="level3">
+<h3 class="anchored" data-anchor-id="transformer-based-models">Transformer-based Models</h3>
+<p>Transformer-based models have shown promising results in capturing long-range dependencies in music. The self-attention mechanism allows the model to attend to any part of the input sequence:</p>
+<p><span class="math display">\[
+\text{MultiHead}(Q, K, V) = \text{Concat}(head_1, ..., head_h)W^O
+\]</span></p>
+<p>Where each head is computed as:</p>
+<p><span class="math display">\[
+head_i = \text{Attention}(QW_i^Q, KW_i^K, VW_i^V)
+\]</span></p>
+<section id="music-transformer" class="level4">
+<h4 class="anchored" data-anchor-id="music-transformer">Music Transformer</h4>
+<p>The Music Transformer adapts the Transformer architecture for music generation, capturing long-term dependencies and structure:</p>
+<p><span class="math display">\[
+\text{MusicTransformer}(x) = \text{Decoder}(\text{Encoder}(x))
+\]</span></p>
+<p>Where the encoder and decoder use self-attention to process the input sequence.</p>
+</section>
+</section>
+<section id="recurrent-neural-networks-rnns" class="level3">
+<h3 class="anchored" data-anchor-id="recurrent-neural-networks-rnns">Recurrent Neural Networks (RNNs)</h3>
+<p>RNNs, including LSTMs and GRUs, are commonly used to model sequential data in music generation. They capture dependencies by maintaining a hidden state that evolves over time:</p>
+<p><span class="math display">\[
+h_t = \sigma(W_h h_{t-1} + W_x x_t + b)
+\]</span></p>
+</section>
+<section id="variational-autoencoders-vaes" class="level3">
+<h3 class="anchored" data-anchor-id="variational-autoencoders-vaes">Variational Autoencoders (VAEs)</h3>
+<p>VAEs can be used to generate music by learning a latent representation of the musical structure:</p>
+<p><span class="math display">\[
+z \sim q_\phi(z|x)
+\]</span></p>
+<p><span class="math display">\[
+x \sim p_\theta(x|z)
+\]</span></p>
+<p>Where <span class="math inline">\(q_\phi(z|x)\)</span> is the encoder and <span class="math inline">\(p_\theta(x|z)\)</span> is the decoder.</p>
+</section>
+<section id="generative-adversarial-networks-gans" class="level3">
+<h3 class="anchored" data-anchor-id="generative-adversarial-networks-gans">Generative Adversarial Networks (GANs)</h3>
+<p>GANs can generate music by learning to produce realistic samples that are indistinguishable from real music:</p>
+<p><span class="math display">\[
+G(z) = x, \quad D(x) \in [0, 1]
+\]</span></p>
+<p>Where <span class="math inline">\(G\)</span> is the generator and <span class="math inline">\(D\)</span> is the discriminator.</p>
+</section>
+<section id="reinforcement-learning" class="level3">
+<h3 class="anchored" data-anchor-id="reinforcement-learning">Reinforcement Learning</h3>
+<p>Reinforcement learning can be used to optimize music generation models based on specific musical criteria:</p>
+<p><span class="math display">\[
+\mathcal{L}(\theta) = \mathbb{E}_{x \sim p_\theta} [R(x)]
+\]</span></p>
+<p>Where <span class="math inline">\(R(x)\)</span> is a reward function that evaluates the quality of the generated music.</p>
+<p>These techniques enable the generation of music with coherent long-term structure and dependencies, addressing one of the key challenges in music generation.</p>
+</section>
+</section>
+</section>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

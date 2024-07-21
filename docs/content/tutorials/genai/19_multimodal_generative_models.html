@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>multimodal_generative_models – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs/blogs.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="chapter-19-multimodal-generative-models" class="level1 text-content">
+<h1>Chapter 19: Multimodal Generative Models</h1>
+<section id="multimodal-generative-models" class="level2">
+<h2 class="anchored" data-anchor-id="multimodal-generative-models">Multimodal Generative Models</h2>
+<p>Multimodal generative models are a class of machine learning models that can generate and process data from multiple modalities, such as text, images, audio, and video. These models aim to capture the complex relationships between different types of data and enable cross-modal generation and understanding.</p>
+</section>
+<section id="combining-different-data-modalities" class="level2">
+<h2 class="anchored" data-anchor-id="combining-different-data-modalities">1. Combining Different Data Modalities</h2>
+<p>Multimodal models integrate information from various data types to create a unified representation or generate content across modalities.</p>
+<section id="text" class="level3">
+<h3 class="anchored" data-anchor-id="text">1.1 Text</h3>
+<p>Text modality is often represented using embeddings or tokenization techniques.</p>
+<section id="word-embeddings" class="level4">
+<h4 class="anchored" data-anchor-id="word-embeddings">1.1.1 Word Embeddings</h4>
+<p>Word embeddings map words to dense vector representations:</p>
+<p><span class="math display">\[
+E(w) = v_w \in \mathbb{R}^d
+\]</span></p>
+<p>Where <span class="math inline">\(E\)</span> is the embedding function, <span class="math inline">\(w\)</span> is a word, and <span class="math inline">\(v_w\)</span> is its vector representation.</p>
+<section id="types-of-word-embeddings" class="level5">
+<h5 class="anchored" data-anchor-id="types-of-word-embeddings">1.1.1.1 Types of Word Embeddings</h5>
+<ul>
+<li><strong>Word2Vec</strong>: Skip-gram and Continuous Bag of Words (CBOW) models</li>
+<li><strong>GloVe</strong>: Global Vectors for Word Representation</li>
+<li><strong>FastText</strong>: Incorporates subword information</li>
+</ul>
+<section id="word2vec" class="level6">
+<h6 class="anchored" data-anchor-id="word2vec"><strong>Word2Vec</strong></h6>
+<p>Word2Vec models, introduced by Mikolov et al., can be trained using two approaches:</p>
+<ul>
+<li><strong>Skip-gram</strong>: Predicts surrounding words given the current word.</li>
+<li><strong>Continuous Bag of Words (CBOW)</strong>: Predicts the current word based on surrounding words.</li>
+</ul>
+<p>Mathematically, the Skip-gram model maximizes the following objective:</p>
+<p><span class="math display">\[
+\sum_{w \in V} \sum_{c \in C(w)} \log p(c|w)
+\]</span></p>
+<p>Where <span class="math inline">\(V\)</span> is the vocabulary and <span class="math inline">\(C(w)\)</span> is the context of the word <span class="math inline">\(w\)</span>. The probability <span class="math inline">\(p(c|w)\)</span> is often modeled using a softmax function:</p>
+<p><span class="math display">\[
+p(c|w) = \frac{\exp(v_c \cdot v_w)}{\sum_{w' \in V} \exp(v_{w'} \cdot v_w)}
+\]</span></p>
+<p>Where <span class="math inline">\(v_c\)</span> and <span class="math inline">\(v_w\)</span> are the vector representations of the context word and the current word, respectively.</p>
+</section>
+<section id="glove" class="level6">
+<h6 class="anchored" data-anchor-id="glove"><strong>GloVe</strong></h6>
+<p>GloVe (Global Vectors for Word Representation) is based on word co-occurrence statistics. The objective function to be minimized is:</p>
+<p><span class="math display">\[
+J = \sum_{i,j=1}^V f(P_{ij})(v_i \cdot v_j + b_i + b_j - \log X_{ij})^2
+\]</span></p>
+<p>Where <span class="math inline">\(P_{ij}\)</span> is the probability that words <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> co-occur, <span class="math inline">\(v_i\)</span> and <span class="math inline">\(v_j\)</span> are word vectors, <span class="math inline">\(b_i\)</span> and <span class="math inline">\(b_j\)</span> are biases, and <span class="math inline">\(X_{ij}\)</span> is the co-occurrence count. The weighting function <span class="math inline">\(f(P_{ij})\)</span> is designed to balance the influence of rare and frequent word pairs.</p>
+</section>
+<section id="fasttext" class="level6">
+<h6 class="anchored" data-anchor-id="fasttext"><strong>FastText</strong></h6>
+<p>FastText extends Word2Vec by considering subword information. Each word is represented as a bag of character n-grams, which helps capture morphological variations:</p>
+<p><span class="math display">\[
+E(w) = \sum_{g \in G(w)} E(g)
+\]</span></p>
+<p>Where <span class="math inline">\(G(w)\)</span> is the set of n-grams for the word <span class="math inline">\(w\)</span>. This allows the model to generate embeddings for out-of-vocabulary words by composing them from known n-grams.</p>
+</section>
+</section>
+<section id="contextual-embeddings" class="level5">
+<h5 class="anchored" data-anchor-id="contextual-embeddings">1.1.1.2 Contextual Embeddings</h5>
+<ul>
+<li><strong>ELMo</strong>: Embeddings from Language Models</li>
+<li><strong>BERT</strong>: Bidirectional Encoder Representations from Transformers</li>
+</ul>
+<section id="elmo" class="level6">
+<h6 class="anchored" data-anchor-id="elmo"><strong>ELMo</strong></h6>
+<p>ELMo generates contextualized word embeddings by using a deep bidirectional LSTM:</p>
+<p><span class="math display">\[
+E(w) = \text{ELMo}(w) = \sum_{k=1}^{L} \gamma_k h_k(w)
+\]</span></p>
+<p>Where <span class="math inline">\(L\)</span> is the number of layers, <span class="math inline">\(\gamma_k\)</span> are learned weights, and <span class="math inline">\(h_k(w)\)</span> are the hidden states from each LSTM layer. The hidden states are obtained by:</p>
+<p><span class="math display">\[
+h_k(w) = \text{LSTM}_k(h_{k-1}(w))
+\]</span></p>
+<p>Where <span class="math inline">\(h_{k-1}(w)\)</span> is the output from the previous LSTM layer or the input embeddings.</p>
+</section>
+<section id="bert" class="level6">
+<h6 class="anchored" data-anchor-id="bert"><strong>BERT</strong></h6>
+<p>BERT uses a Transformer architecture to generate bidirectional contextual embeddings. The attention mechanism used in BERT is:</p>
+<p><span class="math display">\[
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+\]</span></p>
+<p>Where <span class="math inline">\(Q\)</span>, <span class="math inline">\(K\)</span>, and <span class="math inline">\(V\)</span> are query, key, and value matrices. These matrices are derived from the input embeddings:</p>
+<p><span class="math display">\[
+Q = XW_Q, \quad K = XW_K, \quad V = XW_V
+\]</span></p>
+<p>Here, <span class="math inline">\(X\)</span> is the input matrix, and <span class="math inline">\(W_Q\)</span>, <span class="math inline">\(W_K\)</span>, <span class="math inline">\(W_V\)</span> are learnable weight matrices.</p>
+</section>
+</section>
+</section>
+<section id="transformer-encoders" class="level4">
+<h4 class="anchored" data-anchor-id="transformer-encoders">1.1.2 Transformer Encoders</h4>
+<p>Transformer encoders process text sequences using self-attention mechanisms:</p>
+<p><span class="math display">\[
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+\]</span></p>
+<p>Where <span class="math inline">\(Q\)</span>, <span class="math inline">\(K\)</span>, and <span class="math inline">\(V\)</span> are query, key, and value matrices derived from the input text.</p>
+<section id="multi-head-attention" class="level5">
+<h5 class="anchored" data-anchor-id="multi-head-attention">1.1.2.1 Multi-Head Attention</h5>
+<p>Multi-head attention allows the model to attend to different parts of the input simultaneously:</p>
+<p><span class="math display">\[
+\text{MultiHead}(Q, K, V) = \text{Concat}(\text{head}_1, \ldots, \text{head}_h)W^O
+\]</span></p>
+<p>Where each head is computed as:</p>
+<p><span class="math display">\[
+\text{head}_i = \text{Attention}(QW_i^Q, KW_i^K, VW_i^V)
+\]</span></p>
+<p>Here, <span class="math inline">\(W_i^Q\)</span>, <span class="math inline">\(W_i^K\)</span>, and <span class="math inline">\(W_i^V\)</span> are projection matrices specific to each attention head. By using multiple attention heads, the model can capture different types of relationships in the input sequence.</p>
+</section>
+<section id="position-wise-feed-forward-networks" class="level5">
+<h5 class="anchored" data-anchor-id="position-wise-feed-forward-networks">1.1.2.2 Position-wise Feed-Forward Networks</h5>
+<p>Each transformer layer includes a position-wise feed-forward network:</p>
+<p><span class="math display">\[
+\text{FFN}(x) = \max(0, xW_1 + b_1)W_2 + b_2
+\]</span></p>
+<p>Where <span class="math inline">\(W_1\)</span> and <span class="math inline">\(W_2\)</span> are weight matrices, and <span class="math inline">\(b_1\)</span> and <span class="math inline">\(b_2\)</span> are biases. This feed-forward network applies two linear transformations with a ReLU activation in between, allowing the model to learn complex transformations of the input data.</p>
+</section>
+</section>
+</section>
+<section id="images" class="level3">
+<h3 class="anchored" data-anchor-id="images">1.2 Images</h3>
+<p>Image data is typically processed using convolutional neural networks (CNNs) or vision transformers.</p>
+<section id="convolutional-layers" class="level4">
+<h4 class="anchored" data-anchor-id="convolutional-layers">1.2.1 Convolutional Layers</h4>
+<p>Convolutional layers extract features from images:</p>
+<p><span class="math display">\[
+F_l(x, y) = \sum_{i=1}^{k_h} \sum_{j=1}^{k_w} W_{l}(i, j) \cdot I(x+i-1, y+j-1)
+\]</span></p>
+<p>Where <span class="math inline">\(F_l\)</span> is the feature map at layer <span class="math inline">\(l\)</span>, <span class="math inline">\(W_l\)</span> is the convolutional kernel, and <span class="math inline">\(I\)</span> is the input image.</p>
+<section id="types-of-convolutional-layers" class="level5">
+<h5 class="anchored" data-anchor-id="types-of-convolutional-layers">1.2.1.1 Types of Convolutional Layers</h5>
+<ul>
+<li><strong>Standard Convolutions</strong>: Regular 2D convolutions</li>
+<li><strong>Depthwise Separable Convolutions</strong>: Separate spatial and channel-wise convolutions</li>
+<li><strong>Dilated Convolutions</strong>: Increase receptive field without increasing parameters</li>
+</ul>
+<section id="depthwise-separable-convolutions" class="level6">
+<h6 class="anchored" data-anchor-id="depthwise-separable-convolutions"><strong>Depthwise Separable Convolutions</strong></h6>
+<p>Depthwise separable convolutions split the convolution into two operations:</p>
+<ol type="1">
+<li><strong>Depthwise Convolution</strong>: Applies a single convolutional filter per input channel.</li>
+<li><strong>Pointwise Convolution</strong>: Uses a 1x1 convolution to combine the output of the depthwise convolution.</li>
+</ol>
+<p>Mathematically, for an input <span class="math inline">\(I \in \mathbb{R}^{H \times W \times C}\)</span>, the depthwise separable convolution is:</p>
+<p><span class="math display">\[
+F_{dw}(x, y, c) = \sum_{i=1}^{k_h} \sum_{j=1}^{k_w} W_{c}(i, j) \cdot I(x+i-1, y+j-1, c)
+\]</span></p>
+<p><span class="math display">\[
+F_{pw}(x, y) = \sum_{c=1}^{C} W_c \cdot F_{dw}(x, y, c)
+\]</span></p>
+</section>
+</section>
+<section id="pooling-layers" class="level5">
+<h5 class="anchored" data-anchor-id="pooling-layers">1.2.1.2 Pooling Layers</h5>
+<p>Pooling layers reduce spatial dimensions:</p>
+<ul>
+<li><strong>Max Pooling</strong>: <span class="math inline">\(y_{ij} = \max_{(a,b) \in R_{ij}} x_{ab}\)</span></li>
+<li><strong>Average Pooling</strong>: <span class="math inline">\(y_{ij} = \frac{1}{|R_{ij}|} \sum_{(a,b) \in R_{ij}} x_{ab}\)</span></li>
+</ul>
+</section>
+</section>
+<section id="vision-transformers" class="level4">
+<h4 class="anchored" data-anchor-id="vision-transformers">1.2.2 Vision Transformers</h4>
+<p>Vision transformers process images as sequences of patches:</p>
+<p><span class="math display">\[
+z_0 = [x_\text{class}; x_p^1 E; x_p^2 E; \cdots; x_p^N E] + E_\text{pos}
+\]</span></p>
+<p>Where <span class="math inline">\(x_p^i\)</span> are image patches, <span class="math inline">\(E\)</span> is a learnable embedding matrix, and <span class="math inline">\(E_\text{pos}\)</span> are positional embeddings.</p>
+<section id="patch-embedding" class="level5">
+<h5 class="anchored" data-anchor-id="patch-embedding">1.2.2.1 Patch Embedding</h5>
+<p>Images are divided into fixed-size patches and linearly projected:</p>
+<p><span class="math display">\[
+x_p^i = \text{Flatten}(\text{Patch}_i) W_E
+\]</span></p>
+<p>Where <span class="math inline">\(\text{Patch}_i\)</span> is the <span class="math inline">\(i\)</span>-th patch of the image, and <span class="math inline">\(W_E\)</span> is a learnable weight matrix that projects the flattened patch into a lower-dimensional embedding space.</p>
+</section>
+<section id="position-encoding" class="level5">
+<h5 class="anchored" data-anchor-id="position-encoding">1.2.2.2 Position Encoding</h5>
+<p>Positional information is added to patch embeddings:</p>
+<p><span class="math display">\[
+E_\text{pos} = [\text{PE}(1); \text{PE}(2); \cdots; \text{PE}(N)]
+\]</span></p>
+<p>Where <span class="math inline">\(\text{PE}(i)\)</span> is the positional encoding for the <span class="math inline">\(i\)</span>-th patch. Positional encodings are added to the patch embeddings to retain information about the spatial arrangement of patches in the image.</p>
+</section>
+</section>
+</section>
+<section id="audio" class="level3">
+<h3 class="anchored" data-anchor-id="audio">1.3 Audio</h3>
+<p>Audio data is often represented using spectrograms or waveforms.</p>
+<section id="spectrograms" class="level4">
+<h4 class="anchored" data-anchor-id="spectrograms">1.3.1 Spectrograms</h4>
+<p>Short-Time Fourier Transform (STFT) is used to compute spectrograms:</p>
+<p><span class="math display">\[
+X(t, \omega) = \sum_{n=-\infty}^{\infty} x[n]w[n-t]e^{-j\omega n}
+\]</span></p>
+<p>Where <span class="math inline">\(x[n]\)</span> is the audio signal, <span class="math inline">\(w[n]\)</span> is a window function, and <span class="math inline">\(X(t, \omega)\)</span> is the spectrogram.</p>
+<section id="mel-spectrograms" class="level5">
+<h5 class="anchored" data-anchor-id="mel-spectrograms">1.3.1.1 Mel Spectrograms</h5>
+<p>Mel spectrograms apply a mel-scale filterbank to the power spectrum:</p>
+<p><span class="math display">\[
+M(t, m) = \sum_{\omega} |X(t, \omega)|^2 H_m(\omega)
+\]</span></p>
+<p>Where <span class="math inline">\(H_m(\omega)\)</span> is the <span class="math inline">\(m\)</span>-th mel-scale filter. The mel-scale filterbank is designed to mimic the human ear’s perception of sound frequencies, providing a more perceptually relevant representation of the audio signal.</p>
+</section>
+<section id="constant-q-transform-cqt" class="level5">
+<h5 class="anchored" data-anchor-id="constant-q-transform-cqt">1.3.1.2 Constant-Q Transform (CQT)</h5>
+<p>CQT provides a frequency representation with logarithmically spaced frequency bins:</p>
+<p><span class="math display">\[
+X_\text{CQT}(t, k) = \sum_{n=0}^{N_k-1} w[n] x[n+t] e^{-j2\pi Q n / N_k}
+\]</span></p>
+<p>Where <span class="math inline">\(N_k\)</span> is the number of samples in the <span class="math inline">\(k\)</span>-th frequency bin, and <span class="math inline">\(Q\)</span> is a constant that determines the frequency resolution.</p>
+</section>
+</section>
+<section id="waveform-processing" class="level4">
+<h4 class="anchored" data-anchor-id="waveform-processing">1.3.2 Waveform Processing</h4>
+<p>Raw waveforms can be processed using 1D convolutional networks:</p>
+<p><span class="math display">\[
+y[n] = \sum_{k=0}^{K-1} h[k]x[n-k]
+\]</span></p>
+<p>Where <span class="math inline">\(y[n]\)</span> is the output, <span class="math inline">\(h[k]\)</span> is the filter, and <span class="math inline">\(x[n]\)</span> is the input waveform. This convolution operation captures temporal patterns in the audio signal.</p>
+<section id="wavenet" class="level5">
+<h5 class="anchored" data-anchor-id="wavenet">1.3.2.1 WaveNet</h5>
+<p>WaveNet uses dilated causal convolutions for audio generation:</p>
+<p><span class="math display">\[
+y[n] = f\left(\sum_{k=0}^{K-1} h[k]x[n-d^l k]\right)
+\]</span></p>
+<p>Where <span class="math inline">\(d\)</span> is the dilation factor and <span class="math inline">\(l\)</span> is the layer index. The dilation factor exponentially increases with the layer index, allowing the model to capture long-range dependencies in the audio signal.</p>
+</section>
+<section id="sincnet" class="level5">
+<h5 class="anchored" data-anchor-id="sincnet">1.3.2.2 SincNet</h5>
+<p>SincNet uses sinc functions as convolutional filters:</p>
+<p><span class="math display">\[
+y[n] = x[n] * g[n, f_1, f_2]
+\]</span></p>
+<p>Where <span class="math inline">\(g[n, f_1, f_2]\)</span> is a bandpass filter defined by sinc functions:</p>
+<p><span class="math display">\[
+g[n, f_1, f_2] = 2f_2 \text{sinc}(2\pi f_2 n) - 2f_1 \text{sinc}(2\pi f_1 n)
+\]</span></p>
+<p>Here, <span class="math inline">\(f_1\)</span> and <span class="math inline">\(f_2\)</span> are the cutoff frequencies of the filter, and <span class="math inline">\(\text{sinc}(x) = \frac{\sin(x)}{x}\)</span>.</p>
+</section>
+</section>
+</section>
+<section id="video" class="level3">
+<h3 class="anchored" data-anchor-id="video">1.4 Video</h3>
+<p>Video data combines spatial and temporal information.</p>
+<section id="d-convolutions" class="level4">
+<h4 class="anchored" data-anchor-id="d-convolutions">1.4.1 3D Convolutions</h4>
+<p>3D convolutions process spatiotemporal data:</p>
+<p><span class="math display">\[
+F(x, y, t) = \sum_{i=1}^{k_h} \sum_{j=1}^{k_w} \sum_{k=1}^{k_t} W(i, j, k) \cdot V(x+i-1, y+j-1, t+k-1)
+\]</span></p>
+<p>Where <span class="math inline">\(F\)</span> is the feature map, <span class="math inline">\(W\)</span> is the 3D convolutional kernel, and <span class="math inline">\(V\)</span> is the input video.</p>
+<section id="separable-3d-convolutions" class="level5">
+<h5 class="anchored" data-anchor-id="separable-3d-convolutions">1.4.1.1 Separable 3D Convolutions</h5>
+<p>To reduce computational complexity, separable 3D convolutions can be used:</p>
+<p><span class="math display">\[
+F(x, y, t) = \text{SpatialConv}(\text{TemporalConv}(V(x, y, t)))
+\]</span></p>
+</section>
+<section id="deformable-3d-convolutions" class="level5">
+<h5 class="anchored" data-anchor-id="deformable-3d-convolutions">1.4.1.2 Deformable 3D Convolutions</h5>
+<p>Deformable convolutions adapt to the motion in videos:</p>
+<p><span class="math display">\[
+F(x, y, t) = \sum_{i,j,k} W(i, j, k) \cdot V(x+i+\Delta x, y+j+\Delta y, t+k+\Delta t)
+\]</span></p>
+<p>Where <span class="math inline">\(\Delta x\)</span>, <span class="math inline">\(\Delta y\)</span>, and <span class="math inline">\(\Delta t\)</span> are learned offsets. These offsets allow the convolutional kernel to adapt its shape to capture motion dynamics more effectively.</p>
+</section>
+</section>
+<section id="recurrent-convolutional-architectures" class="level4">
+<h4 class="anchored" data-anchor-id="recurrent-convolutional-architectures">1.4.2 Recurrent-Convolutional Architectures</h4>
+<p>Combining CNNs with recurrent networks:</p>
+<p><span class="math display">\[
+h_t = f(W_x * x_t + W_h * h_{t-1} + b)
+\]</span></p>
+<p>Where <span class="math inline">\(h_t\)</span> is the hidden state at time <span class="math inline">\(t\)</span>, <span class="math inline">\(x_t\)</span> is the frame at time <span class="math inline">\(t\)</span>, and <span class="math inline">\(*\)</span> denotes convolution.</p>
+<section id="convlstm" class="level5">
+<h5 class="anchored" data-anchor-id="convlstm">1.4.2.1 ConvLSTM</h5>
+<p>ConvLSTM replaces matrix multiplications in LSTM with convolutions:</p>
+<p><span class="math display">\[
+i_t = \sigma(W_{xi} * x_t + W_{hi} * h_{t-1} + b_i)
+\]</span></p>
+<p><span class="math display">\[
+f_t = \sigma(W_{xf} * x_t + W_{hf} * h_{t-1} + b_f)
+\]</span></p>
+<p><span class="math display">\[
+o_t = \sigma(W_{xo} * x_t + W_{ho} * h_{t-1} + b_o)
+\]</span></p>
+<p><span class="math display">\[
+c_t = f_t \odot c_{t-1} + i_t \odot \tanh(W_{xc} * x_t + W_{hc} * h_{t-1} + b_c)
+\]</span></p>
+<p><span class="math display">\[
+h_t = o_t \odot \tanh(c_t)
+\]</span></p>
+<p>Where <span class="math inline">\(i_t\)</span>, <span class="math inline">\(f_t\)</span>, <span class="math inline">\(o_t\)</span>, and <span class="math inline">\(c_t\)</span> are the input, forget, output, and cell states, respectively. These states are computed using convolutions instead of linear transformations, allowing the network to capture spatial dependencies in the input frames.</p>
+</section>
+<section id="video-transformer" class="level5">
+<h5 class="anchored" data-anchor-id="video-transformer">1.4.2.2 Video Transformer</h5>
+<p>Video Transformer extends the Transformer architecture to video data:</p>
+<p><span class="math display">\[
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}} + M\right)V
+\]</span></p>
+<p>Where <span class="math inline">\(M\)</span> is a mask that encodes spatiotemporal relationships. This mask helps the model attend to relevant parts of the video, capturing both spatial and temporal dependencies.</p>
+</section>
+</section>
+</section>
+</section>
+<section id="generative-models-for-vision-language-tasks" class="level2">
+<h2 class="anchored" data-anchor-id="generative-models-for-vision-language-tasks">2. Generative Models for Vision-Language Tasks</h2>
+<p>Vision-language models combine visual and textual information for tasks such as image generation from text descriptions.</p>
+<section id="dall-e" class="level3">
+<h3 class="anchored" data-anchor-id="dall-e">2.1 DALL-E</h3>
+<p>DALL-E is a transformer-based model that generates images from text descriptions.</p>
+<section id="architecture" class="level4">
+<h4 class="anchored" data-anchor-id="architecture">2.1.1 Architecture</h4>
+<p>DALL-E uses a transformer decoder to autoregressively generate image tokens:</p>
+<p><span class="math display">\[
+p(y|x) = \prod_{t=1}^T p(y_t|y_{&lt;t}, x)
+\]</span></p>
+<p>Where <span class="math inline">\(x\)</span> is the text input and <span class="math inline">\(y\)</span> is the generated image tokens.</p>
+</section>
+<section id="training-objective" class="level4">
+<h4 class="anchored" data-anchor-id="training-objective">2.1.2 Training Objective</h4>
+<p>DALL-E is trained to maximize the likelihood of the image tokens given the text:</p>
+<p><span class="math display">\[
+\mathcal{L} = -\sum_{t=1}^T \log p(y_t|y_{&lt;t}, x)
+\]</span></p>
+<p>Where <span class="math inline">\(y_{&lt;t}\)</span> represents the tokens generated before time step <span class="math inline">\(t\)</span>.</p>
+</section>
+<section id="discrete-vae" class="level4">
+<h4 class="anchored" data-anchor-id="discrete-vae">2.1.3 Discrete VAE</h4>
+<p>DALL-E uses a discrete VAE to compress images into tokens:</p>
+<p><span class="math display">\[
+z = \text{Encoder}(x), \quad \hat{x} = \text{Decoder}(z)
+\]</span></p>
+<p>Where <span class="math inline">\(z\)</span> is the latent representation, and <span class="math inline">\(\hat{x}\)</span> is the reconstructed image.</p>
+<section id="vector-quantization" class="level5">
+<h5 class="anchored" data-anchor-id="vector-quantization">2.1.3.1 Vector Quantization</h5>
+<p>The discrete VAE uses vector quantization to map continuous latent vectors to discrete codes:</p>
+<p><span class="math display">\[
+z_q = \arg\min_{e_k} ||z_e - e_k||_2
+\]</span></p>
+<p>Where <span class="math inline">\(e_k\)</span> are learnable codebook vectors. This quantization step allows the model to map high-dimensional continuous data to a finite set of discrete tokens, making the representation more compact.</p>
+</section>
+</section>
+</section>
+<section id="imagen" class="level3">
+<h3 class="anchored" data-anchor-id="imagen">2.2 Imagen</h3>
+<p>Imagen is a text-to-image diffusion model that uses a cascade of diffusion models at increasing resolutions.</p>
+<section id="diffusion-process" class="level4">
+<h4 class="anchored" data-anchor-id="diffusion-process">2.2.1 Diffusion Process</h4>
+<p>The diffusion process gradually adds noise to the image:</p>
+<p><span class="math display">\[
+q(x_t|x_{t-1}) = \mathcal{N}(x_t; \sqrt{1-\beta_t}x_{t-1}, \beta_t I)
+\]</span></p>
+<p>Where <span class="math inline">\(x_t\)</span> is the noisy image at step <span class="math inline">\(t\)</span> and <span class="math inline">\(\beta_t\)</span> is the noise schedule. The noise schedule <span class="math inline">\(\beta_t\)</span> controls the amount of noise added at each step.</p>
+</section>
+<section id="reverse-process" class="level4">
+<h4 class="anchored" data-anchor-id="reverse-process">2.2.2 Reverse Process</h4>
+<p>The reverse process generates images by denoising:</p>
+<p><span class="math display">\[
+p_\theta(x_{t-1}|x_t, c) = \mathcal{N}(x_{t-1}; \mu_\theta(x_t, t, c), \Sigma_\theta(x_t, t, c))
+\]</span></p>
+<p>Where <span class="math inline">\(c\)</span> is the text condition and <span class="math inline">\(\mu_\theta\)</span> and <span class="math inline">\(\Sigma_\theta\)</span> are learned functions. These functions predict the mean and covariance of the denoised image at step <span class="math inline">\(t-1\)</span> given the noisy image at step <span class="math inline">\(t\)</span>.</p>
+</section>
+<section id="cascaded-generation" class="level4">
+<h4 class="anchored" data-anchor-id="cascaded-generation">2.2.3 Cascaded Generation</h4>
+<p>Imagen uses a cascade of diffusion models at increasing resolutions:</p>
+<p><span class="math display">\[
+x_1 = \text{DiffusionModel}_1(c)
+\]</span></p>
+<p><span class="math display">\[
+x_2 = \text{DiffusionModel}_2(x_1, c)
+\]</span></p>
+<p><span class="math display">\[
+x_3 = \text{DiffusionModel}_3(x_2, c)
+\]</span></p>
+<p>Each diffusion model in the cascade generates images at progressively higher resolutions.</p>
+<section id="super-resolution" class="level5">
+<h5 class="anchored" data-anchor-id="super-resolution">2.2.3.1 Super-Resolution</h5>
+<p>The super-resolution models condition on both the text and the lower-resolution image:</p>
+<p><span class="math display">\[
+p_\theta(x_\text{high}|x_\text{low}, c) = \text{DiffusionModel}(x_\text{low}, c)
+\]</span></p>
+<p>Where <span class="math inline">\(x_\text{low}\)</span> is the lower-resolution image, and <span class="math inline">\(x_\text{high}\)</span> is the generated high-resolution image.</p>
+</section>
+</section>
+</section>
+<section id="glide" class="level3">
+<h3 class="anchored" data-anchor-id="glide">2.3 GLIDE</h3>
+<p>GLIDE combines diffusion models with classifier-free guidance for text-to-image generation.</p>
+<section id="classifier-free-guidance" class="level4">
+<h4 class="anchored" data-anchor-id="classifier-free-guidance">2.3.1 Classifier-Free Guidance</h4>
+<p>GLIDE uses classifier-free guidance to steer the generation process:</p>
+<p><span class="math display">\[
+\epsilon_\theta(x_t, t, c) = (1+w)\epsilon_\theta(x_t, t, c) - w\epsilon_\theta(x_t, t)
+\]</span></p>
+<p>Where <span class="math inline">\(w\)</span> is the guidance scale and <span class="math inline">\(\epsilon_\theta\)</span> is the denoising model. The classifier-free guidance encourages the model to generate images that are more consistent with the text condition <span class="math inline">\(c\)</span>.</p>
+</section>
+<section id="training-objective-1" class="level4">
+<h4 class="anchored" data-anchor-id="training-objective-1">2.3.2 Training Objective</h4>
+<p>GLIDE is trained to predict the noise added during the forward process:</p>
+<p><span class="math display">\[
+\mathcal{L} = \mathbb{E}_{t,x_0,\epsilon,c}[||\epsilon - \epsilon_\theta(x_t, t, c)||^2]
+\]</span></p>
+<p>Where <span class="math inline">\(\epsilon\)</span> is the noise, and <span class="math inline">\(x_0\)</span> is the original image.</p>
+</section>
+<section id="upsampling" class="level4">
+<h4 class="anchored" data-anchor-id="upsampling">2.3.3 Upsampling</h4>
+<p>GLIDE uses a separate upsampling diffusion model to increase resolution:</p>
+<p><span class="math display">\[
+x_\text{high} = \text{Upsample}(x_\text{low}, c)
+\]</span></p>
+<section id="noise-aware-upsampling" class="level5">
+<h5 class="anchored" data-anchor-id="noise-aware-upsampling">2.3.3.1 Noise-Aware Upsampling</h5>
+<p>The upsampling model is conditioned on the noise level of the low-resolution image:</p>
+<p><span class="math display">\[
+p_\theta(x_\text{high}|x_\text{low}, c, t) = \text{DiffusionModel}(x_\text{low}, c, t)
+\]</span></p>
+<p>Where <span class="math inline">\(t\)</span> is the time step, and <span class="math inline">\(c\)</span> is the text condition.</p>
+</section>
+</section>
+</section>
+</section>
+<section id="contrastive-learning-for-multimodal-representation" class="level2">
+<h2 class="anchored" data-anchor-id="contrastive-learning-for-multimodal-representation">3. Contrastive Learning for Multimodal Representation</h2>
+<p>Contrastive learning techniques are used to align representations from different modalities.</p>
+<section id="clip-contrastive-language-image-pre-training" class="level3">
+<h3 class="anchored" data-anchor-id="clip-contrastive-language-image-pre-training">3.1 CLIP (Contrastive Language-Image Pre-training)</h3>
+<p>CLIP learns joint representations of images and text through contrastive learning.</p>
+<section id="contrastive-loss" class="level4">
+<h4 class="anchored" data-anchor-id="contrastive-loss">3.1.1 Contrastive Loss</h4>
+<p>CLIP uses a symmetric cross-entropy loss:</p>
+<p><span class="math display">\[
+\mathcal{L} = -\frac{1}{N}\sum_{i=1}^N \left(\log \frac{\exp(s_{ii}/\tau)}{\sum_{j=1}^N \exp(s_{ij}/\tau)} + \log \frac{\exp(s_{ii}/\tau)}{\sum_{j=1}^N \exp(s_{ji}/\tau)}\right)
+\]</span></p>
+<p>Where <span class="math inline">\(s_{ij}\)</span> is the cosine similarity between image <span class="math inline">\(i\)</span> and text <span class="math inline">\(j\)</span>, and <span class="math inline">\(\tau\)</span> is a temperature parameter that scales the similarities.</p>
+</section>
+<section id="image-and-text-encoders" class="level4">
+<h4 class="anchored" data-anchor-id="image-and-text-encoders">3.1.2 Image and Text Encoders</h4>
+<p>CLIP uses separate encoders for images and text:</p>
+<p><span class="math display">\[
+f_I(I) = W_I \cdot \text{CNN}(I), \quad f_T(T) = W_T \cdot \text{Transformer}(T)
+\]</span></p>
+<p>Where <span class="math inline">\(W_I\)</span> and <span class="math inline">\(W_T\)</span> are learnable projection matrices that map the outputs of the CNN and Transformer to a common embedding space.</p>
+</section>
+<section id="zero-shot-classification" class="level4">
+<h4 class="anchored" data-anchor-id="zero-shot-classification">3.1.3 Zero-Shot Classification</h4>
+<p>CLIP enables zero-shot classification by comparing image embeddings to text embeddings of class names:</p>
+<p><span class="math display">\[
+p(y|x) = \frac{\exp(f_I(x)^T f_T(\text{class}_y))}{\sum_{c} \exp(f_I(x)^T f_T(\text{class}_c))}
+\]</span></p>
+<p>Where <span class="math inline">\(f_I(x)\)</span> is the image embedding, and <span class="math inline">\(f_T(\text{class}_y)\)</span> is the text embedding of class <span class="math inline">\(y\)</span>.</p>
+</section>
+</section>
+<section id="align-a-large-scale-image-and-noisy-text-embedding" class="level3">
+<h3 class="anchored" data-anchor-id="align-a-large-scale-image-and-noisy-text-embedding">3.2 ALIGN (A Large-scale ImaGe and Noisy-text embedding)</h3>
+<p>ALIGN extends CLIP by training on a larger, noisier dataset of image-text pairs.</p>
+<section id="noise-contrastive-estimation" class="level4">
+<h4 class="anchored" data-anchor-id="noise-contrastive-estimation">3.2.1 Noise-Contrastive Estimation</h4>
+<p>ALIGN uses noise-contrastive estimation to handle noisy labels:</p>
+<p><span class="math display">\[
+\mathcal{L} = -\mathbb{E}_{(x,y)\sim p_\text{data}} \left[\log \frac{e^{f(x,y)}}{e^{f(x,y)} + \sum_{y'\sim p_n(y)} e^{f(x,y')}}\right]
+\]</span></p>
+<p>Where <span class="math inline">\(p_n(y)\)</span> is a noise distribution for negative samples.</p>
+</section>
+<section id="dual-encoder-architecture" class="level4">
+<h4 class="anchored" data-anchor-id="dual-encoder-architecture">3.2.2 Dual Encoder Architecture</h4>
+<p>ALIGN uses a dual encoder architecture similar to CLIP:</p>
+<p><span class="math display">\[
+s(I, T) = f_I(I)^T f_T(T)
+\]</span></p>
+<p>Where <span class="math inline">\(s(I, T)\)</span> is the similarity score between image <span class="math inline">\(I\)</span> and text <span class="math inline">\(T\)</span>.</p>
+</section>
+<section id="hard-negative-mining" class="level4">
+<h4 class="anchored" data-anchor-id="hard-negative-mining">3.2.3 Hard Negative Mining</h4>
+<p>ALIGN employs hard negative mining to improve training efficiency:</p>
+<p><span class="math display">\[
+\mathcal{L}_\text{hard} = -\log \frac{e^{f(x,y)}}{e^{f(x,y)} + \sum_{y'\in \text{HardNeg}(x)} e^{f(x,y')}}
+\]</span></p>
+<p>Where <span class="math inline">\(\text{HardNeg}(x)\)</span> is a set of hard negative samples for image <span class="math inline">\(x\)</span>.</p>
+</section>
+</section>
+</section>
+<section id="zero-shot-and-few-shot-generation" class="level2">
+<h2 class="anchored" data-anchor-id="zero-shot-and-few-shot-generation">4. Zero-Shot and Few-Shot Generation</h2>
+<p>Multimodal models can be used for zero-shot and few-shot generation tasks.</p>
+<section id="zero-shot-generation" class="level3">
+<h3 class="anchored" data-anchor-id="zero-shot-generation">4.1 Zero-Shot Generation</h3>
+<p>Zero-shot generation leverages learned multimodal representations to generate content for unseen combinations of modalities.</p>
+<section id="text-to-image-generation" class="level4">
+<h4 class="anchored" data-anchor-id="text-to-image-generation">4.1.1 Text-to-Image Generation</h4>
+<p>Using CLIP embeddings for zero-shot text-to-image generation:</p>
+<p><span class="math display">\[
+I^* = \arg\max_I \text{sim}(f_I(I), f_T(T))
+\]</span></p>
+<p>Where <span class="math inline">\(I^*\)</span> is the generated image that maximizes similarity with the text <span class="math inline">\(T\)</span>.</p>
+</section>
+<section id="cross-modal-retrieval" class="level4">
+<h4 class="anchored" data-anchor-id="cross-modal-retrieval">4.1.2 Cross-Modal Retrieval</h4>
+<p>Zero-shot cross-modal retrieval using learned embeddings:</p>
+<p><span class="math display">\[
+R(q, D) = \arg\max_{d \in D} \text{sim}(f_q(q), f_d(d))
+\]</span></p>
+<p>Where <span class="math inline">\(q\)</span> is the query in one modality and <span class="math inline">\(D\)</span> is the database of items in another modality.</p>
+</section>
+</section>
+<section id="few-shot-generation" class="level3">
+<h3 class="anchored" data-anchor-id="few-shot-generation">4.2 Few-Shot Generation</h3>
+<p>Few-shot generation adapts multimodal models to new tasks with limited examples.</p>
+<section id="prompt-tuning" class="level4">
+<h4 class="anchored" data-anchor-id="prompt-tuning">4.2.1 Prompt Tuning</h4>
+<p>Adapting language models for few-shot generation:</p>
+<p><span class="math display">\[
+h = \text{Transformer}([P; x])
+\]</span></p>
+<p>Where <span class="math inline">\(P\)</span> is a learned prompt and <span class="math inline">\(x\)</span> is the input.</p>
+</section>
+<section id="fine-tuning-with-adapters" class="level4">
+<h4 class="anchored" data-anchor-id="fine-tuning-with-adapters">4.2.2 Fine-Tuning with Adapters</h4>
+<p>Using adapter layers for efficient few-shot adaptation:</p>
+<p><span class="math display">\[
+h' = h + \text{MLP}(h)
+\]</span></p>
+<p>Where <span class="math inline">\(h'\)</span> is the adapted representation and MLP is a small adapter network.</p>
+</section>
+</section>
+</section>
+<section id="techniques-for-handling-cross-modal-alignment-and-consistency" class="level2">
+<h2 class="anchored" data-anchor-id="techniques-for-handling-cross-modal-alignment-and-consistency">5. Techniques for Handling Cross-Modal Alignment and Consistency</h2>
+<p>Ensuring alignment and consistency across modalities is crucial for multimodal generative models.</p>
+<section id="attention-mechanisms" class="level3">
+<h3 class="anchored" data-anchor-id="attention-mechanisms">5.1 Attention Mechanisms</h3>
+<p>Cross-modal attention aligns information between modalities:</p>
+<p><span class="math display">\[
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+\]</span></p>
+<p>Where <span class="math inline">\(Q\)</span>, <span class="math inline">\(K\)</span>, and <span class="math inline">\(V\)</span> are derived from different modalities.</p>
+</section>
+<section id="cycle-consistency" class="level3">
+<h3 class="anchored" data-anchor-id="cycle-consistency">5.2 Cycle Consistency</h3>
+<p>Cycle consistency ensures that transformations between modalities are invertible:</p>
+<p><span class="math display">\[
+\mathcal{L}_\text{cycle} = ||G_{Y\to X}(G_{X\to Y}(x)) - x||_1 + ||G_{X\to Y}(G_{Y\to X}(y)) - y||_1
+\]</span></p>
+<p>Where <span class="math inline">\(G_{X\to Y}\)</span> and <span class="math inline">\(G_{Y\to X}\)</span> are cross-modal generators.</p>
+</section>
+<section id="multimodal-fusion" class="level3">
+<h3 class="anchored" data-anchor-id="multimodal-fusion">5.3 Multimodal Fusion</h3>
+<p>Fusion techniques combine information from multiple modalities:</p>
+<p><span class="math display">\[
+h_\text{fused} = f(h_\text{text}, h_\text{image}, h_\text{audio})
+\]</span></p>
+<p>Where <span class="math inline">\(f\)</span> is a fusion function, such as concatenation or attention-based fusion.</p>
+</section>
+<section id="adversarial-training" class="level3">
+<h3 class="anchored" data-anchor-id="adversarial-training">5.4 Adversarial Training</h3>
+<p>Adversarial training can improve cross-modal consistency:</p>
+<p><span class="math display">\[
+\min_G \max_D \mathbb{E}_{x\sim p_\text{data}(x)}[\log D(x)] + \mathbb{E}_{z\sim p_z(z)}[\log(1 - D(G(z)))]
+\]</span></p>
+<p>Where <span class="math inline">\(G\)</span> generates cross-modal content and <span class="math inline">\(D\)</span> discriminates between real and generated samples.</p>
+</section>
+<section id="mutual-information-maximization" class="level3">
+<h3 class="anchored" data-anchor-id="mutual-information-maximization">5.5 Mutual Information Maximization</h3>
+<p>Maximizing mutual information between modalities encourages consistent representations:</p>
+<p><span class="math display">\[
+\mathcal{L}_\text{MI} = I(X; Y) = \mathbb{E}_{p(x,y)}\left[\log \frac{p(x,y)}{p(x)p(y)}\right]
+\]</span></p>
+<p>Where <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are different modalities.</p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Multimodal generative models offer powerful capabilities for integrating and generating content across different data modalities. By leveraging techniques such as contrastive learning, diffusion models, and cross-modal attention, these models can capture complex relationships between modalities and enable advanced applications in areas like text-to-image generation, cross-modal retrieval, and zero-shot learning. As research in this field continues to advance, we can expect even more sophisticated multimodal generative models that push the boundaries of artificial intelligence and creativity.</p>
+</section>
+</section>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
