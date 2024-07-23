@@ -209,8 +209,8 @@ window.Quarto = {
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../../blogs/blogs.html"> 
-<span class="menu-text">Blog</span></a>
+    <a class="nav-link" href="../../../notes/notes.html"> 
+<span class="menu-text">Notes</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
@@ -356,7 +356,7 @@ P(X=k) = \binom{n}{k}p^k(1-p)^{n-k}
 <section id="example-4" class="level5">
 <h5 class="anchored" data-anchor-id="example-4">Example</h5>
 <p>Number of heads in 10 coin flips. If each flip has a 0.5 probability of landing heads, then the binomial distribution models the probability of getting exactly <span class="math inline">\(k\)</span> heads in 10 flips.</p>
-<div id="179a7f5a" class="cell" data-execution_count="1">
+<div id="f1ac6885" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -413,7 +413,7 @@ P(X=k) = \frac{\lambda^k e^{-\lambda}}{k!}
 <section id="example-5" class="level5">
 <h5 class="anchored" data-anchor-id="example-5">Example</h5>
 <p>Number of emails received per hour. If emails arrive at an average rate of 5 per hour, the Poisson distribution can model the probability of receiving exactly <span class="math inline">\(k\)</span> emails in an hour.</p>
-<div id="d90478be" class="cell" data-execution_count="2">
+<div id="6b2e4127" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -469,7 +469,7 @@ P(X=k) = (1-p)^{k-1}p
 <section id="example-6" class="level5">
 <h5 class="anchored" data-anchor-id="example-6">Example</h5>
 <p>Number of coin flips until the first heads. If each flip has a 0.5 probability of landing heads, the geometric distribution models the probability that the first heads will occur on the <span class="math inline">\(k\)</span>th flip.</p>
-<div id="b1978b05" class="cell" data-execution_count="3">
+<div id="c81c67d1" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -525,7 +525,7 @@ P(X=k) = \binom{k-1}{r-1}p^r(1-p)^{k-r}
 <section id="example-7" class="level5">
 <h5 class="anchored" data-anchor-id="example-7">Example</h5>
 <p>Number of coin flips needed to get 3 heads. If each flip has a 0.5 probability of landing heads, the negative binomial distribution models the probability that the third head will occur on the <span class="math inline">\(k\)</span>th flip.</p>
-<div id="5b4e4798" class="cell" data-execution_count="4">
+<div id="99703ac3" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -582,7 +582,7 @@ P(X=k) = \frac{\binom{K}{k}\binom{N-K}{n-k}}{\binom{N}{n}}
 <section id="example-8" class="level5">
 <h5 class="anchored" data-anchor-id="example-8">Example</h5>
 <p>Number of red balls drawn from an urn containing a mix of red and blue balls without replacement. If the urn contains 20 balls, 5 of which are red, the hypergeometric distribution models the probability of drawing exactly <span class="math inline">\(k\)</span> red balls in a sample of <span class="math inline">\(n\)</span> balls.</p>
-<div id="8845e6eb" class="cell" data-execution_count="5">
+<div id="e3fdfc44" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -650,7 +650,7 @@ f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}
 <li>Symmetrical around the mean (<span class="math inline">\(\mu\)</span>).</li>
 <li>68-95-99.7 rule (empirical rule): Approximately 68% of data falls within one standard deviation of the mean, 95% within two, and 99.7% within three.</li>
 </ul>
-<div id="9e2e6947" class="cell" data-execution_count="6">
+<div id="151fbc62" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -714,7 +714,7 @@ f(x) = \lambda e^{-\lambda x} \text{ for } x \geq 0
 <section id="example-10" class="level5">
 <h5 class="anchored" data-anchor-id="example-10">Example</h5>
 <p>Time between arrivals of buses. If buses arrive at an average rate of 3 per hour, the exponential distribution can model the probability of waiting a certain amount of time for the next bus.</p>
-<div id="f8ccebd7" class="cell" data-execution_count="7">
+<div id="a2109ec3" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -769,7 +769,7 @@ f(x) = \frac{\lambda^\alpha x^{\alpha-1} e^{-\lambda x}}{\Gamma(\alpha)}
 <section id="example-11" class="level5">
 <h5 class="anchored" data-anchor-id="example-11">Example</h5>
 <p>The time until the third bus arrives, given that buses arrive at an average rate of 3 per hour.</p>
-<div id="8e8e0c62" class="cell" data-execution_count="8">
+<div id="c400de46" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -825,7 +825,7 @@ f(x) = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha, \beta)}
 <section id="example-12" class="level5">
 <h5 class="anchored" data-anchor-id="example-12">Example</h5>
 <p>Modeling the probability of success in a binomial experiment, such as the proportion of voters favoring a candidate in an election.</p>
-<div id="25d1747b" class="cell" data-execution_count="9">
+<div id="d207c3ca" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -881,7 +881,7 @@ f(x) = \frac{k}{\lambda} \left(\frac{x}{\lambda}\right)^{k-1} e^{-(x/\lambda)^k}
 <section id="example-13" class="level5">
 <h5 class="anchored" data-anchor-id="example-13">Example</h5>
 <p>Modeling the lifespan of mechanical components, where the Weibull distribution can describe the probability of failure at different times.</p>
-<div id="abfffdda" class="cell" data-execution_count="10">
+<div id="e9770654" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -937,7 +937,7 @@ f(x) = \frac{1}{x\sigma\sqrt{2\pi}} e^{-\frac{(\log x - \mu)^2}{2\sigma^2}}
 <section id="example-14" class="level5">
 <h5 class="anchored" data-anchor-id="example-14">Example</h5>
 <p>Modeling the distribution of income, where incomes are positively skewed and can be modeled more accurately with a lognormal distribution than a normal distribution.</p>
-<div id="5ac82ce2" class="cell" data-execution_count="11">
+<div id="93291cfa" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1000,7 +1000,7 @@ f(x) = \frac{\Gamma((v+1)/2)}{\sqrt{v\pi}\Gamma(v/2)} \left(1 + \frac{x^2}{v}\ri
 <li>Similar to the normal distribution but with heavier tails, providing more robustness to outliers.</li>
 <li>As the sample size increases, the t-distribution converges to the normal distribution.</li>
 </ul>
-<div id="7232584f" class="cell" data-execution_count="12">
+<div id="38b01bd1" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1055,7 +1055,7 @@ f(x) = \frac{1}{2^{v/2}\Gamma(v/2)} x^{(v/2)-1} e^{-x/2}
 <section id="example-16" class="level5">
 <h5 class="anchored" data-anchor-id="example-16">Example</h5>
 <p>Used in hypothesis testing, such as testing the independence of two categorical variables using the chi-square test of independence.</p>
-<div id="79e6c361" class="cell" data-execution_count="13">
+<div id="d80f9d39" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1110,7 +1110,7 @@ f(x) = \frac{\sqrt{\frac{(d_1x)^{d_1}(d_2)^{d_2}}{(d_1x+d_2)^{d_1+d_2}}}}{xB(d_1
 <section id="example-17" class="level5">
 <h5 class="anchored" data-anchor-id="example-17">Example</h5>
 <p>Used in analysis of variance (ANOVA) to compare the variances of different groups.</p>
-<div id="7de52c97" class="cell" data-execution_count="14">
+<div id="4ffec2ca" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1256,7 +1256,7 @@ M_X(t) = E[e^{tX}]
 <section id="example-23" class="level4">
 <h4 class="anchored" data-anchor-id="example-23">Example</h4>
 <p>The MGF of a normal random variable with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span> is <span class="math inline">\(M_X(t) = \exp(\mu t + \frac{1}{2}\sigma^2 t^2)\)</span>. MGFs are useful for deriving the mean and variance of the distribution.</p>
-<div id="dd49b327" class="cell" data-execution_count="15">
+<div id="47eb4898" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1311,7 +1311,7 @@ M_X(t) = E[e^{tX}]
 <section id="example-24" class="level4">
 <h4 class="anchored" data-anchor-id="example-24">Example</h4>
 <p>If you repeatedly flip a coin, the proportion of heads will approach 0.5 as the number of flips becomes very large.</p>
-<div id="85a61392" class="cell" data-execution_count="16">
+<div id="4aa66e6f" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1365,7 +1365,7 @@ M_X(t) = E[e^{tX}]
 <section id="example-25" class="level4">
 <h4 class="anchored" data-anchor-id="example-25">Example</h4>
 <p>If you take many samples of size 50 from a skewed population and plot the sample means, the resulting distribution will be approximately normal. This approximation enables the use of normal distribution properties to make inferences about the population mean.</p>
-<div id="3696c8b6" class="cell" data-execution_count="17">
+<div id="c9c5a23c" class="cell" data-execution_count="17">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1437,7 +1437,7 @@ P(X_{n+1} = x | X_n = x_n, X_{n-1} = x_{n-1}, \ldots, X_0 = x_0) = P(X_{n+1} = x
 <section id="example-26" class="level4">
 <h4 class="anchored" data-anchor-id="example-26">Example</h4>
 <p>Weather modeling, where the probability of tomorrow’s weather depends only on today’s weather and not on the weather of previous days.</p>
-<div id="09b93e64" class="cell" data-execution_count="18">
+<div id="9fd9a47b" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1469,7 +1469,7 @@ P(X_{n+1} = x | X_n = x_n, X_{n-1} = x_{n-1}, \ldots, X_0 = x_0) = P(X_{n+1} = x
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Weather sequence for 7 days:
-['Cloudy', 'Cloudy', 'Cloudy', 'Cloudy', 'Cloudy', 'Rainy', 'Cloudy']</code></pre>
+['Cloudy', 'Rainy', 'Rainy', 'Rainy', 'Rainy', 'Rainy', 'Cloudy']</code></pre>
 </div>
 </div>
 <hr>
@@ -1484,7 +1484,7 @@ P(X_{n+1} = x | X_n = x_n, X_{n-1} = x_{n-1}, \ldots, X_0 = x_0) = P(X_{n+1} = x
 <section id="example-27" class="level4">
 <h4 class="anchored" data-anchor-id="example-27">Example</h4>
 <p>Modeling stock prices, where prices are influenced by random fluctuations over time.</p>
-<div id="4f0b879f" class="cell" data-execution_count="19">
+<div id="3970b77c" class="cell" data-execution_count="19">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1544,7 +1544,7 @@ G_X(t) = E[t^X]
 <section id="example-28" class="level4">
 <h4 class="anchored" data-anchor-id="example-28">Example</h4>
 <p>The PGF of a binomial random variable with parameters <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span> is <span class="math inline">\(G_X(t) = (pt + 1 - p)^n\)</span>. PGFs are useful for finding probabilities and moments of discrete distributions.</p>
-<div id="c131c6be" class="cell" data-execution_count="20">
+<div id="63016c60" class="cell" data-execution_count="20">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1596,7 +1596,7 @@ G_X(t) = E[t^X]
 <section id="example-29" class="level4">
 <h4 class="anchored" data-anchor-id="example-29">Example</h4>
 <p>The characteristic function of a normal random variable with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span> is <span class="math inline">\(\phi_X(t) = \exp(i\mu t - \frac{1}{2}\sigma^2 t^2)\)</span>. Characteristic functions are used in advanced probability theory and statistical inference.</p>
-<div id="920040d9" class="cell" data-execution_count="21">
+<div id="66edb04d" class="cell" data-execution_count="21">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>

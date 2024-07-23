@@ -175,8 +175,8 @@ window.Quarto = {
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../../blogs/blogs.html"> 
-<span class="menu-text">Blog</span></a>
+    <a class="nav-link" href="../../../notes/notes.html"> 
+<span class="menu-text">Notes</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
@@ -236,7 +236,12 @@ window.Quarto = {
 <li><strong>Encoder</strong>: Also known as the recognition model or inference network, denoted as <span class="math inline">\(q_\phi(z|x)\)</span>.</li>
 <li><strong>Decoder</strong>: Also known as the generative model, denoted as <span class="math inline">\(p_\theta(x|z)\)</span>.</li>
 </ol>
-<p>Where: - <span class="math inline">\(x\)</span> is the input data. - <span class="math inline">\(z\)</span> is the latent variable. - <span class="math inline">\(\phi\)</span> and <span class="math inline">\(\theta\)</span> are the parameters of the encoder and decoder networks, respectively.</p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(x\)</span> is the input data.</li>
+<li><span class="math inline">\(z\)</span> is the latent variable.</li>
+<li><span class="math inline">\(\phi\)</span> and <span class="math inline">\(\theta\)</span> are the parameters of the encoder and decoder networks, respectively.</li>
+</ul>
 <p>The encoder maps the input data to a probability distribution in the latent space, while the decoder maps points from the latent space back to the data space.</p>
 <section id="encoder" class="level3">
 <h3 class="anchored" data-anchor-id="encoder">Encoder</h3>
@@ -289,7 +294,11 @@ D_{KL}(q_\phi(z|x) \parallel p(z|x)) = \mathbb{E}_{q_\phi(z|x)}\left[\log \frac{
 <p><span class="math display">\[
 \log p(x) = D_{KL}(q_\phi(z|x) \parallel p_\theta(z|x)) + \mathbb{E}_{q_\phi(z|x)}\left[\log \frac{p_\theta(x, z)}{q_\phi(z|x)} \right] \geq \mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)] - D_{KL}(q_\phi(z|x) \parallel p(z))
 \]</span></p>
-<p>Where: - The first term <span class="math inline">\(\mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)]\)</span> is the expected log-likelihood of the data under the approximate posterior. - The second term <span class="math inline">\(D_{KL}(q_\phi(z|x) \parallel p(z))\)</span> is the Kullback-Leibler divergence between the approximate posterior and the prior distribution.</p>
+<p>Where:</p>
+<ul>
+<li>The first term <span class="math inline">\(\mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)]\)</span> is the expected log-likelihood of the data under the approximate posterior.</li>
+<li>The second term <span class="math inline">\(D_{KL}(q_\phi(z|x) \parallel p(z))\)</span> is the Kullback-Leibler divergence between the approximate posterior and the prior distribution.</li>
+</ul>
 </section>
 <section id="reparameterization-trick" class="level3">
 <h3 class="anchored" data-anchor-id="reparameterization-trick">Reparameterization Trick</h3>

@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>the_deep_learning_revolution – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<link href="../../../../logo.png" rel="icon" type="image/png">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../../styles.css">
+<link rel="stylesheet" href="../../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../notes/notes.html"> 
+<span class="menu-text">Notes</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="chapter-1-the-deep-learning-revolution" class="level1 text-content">
+<h1>Chapter 1: The Deep Learning Revolution</h1>
+<section id="understanding-machine-learning-and-ai" class="level2">
+<h2 class="anchored" data-anchor-id="understanding-machine-learning-and-ai">Understanding Machine Learning and AI</h2>
+<section id="what-is-machine-learning" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-machine-learning">What is Machine Learning?</h3>
+<p>Machine learning is a rapidly growing field of technology that’s becoming increasingly important. It involves creating computer programs that can learn from data, rather than being explicitly programmed by humans.</p>
+</section>
+<section id="why-is-machine-learning-important" class="level3">
+<h3 class="anchored" data-anchor-id="why-is-machine-learning-important">Why is Machine Learning Important?</h3>
+<ol type="1">
+<li>It’s improving existing technologies</li>
+<li>It’s enabling new capabilities that wouldn’t be possible with traditional programming</li>
+<li>It’s becoming widespread in many applications</li>
+</ol>
+</section>
+<section id="deep-learning-a-powerful-branch-of-machine-learning" class="level3">
+<h3 class="anchored" data-anchor-id="deep-learning-a-powerful-branch-of-machine-learning">Deep Learning: A Powerful Branch of Machine Learning</h3>
+<p>Deep learning is a specific type of machine learning that uses neural networks. These are computer systems inspired by how the human brain works.</p>
+</section>
+<section id="artificial-intelligence-ai-and-machine-learning" class="level3">
+<h3 class="anchored" data-anchor-id="artificial-intelligence-ai-and-machine-learning">Artificial Intelligence (AI) and Machine Learning</h3>
+<ul>
+<li>AI aims to recreate human-like intelligence in machines</li>
+<li>Today, the terms AI and machine learning are often used interchangeably</li>
+<li>Current AI systems are usually designed for specific tasks, unlike the broad capabilities of the human brain</li>
+</ul>
+</section>
+<section id="artificial-general-intelligence-agi" class="level3">
+<h3 class="anchored" data-anchor-id="artificial-general-intelligence-agi">Artificial General Intelligence (AGI)</h3>
+<p>AGI refers to the goal of creating machines with flexible intelligence similar to humans, capable of performing a wide range of tasks.</p>
+</section>
+<section id="recent-developments" class="level3">
+<h3 class="anchored" data-anchor-id="recent-developments">Recent Developments</h3>
+<ul>
+<li>Machine learning is advancing rapidly</li>
+<li>Large language models (a type of deep learning system) are showing impressive capabilities</li>
+<li>Some experts believe these models might be early signs of artificial general intelligence</li>
+</ul>
+</section>
+</section>
+<section id="the-impact-of-deep-learning" class="level2">
+<h2 class="anchored" data-anchor-id="the-impact-of-deep-learning">The Impact of Deep Learning</h2>
+<p>Deep learning is a powerful technology that can be applied to many different fields. Let’s look at an example to understand how it works and why it’s so important.</p>
+<section id="medical-diagnosis-detecting-skin-cancer" class="level3">
+<h3 class="anchored" data-anchor-id="medical-diagnosis-detecting-skin-cancer">Medical Diagnosis: Detecting Skin Cancer</h3>
+<section id="the-problem" class="level4">
+<h4 class="anchored" data-anchor-id="the-problem">The Problem</h4>
+<p>Melanoma is a dangerous type of skin cancer, but it can be cured if found early. Doctors need to tell the difference between:</p>
+<ul>
+<li>Malignant melanomas (dangerous)</li>
+<li>Benign nevi (harmless moles)</li>
+</ul>
+<p>This is very difficult, even for humans, because the images can look very similar.</p>
+</section>
+<section id="the-deep-learning-solution" class="level4">
+<h4 class="anchored" data-anchor-id="the-deep-learning-solution">The Deep Learning Solution</h4>
+<p>Scientists used deep learning to solve this problem. Here’s how:</p>
+<ol type="1">
+<li><p><strong>Gather Data</strong>: They collected about 129,000 images of skin lesions, each labeled as either malignant or benign.</p></li>
+<li><p><strong>Create a Neural Network</strong>: They built a deep neural network with about 25 million adjustable parameters called weights.</p></li>
+<li><p><strong>Train the Network</strong>: The network learned to set these weights by looking at the labeled images. This process is called “training” or “learning”.</p></li>
+<li><p><strong>Make Predictions</strong>: Once trained, the network can look at new images and predict whether they show malignant melanomas or benign nevi.</p></li>
+</ol>
+</section>
+<section id="key-concepts" class="level4">
+<h4 class="anchored" data-anchor-id="key-concepts">Key Concepts</h4>
+<ul>
+<li><strong>Supervised Learning</strong>: The network is given the correct answer (label) for each training example.</li>
+<li><strong>Classification Problem</strong>: The task is to assign each input to one of a fixed set of categories.</li>
+<li><strong>Transfer Learning</strong>: The network was first trained on a larger set of everyday images before being fine-tuned on skin lesion images.</li>
+</ul>
+</section>
+<section id="results" class="level4">
+<h4 class="anchored" data-anchor-id="results">Results</h4>
+<p>The deep learning system became so good at this task that it can now classify skin lesions more accurately than professional dermatologists!</p>
+</section>
+</section>
+<section id="why-this-matters" class="level3">
+<h3 class="anchored" data-anchor-id="why-this-matters">Why This Matters</h3>
+<p>This example shows how deep learning can:</p>
+<ol type="1">
+<li>Solve complex problems that would be almost impossible to program by hand</li>
+<li>Learn from examples to perform tasks at a human expert level</li>
+<li>Be applied to many different fields, not just medicine</li>
+</ol>
+<p>Deep learning is transforming many areas where computers are used, making it a very important and powerful technology.</p>
+</section>
+</section>
+<section id="protein-structure-and-deep-learning" class="level2">
+<h2 class="anchored" data-anchor-id="protein-structure-and-deep-learning">Protein Structure and Deep Learning</h2>
+<p>Proteins are essential molecules in living organisms, often referred to as the building blocks of life. Understanding their structure is crucial for many biological and medical applications.</p>
+<section id="what-are-proteins" class="level3">
+<h3 class="anchored" data-anchor-id="what-are-proteins">What Are Proteins?</h3>
+<ul>
+<li><strong>Composition</strong>: Proteins are made up of long chains of units called amino acids. There are 22 different types of amino acids.</li>
+<li><strong>Function</strong>: The sequence of these amino acids determines how the protein folds into a complex three-dimensional (3D) shape. This shape is crucial for the protein’s function and interactions.</li>
+</ul>
+</section>
+<section id="the-challenge" class="level3">
+<h3 class="anchored" data-anchor-id="the-challenge">The Challenge</h3>
+<p>Determining the 3D structure of a protein from its amino acid sequence has been a major challenge in biology for over 50 years. Traditional experimental methods like X-ray crystallography, cryogenic electron microscopy, and nuclear magnetic resonance spectroscopy can measure the 3D structure but are time-consuming and sometimes difficult.</p>
+</section>
+<section id="the-deep-learning-solution-1" class="level3">
+<h3 class="anchored" data-anchor-id="the-deep-learning-solution-1">The Deep Learning Solution</h3>
+<p>Deep learning has made significant progress in predicting protein structures. Here’s how it works:</p>
+<ol type="1">
+<li><strong>Data Collection</strong>: Gather a set of proteins for which both the amino acid sequence and the 3D structure are known.</li>
+<li><strong>Training the Model</strong>: Use this data to train a deep learning model. The model learns to predict the 3D structure from the amino acid sequence.</li>
+<li><strong>Making Predictions</strong>: Once trained, the model can take a new amino acid sequence and predict its 3D structure.</li>
+</ol>
+</section>
+<section id="example-alphafold" class="level3">
+<h3 class="anchored" data-anchor-id="example-alphafold">Example: AlphaFold</h3>
+<p>AlphaFold is a deep learning model that has made remarkable progress in predicting protein structures.</p>
+<ul>
+<li><strong>Illustration</strong>: Figure 1.2 shows the 3D shape of a protein called T1044/6VR4. The green structure is the actual shape determined by X-ray crystallography, while the blue structure is the prediction made by AlphaFold.</li>
+<li><strong>Accuracy</strong>: The prediction is very close to the actual structure, demonstrating the model’s effectiveness.</li>
+</ul>
+</section>
+<section id="why-this-matters-1" class="level3">
+<h3 class="anchored" data-anchor-id="why-this-matters-1">Why This Matters</h3>
+<p>Predicting protein structures accurately has many important applications:</p>
+<ol type="1">
+<li><strong>Understanding Biological Processes</strong>: Helps scientists understand how proteins work within cells.</li>
+<li><strong>Drug Discovery</strong>: Assists in designing new drugs by understanding how proteins interact with other molecules.</li>
+</ol>
+<p>In summary, deep learning has revolutionized the field of protein structure prediction, making it faster and more accurate, and opening up new possibilities in biology and medicine.</p>
+</section>
+</section>
+<section id="image-synthesis-with-deep-learning" class="level2">
+<h2 class="anchored" data-anchor-id="image-synthesis-with-deep-learning">Image Synthesis with Deep Learning</h2>
+<section id="what-is-image-synthesis" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-image-synthesis">What is Image Synthesis?</h3>
+<p>Image synthesis is the process of creating new images using artificial intelligence. This is different from the previous examples we’ve seen, where the AI was classifying or predicting structures.</p>
+</section>
+<section id="how-it-works" class="level3">
+<h3 class="anchored" data-anchor-id="how-it-works">How It Works</h3>
+<ol type="1">
+<li><strong>Training Data</strong>: The AI is given a set of sample images, like photos of human faces.</li>
+<li><strong>Learning Process</strong>: The AI learns the patterns and features of these images.</li>
+<li><strong>Generation</strong>: After learning, the AI can create new images that look similar to the training images but are entirely artificial.</li>
+</ol>
+</section>
+<section id="key-concepts-1" class="level3">
+<h3 class="anchored" data-anchor-id="key-concepts-1">Key Concepts</h3>
+<section id="unsupervised-learning" class="level4">
+<h4 class="anchored" data-anchor-id="unsupervised-learning">Unsupervised Learning</h4>
+<ul>
+<li>Unlike the previous examples (skin cancer detection and protein structure prediction), this is unsupervised learning.</li>
+<li>The AI isn’t given any labels or correct answers. It just learns from the images themselves.</li>
+</ul>
+</section>
+<section id="generative-models" class="level4">
+<h4 class="anchored" data-anchor-id="generative-models">Generative Models</h4>
+<ul>
+<li>These AI models can create new data (in this case, images) that are similar to their training data.</li>
+<li>The generated images are new and unique, not copies of the training images.</li>
+</ul>
+</section>
+<section id="generative-ai" class="level4">
+<h4 class="anchored" data-anchor-id="generative-ai">Generative AI</h4>
+<ul>
+<li>This term describes AI models that can create various types of content:
+<ul>
+<li>Images</li>
+<li>Video</li>
+<li>Audio</li>
+<li>Text</li>
+<li>Even potential drug molecules</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="an-interesting-variant-text-to-image-generation" class="level3">
+<h3 class="anchored" data-anchor-id="an-interesting-variant-text-to-image-generation">An Interesting Variant: Text-to-Image Generation</h3>
+<ul>
+<li>Some models can generate images based on text descriptions (called prompts).</li>
+<li>You can describe what you want, and the AI will try to create an image matching that description.</li>
+</ul>
+</section>
+<section id="why-this-matters-2" class="level3">
+<h3 class="anchored" data-anchor-id="why-this-matters-2">Why This Matters</h3>
+<ol type="1">
+<li><strong>Creativity and Art</strong>: These models can be used for creating art or assisting artists.</li>
+<li><strong>Entertainment</strong>: They can be used in film, gaming, and other media industries.</li>
+<li><strong>Design</strong>: Useful for quickly generating design concepts or mockups.</li>
+<li><strong>Data Augmentation</strong>: Can create more training data for other AI models.</li>
+</ol>
+</section>
+<section id="the-impressive-results" class="level3">
+<h3 class="anchored" data-anchor-id="the-impressive-results">The Impressive Results</h3>
+<p>The synthetic images of human faces are so high-quality that they can be difficult to distinguish from real photographs. This shows how advanced these AI models have become.</p>
+<p>In summary, image synthesis using deep learning is a powerful technique that allows AI to create new, realistic images, opening up many exciting possibilities in various fields.</p>
+</section>
+</section>
+<section id="large-language-models-llms" class="level2">
+<h2 class="anchored" data-anchor-id="large-language-models-llms">Large Language Models (LLMs)</h2>
+<section id="what-are-large-language-models" class="level3">
+<h3 class="anchored" data-anchor-id="what-are-large-language-models">What Are Large Language Models?</h3>
+<p>Large Language Models (LLMs) are advanced AI systems designed to understand and generate human language. They use deep learning to create detailed internal representations that capture the meaning of words and sentences.</p>
+</section>
+<section id="key-features" class="level3">
+<h3 class="anchored" data-anchor-id="key-features">Key Features</h3>
+<section id="autoregressive-language-models" class="level4">
+<h4 class="anchored" data-anchor-id="autoregressive-language-models">Autoregressive Language Models</h4>
+<ul>
+<li><strong>Generative AI</strong>: These models can generate text, making them a type of generative AI.</li>
+<li><strong>Word Prediction</strong>: They take a sequence of words as input and predict the next word in the sequence.</li>
+<li><strong>Sequence Generation</strong>: By repeatedly predicting the next word and appending it to the sequence, they can generate long passages of text.</li>
+<li><strong>Stop Word</strong>: They can output a special word that signals the end of text generation, allowing them to produce text of finite length.</li>
+</ul>
+</section>
+</section>
+<section id="how-they-work" class="level3">
+<h3 class="anchored" data-anchor-id="how-they-work">How They Work</h3>
+<ol type="1">
+<li><strong>Training Data</strong>: LLMs are trained on large datasets of text. The training data consists of sequences of words with the next word in the sequence as the target.</li>
+<li><strong>Self-Supervised Learning</strong>: This is a type of learning where the model learns from the input data itself without needing separate human-provided labels. The next word in the sequence serves as the label.</li>
+<li><strong>Scalability</strong>: Since there is a vast amount of text available from various sources, LLMs can be trained on very large datasets, leading to very powerful models.</li>
+</ol>
+</section>
+<section id="example-gpt-4" class="level3">
+<h3 class="anchored" data-anchor-id="example-gpt-4">Example: GPT-4</h3>
+<ul>
+<li><strong>Language Generation</strong>: GPT-4, a model developed by OpenAI, can generate text based on an input prompt. For example, it can write a proof of a mathematical fact in the style of a Shakespearean dialogue.</li>
+<li><strong>Human Interaction</strong>: Users can interact with these models by providing input text and receiving generated responses, enabling conversations with the AI.</li>
+</ul>
+</section>
+<section id="why-this-matters-3" class="level3">
+<h3 class="anchored" data-anchor-id="why-this-matters-3">Why This Matters</h3>
+<ol type="1">
+<li><strong>Extraordinary Capabilities</strong>: LLMs have shown remarkable abilities that some experts believe are early signs of artificial general intelligence (AGI).</li>
+<li><strong>Wide Applications</strong>: They can be used for various tasks such as writing, coding, and even generating creative content like poetry or stories.</li>
+</ol>
+</section>
+<section id="illustration" class="level3">
+<h3 class="anchored" data-anchor-id="illustration">Illustration</h3>
+<p>The example where GPT-4 is asked to write a proof of the fact that there are infinitely many primes in the style of a Shakespeare play. This demonstrates the model’s ability to understand complex instructions and generate creative, contextually appropriate content.</p>
+<p>In summary, large language models represent a significant advancement in AI, capable of understanding and generating human language with impressive accuracy and creativity. They open up numerous possibilities for applications across different fields.</p>
+</section>
+</section>
+</section>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

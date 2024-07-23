@@ -176,8 +176,8 @@ window.Quarto = {
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../../blogs/blogs.html"> 
-<span class="menu-text">Blog</span></a>
+    <a class="nav-link" href="../../../notes/notes.html"> 
+<span class="menu-text">Notes</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
@@ -275,7 +275,11 @@ window.Quarto = {
 <section id="pix2pix" class="level3">
 <h3 class="anchored" data-anchor-id="pix2pix">pix2pix</h3>
 <p>pix2pix is a conditional GAN-based model for paired image-to-image translation. It learns a mapping from input images to output images using paired training data.</p>
-<p>Key features: 1. <strong>Generator</strong>: Uses a U-Net architecture, which includes skip connections between corresponding layers in the encoder and decoder. This helps preserve spatial information. 2. <strong>Discriminator</strong>: Uses a PatchGAN architecture, which classifies each patch of the image as real or fake. This encourages the generator to produce realistic local details.</p>
+<p>Key features:</p>
+<ol type="1">
+<li><strong>Generator</strong>: Uses a U-Net architecture, which includes skip connections between corresponding layers in the encoder and decoder. This helps preserve spatial information.</li>
+<li><strong>Discriminator</strong>: Uses a PatchGAN architecture, which classifies each patch of the image as real or fake. This encourages the generator to produce realistic local details.</li>
+</ol>
 <p>The objective function combines adversarial loss with L1 loss:</p>
 <p><span class="math display">\[
 \mathcal{L}_{GAN}(G, D) = \mathbb{E}_{x, y}[\log D(x, y)] + \mathbb{E}_{x, z}[\log(1 - D(x, G(z, x)))]
@@ -292,7 +296,11 @@ window.Quarto = {
 <section id="cyclegan" class="level3">
 <h3 class="anchored" data-anchor-id="cyclegan">CycleGAN</h3>
 <p>CycleGAN enables unpaired image-to-image translation by introducing cycle consistency loss. This allows the model to learn mappings between domains without paired training data.</p>
-<p>Key features: 1. <strong>Two Generators</strong>: <span class="math inline">\(G: X \rightarrow Y\)</span> and <span class="math inline">\(F: Y \rightarrow X\)</span> 2. <strong>Two Discriminators</strong>: <span class="math inline">\(D_X\)</span> and <span class="math inline">\(D_Y\)</span></p>
+<p>Key features:</p>
+<ol type="1">
+<li><strong>Two Generators</strong>: <span class="math inline">\(G: X \rightarrow Y\)</span> and <span class="math inline">\(F: Y \rightarrow X\)</span></li>
+<li><strong>Two Discriminators</strong>: <span class="math inline">\(D_X\)</span> and <span class="math inline">\(D_Y\)</span></li>
+</ol>
 <p>The cycle consistency loss ensures that translating an image to the other domain and back results in the original image:</p>
 <p><span class="math display">\[
 \mathcal{L}_{cyc}(G, F) = \mathbb{E}_{x \sim p_{data}(x)}[||F(G(x)) - x||_1] + \mathbb{E}_{y \sim p_{data}(y)}[||G(F(y)) - y||_1]
@@ -306,7 +314,11 @@ window.Quarto = {
 <section id="unit-unsupervised-image-to-image-translation" class="level3">
 <h3 class="anchored" data-anchor-id="unit-unsupervised-image-to-image-translation">UNIT (UNsupervised Image-to-image Translation)</h3>
 <p>UNIT combines VAEs and GANs for unsupervised image-to-image translation. It assumes a shared latent space between the two domains.</p>
-<p>Key features: 1. <strong>Shared Latent Space</strong>: Assumes that images from both domains can be mapped to a common latent space. 2. <strong>Two VAE-GAN Hybrid Models</strong>: One for each domain, consisting of an encoder, decoder, and discriminator.</p>
+<p>Key features:</p>
+<ol type="1">
+<li><strong>Shared Latent Space</strong>: Assumes that images from both domains can be mapped to a common latent space.</li>
+<li><strong>Two VAE-GAN Hybrid Models</strong>: One for each domain, consisting of an encoder, decoder, and discriminator.</li>
+</ol>
 <p>The objective includes reconstruction loss, adversarial loss, and cycle consistency loss in the latent space:</p>
 <p><span class="math display">\[
 \mathcal{L}_{UNIT} = \mathcal{L}_{VAE-GAN}(X) + \mathcal{L}_{VAE-GAN}(Y) + \lambda \mathcal{L}_{cyc}(G, F)
@@ -320,7 +332,12 @@ window.Quarto = {
 <section id="attngan" class="level3">
 <h3 class="anchored" data-anchor-id="attngan">AttnGAN</h3>
 <p>AttnGAN uses attention mechanisms to refine image generation based on fine-grained word features.</p>
-<p>Key components: 1. <strong>Text Encoder</strong>: Uses a bi-directional LSTM to encode text into word-level features. 2. <strong>Attentional Generative Network</strong>: Multiple generators with attention modules that focus on relevant words for different parts of the image. 3. <strong>Deep Attentional Multimodal Similarity Model (DAMSM)</strong>: Ensures that generated images match the textual descriptions.</p>
+<p>Key components:</p>
+<ol type="1">
+<li><strong>Text Encoder</strong>: Uses a bi-directional LSTM to encode text into word-level features.</li>
+<li><strong>Attentional Generative Network</strong>: Multiple generators with attention modules that focus on relevant words for different parts of the image.</li>
+<li><strong>Deep Attentional Multimodal Similarity Model (DAMSM)</strong>: Ensures that generated images match the textual descriptions.</li>
+</ol>
 <p>The objective function combines adversarial loss with DAMSM loss:</p>
 <p><span class="math display">\[
 \mathcal{L}_{GAN} = \mathbb{E}_{x, y}[\log D(y)] + \mathbb{E}_{x, z}[\log(1 - D(G(z, x)))]
@@ -337,7 +354,12 @@ window.Quarto = {
 <section id="stackgan" class="level3">
 <h3 class="anchored" data-anchor-id="stackgan">StackGAN</h3>
 <p>StackGAN uses a two-stage process to generate high-resolution images from text descriptions.</p>
-<p>Key features: 1. <strong>Stage-I GAN</strong>: Generates low-resolution images from text descriptions. 2. <strong>Stage-II GAN</strong>: Refines and generates high-resolution images from the low-resolution images and text descriptions. 3. <strong>Conditioning Augmentation</strong>: Samples latent variables from a Gaussian distribution to introduce variability.</p>
+<p>Key features:</p>
+<ol type="1">
+<li><strong>Stage-I GAN</strong>: Generates low-resolution images from text descriptions.</li>
+<li><strong>Stage-II GAN</strong>: Refines and generates high-resolution images from the low-resolution images and text descriptions.</li>
+<li><strong>Conditioning Augmentation</strong>: Samples latent variables from a Gaussian distribution to introduce variability.</li>
+</ol>
 <p>The objective for each stage includes adversarial loss and conditioning augmentation loss:</p>
 <p><span class="math display">\[
 \mathcal{L}_{GAN} = \mathbb{E}_{x, y}[\log D(y)] + \mathbb{E}_{x, z}[\log(1 - D(G(z, x)))]
@@ -358,7 +380,12 @@ window.Quarto = {
 <section id="mocogan-motion-and-content-decomposed-gan" class="level3">
 <h3 class="anchored" data-anchor-id="mocogan-motion-and-content-decomposed-gan">MoCoGAN (Motion and Content Decomposed GAN)</h3>
 <p>MoCoGAN decomposes motion and content to generate videos.</p>
-<p>Key components: 1. <strong>Content Generator</strong>: Generates static content that remains consistent across frames. 2. <strong>Motion Generator</strong>: Generates temporal dynamics that vary across frames. 3. <strong>Video Discriminator and Image Discriminator</strong>: Ensure the generated video is coherent and realistic.</p>
+<p>Key components:</p>
+<ol type="1">
+<li><strong>Content Generator</strong>: Generates static content that remains consistent across frames.</li>
+<li><strong>Motion Generator</strong>: Generates temporal dynamics that vary across frames.</li>
+<li><strong>Video Discriminator and Image Discriminator</strong>: Ensure the generated video is coherent and realistic.</li>
+</ol>
 <p>The objective function includes video GAN loss, image GAN loss, and reconstruction loss:</p>
 <p><span class="math display">\[
 \mathcal{L}_{GAN}^{video} = \mathbb{E}_{v}[\log D_{video}(v)] + \mathbb{E}_{z}[\log(1 - D_{video}(G_{video}(z)))]
@@ -378,7 +405,12 @@ window.Quarto = {
 <section id="tgan-temporal-generative-adversarial-nets" class="level3">
 <h3 class="anchored" data-anchor-id="tgan-temporal-generative-adversarial-nets">TGAN (Temporal Generative Adversarial Nets)</h3>
 <p>TGAN uses a temporal generator to create coherent video sequences.</p>
-<p>Key features: 1. <strong>Temporal Generator</strong>: LSTM-like architecture that generates a sequence of latent variables. 2. <strong>Image Generator</strong>: Generates each frame from the corresponding latent variable. 3. <strong>Spatial and Temporal Discriminators</strong>: Ensure the generated frames are coherent both spatially and temporally.</p>
+<p>Key features:</p>
+<ol type="1">
+<li><strong>Temporal Generator</strong>: LSTM-like architecture that generates a sequence of latent variables.</li>
+<li><strong>Image Generator</strong>: Generates each frame from the corresponding latent variable.</li>
+<li><strong>Spatial and Temporal Discriminators</strong>: Ensure the generated frames are coherent both spatially and temporally.</li>
+</ol>
 <p>The objective function includes spatial GAN loss and temporal GAN loss:</p>
 <p><span class="math display">\[
 \mathcal{L}_{GAN}^{spatial} = \mathbb{E}_{i}[\log D_{spatial}(i)] + \mathbb{E}_{z}[\log(1 - D_{spatial}(G_{image}(z)))]

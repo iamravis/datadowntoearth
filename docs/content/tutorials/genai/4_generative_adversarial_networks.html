@@ -175,8 +175,8 @@ window.Quarto = {
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="../../../blogs/blogs.html"> 
-<span class="menu-text">Blog</span></a>
+    <a class="nav-link" href="../../../notes/notes.html"> 
+<span class="menu-text">Notes</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
@@ -242,7 +242,13 @@ window.Quarto = {
 <p><span class="math display">\[
 \min_G \max_D V(D, G) = \mathbb{E}_{x \sim p_{data}(x)}[\log D(x)] + \mathbb{E}_{z \sim p_z(z)}[\log(1 - D(G(z)))]
 \]</span></p>
-<p>Where: - <span class="math inline">\(p_{data}(x)\)</span> is the true data distribution. - <span class="math inline">\(p_z(z)\)</span> is the prior distribution of the input noise. - <span class="math inline">\(G(z)\)</span> is the generator function. - <span class="math inline">\(D(x)\)</span> is the discriminator function.</p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(p_{data}(x)\)</span> is the true data distribution.</li>
+<li><span class="math inline">\(p_z(z)\)</span> is the prior distribution of the input noise.</li>
+<li><span class="math inline">\(G(z)\)</span> is the generator function.</li>
+<li><span class="math inline">\(D(x)\)</span> is the discriminator function.</li>
+</ul>
 </section>
 <section id="training-process" class="level3">
 <h3 class="anchored" data-anchor-id="training-process">Training Process</h3>
@@ -363,8 +369,22 @@ D^*(x) = \frac{p_{data}(x)}{p_{data}(x) + p_g(x)}
 </ul>
 <section id="dcgan-architecture" class="level4">
 <h4 class="anchored" data-anchor-id="dcgan-architecture"><strong>DCGAN Architecture</strong></h4>
-<p><strong>Discriminator</strong>: - <strong>Input</strong>: Image of size (64, 64, 3) - <strong>Convolutional layers</strong>: Feature extraction using strided convolutions - <strong>LeakyReLU activation</strong>: Introduces non-linearity - <strong>Batch normalization</strong>: Stabilizes training - <strong>Fully connected layer</strong>: Outputs a single probability value</p>
-<p><strong>Generator</strong>: - <strong>Input</strong>: Random noise vector (e.g., 100-dimensional) - <strong>Fully connected layer</strong>: Transforms noise vector to a suitable shape for convolutional operations - <strong>Transposed convolutional layers</strong>: Upsample to the desired image size - <strong>ReLU activation</strong>: Used in all layers except the output - <strong>Output layer</strong>: Uses tanh activation to produce the final image</p>
+<p><strong>Discriminator</strong>:</p>
+<ul>
+<li><strong>Input</strong>: Image of size (64, 64, 3)</li>
+<li><strong>Convolutional layers</strong>: Feature extraction using strided convolutions</li>
+<li><strong>LeakyReLU activation</strong>: Introduces non-linearity</li>
+<li><strong>Batch normalization</strong>: Stabilizes training</li>
+<li><strong>Fully connected layer</strong>: Outputs a single probability value</li>
+</ul>
+<p><strong>Generator</strong>:</p>
+<ul>
+<li><strong>Input</strong>: Random noise vector (e.g., 100-dimensional)</li>
+<li><strong>Fully connected layer</strong>: Transforms noise vector to a suitable shape for convolutional operations</li>
+<li><strong>Transposed convolutional layers</strong>: Upsample to the desired image size</li>
+<li><strong>ReLU activation</strong>: Used in all layers except the output</li>
+<li><strong>Output layer</strong>: Uses tanh activation to produce the final image</li>
+</ul>
 </section>
 </section>
 <section id="wgan-wasserstein-gan" class="level3">
