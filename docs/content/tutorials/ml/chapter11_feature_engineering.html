@@ -688,20 +688,24 @@ I(X; Y) = \sum_{x \in X} \sum_{y \in Y} p(x, y) \log \frac{p(x, y)}{p(x) p(y)}
 <ul>
 <li><strong>Mean/Median Imputation:</strong>
 <ul>
-<li><p><strong>Mean Imputation:</strong> Replace missing values with the mean of observed values. <span class="math display">\[
+<li><strong>Mean Imputation:</strong> Replace missing values with the mean of observed values. <span class="math display">\[
 x_{\text{imputed}} = \frac{\sum_{i=1}^{n} x_i}{n}
-\]</span></p></li>
-<li><p><strong>Example:</strong> If a patient’s blood pressure readings are missing, replace with the mean blood pressure of all patients in the same age group.</p></li>
-<li><p><strong>Median Imputation:</strong> Replace missing values with the median of observed values. <span class="math display">\[
+\]</span>
+<ul>
+<li><strong>Example:</strong> If a patient’s blood pressure readings are missing, replace with the mean blood pressure of all patients in the same age group.</li>
+</ul></li>
+<li><strong>Median Imputation:</strong> Replace missing values with the median of observed values. <span class="math display">\[
 x_{\text{imputed}} = \text{median}(x)
-\]</span></p></li>
-<li><p><strong>Example:</strong> For missing BMI values, use the median BMI of patients with similar characteristics (age, gender, health conditions).</p></li>
-<li><p><strong>Advantages:</strong></p>
+\]</span>
+<ul>
+<li><strong>Example:</strong> For missing BMI values, use the median BMI of patients with similar characteristics (age, gender, health conditions).</li>
+</ul></li>
+<li><strong>Advantages:</strong>
 <ul>
 <li>Simple to implement.</li>
 <li>Computationally efficient.</li>
 </ul></li>
-<li><p><strong>Disadvantages:</strong></p>
+<li><strong>Disadvantages:</strong>
 <ul>
 <li>Can distort the distribution of the data.</li>
 <li>Does not account for relationships between variables.</li>
@@ -709,16 +713,18 @@ x_{\text{imputed}} = \text{median}(x)
 </ul></li>
 <li><strong>Mode Imputation:</strong>
 <ul>
-<li><p>Replace missing values with the mode (most frequent value) of observed values. <span class="math display">\[
+<li>Replace missing values with the mode (most frequent value) of observed values. <span class="math display">\[
 x_{\text{imputed}} = \text{mode}(x)
-\]</span></p></li>
-<li><p><strong>Example:</strong> For missing categorical data like smoking status, impute with the most common status among similar patients.</p></li>
-<li><p><strong>Advantages:</strong></p>
+\]</span>
+<ul>
+<li><strong>Example:</strong> For missing categorical data like smoking status, impute with the most common status among similar patients.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
 <ul>
 <li>Simple to implement.</li>
 <li>Suitable for categorical data.</li>
 </ul></li>
-<li><p><strong>Disadvantages:</strong></p>
+<li><strong>Disadvantages:</strong>
 <ul>
 <li>Can introduce bias if the mode is not representative.</li>
 <li>Not suitable for continuous data.</li>
@@ -726,22 +732,24 @@ x_{\text{imputed}} = \text{mode}(x)
 </ul></li>
 <li><strong>K-Nearest Neighbors (KNN) Imputation:</strong>
 <ul>
-<li><p>Replace missing values with the average of the nearest neighbors. <span class="math display">\[
+<li>Replace missing values with the average of the nearest neighbors. <span class="math display">\[
 x_{\text{imputed}} = \frac{\sum_{i=1}^{k} x_{\text{neighbor}_i}}{k}
-\]</span></p></li>
-<li><p><strong>Example:</strong> For a missing cholesterol level, find k patients with similar health profiles and use the average of their cholesterol levels.</p></li>
-<li><p><strong>Choosing k:</strong></p>
+\]</span>
+<ul>
+<li><strong>Example:</strong> For a missing cholesterol level, find k patients with similar health profiles and use the average of their cholesterol levels.</li>
+</ul></li>
+<li><strong>Choosing k:</strong>
 <ul>
 <li><strong>Cross-Validation:</strong> Use cross-validation to determine the optimal value of k. Split the data into training and validation sets, test different values of k, and select the one that minimizes the imputation error.</li>
 <li><strong>Domain Knowledge:</strong> Use domain knowledge to choose k. For example, in a clinical setting, a smaller k might be chosen to ensure that the nearest neighbors are very similar to the patient in question.</li>
 <li><strong>Rule of Thumb:</strong> A common rule of thumb is to use the square root of the number of observations (n). However, this should be adjusted based on the specific dataset and problem.</li>
 </ul></li>
-<li><p><strong>Advantages:</strong></p>
+<li><strong>Advantages:</strong>
 <ul>
 <li>Accounts for relationships between variables.</li>
 <li>Can handle both categorical and continuous data.</li>
 </ul></li>
-<li><p><strong>Disadvantages:</strong></p>
+<li><strong>Disadvantages:</strong>
 <ul>
 <li>Computationally intensive.</li>
 <li>Sensitive to the choice of k and distance metric.</li>
@@ -764,14 +772,16 @@ x_{\text{imputed}} = \frac{\sum_{i=1}^{k} x_{\text{neighbor}_i}}{k}
 </ul></li>
 <li><strong>Hot Deck Imputation:</strong>
 <ul>
-<li><p>A randomly chosen value from an individual in the sample who has similar values on other variables.</p></li>
-<li><p><strong>Example:</strong> For missing data on patient medication adherence, select a similar patient (in terms of age, gender, and health conditions) and use their adherence data.</p></li>
-<li><p><strong>Advantages:</strong></p>
+<li>A randomly chosen value from an individual in the sample who has similar values on other variables.
+<ul>
+<li><strong>Example:</strong> For missing data on patient medication adherence, select a similar patient (in terms of age, gender, and health conditions) and use their adherence data.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
 <ul>
 <li>Preserves the distribution of the data.</li>
 <li>Can handle both categorical and continuous data.</li>
 </ul></li>
-<li><p><strong>Disadvantages:</strong></p>
+<li><strong>Disadvantages:</strong>
 <ul>
 <li>Can introduce bias if the chosen donor is not representative.</li>
 <li>Requires a large dataset to find similar individuals.</li>
@@ -779,14 +789,16 @@ x_{\text{imputed}} = \frac{\sum_{i=1}^{k} x_{\text{neighbor}_i}}{k}
 </ul></li>
 <li><strong>Cold Deck Imputation:</strong>
 <ul>
-<li><p>A systematically chosen value from an individual who has similar values on other variables.</p></li>
-<li><p><strong>Example:</strong> If a patient’s follow-up visit data is missing, use the follow-up data from a similar patient in the same treatment group and condition.</p></li>
-<li><p><strong>Advantages:</strong></p>
+<li>A systematically chosen value from an individual who has similar values on other variables.
+<ul>
+<li><strong>Example:</strong> If a patient’s follow-up visit data is missing, use the follow-up data from a similar patient in the same treatment group and condition.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
 <ul>
 <li>Systematic and reproducible.</li>
 <li>Preserves the distribution of the data.</li>
 </ul></li>
-<li><p><strong>Disadvantages:</strong></p>
+<li><strong>Disadvantages:</strong>
 <ul>
 <li>Can introduce bias if the chosen donor is not representative.</li>
 <li>Requires careful selection of similar individuals.</li>
@@ -794,14 +806,16 @@ x_{\text{imputed}} = \frac{\sum_{i=1}^{k} x_{\text{neighbor}_i}}{k}
 </ul></li>
 <li><strong>Regression Imputation:</strong>
 <ul>
-<li><p>The predicted value obtained by regressing the missing variable on other variables.</p></li>
-<li><p><strong>Example:</strong> Predict missing HbA1c levels in diabetes patients based on their age, weight, and previous HbA1c readings.</p></li>
-<li><p><strong>Advantages:</strong></p>
+<li>The predicted value obtained by regressing the missing variable on other variables.
+<ul>
+<li><strong>Example:</strong> Predict missing HbA1c levels in diabetes patients based on their age, weight, and previous HbA1c readings.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
 <ul>
 <li>Accounts for relationships between variables.</li>
 <li>Can handle both categorical and continuous data.</li>
 </ul></li>
-<li><p><strong>Disadvantages:</strong></p>
+<li><strong>Disadvantages:</strong>
 <ul>
 <li>Can underestimate variability.</li>
 <li>Assumes a linear relationship between variables.</li>
@@ -809,14 +823,16 @@ x_{\text{imputed}} = \frac{\sum_{i=1}^{k} x_{\text{neighbor}_i}}{k}
 </ul></li>
 <li><strong>Stochastic Regression Imputation:</strong>
 <ul>
-<li><p>The predicted value from a regression plus a random residual.</p></li>
-<li><p><strong>Example:</strong> Impute missing blood pressure readings by adding a random error term to the predicted values from a regression model based on other health indicators.</p></li>
-<li><p><strong>Advantages:</strong></p>
+<li>The predicted value from a regression plus a random residual.
+<ul>
+<li><strong>Example:</strong> Impute missing blood pressure readings by adding a random error term to the predicted values from a regression model based on other health indicators.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
 <ul>
 <li>Preserves variability in the data.</li>
 <li>Accounts for relationships between variables.</li>
 </ul></li>
-<li><p><strong>Disadvantages:</strong></p>
+<li><strong>Disadvantages:</strong>
 <ul>
 <li>Computationally intensive.</li>
 <li>Assumes a linear relationship between variables.</li>
@@ -830,19 +846,21 @@ x_{\text{imputed}} = \frac{\sum_{i=1}^{k} x_{\text{neighbor}_i}}{k}
 <ul>
 <li><strong>Indicator Variable:</strong>
 <ul>
-<li><p>Create a new binary feature for each original feature with missing values. <span class="math display">\[
+<li>Create a new binary feature for each original feature with missing values. <span class="math display">\[
 I(x_i) = \begin{cases}
   1 &amp; \text{if } x_i \text{ is missing} \\
   0 &amp; \text{if } x_i \text{ is not missing}
 \end{cases}
-\]</span></p></li>
-<li><p><strong>Example:</strong> Create an indicator variable for missing HbA1c tests in diabetes patients, which might itself be informative about patient care patterns.</p></li>
-<li><p><strong>Advantages:</strong></p>
+\]</span>
+<ul>
+<li><strong>Example:</strong> Create an indicator variable for missing HbA1c tests in diabetes patients, which might itself be informative about patient care patterns.</li>
+</ul></li>
+<li><strong>Advantages:</strong>
 <ul>
 <li>Simple to implement.</li>
 <li>Preserves information about missingness.</li>
 </ul></li>
-<li><p><strong>Disadvantages:</strong></p>
+<li><strong>Disadvantages:</strong>
 <ul>
 <li>Can increase the dimensionality of the dataset.</li>
 <li>May not be informative if missingness is random.</li>
@@ -858,20 +876,46 @@ I(x_i) = \begin{cases}
 <ul>
 <li>Data is missing by chance, unrelated to any variables.</li>
 <li><strong>Example:</strong> A blood test result is missing because the lab equipment malfunctioned randomly.</li>
-<li><strong>Implication:</strong> Simple imputation methods like mean imputation can be effective.</li>
+<li><strong>Implication:</strong> Simple imputation methods can be effective.</li>
+<li><strong>Recommended Techniques:</strong>
+<ol type="1">
+<li>Mean/Median Imputation: Suitable for MCAR as the missing data is unrelated to other variables.</li>
+<li>Hot Deck Imputation: Can preserve the distribution of the data.</li>
+<li>Multiple Imputation: While not necessary, it can still provide robust results.</li>
+</ol></li>
 </ul></li>
 <li><strong>Missing at Random (MAR):</strong>
 <ul>
 <li>Missingness is related to other measured variables but not to the missing variable itself.</li>
 <li><strong>Example:</strong> Older patients are less likely to have their BMI recorded, but the likelihood of missing BMI is not related to the actual BMI value.</li>
-<li><strong>Implication:</strong> More sophisticated techniques like Multiple Imputation by Chained Equations (MICE) are needed.</li>
+<li><strong>Implication:</strong> More sophisticated techniques are needed to account for the relationship between missingness and other variables.</li>
+<li><strong>Recommended Techniques:</strong>
+<ol type="1">
+<li>Multiple Imputation by Chained Equations (MICE): Ideal for MAR as it can account for relationships between variables.</li>
+<li>K-Nearest Neighbors (KNN) Imputation: Can capture complex relationships between variables.</li>
+<li>Regression Imputation: Useful when there’s a clear relationship between the missing variable and other variables.</li>
+</ol></li>
 </ul></li>
 <li><strong>Missing Not at Random (MNAR):</strong>
 <ul>
 <li>Missingness is related to the unobserved variable itself.</li>
 <li><strong>Example:</strong> Patients with very high blood pressure are more likely to miss follow-up appointments where blood pressure would be recorded.</li>
 <li><strong>Implication:</strong> Requires specialized techniques and careful consideration of potential biases.</li>
+<li><strong>Recommended Techniques:</strong>
+<ol type="1">
+<li>Pattern Mixture Models: Can model the relationship between the missing data mechanism and the missing values.</li>
+<li>Selection Models: Useful when the probability of missingness depends on the unobserved data.</li>
+<li>Sensitivity Analysis: To assess how different assumptions about the missing data mechanism affect the results.</li>
+</ol></li>
 </ul></li>
+</ul>
+<p><strong>Additional Considerations:</strong></p>
+<ul>
+<li><p><strong>Hybrid Approaches:</strong> In real-world scenarios, data might exhibit a combination of MCAR, MAR, and MNAR patterns. In such cases, a combination of techniques might be necessary.</p></li>
+<li><p><strong>Domain Knowledge:</strong> Incorporating domain expertise is crucial, especially for MNAR cases. Healthcare professionals’ insights can guide the choice of imputation method and help interpret results.</p></li>
+<li><p><strong>Data Visualization:</strong> Before choosing an imputation method, visualizing the patterns of missingness can provide insights into the underlying mechanism.</p></li>
+<li><p><strong>Multiple Imputation:</strong> While especially useful for MAR, multiple imputation can be a robust approach for all types of missing data, as it accounts for the uncertainty in the imputed values.</p></li>
+<li><p><strong>Missingness Indicators:</strong> For all types of missing data, creating indicator variables for missingness can be informative, especially if the fact that a value is missing is itself meaningful (e.g., a patient refusing to answer a specific health question).</p></li>
 </ul>
 </section>
 <section id="multiple-imputation-by-chained-equations-mice" class="level3">
