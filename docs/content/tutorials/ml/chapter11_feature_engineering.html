@@ -696,45 +696,131 @@ x_{\text{imputed}} = \frac{\sum_{i=1}^{n} x_i}{n}
 x_{\text{imputed}} = \text{median}(x)
 \]</span></p></li>
 <li><p><strong>Example:</strong> For missing BMI values, use the median BMI of patients with similar characteristics (age, gender, health conditions).</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Simple to implement.</li>
+<li>Computationally efficient.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Can distort the distribution of the data.</li>
+<li>Does not account for relationships between variables.</li>
+</ul></li>
 </ul></li>
 <li><strong>Mode Imputation:</strong>
 <ul>
-<li>Replace missing values with the mode (most frequent value) of observed values. <span class="math display">\[
+<li><p>Replace missing values with the mode (most frequent value) of observed values. <span class="math display">\[
 x_{\text{imputed}} = \text{mode}(x)
-\]</span></li>
-<li><strong>Example:</strong> For missing categorical data like smoking status, impute with the most common status among similar patients.</li>
+\]</span></p></li>
+<li><p><strong>Example:</strong> For missing categorical data like smoking status, impute with the most common status among similar patients.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Simple to implement.</li>
+<li>Suitable for categorical data.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Can introduce bias if the mode is not representative.</li>
+<li>Not suitable for continuous data.</li>
+</ul></li>
 </ul></li>
 <li><strong>K-Nearest Neighbors (KNN) Imputation:</strong>
 <ul>
-<li>Replace missing values with the average of the nearest neighbors. <span class="math display">\[
+<li><p>Replace missing values with the average of the nearest neighbors. <span class="math display">\[
 x_{\text{imputed}} = \frac{\sum_{i=1}^{k} x_{\text{neighbor}_i}}{k}
-\]</span></li>
-<li><strong>Example:</strong> For a missing cholesterol level, find k patients with similar health profiles and use the average of their cholesterol levels.</li>
+\]</span></p></li>
+<li><p><strong>Example:</strong> For a missing cholesterol level, find k patients with similar health profiles and use the average of their cholesterol levels.</p></li>
+<li><p><strong>Choosing k:</strong></p>
+<ul>
+<li><strong>Cross-Validation:</strong> Use cross-validation to determine the optimal value of k. Split the data into training and validation sets, test different values of k, and select the one that minimizes the imputation error.</li>
+<li><strong>Domain Knowledge:</strong> Use domain knowledge to choose k. For example, in a clinical setting, a smaller k might be chosen to ensure that the nearest neighbors are very similar to the patient in question.</li>
+<li><strong>Rule of Thumb:</strong> A common rule of thumb is to use the square root of the number of observations (n). However, this should be adjusted based on the specific dataset and problem.</li>
+</ul></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Accounts for relationships between variables.</li>
+<li>Can handle both categorical and continuous data.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Computationally intensive.</li>
+<li>Sensitive to the choice of k and distance metric.</li>
+</ul></li>
 </ul></li>
 <li><strong>Multiple Imputation:</strong>
 <ul>
-<li>Generate multiple imputations for each missing value and average the results.</li>
-<li><strong>Example:</strong> Create multiple complete datasets with different imputed values for missing lab results, analyze each, and combine the results for a more robust analysis.</li>
+<li><p>Generate multiple imputations for each missing value and average the results.</p></li>
+<li><p><strong>Example:</strong> Create multiple complete datasets with different imputed values for missing lab results, analyze each, and combine the results for a more robust analysis.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Accounts for the uncertainty of the imputed values.</li>
+<li>Provides robust statistical analysis.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Computationally intensive.</li>
+<li>Requires specialized software and expertise.</li>
+</ul></li>
 </ul></li>
 <li><strong>Hot Deck Imputation:</strong>
 <ul>
-<li>A randomly chosen value from an individual in the sample who has similar values on other variables.</li>
-<li><strong>Example:</strong> For missing data on patient medication adherence, select a similar patient (in terms of age, gender, and health conditions) and use their adherence data.</li>
+<li><p>A randomly chosen value from an individual in the sample who has similar values on other variables.</p></li>
+<li><p><strong>Example:</strong> For missing data on patient medication adherence, select a similar patient (in terms of age, gender, and health conditions) and use their adherence data.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Preserves the distribution of the data.</li>
+<li>Can handle both categorical and continuous data.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Can introduce bias if the chosen donor is not representative.</li>
+<li>Requires a large dataset to find similar individuals.</li>
+</ul></li>
 </ul></li>
 <li><strong>Cold Deck Imputation:</strong>
 <ul>
-<li>A systematically chosen value from an individual who has similar values on other variables.</li>
-<li><strong>Example:</strong> If a patient’s follow-up visit data is missing, use the follow-up data from a similar patient in the same treatment group and condition.</li>
+<li><p>A systematically chosen value from an individual who has similar values on other variables.</p></li>
+<li><p><strong>Example:</strong> If a patient’s follow-up visit data is missing, use the follow-up data from a similar patient in the same treatment group and condition.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Systematic and reproducible.</li>
+<li>Preserves the distribution of the data.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Can introduce bias if the chosen donor is not representative.</li>
+<li>Requires careful selection of similar individuals.</li>
+</ul></li>
 </ul></li>
 <li><strong>Regression Imputation:</strong>
 <ul>
-<li>The predicted value obtained by regressing the missing variable on other variables.</li>
-<li><strong>Example:</strong> Predict missing HbA1c levels in diabetes patients based on their age, weight, and previous HbA1c readings.</li>
+<li><p>The predicted value obtained by regressing the missing variable on other variables.</p></li>
+<li><p><strong>Example:</strong> Predict missing HbA1c levels in diabetes patients based on their age, weight, and previous HbA1c readings.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Accounts for relationships between variables.</li>
+<li>Can handle both categorical and continuous data.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Can underestimate variability.</li>
+<li>Assumes a linear relationship between variables.</li>
+</ul></li>
 </ul></li>
 <li><strong>Stochastic Regression Imputation:</strong>
 <ul>
-<li>The predicted value from a regression plus a random residual.</li>
-<li><strong>Example:</strong> Impute missing blood pressure readings by adding a random error term to the predicted values from a regression model based on other health indicators.</li>
+<li><p>The predicted value from a regression plus a random residual.</p></li>
+<li><p><strong>Example:</strong> Impute missing blood pressure readings by adding a random error term to the predicted values from a regression model based on other health indicators.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Preserves variability in the data.</li>
+<li>Accounts for relationships between variables.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Computationally intensive.</li>
+<li>Assumes a linear relationship between variables.</li>
+</ul></li>
 </ul></li>
 </ul>
 </section>
@@ -744,13 +830,23 @@ x_{\text{imputed}} = \frac{\sum_{i=1}^{k} x_{\text{neighbor}_i}}{k}
 <ul>
 <li><strong>Indicator Variable:</strong>
 <ul>
-<li>Create a new binary feature for each original feature with missing values. <span class="math display">\[
+<li><p>Create a new binary feature for each original feature with missing values. <span class="math display">\[
 I(x_i) = \begin{cases}
   1 &amp; \text{if } x_i \text{ is missing} \\
   0 &amp; \text{if } x_i \text{ is not missing}
 \end{cases}
-\]</span></li>
-<li><strong>Example:</strong> Create an indicator variable for missing HbA1c tests in diabetes patients, which might itself be informative about patient care patterns.</li>
+\]</span></p></li>
+<li><p><strong>Example:</strong> Create an indicator variable for missing HbA1c tests in diabetes patients, which might itself be informative about patient care patterns.</p></li>
+<li><p><strong>Advantages:</strong></p>
+<ul>
+<li>Simple to implement.</li>
+<li>Preserves information about missingness.</li>
+</ul></li>
+<li><p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Can increase the dimensionality of the dataset.</li>
+<li>May not be informative if missingness is random.</li>
+</ul></li>
 </ul></li>
 </ul>
 </section>
@@ -801,6 +897,11 @@ I(x_i) = \begin{cases}
 <li>Accounts for uncertainty in imputed values.</li>
 <li>Suitable for complex EHR datasets with multiple variables.</li>
 <li>Provides multiple datasets with different imputed values for robust analysis.</li>
+</ul></li>
+<li><strong>Disadvantages:</strong>
+<ul>
+<li>Computationally intensive.</li>
+<li>Requires specialized software and expertise.</li>
 </ul></li>
 <li><strong>Applications in NHS EHR:</strong>
 <ul>
