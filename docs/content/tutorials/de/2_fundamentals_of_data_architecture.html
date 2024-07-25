@@ -198,125 +198,10 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="chapter-2-fundamentals-of-data-architecture" class="level1 text-content">
-<h1>Chapter 2: Fundamentals of Data Architecture</h1>
+<section id="questions" class="level2 text-content">
+<h2 class="anchored" data-anchor-id="questions">Questions</h2>
 <section id="data-models-and-schemas" class="level3">
 <h3 class="anchored" data-anchor-id="data-models-and-schemas">Data Models and Schemas</h3>
-<section id="data-models" class="level4">
-<h4 class="anchored" data-anchor-id="data-models">Data Models</h4>
-<p><strong>Definition</strong> Data models are abstract frameworks that organize elements of data and standardize how they relate to one another and to properties of the real world. They provide a way to structure data to represent entities and their relationships in a database.</p>
-<p><strong>Types</strong></p>
-<ul>
-<li><p><strong>Hierarchical Model</strong> Organizes data in a tree-like structure where each record has a single parent and potentially many children. This model is suitable for applications with hierarchical data, such as organizational structures. <strong>Example</strong>: A company’s organizational chart, where each employee reports to one manager, and each manager can have multiple subordinates.</p></li>
-<li><p><strong>Network Model</strong> Uses a graph structure to allow more complex relationships between entities. Each entity can have multiple parent and child records, making it more flexible than the hierarchical model. <strong>Example</strong>: A university course system, where a course can have multiple prerequisites, and a prerequisite can be required for multiple courses.</p></li>
-<li><p><strong>Relational Model</strong> Stores data in tables (relations) with rows and columns. Each table represents an entity, and relationships between tables are established through keys. SQL is commonly used to manage and query relational databases. <strong>Example</strong>: A customer order system, with tables for customers, orders, and products. Relationships are established through foreign keys linking orders to customers and products.</p></li>
-<li><p><strong>Object-Oriented Model</strong> Represents data as objects, similar to object-oriented programming. Objects encapsulate both data and behavior, making this model suitable for applications with complex data structures and relationships. <strong>Example</strong>: A multimedia application, where each media file (audio, video, image) is an object with properties (format, size) and methods (play, pause).</p></li>
-</ul>
-</section>
-<section id="schemas" class="level4">
-<h4 class="anchored" data-anchor-id="schemas">Schemas</h4>
-<p><strong>Definition</strong> A schema defines the structure and organization of data within a database. It includes the definitions of tables, columns, data types, and relationships between tables.</p>
-<p><strong>Types</strong></p>
-<ul>
-<li><p><strong>Star Schema</strong> Consists of a central fact table surrounded by dimension tables. The fact table contains quantitative data for analysis, while dimension tables contain descriptive attributes related to the facts. <strong>Example</strong>: A sales data warehouse with a central fact table for sales transactions and dimension tables for time, products, and stores.</p></li>
-<li><p><strong>Snowflake Schema</strong> An extension of the star schema where dimension tables are normalized into multiple related tables. This reduces redundancy and can improve data integrity, but may complicate queries. <strong>Example</strong>: A sales data warehouse where the product dimension is split into multiple tables for product categories, subcategories, and details.</p></li>
-<li><p><strong>Galaxy Schema</strong> Also known as a fact constellation schema, it consists of multiple fact tables sharing dimension tables. It is used for complex data warehouse models supporting multiple business processes. <strong>Example</strong>: A retail data warehouse with fact tables for sales, inventory, and shipping, all sharing common dimension tables for time, products, and stores.</p></li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="oltp-vs.-olap-systems" class="level3">
-<h3 class="anchored" data-anchor-id="oltp-vs.-olap-systems">OLTP vs.&nbsp;OLAP Systems</h3>
-<section id="oltp-online-transaction-processing" class="level4">
-<h4 class="anchored" data-anchor-id="oltp-online-transaction-processing">OLTP (Online Transaction Processing)</h4>
-<p><strong>Purpose</strong> Designed for managing transactional data, OLTP systems handle a large number of short online transactions. They are optimized for fast query processing and maintaining data integrity in multi-access environments.</p>
-<p><strong>Characteristics</strong></p>
-<ul>
-<li><p><strong>High Transaction Volume</strong> Handles many small transactions, such as inserts, updates, and deletes. OLTP systems are designed to support day-to-day operations of a business.</p></li>
-<li><p><strong>Data Consistency</strong> Ensures ACID (Atomicity, Consistency, Isolation, Durability) properties to maintain data integrity. This guarantees that all transactions are processed reliably and ensures the database remains in a consistent state.</p></li>
-<li><p><strong>Normalized Data</strong> Uses normalized schemas to reduce data redundancy and improve data integrity. Normalization involves organizing data into separate tables to minimize duplication.</p></li>
-<li><p><strong>Real-time Processing</strong> Supports real-time data processing for operational efficiency. OLTP systems provide immediate feedback and allow for concurrent access by multiple users.</p></li>
-</ul>
-</section>
-<section id="olap-online-analytical-processing" class="level4">
-<h4 class="anchored" data-anchor-id="olap-online-analytical-processing">OLAP (Online Analytical Processing)</h4>
-<p><strong>Purpose</strong> Designed for analyzing historical data, OLAP systems support complex queries and data analysis tasks. They are optimized for read-heavy operations and aggregating large volumes of data.</p>
-<p><strong>Characteristics</strong></p>
-<ul>
-<li><p><strong>Low Transaction Volume</strong> Handles fewer transactions, primarily focusing on data retrieval and analysis. OLAP systems are used for strategic decision-making and business intelligence.</p></li>
-<li><p><strong>Data Aggregation</strong> Supports complex queries involving aggregations, such as SUM, COUNT, and AVG. OLAP systems can process large amounts of data to provide insights and summaries.</p></li>
-<li><p><strong>Denormalized Data</strong> Uses denormalized schemas (e.g., star or snowflake) to optimize query performance. Denormalization involves combining tables to reduce the number of joins needed for queries.</p></li>
-<li><p><strong>Batch Processing</strong> Processes large datasets in batches rather than real-time. OLAP systems typically perform data loading and processing during off-peak hours to prepare data for analysis.</p></li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="data-warehouses-vs.-data-lakes-vs.-data-lakehouses" class="level3">
-<h3 class="anchored" data-anchor-id="data-warehouses-vs.-data-lakes-vs.-data-lakehouses">Data Warehouses vs.&nbsp;Data Lakes vs.&nbsp;Data Lakehouses</h3>
-<section id="data-warehouses" class="level4">
-<h4 class="anchored" data-anchor-id="data-warehouses">Data Warehouses</h4>
-<p><strong>Definition</strong> Centralized repositories designed to store structured data from multiple sources. Data warehouses support analytical queries and business intelligence activities, providing a consistent and consolidated view of the organization’s data.</p>
-<p><strong>Characteristics</strong></p>
-<ul>
-<li><p><strong>Schema-on-Write</strong> Data is structured and schema is defined before writing to the warehouse. This ensures data consistency and quality, but requires a predefined schema.</p></li>
-<li><p><strong>Optimized for Read Operations</strong> Designed for complex queries and data analysis, with optimized read performance. Data warehouses use indexing, partitioning, and other techniques to speed up query execution.</p></li>
-<li><p><strong>ETL Process</strong> Involves Extract, Transform, Load processes to prepare data for analysis. Data is extracted from source systems, transformed to fit the schema, and loaded into the warehouse.</p></li>
-<li><p><strong>Examples</strong> Amazon Redshift, Google BigQuery, Snowflake. These platforms provide scalable and performant solutions for data warehousing in the cloud.</p></li>
-</ul>
-</section>
-<section id="data-lakes" class="level4">
-<h4 class="anchored" data-anchor-id="data-lakes">Data Lakes</h4>
-<p><strong>Definition</strong> Centralized repositories designed to store raw, unstructured, and structured data at any scale. Data lakes support diverse data types and formats, including log files, images, and video, making them suitable for big data analytics.</p>
-<p><strong>Characteristics</strong></p>
-<ul>
-<li><p><strong>Schema-on-Read</strong> Data is stored in its raw format, and schema is applied when data is read. This provides flexibility to handle various data types without predefined schemas.</p></li>
-<li><p><strong>High Scalability</strong> Capable of storing vast amounts of data without a predefined schema. Data lakes can scale horizontally, adding storage capacity as needed.</p></li>
-<li><p><strong>Flexibility</strong> Supports multiple data types and processing frameworks. Data lakes can handle structured, semi-structured, and unstructured data, making them versatile for different analytical needs.</p></li>
-<li><p><strong>Examples</strong> Amazon S3, Azure Data Lake, Hadoop. These platforms provide scalable storage solutions for data lakes, enabling organizations to manage large volumes of diverse data.</p></li>
-</ul>
-</section>
-<section id="data-lakehouses" class="level4">
-<h4 class="anchored" data-anchor-id="data-lakehouses">Data Lakehouses</h4>
-<p><strong>Definition</strong> A hybrid architecture combining the best features of data warehouses and data lakes. Data lakehouses provide the data management capabilities of warehouses with the flexibility and scalability of lakes, supporting both analytical and operational workloads.</p>
-<p><strong>Characteristics</strong></p>
-<ul>
-<li><p><strong>Unified Storage</strong> Combines structured and unstructured data storage in a single repository. This allows for seamless data management and analysis across different data types.</p></li>
-<li><p><strong>Schema-on-Read and Schema-on-Write</strong> Supports both approaches, allowing flexibility in data processing. Data can be stored in raw format and structured when needed or predefined schemas can be used for specific use cases.</p></li>
-<li><p><strong>Optimized for Both Read and Write Operations</strong> Provides efficient data processing for both analytical and transactional workloads. This ensures high performance for various types of data operations.</p></li>
-<li><p><strong>Examples</strong> Delta Lake, Apache Iceberg, Databricks Lakehouse. These technologies offer robust solutions for building data lakehouses, integrating features from both data warehouses and data lakes.</p></li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="batch-processing-vs.-stream-processing" class="level3">
-<h3 class="anchored" data-anchor-id="batch-processing-vs.-stream-processing">Batch Processing vs.&nbsp;Stream Processing</h3>
-<section id="batch-processing" class="level4">
-<h4 class="anchored" data-anchor-id="batch-processing">Batch Processing</h4>
-<p><strong>Definition</strong> Involves processing large volumes of data at once, typically at scheduled intervals. Batch processing is suitable for tasks that do not require real-time data processing, such as end-of-day reporting and data warehousing.</p>
-<p><strong>Characteristics</strong></p>
-<ul>
-<li><p><strong>High Throughput</strong> Processes large datasets efficiently in batches. This allows for significant data transformations and aggregations to be performed at once.</p></li>
-<li><p><strong>Scheduled Execution</strong> Runs at predefined times or intervals, such as nightly or weekly. This provides predictability and consistency in data processing schedules.</p></li>
-<li><p><strong>Examples</strong> ETL jobs, end-of-day processing, monthly reports. Batch processing is commonly used for data integration, data migration, and periodic reporting tasks.</p></li>
-<li><p><strong>Frameworks</strong> Apache Hadoop, Apache Spark (batch mode). These frameworks provide powerful tools for processing large-scale data in batch mode, supporting complex data workflows.</p></li>
-</ul>
-</section>
-<section id="stream-processing" class="level4">
-<h4 class="anchored" data-anchor-id="stream-processing">Stream Processing</h4>
-<p><strong>Definition</strong> Involves processing data in real-time as it is generated. Stream processing is suitable for applications that require immediate data insights and actions, such as real-time analytics and event-driven architectures.</p>
-<p><strong>Characteristics</strong></p>
-<ul>
-<li><p><strong>Low Latency</strong> Processes data with minimal delay, providing near-instantaneous results. This is critical for applications that require timely data processing and decision-making.</p></li>
-<li><p><strong>Continuous Execution</strong> Runs continuously, processing data as it arrives. This ensures that data is always up-to-date and can be acted upon immediately.</p></li>
-<li><p><strong>Examples</strong> Real-time analytics, fraud detection, live monitoring. Stream processing is used in scenarios where immediate data processing and response are necessary.</p></li>
-<li><p><strong>Frameworks</strong> Apache Kafka, Apache Flink, Apache Spark (streaming mode). These frameworks provide robust solutions for building real-time data processing pipelines, supporting high-throughput and low-latency data processing.</p></li>
-</ul>
-</section>
-</section>
-<section id="interview-questions-and-answers" class="level2">
-<h2 class="anchored" data-anchor-id="interview-questions-and-answers">Interview Questions and Answers</h2>
-<section id="data-models-and-schemas-1" class="level3">
-<h3 class="anchored" data-anchor-id="data-models-and-schemas-1">Data Models and Schemas</h3>
 <section id="question-1-describe-the-hierarchical-data-model-and-give-a-practical-example-of-its-use." class="level4">
 <h4 class="anchored" data-anchor-id="question-1-describe-the-hierarchical-data-model-and-give-a-practical-example-of-its-use.">Question 1: Describe the hierarchical data model and give a practical example of its use.</h4>
 <p><strong>Answer:</strong> The hierarchical data model organizes data in a tree-like structure where each record has a single parent and potentially many children. This model is suitable for hierarchical data such as organizational structures. For instance, in a company’s organizational chart, each employee reports to one manager, and each manager can have multiple subordinates.</p>
@@ -350,8 +235,8 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>Answer:</strong> Also known as a fact constellation schema, the galaxy schema consists of multiple fact tables sharing dimension tables. It is used for complex data warehouse models supporting multiple business processes. An example is a retail data warehouse with fact tables for sales, inventory, and shipping, all sharing common dimension tables for time, products, and stores.</p>
 </section>
 </section>
-<section id="oltp-vs.-olap-systems-1" class="level3">
-<h3 class="anchored" data-anchor-id="oltp-vs.-olap-systems-1">OLTP vs.&nbsp;OLAP Systems</h3>
+<section id="oltp-vs.-olap-systems" class="level3">
+<h3 class="anchored" data-anchor-id="oltp-vs.-olap-systems">OLTP vs.&nbsp;OLAP Systems</h3>
 <section id="question-9-what-are-the-primary-characteristics-of-oltp-systems" class="level4">
 <h4 class="anchored" data-anchor-id="question-9-what-are-the-primary-characteristics-of-oltp-systems">Question 9: What are the primary characteristics of OLTP systems?</h4>
 <p><strong>Answer:</strong> OLTP systems are designed for managing transactional data and handle a large number of short online transactions. They are optimized for fast query processing and maintaining data integrity in multi-access environments. Key characteristics include high transaction volume, data consistency (ensuring ACID properties), normalized data schemas, and real-time processing to support operational efficiency.</p>
@@ -369,10 +254,10 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>Answer:</strong> An OLAP system would be used in a business intelligence application for a retail company. It can analyze historical sales data to generate reports and insights, such as sales trends, customer purchasing patterns, and inventory levels, to support strategic decision-making.</p>
 </section>
 </section>
-<section id="data-warehouses-vs.-data-lakes-vs.-data-lakehouses-1" class="level3">
-<h3 class="anchored" data-anchor-id="data-warehouses-vs.-data-lakes-vs.-data-lakehouses-1">Data Warehouses vs.&nbsp;Data Lakes vs.&nbsp;Data Lakehouses</h3>
-<section id="data-warehouses-1" class="level4">
-<h4 class="anchored" data-anchor-id="data-warehouses-1">Data Warehouses</h4>
+<section id="data-warehouses-vs.-data-lakes-vs.-data-lakehouses" class="level3">
+<h3 class="anchored" data-anchor-id="data-warehouses-vs.-data-lakes-vs.-data-lakehouses">Data Warehouses vs.&nbsp;Data Lakes vs.&nbsp;Data Lakehouses</h3>
+<section id="data-warehouses" class="level4">
+<h4 class="anchored" data-anchor-id="data-warehouses">Data Warehouses</h4>
 </section>
 <section id="question-13-what-defines-a-data-warehouse-and-what-are-its-key-characteristics" class="level4">
 <h4 class="anchored" data-anchor-id="question-13-what-defines-a-data-warehouse-and-what-are-its-key-characteristics">Question 13: What defines a data warehouse and what are its key characteristics?</h4>
@@ -382,8 +267,8 @@ ul.task-list li input[type="checkbox"] {
 <h4 class="anchored" data-anchor-id="question-14-describe-a-scenario-where-a-data-warehouse-would-be-beneficial.">Question 14: Describe a scenario where a data warehouse would be beneficial.</h4>
 <p><strong>Answer:</strong> A data warehouse would be beneficial for a financial services company needing to consolidate data from various transaction systems to perform detailed analysis and reporting. It can provide a consistent and consolidated view of the organization’s financial data, supporting regulatory reporting and business insights.</p>
 </section>
-<section id="data-lakes-1" class="level4">
-<h4 class="anchored" data-anchor-id="data-lakes-1">Data Lakes</h4>
+<section id="data-lakes" class="level4">
+<h4 class="anchored" data-anchor-id="data-lakes">Data Lakes</h4>
 </section>
 <section id="question-15-what-are-data-lakes-and-what-makes-them-different-from-data-warehouses" class="level4">
 <h4 class="anchored" data-anchor-id="question-15-what-are-data-lakes-and-what-makes-them-different-from-data-warehouses">Question 15: What are data lakes and what makes them different from data warehouses?</h4>
@@ -393,8 +278,8 @@ ul.task-list li input[type="checkbox"] {
 <h4 class="anchored" data-anchor-id="question-16-when-would-an-organization-prefer-to-use-a-data-lake">Question 16: When would an organization prefer to use a data lake?</h4>
 <p><strong>Answer:</strong> An organization would prefer to use a data lake for big data analytics and machine learning applications. For example, a media company analyzing user engagement across various platforms could store log files, images, and video data in a data lake, enabling flexible analysis and model training without predefined schemas.</p>
 </section>
-<section id="data-lakehouses-1" class="level4">
-<h4 class="anchored" data-anchor-id="data-lakehouses-1">Data Lakehouses</h4>
+<section id="data-lakehouses" class="level4">
+<h4 class="anchored" data-anchor-id="data-lakehouses">Data Lakehouses</h4>
 </section>
 <section id="question-17-explain-the-concept-of-a-data-lakehouse-and-its-advantages." class="level4">
 <h4 class="anchored" data-anchor-id="question-17-explain-the-concept-of-a-data-lakehouse-and-its-advantages.">Question 17: Explain the concept of a data lakehouse and its advantages.</h4>
@@ -405,10 +290,10 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>Answer:</strong> A data lakehouse is suitable for organizations needing a versatile data platform to support both operational and analytical workloads. For instance, an e-commerce company could use a data lakehouse to manage real-time transaction data alongside historical sales and customer behavior data, facilitating both operational efficiency and strategic analysis.</p>
 </section>
 </section>
-<section id="batch-processing-vs.-stream-processing-1" class="level3">
-<h3 class="anchored" data-anchor-id="batch-processing-vs.-stream-processing-1">Batch Processing vs.&nbsp;Stream Processing</h3>
-<section id="batch-processing-1" class="level4">
-<h4 class="anchored" data-anchor-id="batch-processing-1">Batch Processing</h4>
+<section id="batch-processing-vs.-stream-processing" class="level3">
+<h3 class="anchored" data-anchor-id="batch-processing-vs.-stream-processing">Batch Processing vs.&nbsp;Stream Processing</h3>
+<section id="batch-processing" class="level4">
+<h4 class="anchored" data-anchor-id="batch-processing">Batch Processing</h4>
 </section>
 <section id="question-19-what-is-batch-processing-and-what-are-its-main-characteristics" class="level4">
 <h4 class="anchored" data-anchor-id="question-19-what-is-batch-processing-and-what-are-its-main-characteristics">Question 19: What is batch processing and what are its main characteristics?</h4>
@@ -418,8 +303,8 @@ ul.task-list li input[type="checkbox"] {
 <h4 class="anchored" data-anchor-id="question-20-provide-an-example-of-a-task-that-is-well-suited-for-batch-processing.">Question 20: Provide an example of a task that is well-suited for batch processing.</h4>
 <p><strong>Answer:</strong> An example of a task well-suited for batch processing is generating monthly financial reports. Data from various sources is collected and processed in batches, transforming and aggregating the data to produce comprehensive reports on the company’s financial performance.</p>
 </section>
-<section id="stream-processing-1" class="level4">
-<h4 class="anchored" data-anchor-id="stream-processing-1">Stream Processing</h4>
+<section id="stream-processing" class="level4">
+<h4 class="anchored" data-anchor-id="stream-processing">Stream Processing</h4>
 </section>
 <section id="question-21-what-defines-stream-processing-and-what-are-its-benefits" class="level4">
 <h4 class="anchored" data-anchor-id="question-21-what-defines-stream-processing-and-what-are-its-benefits">Question 21: What defines stream processing and what are its benefits?</h4>
@@ -472,7 +357,6 @@ ul.task-list li input[type="checkbox"] {
 <section id="question-30-describe-the-concept-of-indexing-and-its-impact-on-query-performance." class="level4">
 <h4 class="anchored" data-anchor-id="question-30-describe-the-concept-of-indexing-and-its-impact-on-query-performance.">Question 30: Describe the concept of indexing and its impact on query performance.</h4>
 <p><strong>Answer:</strong> Indexing involves creating data structures that improve the speed of data retrieval operations on a database table. Indexes allow the database system to find and access data quickly without scanning the entire table. This significantly improves query performance, especially for large tables and frequently queried columns. For example, adding an index on a customer ID column in an orders table can expedite the retrieval of all orders for a specific customer.</p>
-</section>
 </section>
 </section>
 </section>
