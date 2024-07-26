@@ -68,6 +68,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 <link rel="stylesheet" href="../topics/content.css">
@@ -147,7 +176,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
   <li class="nav-item">
     <a class="nav-link active" href="../notes/notes.html" aria-current="page"> 
-<span class="menu-text">Notes</span></a>
+<span class="menu-text">Notes &amp; Research</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
@@ -209,6 +238,307 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><p><a href="../content/notes/books/dl_bishop/1_the_deep_learning_revolution.html">Deep Learning by Bishop</a></p></li>
 <li><p><a href=".../content/notes/books/dl_bishop/1_the_deep_learning_revolution.qmd">Elements Of Statistical Learning</a></p></li>
+<li><p><a href=".../content/notes/books/dl_bishop/1_the_deep_learning_revolution.qmd">Designing Data Intensive Applications</a></p></li>
+<li><p><a href=".../content/notes/books/dl_bishop/1_the_deep_learning_revolution.qmd">Fundamentals of Data Engineering</a></p></li>
+<li><p><a href=".../content/notes/books/dl_bishop/1_the_deep_learning_revolution.qmd">Mathematics for Machine Learning</a></p></li>
+</ul></li>
+<li><h4 id="an-overview-of" class="anchored">An Overview of:</h4>
+<ul>
+<li><a href="../content/notes/genai/langchain/langchain.html">Langchain</a></li>
+</ul></li>
+<li><h4 id="papers" class="anchored">Papers:</h4>
+<ul>
+<li><h6 id="foundational-papers" class="anchored">Foundational Papers</h6>
+<ul>
+<li><a href="https://arxiv.org/abs/1706.03762">Attention is All You Need (Vaswani et al., 2017)</a></li>
+<li><a href="https://arxiv.org/abs/1810.04805">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding (Devlin et al., 2018)</a></li>
+<li><a href="https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf">Generative Pre-trained Transformer (GPT) (Radford et al., 2018)</a></li>
+<li><a href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">GPT-2: Better Language Models and Their Implications (Radford et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/2005.14165">GPT-3: Language Models are Few-Shot Learners (Brown et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1907.11692">RoBERTa: A Robustly Optimized BERT Pretraining Approach (Liu et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1910.10683">T5: Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer (Raffel et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1906.08237">XLNet: Generalized Autoregressive Pretraining for Language Understanding (Yang et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1910.13461">BART: Denoising Sequence-to-Sequence Pre-training for Natural Language Generation, Translation, and Comprehension (Lewis et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1901.02860">Transformer-XL: Attentive Language Models Beyond a Fixed-Length Context (Dai et al., 2019)</a></li>
+<li><a href="https://aclanthology.org/D14-1162/">GloVe: Global Vectors for Word Representation (Pennington et al., 2014)</a></li>
+<li><a href="https://arxiv.org/abs/1301.3781">Word2Vec: Efficient Estimation of Word Representations in Vector Space (Mikolov et al., 2013)</a></li>
+<li><a href="https://arxiv.org/abs/1607.04606">FastText: Enriching Word Vectors with Subword Information (Bojanowski et al., 2017)</a></li>
+<li><a href="https://arxiv.org/abs/1802.05365">ELMo: Deep Contextualized Word Representations (Peters et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1801.06146">ULMFiT: Universal Language Model Fine-tuning for Text Classification (Howard and Ruder, 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1409.3215">Seq2Seq: Sequence to Sequence Learning with Neural Networks (Sutskever et al., 2014)</a></li>
+<li><a href="https://arxiv.org/abs/1409.0473">Neural Machine Translation by Jointly Learning to Align and Translate (Bahdanau et al., 2014)</a></li>
+<li><a href="https://arxiv.org/abs/1410.3916">Memory Networks (Weston et al., 2014)</a></li>
+<li><a href="https://arxiv.org/abs/1410.5401">Neural Turing Machines (Graves et al., 2014)</a></li>
+<li><a href="https://arxiv.org/abs/1705.03122">Convolutional Sequence to Sequence Learning (Gehring et al., 2017)</a></li>
+<li><a href="https://arxiv.org/abs/1506.03134">Pointer Networks (Vinyals et al., 2015)</a></li>
+<li><a href="https://arxiv.org/abs/1409.2329">Recurrent Neural Network Regularization (Zaremba et al., 2014)</a></li>
+<li><a href="https://arxiv.org/abs/1704.00028">Improved Training of Wasserstein GANs (Gulrajani et al., 2017)</a></li>
+<li><a href="https://arxiv.org/abs/1511.01432">Semi-supervised Sequence Learning (Dai and Le, 2015)</a></li>
+<li><a href="https://arxiv.org/abs/1503.02531">Distilling the Knowledge in a Neural Network (Hinton et al., 2015)</a></li>
+<li><a href="https://jalammar.github.io/illustrated-transformer/">The Illustrated Transformer (Jay Alammar, 2018)</a></li>
+<li><a href="https://openai.com/research/language-unsupervised">Improving Language Understanding by Generative Pre-Training (Radford et al., 2018)</a></li>
+</ul></li>
+<li><h6 id="optimization-and-training-techniques" class="anchored">Optimization and Training Techniques</h6>
+<ul>
+<li><a href="https://arxiv.org/abs/1412.6980">Adam: A Method for Stochastic Optimization (Kingma and Ba, 2014)</a></li>
+<li><a href="https://arxiv.org/abs/1607.06450">Layer Normalization (Ba, Kiros, and Hinton, 2016)</a></li>
+<li><a href="https://jmlr.org/papers/v15/srivastava14a.html">Dropout: A Simple Way to Prevent Neural Networks from Overfitting (Srivastava et al., 2014)</a></li>
+<li><a href="https://arxiv.org/abs/1512.00567">Label Smoothing Regularization (Szegedy et al., 2016)</a></li>
+<li><a href="https://arxiv.org/abs/1608.06993">DenseNet: Densely Connected Convolutional Networks (Huang et al., 2017)</a></li>
+<li><a href="https://arxiv.org/abs/1804.04235">Adafactor: Adaptive Learning Rates with Sublinear Memory Cost (Shazeer and Stern, 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1907.08610">Lookahead Optimizer: k steps forward, 1 step back (Zhang et al., 2019)</a></li>
+<li><a href="https://github.com/lessw2020/Ranger-Deep-Learning-Optimizer">Ranger: A Synergistic Combination of RAdam and LookAhead for Deep Learning (Wright, 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1803.05407">Stochastic Weight Averaging (SWA) (Izmailov et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1908.03265">Rectified Adam (RAdam): Towards Smoother Optimization (Liu et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1909.11259">Learning Rate Dropout (Park et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1902.09843">Adaptive Gradient Methods with Dynamic Bound of Learning Rate (Zou et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1810.05270">Rethinking the Value of Network Pruning (Liu et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1711.02257">GradNorm: Gradient Normalization for Adaptive Loss Balancing in Deep Multitask Networks (Chen et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1706.08840">Gradient Episodic Memory for Continual Learning (Lopez-Paz and Ranzato, 2017)</a></li>
+<li><a href="https://proceedings.mlr.press/v28/sutskever13.html">On the importance of initialization and momentum in deep learning (Sutskever et al., 2013)</a></li>
+<li><a href="https://arxiv.org/abs/1608.03983">SGDR: Stochastic Gradient Descent with Warm Restarts (Loshchilov and Hutter, 2016)</a></li>
+<li><a href="https://arxiv.org/abs/1708.07120">Learning rate schedules for faster training (Smith, 2017)</a></li>
+<li><a href="https://arxiv.org/abs/1805.09501">AutoAugment: Learning Augmentation Policies from Data (Cubuk et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1908.03265">RAdam: A Method for Stochastic Optimization (Liu et al., 2019)</a></li>
+<li><a href="https://github.com/lessw2020/Ranger-Deep-Learning-Optimizer">Ranger: A Synergistic Combination of RAdam and LookAhead for Deep Learning (Wright, 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1603.06560">Hyperband: A Novel Bandit-Based Approach to Hyperparameter Optimization (Li et al., 2016)</a></li>
+<li><a href="https://arxiv.org/abs/1711.09846">Population Based Training of Neural Networks (Jaderberg et al., 2017)</a></li>
+<li><a href="https://arxiv.org/abs/1803.09820">Learning Rate Schedule for Fast Training (Smith et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/2006.05696">Training Neural Networks with Stochastic Gradient Descent via Randomized Gaussian Projections (Lee et al., 2020)</a></li>
+<li><a href="https://proceedings.mlr.press/v9/glorot10a.html">Understanding the Difficulty of Training Deep Feedforward Neural Networks (Glorot and Bengio, 2010)</a></li>
+<li><a href="https://arxiv.org/abs/1902.09843">Adaptive Gradient Methods with Dynamic Bound of Learning Rate (Zou et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/2006.05696">Rectified Gradient Methods for Deep Learning via Optimization with Orthogonality Constraints (Li et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1708.07120">Learning rate schedules for fast training (Smith, 2017)</a></li>
+<li><a href="https://arxiv.org/abs/1603.06560">Hyperband: A Novel Bandit-Based Approach to Hyperparameter Optimization (Li et al., 2016)</a></li>
+<li><a href="https://arxiv.org/abs/1711.09846">Population Based Training of Neural Networks (Jaderberg et al., 2017)</a></li>
+<li><a href="https://arxiv.org/abs/1806.09055">DARTS: Differentiable Architecture Search (Liu et al., 2018)</a></li>
+<li><a href="https://proceedings.mlr.press/v9/glorot10a.html">Understanding the difficulty of training deep feedforward neural networks (Glorot and Bengio, 2010)</a></li>
+<li><a href="https://arxiv.org/abs/1511.06068">Reducing Overfitting in Deep Networks by Decorrelating Representations (Cogswell et al., 2015)</a></li>
+<li><a href="https://arxiv.org/abs/1502.01852">Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification (He et al., 2015)</a></li>
+<li><a href="https://proceedings.mlr.press/v9/glorot10a.html">Understanding the difficulty of training deep feedforward neural networks (Glorot and Bengio, 2010)</a></li>
+</ul></li>
+<li><h6 id="advanced-models-and-architectures" class="anchored">Advanced Models and Architectures:</h6>
+<ul>
+<li><a href="https://arxiv.org/abs/1909.11942">ALBERT: A Lite BERT for Self-supervised Learning of Language Representations (Lan et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/2003.10555">ELECTRA: Pre-training Text Encoders as Discriminators Rather Than Generators (Clark et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1809.11096">BigGAN: Large Scale GAN Training for High Fidelity Natural Image Synthesis (Brock et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/2001.04451">Reformer: The Efficient Transformer (Kitaev et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2004.05150">Longformer: The Long-Document Transformer (Beltagy et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1904.10509">Sparse Transformers: Generating Text with Fewer Parameters (Child et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/2101.03961">Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity (Fedus et al., 2021)</a></li>
+<li><a href="https://arxiv.org/abs/2004.03839">T-NLG: A Transformer-based Language Model for Long Text Generation (Du et al., 2021)</a></li>
+<li><a href="https://arxiv.org/abs/1811.02084">Mesh-TensorFlow: Deep Learning for Supercomputers (Shazeer et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/2006.16668">GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding (Lepikhin et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2003.05997">Routing Transformers: Adaptive Attention Routing for Efficient Long-Range Attention (Roy et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1807.03819">Universal Transformers (Dehghani et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/2001.04451">Reformer: The Efficient Transformer (Kitaev et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2009.14794">Performer: Efficient Transformer Architectures (Choromanski et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2006.04768">Linformer: Self-Attention with Linear Complexity (Wang et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2005.00743">Synthesizer: Rethinking Self-Attention in Transformer Models (Tay et al., 2021)</a></li>
+<li><a href="https://arxiv.org/abs/2109.08668">Prime: Attention with Priming (So et al., 2021)</a></li>
+<li><a href="https://arxiv.org/abs/1901.02860">Transformer-XL: Attentive Language Models Beyond a Fixed-Length Context (Dai et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1912.03458">Dynamic Convolution: Attention Over Convolution Kernels (Wu et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2007.14062">BigBird: Transformers for Longer Sequences (Zaheer et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1901.11504">MT-DNN: Multi-Task Deep Neural Networks for Natural Language Understanding (Liu et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/2004.09297">MPNet: Masked and Permuted Pre-training for Language Understanding (Song et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2006.03654">DeBERTa: Decoding-enhanced BERT with Disentangled Attention (He et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1904.09223">ERNIE: Enhanced Representation through Knowledge Integration (Sun et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1912.13318">LayoutLM: Pre-training of Text and Layout for Document Image Understanding (Xu et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2004.03839">T-NLG: A Transformer-based Language Model for Long Text Generation (Du et al., 2021)</a></li>
+<li><a href="https://arxiv.org/abs/2012.14740">Cluster-Former: Clustering-Based Sparse Transformer for Long-Range Dependence Encoding (Wang et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2002.11296">Sparse Sinkhorn Attention (Tay et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1911.05507">Compressive Transformers for Long-Range Sequence Modeling (Rae et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/2005.00481">Unifying Language Learning Paradigms (Artetxe et al., 2020)</a></li>
+</ul></li>
+<li><h6 id="multimodal-and-cross-modal-models" class="anchored">Multimodal and Cross-Modal Models:</h6>
+<ul>
+<li><a href="https://arxiv.org/abs/2103.00020">CLIP: Learning Transferable Visual Models From Natural Language Supervision (Radford et al., 2021)</a></li>
+<li><a href="https://arxiv.org/abs/2102.12092">DALL-E: Creating Images from Text Descriptions (Ramesh et al., 2021)</a></li>
+<li><a href="https://arxiv.org/abs/1908.03557">VisualBERT: A Simple and Performant Baseline for Vision and Language (Li et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1909.11740">UNITER: UNiversal Image-TExt Representation Learning (Chen et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1908.02265">ViLBERT: Pretraining Task-Agnostic Visiolinguistic Representations for Vision-and-Language Tasks (Lu et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1908.07490">LXMERT: Learning Cross-Modality Encoder Representations from Transformers (Tan and Bansal, 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1904.01766">VideoBERT: A Joint Model for Video and Language Representation Learning (Sun et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/2007.14135">SpeechBERT: Cross-Modal Pre-trained Language Model for End-to-End Spoken Question Answering (Chuang et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2001.07966">ImageBERT: Cross-modal Pre-training with Large-scale Weak-supervised Image-Text Data (Qi et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2006.16934">ERNIE-ViL: Knowledge Enhanced Vision-Language Representations Through Scene Graph (Yu et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2107.07651">ALBEF: Align Before Fuse for Multimodal Representation Learning (Li et al., 2021)</a></li>
+<li><a href="https://arxiv.org/abs/2003.13198">InterBERT: Vision-and-Language Interaction for Multi-modal Pretraining (Lin et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2004.00849">Pixel-BERT: Aligning Image Pixels with Text by Deep Multi-Modal Transformers (Huang et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1909.11059">Unified Vision-Language Pre-Training for Image Captioning and VQA (Zhou et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1912.02315">12-in-1: Multi-Task Vision and Language Representation Learning (Lu et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2005.09801">FashionBERT: Text and Image Matching for Fashion Image Retrieval (Gao et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1908.08530">VL-BERT: Pre-training of Generic Visual-Linguistic Representations (Su et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/2002.06353">UniVL: A Unified Video and Language Pre-Training Model for Multimodal Understanding and Generation (Lu et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2004.06165">Oscar: Object-Semantics Aligned Pre-training for Vision-Language Tasks (Li et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1909.11059">VLP: Visual Language Pre-Training for Visual Question Answering and Image Captioning (Zhou et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2001.07966">ImageBERT: Cross-modal Pre-training with Large-scale Weak-supervised Image-Text Data (Qi et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1811.00962">Visual Commonsense R-CNN (Zellers et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/2102.05918">ALIGN: Scaling Up Visual and Vision-Language Representation Learning With Noisy Text Supervision (Jia et al., 2021)</a></li>
+<li><a href="https://arxiv.org/abs/2004.06165">Oscar: Object-Semantics Aligned Pre-training for Vision-Language Tasks (Li et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2012.15409">UNIMO: Towards Unified-Modal Understanding and Generation via Cross-Modal Contrastive Learning (Li et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2009.13682">VIVO: Surpassing Human Performance in Novel Object Captioning with Visual Vocabulary Pre-Training (Hu et al., 2021)</a></li>
+<li><a href="https://arxiv.org/abs/2103.01075">OmniNet: Omnidirectional Representations from Transformers (Pramanick et al., 2021)</a></li>
+<li><a href="https://arxiv.org/abs/2103.14030">M6: Multi-Modality-to-Multi-Modality Multilingual Pre-Training for Web-Scale Knowledge Alignment (Lin et al., 2021)</a></li>
+<li><a href="https://arxiv.org/abs/2011.00597">COOT: Cooperative Hierarchical Transformer for Video-Text Representation Learning (Ging et al., 2020)</a></li>
+</ul></li>
+<li><h6 id="zero-shot-and-few-shot-learning" class="anchored">Zero-shot and Few-shot Learning:</h6>
+<ul>
+<li><a href="https://arxiv.org/abs/1707.00600">Zero-Shot Learning: A Comprehensive Evaluation of the Good, the Bad and the Ugly (Xian et al., 2017)</a></li>
+<li><a href="https://arxiv.org/abs/1703.03400">Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks (Finn et al., 2017)</a></li>
+<li><a href="https://arxiv.org/abs/1703.05175">Prototypical Networks for Few-shot Learning (Snell et al., 2017)</a></li>
+<li><a href="https://arxiv.org/abs/1711.04043">Few-Shot Learning with Graph Neural Networks (Garcia and Bruna, 2017)</a></li>
+<li><a href="https://arxiv.org/abs/1606.04474">Learning to Learn with Gradients (Andrychowicz et al., 2016)</a></li>
+<li><a href="https://arxiv.org/abs/2005.14165">GPT-3: Language Models are Few-Shot Learners (Brown et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1706.05084">Learning from Noisy Labels with Self-Ensembling (Laine and Aila, 2016)</a></li>
+<li><a href="https://arxiv.org/abs/2011.05129">Cross-Modal Transfer Learning for Few-shot Image Classification (Tsai et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1605.06065">Meta-Learning with Memory-Augmented Neural Networks (Santoro et al., 2016)</a></li>
+<li><a href="https://arxiv.org/abs/1606.04080">Matching Networks for One Shot Learning (Vinyals et al., 2016)</a></li>
+<li><a href="https://arxiv.org/abs/2004.11362">Few-shot Image Classification with Contrastive Learning (Khosla et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2106.11098">Incremental Few-Shot Text Classification with Multi-Round New Class Detection (Yang et al., 2021)</a></li>
+<li><a href="https://arxiv.org/abs/2006.10762">Few-shot Generative Model Adaptation for Time Series Anomaly Detection (Lim et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1309.4487">Zero-shot Learning with Semantic Output Codes (Socher et al., 2013)</a></li>
+<li><a href="https://arxiv.org/abs/1712.07136">Low-Shot Learning with Imprinted Weights (Qi et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/2002.09434">Few-Shot Learning via Learning the Representation, Provably (Ghosh et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1904.04242">TAFE-Net: Task-Aware Feature Embedding Network for Joint Few-Shot Learning and Semantic Segmentation (Wang et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1712.01381">Zero-Shot Visual Recognition using Semantics-Preserving Adversarial Embedding Networks (Zhu et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1803.00676">Meta-Learning for Semi-Supervised Few-Shot Classification (Ren et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1903.07737">Grail: Graph Representation for Few-Shot Learning (Liu et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1707.00600">Zero-Shot Learning - A Comprehensive Evaluation of the Good, the Bad and the Ugly (Xian et al., 2017)</a></li>
+<li><a href="https://arxiv.org/abs/1711.06025">Learning to Compare: Relation Network for Few-Shot Learning (Sung et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/2008.06070">Few-shot Text Classification with Distributional Signatures (Mueller et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2004.11544">Few-shot Learning with Localization in Realistic Settings (Nguyen et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1802.06006">Zero-Shot Text-to-Speech Synthesis (Jia et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1611.08490">Zero-shot Learning of Classifiers from Natural Language Quantification (Schuhmann et al., 2016)</a></li>
+<li><a href="https://arxiv.org/abs/2002.03531">Deep Meta-Learning: Learning to Learn in the Concept Space (Cao et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1811.01590">Few-shot Learning with Embedded Class Models and Shot-Free Meta Training (Zhang et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1807.08048">Adaptive Cross-Modal Few-shot Learning (Schwartz et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/2007.11498">CrossTransformers: spatially-aware few-shot transfer (Doersch et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2108.08521">Task-Aware Variational Adversarial Few-Shot Learning (Chen et al., 2021)</a></li>
+<li><a href="https://arxiv.org/abs/1906.05201">Self-Supervised Training Enhances Online Continual Learning (Zhai et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1909.00025">Meta-Learning with Warped Gradient Descent (Flennerhag et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1606.04080">Matching Networks for One Shot Learning (Vinyals et al., 2016)</a></li>
+<li><a href="https://arxiv.org/abs/1703.05175">ProtoNet: Prototypical Networks for Few-shot Learning (Snell et al., 2017)</a></li>
+<li><a href="https://arxiv.org/abs/1909.13600">Zero-Shot Text-to-SQL Learning with Auxiliary Task (Hwang et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1904.02239">Hyperbolic Image-Text Representations (Le et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1711.10282">Learning from Between-class Examples for Deep Sound Recognition (Tokozume et al., 2017)</a></li>
+</ul></li>
+<li><h6 id="ethical-considerations-and-bias-mitigation" class="anchored">Ethical Considerations and Bias Mitigation:</h6>
+<ul>
+<li><a href="https://proceedings.mlr.press/v81/buolamwini18a.html">Gender Shades: Intersectional Accuracy Disparities in Commercial Gender Classification (Buolamwini and Gebru, 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1803.09010">Data Sheets for Datasets (Gebru et al., 2018)</a></li>
+<li><a href="https://dl.acm.org/doi/10.1145/3287560.3287598">Fairness and Abstraction in Sociotechnical Systems (Selbst et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1606.03490">The Mythos of Model Interpretability (Lipton, 2016)</a></li>
+<li><a href="https://doi.org/10.1080/1369118X.2018.1477967">AI Ethics: The Case for Contextual Transparency (Ananny and Crawford, 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1607.06520">Man is to Computer Programmer as Woman is to Homemaker? Debiasing Word Embeddings (Bolukbasi et al., 2016)</a></li>
+<li><a href="https://arxiv.org/abs/1801.07593">Mitigating Unwanted Biases with Adversarial Learning (Zhang et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1901.10442">Disaggregated Demographic Analysis Improves Fairness in Computer Vision (De Vries et al., 2019)</a></li>
+<li><a href="https://doi.org/10.1093/acrefore/9780190228637.013.772">Algorithmic Fairness: A Non-Technical Introduction (Binns, 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1905.06842">Disentangled Representations and their Applications in Fairness (Locatello et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1803.09010">Datasheets for Datasets: A Genre for Reporting the Dataset Life Cycle (Gebru et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1901.10526">Fairness and Machine Learning: Limitations and Opportunities (Barocas et al., 2019)</a></li>
+<li><a href="https://plato.stanford.edu/entries/ethics-ai/">Ethics of Artificial Intelligence and Robotics (Moor, 2006)</a></li>
+<li><a href="https://arxiv.org/abs/1809.05253">Ethical Implications of Bias in Machine Learning (Heidari et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1808.08166">Preventing Fairness Gerrymandering: Auditing and Learning for Subgroup Fairness (Kearns et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1807.08129">Black Boxes at the AI Frontier: How to Promote Transparency, Robustness, and Accountability (Hoffman et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1911.11807">Fairness Indicators: Scalable Infrastructure for Fairness in Machine Learning (Bird et al., 2020)</a></li>
+<li><a href="https://doi.org/10.1007/s10115-013-0678-7">The Foundations of Fair Machine Learning (Romei and Ruggieri, 2014)</a></li>
+<li><a href="https://arxiv.org/abs/1507.05259">Fairness Constraints: Mechanisms for Fair Classification (Zafar et al., 2017)</a></li>
+<li><a href="https://arxiv.org/abs/1308.2454">Fair Representation Learning for Fairness Constraints (Zemel et al., 2013)</a></li>
+<li><a href="https://www.tandfonline.com/doi/abs/10.1080/01972243.2020.1735207">When the Algorithm Itself Is a Racist: Diagnosing Ethical Harm in the Machine Learning Pipeline (Cooper, 2020)</a></li>
+<li><a href="https://link.springer.com/article/10.1007/s11023-016-9410-7">Beyond Fairness: The Value of a Human Rights Perspective in Algorithmic Decision Making (Mittelstadt et al., 2016)</a></li>
+<li><a href="https://dl.acm.org/doi/10.1145/1850488.1850531">Ensuring Fairness in Machine Learning: Addressing the Issues of Discrimination and Inequality (Calders and Verwer, 2010)</a></li>
+<li><a href="https://doi.org/10.1093/socpro/spy002">A Framework for Understanding Unintended Consequences of Machine Learning (Eubanks, 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1803.09010">Datasheets for Datasets: A Genre for Reporting the Dataset Life Cycle (Gebru et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1808.07261">FactSheets: Increasing Trust in AI Services through Supplier’s Declarations of Conformity (Arnold et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1808.09115">On Microtargeting Socially Divisive Ads: A Case Study of Russia-Linked Ad Campaigns on Facebook (Kim et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1906.09208">Mitigating Bias in Algorithmic Hiring: Evaluating Claims and Practices (Raghavan et al., 2020)</a></li>
+<li><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2747928">The Fairness Doctrine: Predictive Analytics and the Ethics of Preemption (Barocas et al., 2016)</a></li>
+<li><a href="https://arxiv.org/abs/1907.00017">The Hidden Assumptions behind Counterfactual Explanations and Principal Reasons (Wachter et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/2006.14548">Does Machine Learning Automate Moral Hazard and Error? (Fazelpour and Lipton, 2020)</a></li>
+<li><a href="https://dl.acm.org/doi/10.1145/2783258.2783311">Certifying and Removing Disparate Impact (Feldman et al., 2015)</a></li>
+</ul></li>
+<li><h6 id="future-directions" class="anchored">Future Directions:</h6>
+<ul>
+<li><a href="https://arxiv.org/abs/1802.07569">Continual Learning: A Comprehensive Survey (Parisi et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/2009.06732">Efficient Transformers: A Survey (Tay et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1701.06538">Sparsely-Gated Mixture-of-Experts Layers (Shazeer et al., 2017)</a></li>
+<li><a href="https://arxiv.org/abs/1809.11096">Large Scale GAN Training for High Fidelity Natural Image Synthesis (Brock et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/2010.11929">Transformers for Image Recognition at Scale (Dosovitskiy et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2009.14794">Rethinking Attention with Performers (Choromanski et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2006.16668">GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding (Lepikhin et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2003.05997">Routing Transformers: Adaptive Attention Routing for Efficient Long-Range Attention (Roy et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/2004.03839">T-NLG: A Transformer-based Language Model for Long Text Generation (Du et al., 2021)</a></li>
+<li><a href="https://arxiv.org/abs/1811.02084">Mesh-TensorFlow: Deep Learning for Supercomputers (Shazeer et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/2106.04560">Scaling Vision Transformers (Zhai et al., 2021)</a></li>
+<li><a href="https://arxiv.org/abs/2006.03236">Funnel-Transformer: Filtering out Sequential Redundancy for Efficient Language Processing (Dai et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1907.12461">Leveraging Pre-trained Checkpoints for Sequence Generation Tasks (Edunov et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1411.1920">Knowledge Graph Embedding: A Survey of Approaches and Applications (Wang et al., 2017)</a></li>
+<li><a href="https://arxiv.org/abs/2304.11062">Scaling Transformers to 1M tokens and beyond with RMT (Khizgilov et al., 2023)</a></li>
+<li><a href="https://arxiv.org/abs/2106.09685">LoRA: Low-Rank Adaptation of Large Language Models (Hu et al., 2021)</a></li>
+<li><a href="https://arxiv.org/abs/2211.05100">BLOOM: A 176B-Parameter Open-Access Multilingual Language Model (Scao et al., 2022)</a></li>
+<li><a href="https://arxiv.org/abs/2306.11207">Sparse is Enough in Scaling Transformers (Liu et al., 2023)</a></li>
+<li><a href="https://arxiv.org/abs/2203.17189">Scaling Up Models and Data with <span class="math inline">\(\texttt{t5x}\)</span> and <span class="math inline">\(\texttt{seqio}\)</span> (Roberts et al., 2022)</a></li>
+<li><a href="https://arxiv.org/abs/2301.10472">XLM-V: Overcoming the Vocabulary Bottleneck in Multilingual Masked Language Models (Bastings et al., 2023)</a></li>
+<li><a href="https://arxiv.org/abs/2205.14135">FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness (Dao et al., 2022)</a></li>
+<li><a href="https://arxiv.org/abs/2301.12594">Extrapolating Multimodal Foundation Models (Zellers et al., 2023)</a></li>
+<li><a href="https://arxiv.org/abs/2209.06180">Universal Information Extraction as Unified Semantic Matching (Lu et al., 2022)</a></li>
+<li><a href="https://arxiv.org/abs/2206.08916">Unified-IO: A Unified Model for Vision, Language, and Multi-Modal Tasks (Lu et al., 2022)</a></li>
+<li><a href="https://arxiv.org/abs/1912.01412">Deep Learning for Symbolic Mathematics (Lample and Charton, 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1501.05388">From Word Embeddings to Document Distances (Kusner et al., 2015)</a></li>
+<li><a href="https://arxiv.org/abs/2110.13488">Taming Transformers for High-Resolution Image Synthesis (Vahdat et al., 2021)</a></li>
+<li><a href="https://arxiv.org/abs/2203.15556">Training Compute-Optimal Large Language Models (Hoffmann et al., 2022)</a></li>
+<li><a href="https://arxiv.org/abs/2212.05275">Translating Mathematical Notation to LaTeX with Machine Learning (Cochrane et al., 2022)</a></li>
+<li><a href="https://arxiv.org/abs/2102.04710">Self-supervised Learning of Pretext-Invariant Representations (Chen and He, 2021)</a></li>
+<li><a href="https://arxiv.org/abs/2203.12533">Pathways: Asynchronous Distributed Dataflow for ML (Barham et al., 2022)</a></li>
+<li><a href="https://arxiv.org/abs/1908.07873">Federated Learning: Challenges, Methods, and Future Directions (Yang et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/2112.11446">Language Modeling at Scale: Gopher, RETRO, and the Future of Language Models (Rae et al., 2021)</a></li>
+<li><a href="https://arxiv.org/abs/2103.00020">Learning Transferable Visual Models From Natural Language Supervision (Radford et al., 2021)</a></li>
+<li><a href="https://arxiv.org/abs/2111.09223">Learning and Using the Arrow of Time (Weissenborn et al., 2021)</a></li>
+</ul></li>
+<li><h6 id="other-notable-papers" class="anchored">Other Notable Papers:</h6>
+<ul>
+<li><a href="https://arxiv.org/abs/1512.03385">Deep Residual Learning for Image Recognition (He et al., 2015)</a></li>
+<li><a href="https://arxiv.org/abs/1409.3215">Sequence to Sequence Learning with Neural Networks (Sutskever et al., 2014)</a></li>
+<li><a href="https://arxiv.org/abs/1409.0473">Neural Machine Translation by Jointly Learning to Align and Translate (Bahdanau et al., 2014)</a></li>
+<li><a href="https://arxiv.org/abs/1910.01108">DistilBERT: A Distilled Version of BERT (Sanh et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1705.03122">Convolutional Sequence to Sequence Learning (Gehring et al., 2017)</a></li>
+<li><a href="https://www.sciencedirect.com/science/article/abs/pii/S0167865500961161">Bidirectional Recurrent Neural Networks (Schuster and Paliwal, 1997)</a></li>
+<li><a href="https://arxiv.org/abs/1903.11395">Mixture of Softmaxes for Low-Resource Neural Machine Translation (Shen et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/2004.04937">Advancing High-Quality Neural Machine Translation with Joint Training of Iterative Refinement Steps (Kasai et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1705.07115">Multi-Task Learning Using Uncertainty to Weigh Losses for Scene Geometry and Semantics (Kendall et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1707.07012">Learning Transferable Architectures for Scalable Image Recognition (Zoph et al., 2018)</a></li>
+<li><a href="https://ieeexplore.ieee.org/document/6296526">Deep Neural Networks for Acoustic Modeling in Speech Recognition (Hinton et al., 2012)</a></li>
+<li><a href="https://arxiv.org/abs/1711.00489">Don’t Decay the Learning Rate, Increase the Batch Size (Smith et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1910.11603">Learning to Rank with BERT: An Empirical Study on Large-Scale Information Retrieval (Han et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1905.02249">MixMatch: A Holistic Approach to Semi-Supervised Learning (Berthelot et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1703.06211">Deformable Convolutional Networks (Dai et al., 2017)</a></li>
+<li><a href="https://arxiv.org/abs/1605.07146">Wide Residual Networks (Zagoruyko and Komodakis, 2016)</a></li>
+<li><a href="https://arxiv.org/abs/1802.05365">Deep Contextualized Word Representations (Peters et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/2103.00020">Learning Transferable Visual Models From Natural Language Supervision (Radford et al., 2021)</a></li>
+<li><a href="https://arxiv.org/abs/1606.03498">Improved Techniques for Training GANs (Salimans et al., 2016)</a></li>
+<li><a href="https://dl.acm.org/doi/10.5555/2998687.2998832">Learning Long-Term Dependencies with Gradient Descent is Difficult (Bengio et al., 1994)</a></li>
+<li><a href="https://arxiv.org/abs/1312.5602">Playing Atari with Deep Reinforcement Learning (Mnih et al., 2013)</a></li>
+<li><a href="https://arxiv.org/abs/1804.02767">YOLOv3: An Incremental Improvement (Redmon and Farhadi, 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1704.04861">MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications (Howard et al., 2017)</a></li>
+<li><a href="https://arxiv.org/abs/1806.10282">Auto-Keras: An Efficient Neural Architecture Search System (Jin et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1909.01716">Large-Scale Question Answering with Knowledge Base and Text (Sun et al., 2019)</a></li>
+<li><a href="https://openai.com/research/language-unsupervised">Improving Language Understanding by Generative Pre-Training (Radford et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1805.10402">Pushing the Limits of Semi-Supervised Learning: Can Big Data Help? (Oliver et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1508.06576">A Neural Algorithm of Artistic Style (Gatys et al., 2015)</a></li>
+<li><a href="https://arxiv.org/abs/1810.04805">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding (Devlin et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/1705.02364">Supervised Learning of Universal Sentence Representations from Natural Language Inference Data (Conneau et al., 2017)</a></li>
+<li><a href="https://arxiv.org/abs/1805.09801">Meta-Gradient Reinforcement Learning (Xu et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1704.01444">Learning to Generate Reviews and Discovering Sentiment (Radford et al., 2017)</a></li>
+<li><a href="https://arxiv.org/abs/1612.01474">Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles (Lakshminarayanan et al., 2017)</a></li>
+<li><a href="https://arxiv.org/abs/2302.13971">LLaMA: Open and Efficient Foundation Language Models (Touvron et al., 2023)</a></li>
+<li><a href="https://arxiv.org/abs/1711.07971">Non-local Neural Networks (Wang et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/2004.11867">Massively Multilingual Neural Machine Translation in the Wild: Findings and Challenges (Fan et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1810.04805">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding (Devlin et al., 2018)</a></li>
+<li><a href="https://arxiv.org/abs/1907.11692">RoBERTa: A Robustly Optimized BERT Pretraining Approach (Liu et al., 2019)</a></li>
+<li><a href="https://arxiv.org/abs/2004.04937">Advancing High-Quality Neural Machine Translation with Joint Training of Iterative Refinement Steps (Kasai et al., 2020)</a></li>
+<li><a href="https://arxiv.org/abs/1404.4661">Learning Fine-Grained Image Similarity with Deep Ranking (Wang et al., 2014)</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </div>

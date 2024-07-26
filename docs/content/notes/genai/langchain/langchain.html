@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.47">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ravi Shankar">
+
+<title>langchain – Data Down To Earth</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<link href="../../../../logo.png" rel="icon" type="image/png">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../../styles.css">
+<link rel="stylesheet" href="../../../content.css">
+<meta property="og:title" content="– Data Down To Earth">
+<meta property="og:site_name" content="Data Down To Earth">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../logo.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../../index.html">
+    <span class="navbar-title">Data Down To Earth</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../../../../projects/dsml_projects.html">
+ <span class="dropdown-text">Data Science and ML Projects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../projects/genai_projects.html">
+ <span class="dropdown-text">Generative AI Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-tutorials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Tutorials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-tutorials">    
+        <li>
+    <a class="dropdown-item" href="../../../../topics/statistics.html">
+ <span class="dropdown-text">Statistics &amp; Probability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../topics/machine_learning.html">
+ <span class="dropdown-text">Machine Learning</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../topics/de.html">
+ <span class="dropdown-text">Data Engineering</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../topics/generative_ai.html">
+ <span class="dropdown-text">Generative AI</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../topics/public_health.html">
+ <span class="dropdown-text">Public Health</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../topics/product_sense.html">
+ <span class="dropdown-text">Product Sense</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../notes/notes.html"> 
+<span class="menu-text">Notes &amp; Research</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/iamrsps"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/iamravishankar/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+</div>
+
+
+
+<div class="quarto-title-meta column-page">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ravi Shankar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="langchain" class="level2 text-content">
+<h2 class="anchored" data-anchor-id="langchain">LangChain</h2>
+<section id="architecture" class="level3">
+<h3 class="anchored" data-anchor-id="architecture">1. Architecture</h3>
+<p><strong>Definition</strong>: The overall structure and organisation of LangChain components.</p>
+<p><strong>Explanation</strong>: LangChain’s architecture is designed to be modular and flexible. It consists of various components that can be combined to create complex AI applications. The core idea is to separate different functionalities (like language models, memory, and tools) into distinct modules that can be easily connected and customised.</p>
+<p><strong>Example</strong>: A question-answering system might use a document loader to input data, a text splitter to break it into chunks, an embedding model to vectorise the text, a vector store for efficient retrieval, and an LLM to generate answers based on the retrieved information.</p>
+<p><strong>Key Concepts</strong>:</p>
+<ul>
+<li>Modularity: Components can be easily swapped or combined.</li>
+<li>Flexibility: The architecture allows for easy customisation and extension.</li>
+<li>Scalability: Can handle simple to complex AI workflows.</li>
+</ul>
+</section>
+<section id="langchain-core" class="level3">
+<h3 class="anchored" data-anchor-id="langchain-core">2. langchain-core</h3>
+<p><strong>Definition</strong>: The fundamental building blocks and interfaces for LangChain applications.</p>
+<p><strong>Explanation</strong>: langchain-core provides the essential classes and abstract interfaces that form the foundation of LangChain. These include base classes for language models, prompts, memory, and other core components. It defines the standard interfaces that all LangChain components adhere to, ensuring compatibility and interoperability.</p>
+<p><strong>Example</strong>: The <code>BaseLanguageModel</code> class in langchain-core defines the basic interface for all language models, whether they’re from OpenAI, Anthropic, or a custom implementation.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>BaseLanguageModel.generate(prompt: str) -&gt; str</code>: Generates text based on input prompts.</li>
+<li><code>PromptTemplate.format(**kwargs) -&gt; str</code>: Formats a prompt template with provided variables.</li>
+<li><code>BaseLLMOutputParser.parse(text: str) -&gt; Any</code>: Parses the output of an LLM into a structured format.</li>
+<li><code>BaseMemory.save_context(inputs: Dict, outputs: Dict)</code>: Saves the context of a conversation.</li>
+<li><code>BaseMemory.load_memory_variables(inputs: Dict) -&gt; Dict</code>: Loads relevant memory variables for a given input.</li>
+</ul>
+</section>
+<section id="partner-packages" class="level3">
+<h3 class="anchored" data-anchor-id="partner-packages">3. Partner packages</h3>
+<p><strong>Definition</strong>: Official integrations with external AI services and tools.</p>
+<p><strong>Explanation</strong>: Partner packages are pre-built integrations that allow LangChain to seamlessly work with various third-party AI services, databases, and tools. These packages handle the specifics of API calls, data formatting, and other integration details, making it easy to use external services within LangChain applications.</p>
+<p><strong>Example</strong>: The OpenAI package allows you to use GPT-3 or GPT-4 models in your LangChain application without having to handle the API calls and response parsing yourself.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>OpenAI(api_key: str, model_name: str)</code>: Initializes an OpenAI language model.</li>
+<li><code>OpenAI.complete(prompt: str) -&gt; str</code>: Generates text completion using OpenAI’s API.</li>
+<li><code>PineconeIndex(api_key: str, environment: str)</code>: Initializes a connection to a Pinecone vector database.</li>
+<li><code>PineconeIndex.from_texts(texts: List[str], embeddings: Embeddings)</code>: Creates a Pinecone index from a list of texts.</li>
+<li><code>PineconeIndex.similarity_search(query: str, k: int) -&gt; List[Document]</code>: Performs a similarity search in the Pinecone index.</li>
+</ul>
+</section>
+<section id="langchain-1" class="level3">
+<h3 class="anchored" data-anchor-id="langchain-1">4. langchain</h3>
+<p><strong>Definition</strong>: The main package that combines core functionality with a wide range of components and utilities.</p>
+<p><strong>Explanation</strong>: The langchain package is the primary interface for most users. It brings together all the core components, community contributions, and utilities into a cohesive package. This package provides high-level abstractions and ready-to-use chains and agents that can be easily customised for various AI applications.</p>
+<p><strong>Example</strong>: Using langchain, you can quickly set up a conversational AI that uses a language model, maintains conversation history, and can use tools to perform actions.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>LLMChain(llm: BaseLanguageModel, prompt: PromptTemplate).run(input: Dict) -&gt; str</code>: Executes a chain that formats a prompt and runs it through an LLM.</li>
+<li><code>ConversationChain(llm: BaseLanguageModel, memory: BaseMemory).predict(input: str) -&gt; str</code>: Manages a conversation, maintaining history and generating responses.</li>
+<li><code>VectorDBQA(vectorstore: VectorStore, llm: BaseLanguageModel).run(query: str) -&gt; str</code>: Performs question-answering using a vector database for retrieval and an LLM for answer generation.</li>
+<li><code>initialize_agent(tools: List[Tool], llm: BaseLanguageModel, agent: str, verbose: bool)</code>: Creates an agent that can use specified tools to complete tasks.</li>
+</ul>
+</section>
+<section id="langchain-community" class="level3">
+<h3 class="anchored" data-anchor-id="langchain-community">5. langchain-community</h3>
+<p><strong>Definition</strong>: A collection of community-contributed components and integrations for LangChain.</p>
+<p><strong>Explanation</strong>: langchain-community is a package that contains a wide variety of components, tools, and integrations developed by the LangChain community. These contributions extend LangChain’s capabilities, offering specialised document loaders, unique embedding models, custom tools, and more.</p>
+<p><strong>Example</strong>: A community-contributed PDF loader might offer advanced features like table extraction or handling of complex layouts, which aren’t available in the core package.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>PyPDFLoader(file_path: str).load() -&gt; List[Document]</code>: Loads text from PDF files, splitting into pages.</li>
+<li><code>FaissStore(embedding_function: Callable, index: faiss.Index).add_texts(texts: List[str])</code>: Adds texts to a FAISS vector store for efficient similarity search.</li>
+<li><code>WikipediaAPIWrapper().run(query: str) -&gt; str</code>: Fetches information from Wikipedia based on a query.</li>
+<li><code>PythonREPLTool().run(command: str) -&gt; str</code>: Executes Python code and returns the output.</li>
+</ul>
+</section>
+<section id="langgraph" class="level3">
+<h3 class="anchored" data-anchor-id="langgraph">6. langgraph</h3>
+<p><strong>Definition</strong>: A tool for building complex, multi-step AI workflows.</p>
+<p><strong>Explanation</strong>: langgraph allows you to create sophisticated AI workflows by defining a graph of interconnected components. Each node in the graph can be a LangChain component, and the edges define how data flows between these components. This enables the creation of complex, multi-step processes that can involve decision-making, loops, and parallel execution.</p>
+<p><strong>Example</strong>: Creating a research assistant that first searches for information, then summarises the findings, and finally generates a report, with the ability to loop back for more information if needed.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>Graph().add_node(name: str, node: Callable)</code>: Adds a node (component) to the workflow graph.</li>
+<li><code>Graph().add_edge(start: str, end: str)</code>: Connects two nodes in the workflow graph.</li>
+<li><code>Graph().set_entry_point(name: str)</code>: Defines the starting point of the workflow.</li>
+<li><code>Graph().compile()</code>: Finalises the graph structure for execution.</li>
+<li><code>CompiledGraph().invoke(input: Dict) -&gt; Any</code>: Runs the compiled workflow with given input.</li>
+</ul>
+</section>
+<section id="langserve" class="level3">
+<h3 class="anchored" data-anchor-id="langserve">7. langserve</h3>
+<p><strong>Definition</strong>: A framework for deploying LangChain applications as APIs.</p>
+<p><strong>Explanation</strong>: langserve provides tools and utilities to turn LangChain applications into web services. It handles the complexities of setting up API endpoints, managing requests and responses, and integrating with web frameworks. This makes it easy to deploy LangChain applications as scalable, production-ready services.</p>
+<p><strong>Example</strong>: Deploying a question-answering system as a REST API that other applications can query.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>add_routes(app: FastAPI, routes: Dict[str, Runnable])</code>: Adds API routes for LangChain components to a FastAPI application.</li>
+<li><code>create_langchain_server(chains: Dict[str, Chain])</code>: Creates a standalone server for LangChain components.</li>
+<li><code>run_server(host: str, port: int)</code>: Starts the API server.</li>
+<li><code>client.invoke(route: str, input: Dict) -&gt; Any</code>: Invokes a deployed LangChain component from a client application.</li>
+</ul>
+</section>
+<section id="langsmith" class="level3">
+<h3 class="anchored" data-anchor-id="langsmith">8. LangSmith</h3>
+<p><strong>Definition</strong>: A platform for debugging, monitoring, and improving LangChain applications.</p>
+<p><strong>Explanation</strong>: LangSmith is a comprehensive tool for observing and optimising LangChain applications. It provides detailed logging of each step in a LangChain process, allowing developers to visualise the flow of data, identify bottlenecks, and debug issues. It also offers features for A/B testing different configurations and monitoring production deployments.</p>
+<p><strong>Example</strong>: Using LangSmith to visualise how an agent decides which tools to use and how it formulates its final response.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>trace(run_id: str).start()</code>: Starts tracing a LangChain run.</li>
+<li><code>trace(run_id: str).log(key: str, value: Any)</code>: Logs a specific value during a run.</li>
+<li><code>trace(run_id: str).end()</code>: Ends tracing for a run.</li>
+<li><code>LangSmithClient().create_dataset(name: str, description: str)</code>: Creates a dataset for testing and evaluation.</li>
+<li><code>LangSmithClient().run_on_dataset(dataset_name: str, llm_or_chain: Any, evaluation_handlers: List[Callable])</code>: Runs a model or chain on a dataset and evaluates the results.</li>
+</ul>
+</section>
+<section id="langchain-expression-language-lcel" class="level3">
+<h3 class="anchored" data-anchor-id="langchain-expression-language-lcel">9. LangChain Expression Language (LCEL)</h3>
+<p><strong>Definition</strong>: A declarative language for composing LangChain components.</p>
+<p><strong>Explanation</strong>: LCEL provides a simple, expressive way to combine LangChain components into complex chains and workflows. It uses operator overloading to allow for intuitive composition of components, making it easy to create sophisticated AI applications with minimal boilerplate code.</p>
+<p><strong>Example</strong>: Using LCEL to create a chain that retrieves information, summarises it, and then uses the summary to answer a question.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>|</code> operator: Chains components sequentially. E.g., <code>retriever | summariser | llm</code>.</li>
+<li><code>RunnableParallel()</code>: Runs multiple components in parallel. E.g., <code>RunnableParallel({"summary": summariser, "sentiment": sentiment_analyser})</code>.</li>
+<li><code>RunnablePassthrough()</code>: Passes inputs through unchanged.</li>
+<li><code>RunnableLambda(func: Callable)</code>: Creates a runnable from a Python function.</li>
+</ul>
+</section>
+<section id="runnable-interface" class="level3">
+<h3 class="anchored" data-anchor-id="runnable-interface">10. Runnable interface</h3>
+<p><strong>Definition</strong>: A standard interface for executable AI components.</p>
+<p><strong>Explanation</strong>: The Runnable interface provides a consistent way to interact with various LangChain components. Any object that implements the Runnable interface can be easily integrated into LangChain workflows, chains, and agents. This standardisation makes it simple to create custom components that seamlessly work with the rest of the LangChain ecosystem.</p>
+<p><strong>Example</strong>: Creating a custom tool that analyses sentiment and implements the Runnable interface so it can be used in an agent.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>invoke(input: Dict) -&gt; Any</code>: Executes the runnable component with given inputs.</li>
+<li><code>stream(input: Dict) -&gt; Iterator</code>: Streams the output of the component.</li>
+<li><code>batch(inputs: List[Dict]) -&gt; List[Any]</code>: Processes multiple inputs in batch.</li>
+<li><code>ainvoke(input: Dict) -&gt; Awaitable[Any]</code>: Asynchronous version of invoke.</li>
+</ul>
+</section>
+<section id="components" class="level3">
+<h3 class="anchored" data-anchor-id="components">11. Components</h3>
+<p><strong>Definition</strong>: The building blocks of LangChain applications.</p>
+<p><strong>Explanation</strong>: Components in LangChain are modular pieces that perform specific functions. They can be combined in various ways to create complex AI systems. Components include language models, prompt templates, memory systems, and more. Each component is designed to be interchangeable and customisable, allowing for flexible application design.</p>
+<p><strong>Example</strong>: Using a PromptTemplate component to format user input before passing it to a language model component.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>Component.run(input: Dict) -&gt; Any</code>: Executes the component’s main functionality.</li>
+<li><code>Component.invoke(input: Dict) -&gt; Any</code>: Alternative method to execute the component.</li>
+<li><code>Component.from_config(config: Dict) -&gt; Component</code>: Creates a component instance from a configuration dictionary.</li>
+<li><code>Component.to_json() -&gt; str</code>: Serialises the component to a JSON string for storage or transmission.</li>
+</ul>
+</section>
+<section id="chat-models" class="level3">
+<h3 class="anchored" data-anchor-id="chat-models">12. Chat models</h3>
+<p><strong>Definition</strong>: Language models specifically designed for conversational interactions.</p>
+<p><strong>Explanation</strong>: Chat models are a type of language model optimised for back-and-forth conversations. They can maintain context across multiple turns of dialogue and generate more natural, contextually appropriate responses. LangChain provides interfaces to various chat models from different providers.</p>
+<p><strong>Example</strong>: Using GPT-3.5-turbo to create a customer service chatbot that can handle multi-turn conversations.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>ChatOpenAI(model_name: str, temperature: float).generate(messages: List[Dict]) -&gt; ChatResult</code>: Generates chat completions using OpenAI’s chat models.</li>
+<li><code>ChatAnthropic(model_name: str).predict(prompt: str) -&gt; str</code>: Generates a response using Anthropic’s chat models.</li>
+<li><code>ChatModel.stream(messages: List[Dict]) -&gt; Iterator[str]</code>: Streams the generated response token by token.</li>
+<li><code>ChatModel.get_num_tokens(text: str) -&gt; int</code>: Estimates the number of tokens in the input text.</li>
+</ul>
+</section>
+<section id="llms-large-language-models" class="level3">
+<h3 class="anchored" data-anchor-id="llms-large-language-models">13. LLMs (Large Language Models)</h3>
+<p><strong>Definition</strong>: General-purpose language models for text generation and understanding.</p>
+<p><strong>Explanation</strong>: LLMs are the core of many LangChain applications. They are powerful models trained on vast amounts of text data, capable of generating human-like text, answering questions, and performing various language tasks. LangChain provides a unified interface to interact with LLMs from different providers.</p>
+<p><strong>Example</strong>: Using GPT-3 to generate a story based on a given prompt or to answer general knowledge questions.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>OpenAI(model_name: str).generate(prompts: List[str]) -&gt; LLMResult</code>: Generates text completions using OpenAI’s models.</li>
+<li><code>HuggingFaceHub(repo_id: str, model_kwargs: Dict).predict(text: str) -&gt; str</code>: Generates text using models from Hugging Face’s model hub.</li>
+<li><code>LLM.get_num_tokens(text: str) -&gt; int</code>: Estimates the number of tokens in the input text.</li>
+<li><code>LLM.batch_generate(prompts: List[str], batch_size: int) -&gt; List[LLMResult]</code>: Generates responses for multiple prompts in batches.</li>
+</ul>
+</section>
+<section id="messages" class="level3">
+<h3 class="anchored" data-anchor-id="messages">14. Messages</h3>
+<p><strong>Definition</strong>: Structured format for inputs and outputs in conversational AI.</p>
+<p><strong>Explanation</strong>: Messages in LangChain represent different types of inputs and outputs in a conversation. They help maintain the structure and flow of dialogue, distinguishing between human inputs, AI responses, and system messages. This structured approach allows for more nuanced and context-aware conversations.</p>
+<p><strong>Example</strong>: In a chatbot application, using HumanMessage for user inputs, AIMessage for bot responses, and SystemMessage for setting the bot’s behaviour.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>HumanMessage(content: str)</code>: Creates a message object representing human input.</li>
+<li><code>AIMessage(content: str)</code>: Creates a message object representing AI-generated response.</li>
+<li><code>SystemMessage(content: str)</code>: Creates a message object for system instructions or context.</li>
+<li><code>ChatMessage(role: str, content: str)</code>: Creates a generic message with a specified role.</li>
+<li><code>MessageHistory().add_message(message: BaseMessage)</code>: Adds a message to the conversation history.</li>
+</ul>
+</section>
+<section id="prompt-templates" class="level3">
+<h3 class="anchored" data-anchor-id="prompt-templates">15. Prompt templates</h3>
+<p><strong>Definition</strong>: Reusable structures for generating prompts dynamically.</p>
+<p><strong>Explanation</strong>: Prompt templates allow you to create standardised, reusable prompt structures with placeholders for variables. This makes it easy to generate consistent prompts across different contexts or with different inputs. Prompt templates can include logic for formatting and can be composed to create complex prompts.</p>
+<p><strong>Example</strong>: Creating a template for generating product descriptions: “Write a compelling description for a {product_type} that emphasises its {key_feature}.”</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>PromptTemplate.from_template(template: str) -&gt; PromptTemplate</code>: Creates a prompt template from a string template.</li>
+<li><code>PromptTemplate.format(**kwargs) -&gt; str</code>: Formats the template with provided variables.</li>
+<li><code>PromptTemplate.save(file_path: str)</code>: Saves the prompt template to a file.</li>
+<li><code>PromptTemplate.from_file(file_path: str, input_variables: List[str]) -&gt; PromptTemplate</code>: Loads a prompt template from a file.</li>
+<li><code>FewShotPromptTemplate(examples: List[Dict], example_prompt: PromptTemplate, prefix: str, suffix: str)</code>: Creates a template for few-shot learning prompts.</li>
+</ul>
+</section>
+<section id="example-selectors" class="level3">
+<h3 class="anchored" data-anchor-id="example-selectors">16. Example selectors</h3>
+<p><strong>Definition</strong>: Tools for choosing relevant examples to guide AI responses.</p>
+<p><strong>Explanation</strong>: Example selectors are used in few-shot learning scenarios to dynamically choose the most relevant examples to include in a prompt. This helps guide the AI’s responses by providing context that’s most similar or relevant to the current input. Different selection strategies can be used based on the specific use case.</p>
+<p><strong>Example</strong>: In a customer support scenario, selecting past conversations that are most similar to the current query to guide the AI’s response.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>SemanticSimilarityExampleSelector(examples: List[Dict], embeddings: Embeddings).select_examples(input: Dict) -&gt; List[Dict]</code>: Selects examples based on semantic similarity to the input.</li>
+<li><code>NGramOverlapExampleSelector(examples: List[Dict]).add_example(example: Dict)</code>: Adds an example to the selector.</li>
+<li><code>LengthBasedExampleSelector(examples: List[Dict]).select_examples(input: Dict) -&gt; List[Dict]</code>: Selects examples based on length constraints.</li>
+<li><code>ExampleSelector.from_examples(examples: List[Dict], example_prompt: PromptTemplate, input_variables: List[str]) -&gt; ExampleSelector</code>: Creates an example selector from a list of examples.</li>
+</ul>
+</section>
+<section id="output-parsers" class="level3">
+<h3 class="anchored" data-anchor-id="output-parsers">17. Output parsers</h3>
+<p><strong>Definition</strong>: Tools for converting raw LLM output into structured data.</p>
+<p><strong>Explanation</strong>: Output parsers take the raw text output from an LLM and convert it into a structured format that’s easier to work with programmatically. This can include parsing JSON, extracting specific fields, or converting text to specific data types. Output parsers help bridge the gap between the free-form text generation of LLMs and the structured data often required in applications.</p>
+<p><strong>Example</strong>: Parsing a language model’s output into a JSON object with specific fields like “summary”, “sentiment”, and “key_points”.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>StructuredOutputParser.from_response_schemas(response_schemas: List[ResponseSchema]) -&gt; StructuredOutputParser</code>: Creates a parser for structured output based on defined schemas.</li>
+<li><code>PydanticOutputParser(pydantic_object: Type[BaseModel]).parse(text: str) -&gt; BaseModel</code>: Parses output into a Pydantic model.</li>
+<li><code>CommaSeparatedListOutputParser().parse(text: str) -&gt; List[str]</code>: Parses a comma-separated list from text.</li>
+<li><code>OutputFixingParser(parser: BaseOutputParser, retry_chain: LLMChain)</code>: Attempts to fix parsing errors by reprocessing through an LLM.</li>
+</ul>
+</section>
+<section id="chat-history" class="level3">
+<h3 class="anchored" data-anchor-id="chat-history">18. Chat history</h3>
+<p><strong>Definition</strong>: Storage and management of conversation logs.</p>
+<p><strong>Explanation</strong>: Chat history components in LangChain handle the storage, retrieval, and management of conversation logs. This is crucial for maintaining context in multi-turn conversations, allowing the AI to reference past interactions and maintain coherence. Chat history can be stored in various formats and can include metadata about each message.</p>
+<p><strong>Example</strong>: Maintaining a conversation log for a customer service chatbot, allowing it to reference previous questions and answers.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>ChatMessageHistory().add_user_message(message: str)</code>: Adds a user message to the history.</li>
+<li><code>ChatMessageHistory().add_ai_message(message: str)</code>: Adds an AI-generated message to the history.</li>
+<li><code>ChatMessageHistory().messages -&gt; List[BaseMessage]</code>: Retrieves all messages in the history.</li>
+<li><code>ConversationBufferMemory(chat_memory: BaseChatMessageHistory).save_context(inputs: Dict, outputs: Dict)</code>: Saves the current context to memory.</li>
+<li><code>ConversationBufferMemory(chat_memory: BaseChatMessageHistory).load_memory_variables(inputs: Dict) -&gt; Dict</code>: Loads relevant memory variables for the current context.</li>
+</ul>
+</section>
+<section id="documents" class="level3">
+<h3 class="anchored" data-anchor-id="documents">19. Documents</h3>
+<p><strong>Definition</strong>: Containers for text data and associated metadata.</p>
+<p><strong>Explanation</strong>: In LangChain, documents are the primary way of representing chunks of text along with their metadata. They are used extensively in document loading, text splitting, and retrieval operations. Documents can represent anything from paragraphs of a book to entries in a database, and their metadata can include source information, timestamps, or any other relevant data.</p>
+<p><strong>Example</strong>: Representing pages of a PDF as Document objects, each containing the text content and metadata like page number and source file.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>Document(page_content: str, metadata: Dict)</code>: Creates a new document with content and metadata.</li>
+<li><code>Document.to_json() -&gt; str</code>: Serialises the document to a JSON string.</li>
+<li><code>Document.from_json(json_string: str) -&gt; Document</code>: Creates a document from a JSON string.</li>
+<li><code>Document.similarity(other: Document) -&gt; float</code>: Calculates similarity with another document (if embeddings are available).</li>
+</ul>
+</section>
+<section id="document-loaders" class="level3">
+<h3 class="anchored" data-anchor-id="document-loaders">20. Document loaders</h3>
+<p><strong>Definition</strong>: Tools for importing text from various file formats and sources.</p>
+<p><strong>Explanation</strong>: Document loaders in LangChain are responsible for reading text from different file formats (like PDF, CSV, HTML) or data sources (like databases or APIs) and converting them into Document objects. They handle the complexities of parsing different formats and often include options for how to split or process the text during loading.</p>
+<p><strong>Example</strong>: Using a PDF loader to extract text from a scientific paper, creating a Document object for each page.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>PyPDFLoader(file_path: str).load() -&gt; List[Document]</code>: Loads text from a PDF file.</li>
+<li><code>CSVLoader(file_path: str).load() -&gt; List[Document]</code>: Loads text from a CSV file.</li>
+<li><code>TextLoader(file_path: str).load() -&gt; List[Document]</code>: Loads text from a plain text file.</li>
+<li><code>WebBaseLoader(web_path: str).load() -&gt; List[Document]</code>: Loads text from a web page.</li>
+<li><code>DirectoryLoader(path: str, glob: str).load() -&gt; List[Document]</code>: Loads documents from all files in a directory matching a glob pattern.</li>
+</ul>
+</section>
+<section id="text-splitters" class="level3">
+<h3 class="anchored" data-anchor-id="text-splitters">21. Text splitters</h3>
+<p><strong>Definition</strong>: Tools for dividing long texts into smaller, manageable chunks.</p>
+<p><strong>Explanation</strong>: Text splitters are crucial for processing large documents or long pieces of text. They break down text into smaller segments that can be more easily processed by language models or stored in vector databases. Different splitting strategies can be used based on the nature of the text and the specific requirements of the application.</p>
+<p><strong>Example</strong>: Splitting a long research paper into paragraphs or fixed-length chunks for easier processing and retrieval.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>CharacterTextSplitter(chunk_size: int, chunk_overlap: int).split_text(text: str) -&gt; List[str]</code>: Splits text based on character count.</li>
+<li><code>RecursiveCharacterTextSplitter(chunk_size: int, chunk_overlap: int).split_documents(documents: List[Document]) -&gt; List[Document]</code>: Recursively splits documents, respecting sentence and paragraph boundaries.</li>
+<li><code>TokenTextSplitter(chunk_size: int, chunk_overlap: int).split_text(text: str) -&gt; List[str]</code>: Splits text based on token count.</li>
+<li><code>MarkdownHeaderTextSplitter().split_text(markdown_text: str) -&gt; List[Document]</code>: Splits markdown text based on headers.</li>
+</ul>
+</section>
+<section id="embedding-models" class="level3">
+<h3 class="anchored" data-anchor-id="embedding-models">22. Embedding models</h3>
+<p><strong>Definition</strong>: Models that convert text into numerical vectors.</p>
+<p><strong>Explanation</strong>: Embedding models transform text into high-dimensional vectors that capture semantic meaning. These embeddings are crucial for many NLP tasks, including semantic search, clustering, and similarity comparisons. LangChain provides interfaces to various embedding models from different providers.</p>
+<p><strong>Example</strong>: Converting a set of product descriptions into embeddings for a similarity-based recommendation system.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>OpenAIEmbeddings(model: str).embed_documents(texts: List[str]) -&gt; List[List[float]]</code>: Generates embeddings for a list of texts using OpenAI’s models.</li>
+<li><code>HuggingFaceEmbeddings(model_name: str).embed_query(text: str) -&gt; List[float]</code>: Generates an embedding for a single query using a Hugging Face model.</li>
+<li><code>CohereEmbeddings().embed_documents(documents: List[Document]) -&gt; List[List[float]]</code>: Generates embeddings for a list of documents using Cohere’s API.</li>
+<li><code>TensorflowHubEmbeddings(model_url: str).embed_query(text: str) -&gt; List[float]</code>: Generates an embedding using a TensorFlow Hub model.</li>
+</ul>
+</section>
+<section id="vector-stores" class="level3">
+<h3 class="anchored" data-anchor-id="vector-stores">23. Vector stores</h3>
+<p><strong>Definition</strong>: Databases optimised for storing and querying vector embeddings.</p>
+<p><strong>Explanation</strong>: Vector stores are specialised databases designed to efficiently store and search high-dimensional vectors. They are crucial for implementing semantic search and similarity-based retrieval in LangChain applications. Vector stores allow for fast nearest neighbour searches, which is essential for finding relevant information based on semantic similarity.</p>
+<p><strong>Example</strong>: Storing embeddings of a large document collection for quick retrieval of relevant passages during question-answering tasks.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>Chroma.from_documents(documents: List[Document], embedding: Embeddings)</code>: Creates a Chroma vector store from a list of documents.</li>
+<li><code>FAISS(embedding_function: Callable, index: faiss.Index).add_texts(texts: List[str])</code>: Adds texts to a FAISS vector store.</li>
+<li><code>Pinecone.from_existing_index(index_name: str, embedding: Embeddings).similarity_search(query: str, k: int) -&gt; List[Document]</code>: Performs a similarity search on an existing Pinecone index.</li>
+<li><code>Qdrant(client: QdrantClient, collection_name: str).add_documents(documents: List[Document])</code>: Adds documents to a Qdrant vector store.</li>
+</ul>
+</section>
+<section id="retrievers" class="level3">
+<h3 class="anchored" data-anchor-id="retrievers">24. Retrievers</h3>
+<p><strong>Definition</strong>: Components that find and return relevant information from a knowledge base.</p>
+<p><strong>Explanation</strong>: Retrievers are responsible for finding relevant information from a corpus of documents or a knowledge base. They often work in conjunction with vector stores to perform semantic searches. Retrievers can use various strategies, from simple keyword matching to complex neural network-based retrieval methods.</p>
+<p><strong>Example</strong>: In a question-answering system, using a retriever to find relevant passages from a large document collection before generating an answer.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>VectorStoreRetriever(vectorstore: VectorStore).get_relevant_documents(query: str) -&gt; List[Document]</code>: Retrieves relevant documents from a vector store.</li>
+<li><code>TFIDFRetriever(documents: List[Document]).get_relevant_documents(query: str) -&gt; List[Document]</code>: Uses TF-IDF for document retrieval.</li>
+<li><code>SelfQueryRetriever(vectorstore: VectorStore, llm: BaseLanguageModel).get_relevant_documents(query: str) -&gt; List[Document]</code>: Uses an LLM to generate a structured query for retrieval.</li>
+<li><code>MultiQueryRetriever(retriever: BaseRetriever, llm: BaseLanguageModel).get_relevant_documents(query: str) -&gt; List[Document]</code>: Generates multiple query variations to improve retrieval.</li>
+</ul>
+</section>
+<section id="tools" class="level3">
+<h3 class="anchored" data-anchor-id="tools">25. Tools</h3>
+<p><strong>Definition</strong>: Specific functions or capabilities that can be used by AI agents.</p>
+<p><strong>Explanation</strong>: Tools in LangChain represent specific functionalities that can be leveraged by AI agents to perform tasks. These can range from simple calculators to complex API integrations. Tools allow agents to interact with external systems, perform computations, or access specific information sources.</p>
+<p><strong>Example</strong>: A weather tool that an AI agent can use to fetch current weather information for a given location.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>Tool(name: str, func: Callable, description: str)</code>: Creates a custom tool with a given function and description.</li>
+<li><code>PythonREPLTool().run(command: str) -&gt; str</code>: Executes Python code and returns the output.</li>
+<li><code>RequestsGetTool().run(url: str) -&gt; str</code>: Performs an HTTP GET request and returns the response.</li>
+<li><code>WikipediaQueryRun().run(query: str) -&gt; str</code>: Searches Wikipedia and returns a summary of the results.</li>
+</ul>
+</section>
+<section id="toolkits" class="level3">
+<h3 class="anchored" data-anchor-id="toolkits">26. Toolkits</h3>
+<p><strong>Definition</strong>: Collections of related tools.</p>
+<p><strong>Explanation</strong>: Toolkits are groups of related tools that are bundled together to provide a comprehensive set of functionalities. They are designed to work seamlessly together and can be used to perform a series of related tasks within a LangChain application.</p>
+<p><strong>Example</strong>: A SQL toolkit that includes tools for connecting to a database, executing queries, and retrieving results.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>SQLDatabaseToolkit(connection_string: str).get_tools() -&gt; List[Tool]</code>: Returns a set of SQL-related tools.</li>
+<li><code>WebScrapingToolkit().get_tools() -&gt; List[Tool]</code>: Provides tools for scraping and parsing web content.</li>
+<li><code>DataCleaningToolkit().get_tools() -&gt; List[Tool]</code>: Includes tools for cleaning and preprocessing data.</li>
+</ul>
+</section>
+<section id="agents" class="level3">
+<h3 class="anchored" data-anchor-id="agents">27. Agents</h3>
+<p><strong>Definition</strong>: AI systems that can use tools to complete tasks.</p>
+<p><strong>Explanation</strong>: Agents in LangChain are intelligent systems that can perform tasks by using various tools. They can make decisions about which tools to use based on the task at hand and can execute complex workflows involving multiple steps and tools. Agents can be configured to handle specific types of tasks or to operate in a general-purpose manner.</p>
+<p><strong>Example</strong>: An agent that can search the web for information, summarise the results, and generate a report.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>Agent.run(input: Dict) -&gt; Any</code>: Executes the agent’s decision-making process.</li>
+<li><code>Agent.add_tool(tool: Tool)</code>: Adds a tool to the agent’s toolkit.</li>
+<li><code>Agent.configure(**kwargs)</code>: Configures the agent with specific settings.</li>
+<li><code>ReActAgent(llm: BaseLanguageModel, tools: List[Tool]).run(input: Dict) -&gt; Any</code>: A specific type of agent that uses reasoning and action to complete tasks.</li>
+</ul>
+</section>
+<section id="callbacks" class="level3">
+<h3 class="anchored" data-anchor-id="callbacks">28. Callbacks</h3>
+<p><strong>Definition</strong>: Hooks for monitoring and logging AI operations.</p>
+<p><strong>Explanation</strong>: Callbacks are functions that are called at specific points during the execution of LangChain components. They are used for monitoring, logging, and debugging purposes. Callbacks can capture detailed information about the execution process, including inputs, outputs, and intermediate states.</p>
+<p><strong>Example</strong>: Logging each step of a language model’s text generation process to understand how it arrived at the final output.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>Callback.on_llm_start(llm: BaseLanguageModel, prompt: str)</code>: Hook called when an LLM operation starts.</li>
+<li><code>Callback.on_llm_end(llm: BaseLanguageModel, response: str)</code>: Hook called when an LLM operation ends.</li>
+<li><code>Callback.on_tool_start(tool: Tool, input: Dict)</code>: Hook called when a tool operation starts.</li>
+<li><code>Callback.on_tool_end(tool: Tool, output: Any)</code>: Hook called when a tool operation ends.</li>
+</ul>
+</section>
+<section id="techniques" class="level3">
+<h3 class="anchored" data-anchor-id="techniques">29. Techniques</h3>
+<p><strong>Definition</strong>: Methods for enhancing AI capabilities.</p>
+<p><strong>Explanation</strong>: Techniques in LangChain refer to various methods and strategies used to improve the performance and capabilities of AI models and systems. These can include advanced training methods, optimisation techniques, and specific algorithms designed to enhance certain aspects of AI behaviour.</p>
+<p><strong>Example</strong>: Using few-shot learning to improve the accuracy of a language model on specific tasks by providing a few examples in the prompt.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>FewShotPromptTemplate(examples: List[Dict], example_prompt: PromptTemplate, prefix: str, suffix: str)</code>: Creates a template for few-shot learning prompts.</li>
+<li><code>SelfConsistency(chain: LLMChain).run(input: Dict) -&gt; Any</code>: Uses self-consistency to improve the reliability of chain outputs.</li>
+<li><code>EnsembleModel(models: List[BaseLanguageModel]).generate(prompt: str) -&gt; str</code>: Combines multiple models to generate a more robust output.</li>
+</ul>
+</section>
+<section id="streaming" class="level3">
+<h3 class="anchored" data-anchor-id="streaming">30. Streaming</h3>
+<p><strong>Definition</strong>: Generating and processing output in real-time.</p>
+<p><strong>Explanation</strong>: Streaming in LangChain refers to the ability to generate and process output incrementally in real-time. This is particularly useful for applications where immediate feedback is important, such as interactive chatbots or live data processing systems. Streaming allows for a more responsive and dynamic user experience.</p>
+<p><strong>Example</strong>: Displaying chatbot responses as they are generated, rather than waiting for the entire response to be completed.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>LLMChain.stream(input: Dict) -&gt; Iterator[str]</code>: Streams the output of an LLM chain in real-time.</li>
+<li><code>ChatModel.stream(messages: List[Dict]) -&gt; Iterator[str]</code>: Streams the generated response token by token.</li>
+<li><code>StreamingCallback.on_token(token: str)</code>: Hook called for each token generated during streaming.</li>
+</ul>
+</section>
+<section id="functiontool-calling" class="level3">
+<h3 class="anchored" data-anchor-id="functiontool-calling">31. Function/tool calling</h3>
+<p><strong>Definition</strong>: Allowing AI to invoke specific functions or tools.</p>
+<p><strong>Explanation</strong>: Function or tool calling in LangChain enables AI models to invoke predefined functions or tools as part of their execution process. This allows the models to perform specific tasks or access external resources dynamically, enhancing their capabilities and flexibility.</p>
+<p><strong>Example</strong>: An AI model calling a weather API to get current weather information for a given location during a conversation.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>FunctionCaller.call_function(function_name: str, input: Dict) -&gt; Any</code>: Calls a specific function with the given input.</li>
+<li><code>ToolCaller.call_tool(tool_name: str, input: Dict) -&gt; Any</code>: Calls a specific tool with the given input.</li>
+<li><code>FunctionCaller.configure(**kwargs)</code>: Configures the function caller with specific settings.</li>
+</ul>
+</section>
+<section id="structured-output" class="level3">
+<h3 class="anchored" data-anchor-id="structured-output">32. Structured output</h3>
+<p><strong>Definition</strong>: Generating responses in specific, structured formats.</p>
+<p><strong>Explanation</strong>: Structured output refers to the ability of AI models to generate responses in well-defined formats, such as JSON, XML, or custom data structures. This is useful for applications that require precise data formats for further processing or integration with other systems.</p>
+<p><strong>Example</strong>: Generating a JSON object with specific fields like “summary”, “sentiment”, and “key_points” from a text analysis task.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>StructuredOutputParser.from_response_schemas(response_schemas: List[ResponseSchema]) -&gt; StructuredOutputParser</code>: Creates a parser for structured output based on defined schemas.</li>
+<li><code>PydanticOutputParser(pydantic_object: Type[BaseModel]).parse(text: str) -&gt; BaseModel</code>: Parses output into a Pydantic model.</li>
+<li><code>CommaSeparatedListOutputParser().parse(text: str) -&gt; List[str]</code>: Parses a comma-separated list from text.</li>
+<li><code>OutputFixingParser(parser: BaseOutputParser, retry_chain: LLMChain)</code>: Attempts to fix parsing errors by reprocessing through an LLM.</li>
+</ul>
+</section>
+<section id="retrieval" class="level3">
+<h3 class="anchored" data-anchor-id="retrieval">33. Retrieval</h3>
+<p><strong>Definition</strong>: Finding and using relevant information for tasks.</p>
+<p><strong>Explanation</strong>: Retrieval in LangChain involves finding and using relevant information from a knowledge base, document collection, or other data sources to support AI tasks. Effective retrieval is crucial for tasks like question answering, summarisation, and information extraction.</p>
+<p><strong>Example</strong>: Using a search engine to find articles related to a query and then using the retrieved information to generate a summary.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>Retriever.retrieve(query: str) -&gt; List[Document]</code>: Finds and returns relevant information from a knowledge base.</li>
+<li><code>VectorStoreRetriever(vectorstore: VectorStore).get_relevant_documents(query: str) -&gt; List[Document]</code>: Retrieves relevant documents from a vector store.</li>
+<li><code>TFIDFRetriever(documents: List[Document]).get_relevant_documents(query: str) -&gt; List[Document]</code>: Uses TF-IDF for document retrieval.</li>
+</ul>
+</section>
+<section id="text-splitting" class="level3">
+<h3 class="anchored" data-anchor-id="text-splitting">34. Text splitting</h3>
+<p><strong>Definition</strong>: Dividing text into smaller, processable parts.</p>
+<p><strong>Explanation</strong>: Text splitting involves breaking down large texts into smaller, manageable chunks that can be more easily processed by language models or other components. This is essential for handling long documents, ensuring that each chunk is of an appropriate size for processing.</p>
+<p><strong>Example</strong>: Splitting a book into chapters or paragraphs for analysis and indexing.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>CharacterTextSplitter(chunk_size: int, chunk_overlap: int).split_text(text: str) -&gt; List[str]</code>: Splits text based on character count.</li>
+<li><code>RecursiveCharacterTextSplitter(chunk_size: int, chunk_overlap: int).split_documents(documents: List[Document]) -&gt; List[Document]</code>: Recursively splits documents, respecting sentence and paragraph boundaries.</li>
+<li><code>TokenTextSplitter(chunk_size: int, chunk_overlap: int).split_text(text: str) -&gt; List[str]</code>: Splits text based on token count.</li>
+</ul>
+</section>
+<section id="evaluation" class="level3">
+<h3 class="anchored" data-anchor-id="evaluation">35. Evaluation</h3>
+<p><strong>Definition</strong>: Assessing the performance of AI systems.</p>
+<p><strong>Explanation</strong>: Evaluation in LangChain involves measuring the performance of AI models and systems against defined metrics. This can include accuracy, precision, recall, and other relevant metrics. Evaluation helps in understanding the effectiveness of models and identifying areas for improvement.</p>
+<p><strong>Example</strong>: Measuring the accuracy of responses generated by a question-answering system by comparing them to a set of ground truth answers.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>Evaluator.evaluate(output: Any, metrics: List[Callable]) -&gt; Dict[str, Any]</code>: Assesses the performance of AI outputs against defined metrics.</li>
+<li><code>Evaluator.add_metric(metric: Callable)</code>: Adds a new metric to the evaluator.</li>
+<li><code>Evaluator.run_on_dataset(dataset: List[Dict], model: BaseLanguageModel) -&gt; List[Dict]</code>: Runs evaluation on a dataset using a specified model.</li>
+</ul>
+</section>
+<section id="tracing" class="level3">
+<h3 class="anchored" data-anchor-id="tracing">36. Tracing</h3>
+<p><strong>Definition</strong>: Recording the steps of AI operations for analysis.</p>
+<p><strong>Explanation</strong>: Tracing involves recording detailed information about the execution of AI operations, including inputs, outputs, intermediate states, and execution times. This information is valuable for debugging, monitoring, and optimising AI workflows.</p>
+<p><strong>Example</strong>: Logging the sequence of prompts and responses during a conversation to understand how the AI arrived at its final answer.</p>
+<p><strong>Key Functions</strong>:</p>
+<ul>
+<li><code>Tracer.start_trace()</code>: Begins tracing of AI operations.</li>
+<li><code>Tracer.end_trace()</code>: Ends tracing of AI operations.</li>
+<li><code>Tracer.log(key: str, value: Any)</code>: Logs a specific value during tracing.</li>
+<li><code>Tracer.get_trace() -&gt; List[Dict]</code>: Retrieves the recorded trace information.</li>
+</ul>
+</section>
+</section>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
