@@ -403,7 +403,7 @@ window.Quarto = {
 <section id="objective" class="level5">
 <h5 class="anchored" data-anchor-id="objective">Objective</h5>
 <p>Determine which headline leads to a higher click-through rate (CTR).</p>
-<div id="1ff1536b" class="cell" data-execution_count="1">
+<div id="98639bb9" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -451,10 +451,10 @@ window.Quarto = {
 <span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"The difference in CTR between the two headlines is not statistically significant."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>CTR for Headline A: 28.96%
-CTR for Headline B: 30.08%
-Z-score: -0.3899530795617233
-P-value: 0.696571242815434
+<pre><code>CTR for Headline A: 30.59%
+CTR for Headline B: 27.25%
+Z-score: 1.1622693737983392
+P-value: 0.24512606282741733
 The difference in CTR between the two headlines is not statistically significant.</code></pre>
 </div>
 </div>
@@ -494,7 +494,7 @@ The difference in CTR between the two headlines is not statistically significant
 <section id="objective-1" class="level5">
 <h5 class="anchored" data-anchor-id="objective-1">Objective</h5>
 <p>Determine the optimal combination of headline, image, and CTA button that maximizes the conversion rate.</p>
-<div id="f498d16a" class="cell" data-execution_count="2">
+<div id="bf70b149" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -543,24 +543,28 @@ The difference in CTR between the two headlines is not statistically significant
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   headline   image   cta_button  users  clicks  \
-0     Discover New Features  Image1  Sign Up Now    127      27   
-1     Discover New Features  Image1   Learn More    111      21   
-2     Discover New Features  Image2  Sign Up Now    106      25   
-3     Discover New Features  Image2   Learn More    198      51   
-4  Unlock Exclusive Content  Image1  Sign Up Now    103      25   
-5  Unlock Exclusive Content  Image1   Learn More    135      34   
-6  Unlock Exclusive Content  Image2  Sign Up Now    164      37   
-7  Unlock Exclusive Content  Image2   Learn More    184      37   
+0     Discover New Features  Image1  Sign Up Now    173      46   
+1     Discover New Features  Image1   Learn More    196      48   
+2     Discover New Features  Image2  Sign Up Now    184      57   
+3     Discover New Features  Image2   Learn More    149      28   
+4  Unlock Exclusive Content  Image1  Sign Up Now    102      14   
+5  Unlock Exclusive Content  Image1   Learn More    106      24   
+6  Unlock Exclusive Content  Image2  Sign Up Now    111      26   
+7  Unlock Exclusive Content  Image2   Learn More    115      27   
 
    conversion_rate  
-0         0.212598  
-1         0.189189  
-2         0.235849  
-3         0.257576  
-4         0.242718  
-5         0.251852  
-6         0.225610  
-7         0.201087  </code></pre>
+0         0.265896  
+1         0.244898  
+2         0.309783  
+3         0.187919  
+4         0.137255  
+5         0.226415  
+6         0.234234  
+7         0.234783  
+Combination ('Discover New Features', 'Image1', 'Sign Up Now') is significantly different from ('Unlock Exclusive Content', 'Image1', 'Sign Up Now') with p-value 0.012594966335907344
+Combination ('Discover New Features', 'Image1', 'Learn More') is significantly different from ('Unlock Exclusive Content', 'Image1', 'Sign Up Now') with p-value 0.029851660576013243
+Combination ('Discover New Features', 'Image2', 'Sign Up Now') is significantly different from ('Discover New Features', 'Image2', 'Learn More') with p-value 0.011210431048950732
+Combination ('Discover New Features', 'Image2', 'Sign Up Now') is significantly different from ('Unlock Exclusive Content', 'Image1', 'Sign Up Now') with p-value 0.0012155334781905082</code></pre>
 </div>
 </div>
 <hr>
@@ -586,7 +590,7 @@ The difference in CTR between the two headlines is not statistically significant
 <section id="objective-2" class="level5">
 <h5 class="anchored" data-anchor-id="objective-2">Objective</h5>
 <p>Compare the conversion rates between the original landing page and the new landing page.</p>
-<div id="96b62e0c" class="cell" data-execution_count="3">
+<div id="cf606d0a" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -633,10 +637,10 @@ The difference in CTR between the two headlines is not statistically significant
 <span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"The difference in conversion rates between the two landing pages is not statistically significant."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Conversion Rate for Original Landing Page: 30.43%
-Conversion Rate for New Landing Page: 28.46%
-Z-score: 0.9648109386941911
-P-value: 0.334639516015643
+<pre><code>Conversion Rate for Original Landing Page: 30.79%
+Conversion Rate for New Landing Page: 27.81%
+Z-score: 1.4616053453841633
+P-value: 0.14384938874873734
 The difference in conversion rates between the two landing pages is not statistically significant.</code></pre>
 </div>
 </div>
@@ -663,7 +667,7 @@ The difference in conversion rates between the two landing pages is not statisti
 <section id="objective-3" class="level5">
 <h5 class="anchored" data-anchor-id="objective-3">Objective</h5>
 <p>Compare the cart abandonment rates between the original multi-page checkout process and the new multi-page checkout process.</p>
-<div id="a1c86de6" class="cell" data-execution_count="4">
+<div id="ab4b376f" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -759,7 +763,7 @@ The difference in completion rates between the two checkout processes is statist
 <section id="objective-4" class="level5">
 <h5 class="anchored" data-anchor-id="objective-4">Objective</h5>
 <p>Continuously monitor the click-through rate (CTR) of both ads and decide whether to stop the test early if the new ad is significantly outperforming the current ad.</p>
-<div id="b262a214" class="cell" data-execution_count="5">
+<div id="e328d190" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -870,7 +874,7 @@ The new ad is significantly outperforming the current ad. Stopping the test earl
 <section id="objective-5" class="level5">
 <h5 class="anchored" data-anchor-id="objective-5">Objective</h5>
 <p>Use the epsilon-greedy algorithm to dynamically allocate traffic to the different versions based on their performance, aiming to maximize the overall click-through rate (CTR).</p>
-<div id="965a4aaa" class="cell" data-execution_count="6">
+<div id="ecb9c328" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -998,7 +1002,7 @@ CTR = \frac{\text{Total Clicks}}{\text{Total Impressions}}
 <section id="objective-6" class="level5">
 <h5 class="anchored" data-anchor-id="objective-6">Objective</h5>
 <p>Use Thompson sampling to dynamically allocate traffic to the different ad campaigns based on the probability of each being the best option, aiming to maximize the overall conversion rate.</p>
-<div id="11cf2509" class="cell" data-execution_count="7">
+<div id="11af1591" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1156,7 +1160,7 @@ The best-performing campaign is: B</code></pre>
 <section id="objective-7" class="level5">
 <h5 class="anchored" data-anchor-id="objective-7">Objective</h5>
 <p>Use Bayesian A/B testing to update beliefs about the performance of each design and decide which design to implement based on the collected data.</p>
-<div id="1369af07" class="cell" data-execution_count="8">
+<div id="e4b5c897" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1304,7 +1308,7 @@ Probability that Design B is better than Design A: 99.98%</code></pre>
 </section>
 <section id="frequentist-approach" class="level5">
 <h5 class="anchored" data-anchor-id="frequentist-approach">Frequentist Approach</h5>
-<div id="5cef9b1b" class="cell" data-execution_count="9">
+<div id="abb09292" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1356,7 +1360,7 @@ The difference in conversion rates is statistically significant. Design B is bet
 </section>
 <section id="bayesian-approach" class="level5">
 <h5 class="anchored" data-anchor-id="bayesian-approach">Bayesian Approach</h5>
-<div id="f028d218" class="cell" data-execution_count="10">
+<div id="be5be2ee" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1465,7 +1469,7 @@ The difference in conversion rates is statistically significant. Design B is bet
 <section id="objective-9" class="level5">
 <h5 class="anchored" data-anchor-id="objective-9">Objective</h5>
 <p>Use a two-factor factorial design to assess the main effects and interactions between image styles and post times on user engagement.</p>
-<div id="ebdc9700" class="cell" data-execution_count="11">
+<div id="1ca59163" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1570,7 +1574,7 @@ Residual                     9640.930846  396.0        NaN           NaN</code><
 <section id="objective-10" class="level5">
 <h5 class="anchored" data-anchor-id="objective-10">Objective</h5>
 <p>Use a three-factor factorial design to assess the main effects and interactions among image styles, post times, and caption lengths on user engagement.</p>
-<div id="d4824df8" class="cell" data-execution_count="12">
+<div id="2ece6e2e" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1691,7 +1695,7 @@ Residual                                                NaN  </code></pre>
 <section id="objective-11" class="level5">
 <h5 class="anchored" data-anchor-id="objective-11">Objective</h5>
 <p>Use a full factorial design to assess the main effects and interactions among image styles, post times, and caption lengths on user engagement.</p>
-<div id="346c62de" class="cell" data-execution_count="13">
+<div id="21680bc2" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1814,7 +1818,7 @@ Residual                                              NaN           NaN  </code>
 <li><p><strong>Definition</strong>: Quarter-fraction designs test a quarter of the possible combinations, further reducing sample size requirements but increasing the risk of confounding interactions.</p></li>
 <li><p><strong>Example</strong>: Testing 4 out of 16 possible combinations in a study on the effects of different marketing strategies and budget allocations.</p></li>
 </ul>
-<div id="ea336089" class="cell" data-execution_count="14">
+<div id="4594abc1" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1889,7 +1893,7 @@ Residual                                   NaN  </code></pre>
 </div>
 </div>
 </div>
-<div id="18512612" class="cell" data-execution_count="15">
+<div id="4f81cdf3" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -1942,6 +1946,16 @@ Residual                                   NaN  </code></pre>
 <span id="cb29-48"><a href="#cb29-48" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb29-49"><a href="#cb29-49" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/ravishankar/miniforge3/lib/python3.10/site-packages/statsmodels/base/model.py:1894: ValueWarning:
+
+covariance of constraints does not have full rank. The number of constraints is 2, but rank is 1
+
+/Users/ravishankar/miniforge3/lib/python3.10/site-packages/statsmodels/base/model.py:1894: ValueWarning:
+
+covariance of constraints does not have full rank. The number of constraints is 2, but rank is 1
+</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>ANOVA Table (Quarter-Fraction Design):
                                         sum_sq     df           F  \
@@ -1963,16 +1977,6 @@ C(image_style):C(post_time)       7.790585e-03
 C(image_style):C(caption_length)  7.790585e-03  
 C(post_time):C(caption_length)    1.572853e-02  
 Residual                                   NaN  </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/Users/ravishankar/miniforge3/lib/python3.10/site-packages/statsmodels/base/model.py:1894: ValueWarning:
-
-covariance of constraints does not have full rank. The number of constraints is 2, but rank is 1
-
-/Users/ravishankar/miniforge3/lib/python3.10/site-packages/statsmodels/base/model.py:1894: ValueWarning:
-
-covariance of constraints does not have full rank. The number of constraints is 2, but rank is 1
-</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <pre><code>&lt;Figure size 1152x576 with 0 Axes&gt;</code></pre>
